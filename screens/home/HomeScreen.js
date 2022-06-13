@@ -7,8 +7,8 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { Card, Title, Paragraph } from "react-native-paper";
-
+import { Card, Title, Paragraph, IconButton } from "react-native-paper";
+import Colors from "../../styles/colors.js";
 const HomeScreen = ({ navigation }) => {
   const mockdata = [
     {
@@ -54,16 +54,11 @@ const HomeScreen = ({ navigation }) => {
           activeOpacity={0.7}
           style={styles.touchableOpacityStyle}
         >
-          <Image
-            //We are making FAB using TouchableOpacity with an image
-            //We are using online image here
-            source={{
-              uri: "https://raw.githubusercontent.com/AboutReact/sampleresource/master/plus_icon.png",
-            }}
-            //You can use your project image Example below
-            //source={require('./images/float-add-icon.png')}
-            style={styles.floatingButtonStyle}
-          />
+          <IconButton
+            icon="plus-circle"
+            size={70}
+            color={Colors.primaryColor}
+          ></IconButton>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
