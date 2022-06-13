@@ -60,7 +60,7 @@ const HomeScreen = ({ navigation }) => {
             source={{
               uri: "https://raw.githubusercontent.com/AboutReact/sampleresource/master/plus_icon.png",
             }}
-            //You can use you project image Example below
+            //You can use your project image Example below
             //source={require('./images/float-add-icon.png')}
             style={styles.floatingButtonStyle}
           />

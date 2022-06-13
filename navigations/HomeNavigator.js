@@ -1,8 +1,9 @@
 import React from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Avatar } from "react-native-paper";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
-import EventDetailsScreen from "../screens/event-details/EventDetailsScreen";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
 
 const Stack = createStackNavigator();
@@ -10,7 +11,20 @@ const Stack = createStackNavigator();
 const HomeNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen
+        name="SoleMates"
+        component={HomeScreen}
+        options={{
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => alert("This is a button!")}
+              style={styles.container}
+            >
+              <Avatar.Icon icon="account" size={30} title="Info" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <Stack.Screen
         name="Event Details"
         component={EventDetailsNavigator}
@@ -22,3 +36,11 @@ const HomeNavigator = () => {
 };
 
 export default HomeNavigator;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 10,
+  },
+});

@@ -12,7 +12,9 @@ const AppNavigator = () => {
       <Tab.Screen
         name="Home Page"
         component={HomeNavigator}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
       <Tab.Screen name="Your Session" component={PersonalEventScreen} />
     </Tab.Navigator>
