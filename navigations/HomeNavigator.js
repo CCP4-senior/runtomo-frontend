@@ -5,10 +5,17 @@ import { Avatar } from "react-native-paper";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
+import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 
 const Stack = createStackNavigator();
 
-const HomeNavigator = () => {
+const HomeNavigator = ({ navigation }) => {
+  const openProfileScreen = (eventData) => {
+    navigation.navigate("Profile", {
+      eventData: eventData,
+    });
+  };
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -17,7 +24,7 @@ const HomeNavigator = () => {
         options={{
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => alert("This is a button!")}
+              onPress={() => openProfileScreen()}
               style={styles.container}
             >
               <Avatar.Icon icon="account" size={30} title="Info" />
@@ -31,6 +38,7 @@ const HomeNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Create Event" component={EventCreationScreen} />
+      <Stack.Screen name="Profile" component={UserProfileScreen} />
     </Stack.Navigator>
   );
 };
