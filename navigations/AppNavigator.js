@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ unmountOnBlur: true }}>
       <Tab.Screen
         name="Home Page"
         component={HomeNavigator}
