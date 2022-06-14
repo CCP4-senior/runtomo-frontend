@@ -56,11 +56,12 @@ const EventCreationScreen = ({ navigation }) => {
             style={{ backgroundColor: "#fff", width: 335 }}
             placeholder="Area"
             value={area}
+            onChangeText={(text) => setArea(text)}
           />
         </View>
         <View style={styles.pickerContainer}>
-          <DatePicker />
-          <TimePicker />
+          <DatePicker setDate={setDate} />
+          <TimePicker setTime={setTime} />
         </View>
         <View style={styles.inputContainer}>
           <TextInput
@@ -134,7 +135,19 @@ const EventCreationScreen = ({ navigation }) => {
           contentStyle={{
             padding: 7,
           }}
-          onPress={() => navigation.navigate("Event Created")}
+          onPress={() => {
+            const eventData = {
+              eventTitle,
+              venueAddress,
+              area,
+              date,
+              time,
+              runningDuration,
+              eventDescription,
+            };
+            console.log(eventData);
+            navigation.navigate("Event Created");
+          }}
         >
           Create Event
         </Button>

@@ -4,7 +4,7 @@ import { TextInput } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Colors from "../../styles/colors.js";
 
-const DatePicker = () => {
+const DatePicker = ({ setTime }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -16,7 +16,7 @@ const DatePicker = () => {
   };
 
   const handleConfirm = (date) => {
-    console.warn("A date has been picked: ", date);
+    setTime(date);
     hideDatePicker();
   };
 
