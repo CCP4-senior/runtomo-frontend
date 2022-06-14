@@ -1,8 +1,9 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Card, Paragraph, Title, Button } from "react-native-paper";
+import { Card, Paragraph, Title } from "react-native-paper";
 import { format } from "date-fns";
 import Colors from "../../assets/styles/colors.js";
+import LongButton from "../../components/LongButton.js";
 
 const CreateConfirmationScreen = ({ navigation, newEvent }) => {
   return (
@@ -33,53 +34,20 @@ const CreateConfirmationScreen = ({ navigation, newEvent }) => {
           </Paragraph>
         </Card.Content>
       </Card>
-      <Button
-        mode="contained"
-        uppercase={false}
-        color={Colors.secondaryColor}
-        style={{
-          borderRadius: 25,
-          width: 325,
-          height: 55,
-          marginTop: 20,
-        }}
-        labelStyle={{
-          fontWeight: "bold",
-          fontSize: 20,
-          color: "#555555",
-        }}
-        contentStyle={{
-          padding: 7,
-        }}
-        onPress={() => {
+      <LongButton
+        buttonHandler={() => {
           Alert("Some edit page");
         }}
-      >
-        Edit Event
-      </Button>
-      <Button
-        mode="contained"
-        uppercase={false}
-        color={Colors.primaryColor}
-        style={{
-          borderRadius: 25,
-          width: 325,
-          height: 55,
-          marginTop: 20,
-        }}
-        labelStyle={{
-          fontWeight: "bold",
-          fontSize: 20,
-        }}
-        contentStyle={{
-          padding: 7,
-        }}
-        onPress={() => {
+        buttonColor={Colors.secondaryColor}
+        buttonText="Edit Event"
+      />
+      <LongButton
+        buttonHandler={() => {
           navigation.navigate("SoleMates");
         }}
-      >
-        Done
-      </Button>
+        buttonColor={Colors.primaryColor}
+        buttonText="Done"
+      />
     </View>
   );
 };

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
-import { Button, TextInput, IconButton, Provider } from "react-native-paper";
+import { TextInput, IconButton, Provider } from "react-native-paper";
 import Colors from "../../assets/styles/colors.js";
 import DatePicker from "./DatePicker.js";
 import TimePicker from "./TimePicker.js";
 import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
+import LongButton from "../../components/LongButton.js";
 
 const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
   const [eventTitle, setEventTitle] = useState("");
@@ -22,6 +23,19 @@ const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
     setDurationModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
+  const buttonHandler = () => {
+    setNewEvent({
+      eventTitle,
+      meetingPoint,
+      area,
+      date,
+      time,
+      runningDuration,
+      eventDescription,
+    });
+    console.log(newEvent);
+    navigation.navigate("Event Created");
+  };
 
   return (
     <Provider>
@@ -142,39 +156,11 @@ const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
               onChangeText={(text) => setEventDescription(text)}
             />
           </View>
-          <Button
-            mode="contained"
-            uppercase={false}
-            color={Colors.primaryColor}
-            style={{
-              borderRadius: 25,
-              width: 325,
-              height: 55,
-              marginTop: 20,
-            }}
-            labelStyle={{
-              fontWeight: "bold",
-              fontSize: 20,
-            }}
-            contentStyle={{
-              padding: 7,
-            }}
-            onPress={() => {
-              setNewEvent({
-                eventTitle,
-                meetingPoint,
-                area,
-                date,
-                time,
-                runningDuration,
-                eventDescription,
-              });
-              console.log(newEvent);
-              navigation.navigate("Event Created");
-            }}
-          >
-            Create Event
-          </Button>
+          <LongButton
+            buttonHandler={buttonHandler}
+            buttonColor={Colors.primaryColor}
+            buttonText="Create Event"
+          />
         </View>
       </ScrollView>
     </Provider>
