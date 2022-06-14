@@ -27,7 +27,7 @@ const SignIn = () => {
           label="Email"
           value={email}
           mode="outlined"
-          outlineColor="#fa2600"
+          outlineColor="black"
           underlineColor="#fa2600"
           activeOutlineColor="#fa2600"
           autoCapitalize="none"
@@ -43,7 +43,7 @@ const SignIn = () => {
           label="Password"
           value={password}
           mode="outlined"
-          outlineColor="#fa2600"
+          outlineColor="black"
           underlineColor="#fa2600"
           activeOutlineColor="#fa2600"
           textContentType="password"
