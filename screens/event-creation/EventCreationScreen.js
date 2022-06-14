@@ -5,7 +5,7 @@ import Colors from "../../styles/colors.js";
 import DatePicker from "./DatePicker.js";
 import TimePicker from "./TimePicker.js";
 
-const EventCreationScreen = () => {
+const EventCreationScreen = ({ navigation }) => {
   const [eventTitle, setEventTitle] = useState("");
   const [venueAddress, setVenueAddress] = useState("");
   const [area, setArea] = useState("");
@@ -13,12 +13,21 @@ const EventCreationScreen = () => {
   const [time, setTime] = useState("");
   const [runningDuration, setRunningDuration] = useState("");
   const [eventDescription, setEventDescription] = useState("");
+  const initialEvent = Object.freeze({
+    eventTitle: "",
+    venueAddress: "",
+    area: "",
+    date: "",
+    time: "",
+    runningDuration: "",
+    eventDescription: "",
+  });
+  const [eventData, setEventData] = useState(initialEvent);
   return (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
           <TextInput
-            // style={styles.input}
             mode="outlined"
             outlineColor="#fff"
             theme={{ roundness: 25 }}
@@ -30,7 +39,6 @@ const EventCreationScreen = () => {
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            // style={styles.input}
             mode="outlined"
             outlineColor="#fff"
             theme={{ roundness: 25 }}
@@ -42,7 +50,6 @@ const EventCreationScreen = () => {
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            // style={styles.input}
             mode="outlined"
             outlineColor="#fff"
             theme={{ roundness: 25 }}
@@ -57,7 +64,6 @@ const EventCreationScreen = () => {
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            // style={styles.input}
             mode="outlined"
             outlineColor="#fff"
             theme={{ roundness: 25 }}
@@ -128,7 +134,7 @@ const EventCreationScreen = () => {
           contentStyle={{
             padding: 7,
           }}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("Event Created")}
         >
           Create Event
         </Button>
@@ -150,26 +156,10 @@ const styles = StyleSheet.create({
   inputContainer: {
     margin: 5,
   },
-  input: {
-    width: 335,
-    height: 50,
-    backgroundColor: "#fff",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 25,
-    fontSize: 16,
-    // marginBottom: 25,
-  },
   description: {
     height: 98,
     borderRadius: 10,
   },
-  // button: {
-  //   width: 335,
-  //   height: 50,
-  //   borderRadius: 25,
-  //   backgroundColor: Colors.primaryColor,
-  // },
   pickerContainer: {
     width: 335,
     flex: 1,
