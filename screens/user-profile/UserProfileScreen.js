@@ -24,53 +24,51 @@ const UserProfileScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          {/* placeholder image, to be updated */}
-          <ImageBackground
-            style={styles.backgroundImage}
-            imageStyle={{ opacity: 0.75 }}
-            source={require("../../assets/images/backgroundProfile.png")}
-            resizeMode="cover"
-          >
-            <Image
-              style={[styles.profilePicture, { height: height * 0.3 }]}
-              source={{
-                uri: "https://xsgames.co/randomusers/avatar.php?g=male",
-              }}
-              resizeMode="contain"
-            />
-          </ImageBackground>
+      <View style={styles.imageContainer}>
+        {/* placeholder image, to be updated */}
+        <ImageBackground
+          style={styles.backgroundImage}
+          imageStyle={{ opacity: 0.75 }}
+          source={require("../../assets/images/backgroundProfile.png")}
+          resizeMode="cover"
+        >
+          <Image
+            style={[styles.profilePicture, { height: height * 0.3 }]}
+            source={{
+              uri: "https://xsgames.co/randomusers/avatar.php?g=male",
+            }}
+            resizeMode="contain"
+          />
+        </ImageBackground>
+      </View>
+      <View style={styles.userInfoContainer}>
+        <View style={styles.userInfoHeader}>
+          <Text style={styles.userFullName}>
+            {userData.firstName} {userData.lastName}
+          </Text>
+          <Button
+            onPress={() => alert("Edit!")}
+            icon="account-edit"
+            color="red"
+            labelStyle={{ fontSize: 30 }}
+          ></Button>
         </View>
-        <View style={styles.userInfoContainer}>
-          <View style={styles.userInfoHeader}>
-            <Text style={styles.userFullName}>
-              {userData.firstName} {userData.lastName}
-            </Text>
-            <Button
-              onPress={() => alert("Edit!")}
-              icon="account-edit"
-              color="red"
-              labelStyle={{ fontSize: 30 }}
-            ></Button>
-          </View>
-          <View style={styles.userDataWrapper}>
-            <Text style={styles.userDataFont}>Email: {userData.email}</Text>
-          </View>
-          <View style={styles.userDataWrapper}>
-            <Text style={styles.userDataFont}>Age: {userData.age}</Text>
-          </View>
-          <View style={[styles.userDataWrapper, styles.tagsContainer]}>
-            <Text style={styles.userDataFont}>Runner Type:</Text>
-            {userData.runnerType.map((type, index) => {
-              return (
-                <Text style={[styles.tags, styles.userDataFont]} key={index}>
-                  {" "}
-                  {type}{" "}
-                </Text>
-              );
-            })}
-          </View>
+        <View style={styles.userDataWrapper}>
+          <Text style={styles.userDataFont}>Email: {userData.email}</Text>
+        </View>
+        <View style={styles.userDataWrapper}>
+          <Text style={styles.userDataFont}>Age: {userData.age}</Text>
+        </View>
+        <View style={[styles.userDataWrapper, styles.tagsContainer]}>
+          <Text style={styles.userDataFont}>Runner Type:</Text>
+          {userData.runnerType.map((type, index) => {
+            return (
+              <Text style={[styles.tags, styles.userDataFont]} key={index}>
+                {" "}
+                {type}{" "}
+              </Text>
+            );
+          })}
         </View>
       </View>
     </SafeAreaView>
@@ -82,21 +80,16 @@ export default UserProfileScreen;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  container: {
-    flex: 1,
   },
   imageContainer: {
     alignItems: "center",
-    paddingTop: 10,
   },
   backgroundImage: {
     width: "100%",
     height: 250,
   },
   profilePicture: {
-    width: "52%",
+    width: "48%",
     maxHeight: 200,
     borderRadius: 10,
     borderWidth: 2,
