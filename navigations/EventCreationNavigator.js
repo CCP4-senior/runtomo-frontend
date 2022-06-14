@@ -6,10 +6,36 @@ import CreateConfirmationScreen from "../screens/event-creation/CreateConfirmati
 const Stack = createStackNavigator();
 
 const EventCreationNavigator = () => {
+  const initialEvent = Object.freeze({
+    eventTitle: "",
+    meetingPoint: "",
+    area: "",
+    date: "",
+    time: "",
+    runningDuration: "",
+    eventDescription: "",
+  });
+  const [newEvent, setNewEvent] = useState(initialEvent);
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Create Event" component={EventCreationScreen} />
-      <Stack.Screen name="Event Created" component={CreateConfirmationScreen} />
+      <Stack.Screen name="Create Event">
+        {(props) => (
+          <EventCreationScreen
+            {...props}
+            newEvent={newEvent}
+            setNewEvent={setNewEvent}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen name="Event Created">
+        {(props) => (
+          <CreateConfirmationScreen
+            {...props}
+            newEvent={newEvent}
+            setNewEvent={setNewEvent}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

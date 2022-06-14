@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
-import {
-  Button,
-  TextInput,
-  IconButton,
-  Provider,
-  Portal,
-  List,
-} from "react-native-paper";
+import { Button, TextInput, IconButton, Provider } from "react-native-paper";
 import Colors from "../../styles/colors.js";
 import DatePicker from "./DatePicker.js";
 import TimePicker from "./TimePicker.js";
 import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
 
-const EventCreationScreen = ({ navigation }) => {
+const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
   const [eventTitle, setEventTitle] = useState("");
   const [meetingPoint, setmeetingPoint] = useState("");
   const [area, setArea] = useState("");
@@ -29,15 +22,6 @@ const EventCreationScreen = ({ navigation }) => {
     setDurationModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
-  const initialEvent = Object.freeze({
-    eventTitle: "",
-    meetingPoint: "",
-    area: "",
-    date: "",
-    time: "",
-    runningDuration: "",
-    eventDescription: "",
-  });
 
   return (
     <Provider>
@@ -175,7 +159,7 @@ const EventCreationScreen = ({ navigation }) => {
               padding: 7,
             }}
             onPress={() => {
-              setEventData({
+              setNewEvent({
                 eventTitle,
                 meetingPoint,
                 area,
@@ -184,7 +168,7 @@ const EventCreationScreen = ({ navigation }) => {
                 runningDuration,
                 eventDescription,
               });
-              console.log(eventData);
+              console.log(newEvent);
               navigation.navigate("Event Created");
             }}
           >

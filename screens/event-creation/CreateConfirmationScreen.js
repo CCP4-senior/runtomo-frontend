@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import { ScrollView, View, StyleSheet, Text } from "react-native";
-import {
-  Card,
-  Paragraph,
-  Title,
-  Button,
-  TextInput,
-  IconButton,
-} from "react-native-paper";
+import React from "react";
+import { View, StyleSheet } from "react-native";
+import { Card, Paragraph, Title, Button } from "react-native-paper";
+import { format } from "date-fns";
 import Colors from "../../styles/colors.js";
 
-const CreateConfirmationScreen = ({ navigation }) => {
+const CreateConfirmationScreen = ({ navigation, newEvent }) => {
   return (
     <View style={styles.container}>
       <Card style={[styles.card, styles.cardTop]} onPress={() => {}}>
@@ -31,9 +25,12 @@ const CreateConfirmationScreen = ({ navigation }) => {
           style={{ height: 175 }}
         />
         <Card.Content>
-          <Title>Event title</Title>
-          <Paragraph>area and meeting Point</Paragraph>
-          <Paragraph>Date and time</Paragraph>
+          <Title>{newEvent.eventTitle}</Title>
+          <Paragraph>{newEvent.area}</Paragraph>
+          <Paragraph>
+            {format(new Date(newEvent.date), "MMM d, yyyy")} at{" "}
+            {format(new Date(newEvent.time), "p")}
+          </Paragraph>
         </Card.Content>
       </Card>
       <Button
