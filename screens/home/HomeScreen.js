@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation }) => {
     });
   };
   const openEventCreation = () => {
-    navigation.navigate("Create Event");
+    navigation.navigate("Event Creation");
   };
   return (
     <SafeAreaView style={styles.container}>

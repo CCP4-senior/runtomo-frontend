@@ -1,158 +1,198 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
-import { Button, TextInput, IconButton } from "react-native-paper";
+import {
+  Button,
+  TextInput,
+  IconButton,
+  Provider,
+  Portal,
+  List,
+} from "react-native-paper";
 import Colors from "../../styles/colors.js";
 import DatePicker from "./DatePicker.js";
 import TimePicker from "./TimePicker.js";
+import AreaModal from "./AreaModal.js";
+import DurationModal from "./DurationModal.js";
 
 const EventCreationScreen = ({ navigation }) => {
   const [eventTitle, setEventTitle] = useState("");
-  const [venueAddress, setVenueAddress] = useState("");
+  const [meetingPoint, setmeetingPoint] = useState("");
   const [area, setArea] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [runningDuration, setRunningDuration] = useState("");
+  const [areaModalVisible, setAreaModalVisible] = useState(false);
+  const [durationModalVisible, setDurationModalVisible] = useState(false);
+
+  const hideModal = () => {
+    setAreaModalVisible(false);
+    setDurationModalVisible(false);
+  };
   const [eventDescription, setEventDescription] = useState("");
   const initialEvent = Object.freeze({
     eventTitle: "",
-    venueAddress: "",
+    meetingPoint: "",
     area: "",
     date: "",
     time: "",
     runningDuration: "",
     eventDescription: "",
   });
-  const [eventData, setEventData] = useState(initialEvent);
+
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            mode="outlined"
-            outlineColor="#fff"
-            theme={{ roundness: 25 }}
-            style={{ backgroundColor: "#fff", width: 335 }}
-            placeholder="Event Title"
-            value={eventTitle}
-            onChangeText={(text) => setEventTitle(text)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            mode="outlined"
-            outlineColor="#fff"
-            theme={{ roundness: 25 }}
-            style={{ backgroundColor: "#fff", width: 335 }}
-            placeholder="Venue Address"
-            value={venueAddress}
-            onChangeText={(text) => setVenueAddress(text)}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            mode="outlined"
-            outlineColor="#fff"
-            theme={{ roundness: 25 }}
-            style={{ backgroundColor: "#fff", width: 335 }}
-            placeholder="Area"
-            value={area}
-            onChangeText={(text) => setArea(text)}
-          />
-        </View>
-        <View style={styles.pickerContainer}>
-          <DatePicker setDate={setDate} />
-          <TimePicker setTime={setTime} />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            mode="outlined"
-            outlineColor="#fff"
-            theme={{ roundness: 25 }}
-            style={{ backgroundColor: "#fff", width: 335 }}
-            placeholder="Running Duration"
-            value={runningDuration}
-            onChangeText={(text) => setRunningDuration(text)}
-          />
-        </View>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            alignSelf: "flex-start",
-            marginLeft: 20,
-            marginTop: 10,
-          }}
-        >
-          <Text style={{ fontWeight: "bold" }}>Event Image</Text>
+    <Provider>
+      <AreaModal
+        modalVisible={areaModalVisible}
+        hideModal={hideModal}
+        setArea={setArea}
+      />
+      <DurationModal
+        modalVisible={durationModalVisible}
+        setRunningDuration={setRunningDuration}
+        hideModal={hideModal}
+      />
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              mode="outlined"
+              outlineColor="#fff"
+              activeOutlineColor={Colors.secondaryColor}
+              theme={{ roundness: 25 }}
+              style={{ backgroundColor: "#fff", width: 335 }}
+              placeholder="Event Title"
+              value={eventTitle}
+              onChangeText={(text) => setEventTitle(text)}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              mode="outlined"
+              outlineColor="#fff"
+              activeOutlineColor={Colors.secondaryColor}
+              theme={{ roundness: 25 }}
+              style={{ backgroundColor: "#fff", width: 335 }}
+              placeholder="Area"
+              value={area}
+              onFocus={() => setAreaModalVisible(true)}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              mode="outlined"
+              outlineColor="#fff"
+              activeOutlineColor={Colors.secondaryColor}
+              theme={{ roundness: 25 }}
+              style={{ backgroundColor: "#fff", width: 335 }}
+              placeholder="Meeting Point Address"
+              value={meetingPoint}
+              onChangeText={(text) => setmeetingPoint(text)}
+            />
+          </View>
+
+          <View style={styles.pickerContainer}>
+            <DatePicker setDate={setDate} date={date} />
+            <TimePicker setTime={setTime} time={time} />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              mode="outlined"
+              outlineColor="#fff"
+              activeOutlineColor={Colors.secondaryColor}
+              theme={{ roundness: 25 }}
+              style={{ backgroundColor: "#fff", width: 335 }}
+              placeholder="Running Duration"
+              value={runningDuration}
+              onFocus={() => setDurationModalVisible(true)}
+            />
+          </View>
           <View
-            backgroundColor="#fff"
             style={{
-              width: 98,
-              height: 98,
-              borderRadius: 10,
               alignItems: "center",
               justifyContent: "center",
+              alignSelf: "flex-start",
+              marginLeft: 20,
+              marginTop: 10,
             }}
           >
+            <Text style={{ fontWeight: "bold" }}>Event Image</Text>
             <View
+              backgroundColor="#fff"
               style={{
-                borderStyle: "dashed",
-                borderWidth: 1,
+                width: 98,
+                height: 98,
                 borderRadius: 10,
-                borderColor: Colors.secondaryColor,
-                width: 80,
-                height: 80,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <IconButton icon="camera" color={Colors.text} size={29} />
-              <Text>Add Image</Text>
+              <View
+                style={{
+                  borderStyle: "dashed",
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  borderColor: Colors.secondaryColor,
+                  width: 80,
+                  height: 80,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <IconButton icon="camera" color={Colors.text} size={29} />
+                <Text>Add Image</Text>
+              </View>
             </View>
           </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              mode="outlined"
+              outlineColor="#fff"
+              activeOutlineColor={Colors.secondaryColor}
+              theme={{ roundness: 10 }}
+              style={{ backgroundColor: "#fff", width: 335, height: 98 }}
+              placeholder="Event Description"
+              value={eventDescription}
+              onChangeText={(text) => setEventDescription(text)}
+            />
+          </View>
+          <Button
+            mode="contained"
+            uppercase={false}
+            color={Colors.primaryColor}
+            style={{
+              borderRadius: 25,
+              width: 325,
+              height: 55,
+              marginTop: 20,
+            }}
+            labelStyle={{
+              fontWeight: "bold",
+              fontSize: 20,
+            }}
+            contentStyle={{
+              padding: 7,
+            }}
+            onPress={() => {
+              const eventData = {
+                eventTitle,
+                meetingPoint,
+                area,
+                date,
+                time,
+                runningDuration,
+                eventDescription,
+              };
+              console.log(eventData);
+              navigation.navigate("Event Created");
+            }}
+          >
+            Create Event
+          </Button>
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            // style={[styles.input, styles.description]}
-            mode="outlined"
-            outlineColor="#fff"
-            theme={{ roundness: 10 }}
-            style={{ backgroundColor: "#fff", width: 335, height: 98 }}
-            placeholder="Event Description"
-            value={eventDescription}
-            onChangeText={(text) => setEventDescription(text)}
-          />
-        </View>
-        <Button
-          mode="contained"
-          uppercase={false}
-          color={Colors.primaryColor}
-          style={{ borderRadius: 25, width: 325, height: 60, marginTop: 20 }}
-          labelStyle={{
-            fontWeight: "bold",
-            fontSize: 20,
-          }}
-          contentStyle={{
-            padding: 7,
-          }}
-          onPress={() => {
-            const eventData = {
-              eventTitle,
-              venueAddress,
-              area,
-              date,
-              time,
-              runningDuration,
-              eventDescription,
-            };
-            console.log(eventData);
-            navigation.navigate("Event Created");
-          }}
-        >
-          Create Event
-        </Button>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </Provider>
   );
 };
 

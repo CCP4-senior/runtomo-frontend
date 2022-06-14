@@ -3,8 +3,9 @@ import { View } from "react-native";
 import { TextInput } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Colors from "../../styles/colors.js";
+import { format } from "date-fns";
 
-const DatePicker = ({ setTime }) => {
+const DatePicker = ({ setTime, time }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -25,11 +26,13 @@ const DatePicker = ({ setTime }) => {
       <TextInput
         mode="outlined"
         outlineColor="#fff"
+        activeOutlineColor={Colors.secondaryColor}
         theme={{ roundness: 25 }}
         style={{ backgroundColor: "#fff", width: 160 }}
-        placeholder="Date"
+        placeholder="Time"
         onFocus={showDatePicker}
         right={<TextInput.Icon name="clock-outline" color={Colors.text} />}
+        value={time ? format(new Date(time), "p") : ""}
       />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}

@@ -32,7 +32,7 @@ const HomeNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Create Event"
+        name="Event Creation"
         // component={EventCreationScreen}
         component={EventCreationNavigator}
         options={{ headerShown: false }}
