@@ -45,7 +45,7 @@ const SignIn = () => {
           textContentType="emailAddress"
           keyboardType="email-address"
           returnKeyType="next"
-          style={{ height: 55 }}
+          style={{ height: 50 }}
           error={false}
           errorText={"TESTING"}
           onChangeText={(text) => {
@@ -73,7 +73,7 @@ const SignIn = () => {
           activeOutlineColor="black"
           textContentType="password"
           secureTextEntry={true}
-          style={{ height: 55 }}
+          style={{ height: 50 }}
           onChangeText={(text) => setPassword(text)}
         />
       </View>
