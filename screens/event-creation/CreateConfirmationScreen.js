@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Paragraph, Title, Button } from "react-native-paper";
 import { format } from "date-fns";
-import Colors from "../../styles/colors.js";
+import Colors from "../../assets/styles/colors.js";
 
 const CreateConfirmationScreen = ({ navigation, newEvent }) => {
   return (
@@ -46,12 +46,13 @@ const CreateConfirmationScreen = ({ navigation, newEvent }) => {
         labelStyle={{
           fontWeight: "bold",
           fontSize: 20,
+          color: "#555555",
         }}
         contentStyle={{
           padding: 7,
         }}
         onPress={() => {
-          console.log("Yay!");
+          Alert("Some edit page");
         }}
       >
         Edit Event
@@ -74,7 +75,7 @@ const CreateConfirmationScreen = ({ navigation, newEvent }) => {
           padding: 7,
         }}
         onPress={() => {
-          console.log("Yay!");
+          navigation.navigate("SoleMates");
         }}
       >
         Done

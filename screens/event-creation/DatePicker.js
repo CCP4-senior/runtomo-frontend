@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { TextInput } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
-import Colors from "../../styles/colors.js";
+import Colors from "../../assets/styles/colors.js";
 
 const DatePicker = ({ setDate, date }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);

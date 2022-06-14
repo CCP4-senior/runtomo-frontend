@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { TextInput } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import Colors from "../../styles/colors.js";
+import Colors from "../../assets/styles/colors.js";
 import { format } from "date-fns";
 
 const DatePicker = ({ setTime, time }) => {

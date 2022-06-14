@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Card, Title, Paragraph, IconButton } from "react-native-paper";
-import Colors from "../../styles/colors.js";
+import Colors from "../../assets/styles/colors.js";
 const HomeScreen = ({ navigation }) => {
   const mockdata = [
     {

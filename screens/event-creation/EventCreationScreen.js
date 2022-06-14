@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { Button, TextInput, IconButton, Provider } from "react-native-paper";
-import Colors from "../../styles/colors.js";
+import Colors from "../../assets/styles/colors.js";
 import DatePicker from "./DatePicker.js";
 import TimePicker from "./TimePicker.js";
 import AreaModal from "./AreaModal.js";
@@ -131,6 +131,7 @@ const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
+              mutiline={true}
               mode="outlined"
               outlineColor="#fff"
               activeOutlineColor={Colors.secondaryColor}
