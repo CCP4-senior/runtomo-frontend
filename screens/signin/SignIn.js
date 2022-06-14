@@ -9,13 +9,25 @@ const SignIn = () => {
   const { setUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState({
+    isTriggered: false,
+    message: "",
+  });
+  const [passwordError, setPasswordError] = useState("");
 
   const handleSignIn = () => {
     if (true) {
       setUser("Wane");
       navigation.navigate("SignIn", { screen: "Home" });
     } else {
-      setAuthenticated(false);
+      setUser("");
+    }
+  };
+
+  const validateEmail = (text) => {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
+      const updatedEmailError = { isTriggered: false, message: "" };
+      setEmailError(updatedEmailError);
     }
   };
 
@@ -36,8 +48,21 @@ const SignIn = () => {
           style={{ height: 55 }}
           error={false}
           errorText={"TESTING"}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => {
+            if (emailError.isTriggered === false) {
+              const updatedEmailError = {
+                isTriggered: true,
+                message: "Please enter a valid email.",
+              };
+              setEmailError(updatedEmailError);
+            }
+            validateEmail(text);
+            return setEmail(text);
+          }}
         />
+        <Text style={styles.emailErrorMessage}>
+          {emailError.isTriggered && emailError.message}
+        </Text>
       </View>
       <View style={styles.passwordFieldWrapper}>
         <TextInput
@@ -116,6 +141,10 @@ const styles = StyleSheet.create({
     top: 294,
     left: 30,
     marginHorizontal: 20,
+  },
+  emailErrorMessage: {
+    marginTop: 4,
+    color: "#c7254e",
   },
   passwordFieldWrapper: {
     position: "absolute",
