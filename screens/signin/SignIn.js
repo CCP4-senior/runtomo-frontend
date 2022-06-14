@@ -28,13 +28,14 @@ const SignIn = () => {
           value={email}
           mode="outlined"
           outlineColor="black"
-          underlineColor="#fa2600"
-          activeOutlineColor="#fa2600"
+          activeOutlineColor="black"
           autoCapitalize="none"
           textContentType="emailAddress"
           keyboardType="email-address"
           returnKeyType="next"
           style={{ height: 55 }}
+          error={false}
+          errorText={"TESTING"}
           onChangeText={(text) => setEmail(text)}
         />
       </View>
@@ -44,8 +45,7 @@ const SignIn = () => {
           value={password}
           mode="outlined"
           outlineColor="black"
-          underlineColor="#fa2600"
-          activeOutlineColor="#fa2600"
+          activeOutlineColor="black"
           textContentType="password"
           secureTextEntry={true}
           style={{ height: 55 }}
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     width: 305,
     height: 34,
     left: 35,
-    top: 233,
+    top: 223,
     fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
