@@ -15,10 +15,8 @@ const UserProfileScreen = ({ navigation }) => {
   const { height } = useWindowDimensions();
 
   const userData = {
-    firstName: "Wane",
-    lastName: "Wade",
+    username: "WayneWadeRuns",
     age: 28,
-    email: "wanewayde@gmail.com",
     runnerType: ["casual", "social"],
   };
 
@@ -43,9 +41,7 @@ const UserProfileScreen = ({ navigation }) => {
       </View>
       <View style={styles.userInfoContainer}>
         <View style={styles.userInfoHeader}>
-          <Text style={styles.userFullName}>
-            {userData.firstName} {userData.lastName}
-          </Text>
+          <Text style={styles.userFullName}>{userData.username}</Text>
           <Button
             onPress={() => alert("Edit!")}
             icon="account-edit"
@@ -53,14 +49,8 @@ const UserProfileScreen = ({ navigation }) => {
             labelStyle={{ fontSize: 30 }}
           ></Button>
         </View>
-        <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Email: {userData.email}</Text>
-        </View>
-        <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Age: {userData.age}</Text>
-        </View>
         <View style={[styles.userDataWrapper, styles.tagsContainer]}>
-          <Text style={styles.userDataFont}>Runner Type:</Text>
+          <Text style={styles.userDataFont}>Runner Type</Text>
           {userData.runnerType.map((type, index) => {
             return (
               <Text style={[styles.tags, styles.userDataFont]} key={index}>
@@ -69,6 +59,9 @@ const UserProfileScreen = ({ navigation }) => {
               </Text>
             );
           })}
+        </View>
+        <View style={styles.userDataWrapper}>
+          <Text style={styles.userDataFont}>Age: {userData.age}</Text>
         </View>
       </View>
     </SafeAreaView>
