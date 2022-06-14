@@ -1,7 +1,12 @@
 import React from "react";
 import { Button } from "react-native-paper";
 
-const LongButton = ({ buttonHandler, buttonColor, buttonText }) => {
+const LongButton = ({
+  buttonHandler,
+  buttonColor,
+  buttonText,
+  buttonTextColor,
+}) => {
   return (
     <Button
       mode="contained"
@@ -16,6 +21,7 @@ const LongButton = ({ buttonHandler, buttonColor, buttonText }) => {
       labelStyle={{
         fontWeight: "bold",
         fontSize: 20,
+        color: buttonTextColor || "#fff",
       }}
       contentStyle={{
         padding: 7,
