@@ -175,7 +175,7 @@ const EventCreationScreen = ({ navigation }) => {
               padding: 7,
             }}
             onPress={() => {
-              const eventData = {
+              setEventData({
                 eventTitle,
                 meetingPoint,
                 area,
@@ -183,7 +183,7 @@ const EventCreationScreen = ({ navigation }) => {
                 time,
                 runningDuration,
                 eventDescription,
-              };
+              });
               console.log(eventData);
               navigation.navigate("Event Created");
             }}

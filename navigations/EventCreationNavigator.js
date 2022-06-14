@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
 import CreateConfirmationScreen from "../screens/event-creation/CreateConfirmationScreen";
