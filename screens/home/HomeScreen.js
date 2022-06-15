@@ -1,14 +1,12 @@
 import React from "react";
 import {
-  Text,
   View,
   SafeAreaView,
   StyleSheet,
-  Image,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { Card, Title, Paragraph, IconButton } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
@@ -18,8 +16,8 @@ const HomeScreen = ({ navigation }) => {
       id: 1,
       title: "Imperial palace run",
       ward: "Shibuya",
-      date: "2022-09-10T14:02:55.300Z",
-      time: "2022-09-10T14:02:55.300Z",
+      date: "2022-07-17T14:02:55.300Z",
+      time: "2022-07-17T14:02:55.300Z",
       user: { id: 1, username: "Kumiko" },
     },
     {
@@ -34,8 +32,8 @@ const HomeScreen = ({ navigation }) => {
       id: 3,
       title: "Kanda river run",
       ward: "Shinjuku",
-      date: "2022-09-15T12:03:55.300Z",
-      time: "2022-09-15T12:03:55.300Z",
+      date: "2022-09-02T12:03:55.300Z",
+      time: "2022-09-02T12:03:55.300Z",
       user: { id: 3, username: "Kei" },
     },
   ];

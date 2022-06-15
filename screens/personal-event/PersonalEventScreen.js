@@ -1,5 +1,13 @@
 import React from "react";
-import { Text } from "react-native";
+import {
+  Text,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 
 const PersonalEvent = () => {
   return <Text>List of Running Events</Text>;
