@@ -19,6 +19,7 @@ const HomeScreen = ({ navigation }) => {
       date: "2022-07-17T14:02:55.300Z",
       time: "2022-07-17T14:02:55.300Z",
       user: { id: 1, username: "Kumiko" },
+      owner_id: 1,
     },
     {
       id: 2,
@@ -27,6 +28,7 @@ const HomeScreen = ({ navigation }) => {
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
       user: { id: 2, username: "Wade" },
+      owner_id: 2,
     },
     {
       id: 3,
@@ -35,6 +37,7 @@ const HomeScreen = ({ navigation }) => {
       date: "2022-09-02T12:03:55.300Z",
       time: "2022-09-02T12:03:55.300Z",
       user: { id: 3, username: "Kei" },
+      owner_id: 3,
     },
   ];
   const selectEvent = (eventData) => {
