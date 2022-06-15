@@ -3,9 +3,9 @@ import { View } from "react-native";
 import { TextInput } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
-import Colors from "../../assets/styles/colors.js";
+import CustomInput from "../../components/CustomInput.js";
 
-const DatePicker = ({ setDate, date }) => {
+const DatePicker = ({ setDate, date, errors, control, submitted }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -23,16 +23,13 @@ const DatePicker = ({ setDate, date }) => {
 
   return (
     <View>
-      <TextInput
-        mode="outlined"
-        outlineColor="#fff"
-        activeOutlineColor={Colors.secondaryColor}
-        theme={{ roundness: 25 }}
-        style={{ backgroundColor: "#fff", width: 160 }}
+      <CustomInput
         placeholder="Date"
+        icon="calendar-month"
         onFocus={showDatePicker}
-        right={<TextInput.Icon name="calendar-month" color={Colors.text} />}
         value={date ? format(new Date(date), "MMM d, yyyy") : ""}
+        width={160}
+        submitted={submitted}
       />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}

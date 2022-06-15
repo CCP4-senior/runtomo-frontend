@@ -7,10 +7,11 @@ import TimePicker from "./TimePicker.js";
 import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
 import LongButton from "../../components/LongButton.js";
+import CustomInput from "../../components/CustomInput.js";
 
 const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
   const [eventTitle, setEventTitle] = useState("");
-  const [meetingPoint, setmeetingPoint] = useState("");
+  const [meetingPoint, setMeetingPoint] = useState("");
   const [area, setArea] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -23,8 +24,20 @@ const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
     setDurationModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
-  const buttonHandler = () => {
-    setNewEvent({
+  const buttonHandler = (data) => {
+    const requiredFields = [
+      eventTitle,
+      meetingPoint,
+      area,
+      date,
+      time,
+      runningDuration,
+    ];
+    if (requiredFields.some((field) => field === "")) {
+      setSubmitted(true);
+      return;
+    }
+    const event = {
       eventTitle,
       meetingPoint,
       area,
@@ -32,10 +45,13 @@ const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
       time,
       runningDuration,
       eventDescription,
-    });
-    console.log(newEvent);
+    };
+
+    setNewEvent(event);
     navigation.navigate("Event Created");
+    setSubmitted(false);
   };
+  const [submitted, setSubmitted] = useState(false);
 
   return (
     <Provider>
@@ -52,58 +68,40 @@ const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
-            <TextInput
-              mode="outlined"
-              outlineColor="#fff"
-              activeOutlineColor={Colors.secondaryColor}
-              theme={{ roundness: 25 }}
-              style={{ backgroundColor: "#fff", width: 335 }}
+            <CustomInput
               placeholder="Event Title"
               value={eventTitle}
-              onChangeText={(text) => setEventTitle(text)}
+              changeHandler={(text) => setEventTitle(text)}
+              submitted={submitted}
             />
           </View>
-
           <View style={styles.inputContainer}>
-            <TextInput
-              mode="outlined"
-              outlineColor="#fff"
-              activeOutlineColor={Colors.secondaryColor}
-              theme={{ roundness: 25 }}
-              style={{ backgroundColor: "#fff", width: 335 }}
+            <CustomInput
               placeholder="Area"
-              value={area}
               onFocus={() => setAreaModalVisible(true)}
+              value={area}
+              submitted={submitted}
             />
           </View>
-
           <View style={styles.inputContainer}>
-            <TextInput
-              mode="outlined"
-              outlineColor="#fff"
-              activeOutlineColor={Colors.secondaryColor}
-              theme={{ roundness: 25 }}
-              style={{ backgroundColor: "#fff", width: 335 }}
+            <CustomInput
               placeholder="Meeting Point Address"
               value={meetingPoint}
-              onChangeText={(text) => setmeetingPoint(text)}
+              changeHandler={(text) => setMeetingPoint(text)}
+              submitted={submitted}
             />
           </View>
-
           <View style={styles.pickerContainer}>
-            <DatePicker setDate={setDate} date={date} />
-            <TimePicker setTime={setTime} time={time} />
+            <DatePicker setDate={setDate} date={date} submitted={submitted} />
+            <TimePicker setTime={setTime} time={time} submitted={submitted} />
           </View>
           <View style={styles.inputContainer}>
-            <TextInput
-              mode="outlined"
-              outlineColor="#fff"
-              activeOutlineColor={Colors.secondaryColor}
-              theme={{ roundness: 25 }}
-              style={{ backgroundColor: "#fff", width: 335 }}
+            <CustomInput
               placeholder="Running Duration"
+              customValue={runningDuration}
+              onFocus={setDurationModalVisible}
               value={runningDuration}
-              onFocus={() => setDurationModalVisible(true)}
+              submitted={submitted}
             />
           </View>
           <View
