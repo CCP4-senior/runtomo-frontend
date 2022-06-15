@@ -5,10 +5,11 @@ import { format } from "date-fns";
 
 const EventCard = ({ event }) => {
   return (
-    <Card style={[styles.card]} onPress={() => {}}>
+    <Card style={[styles.card]} theme={{ roundness: 10 }}>
       <Card.Cover
         source={{ uri: "https://picsum.photos/700" }}
         style={{ height: 175 }}
+        theme={{ roundness: 10 }}
       />
       <Card.Content>
         <Title>{event.eventTitle}</Title>

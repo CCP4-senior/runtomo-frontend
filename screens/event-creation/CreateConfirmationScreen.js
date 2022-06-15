@@ -1,14 +1,18 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
-import Color from "../../assets/themes/Color.js"
+import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import EventCard from "../../components/EventCard.js";
 
 const CreateConfirmationScreen = ({ navigation, newEvent }) => {
   return (
     <View style={styles.container}>
-      <Card style={[styles.card, styles.cardTop]} onPress={() => {}}>
+      <Card
+        style={[styles.card, styles.cardTop]}
+        theme={{ roundness: 10 }}
+        onPress={() => {}}
+      >
         <Card.Content>
           <Title style={styles.cardTopTitle}>Congratulations</Title>
           <Paragraph style={styles.paragraph}>
