@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { TextInput } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
 import CustomInput from "../../components/CustomInput.js";
 
-const DatePicker = ({ setDate, date, errors, control, submitted }) => {
+const DatePicker = ({ setDate, date, time, setTime, submitted, category }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -16,24 +15,31 @@ const DatePicker = ({ setDate, date, errors, control, submitted }) => {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
-    setDate(date);
+  const handleConfirm = (data) => {
+    category === "date" ? setDate(data) : setTime(data);
+
     hideDatePicker();
   };
 
   return (
     <View>
       <CustomInput
-        placeholder="Date"
-        icon="calendar-month"
+        placeholder={category === "date" ? "Date" : "Time"}
+        icon={category === "date" ? "calendar-month" : "clock-outline"}
         onFocus={showDatePicker}
-        value={date ? format(new Date(date), "MMM d, yyyy") : ""}
+        value={
+          date || time
+            ? category === "date"
+              ? format(new Date(date), "MMM d, yyyy")
+              : format(new Date(time), "p")
+            : ""
+        }
         width={160}
         submitted={submitted}
       />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
-        mode="date"
+        mode={category === "date" ? "date" : "time"}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
       />

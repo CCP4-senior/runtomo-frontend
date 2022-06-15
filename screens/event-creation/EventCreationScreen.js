@@ -3,13 +3,12 @@ import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { TextInput, IconButton, Provider } from "react-native-paper";
 import Colors from "../../assets/styles/colors.js";
 import DatePicker from "./DatePicker.js";
-import TimePicker from "./TimePicker.js";
 import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 
-const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
+const EventCreationScreen = ({ navigation, setNewEvent }) => {
   const [eventTitle, setEventTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [area, setArea] = useState("");
@@ -92,8 +91,18 @@ const EventCreationScreen = ({ navigation, newEvent, setNewEvent }) => {
             />
           </View>
           <View style={styles.pickerContainer}>
-            <DatePicker setDate={setDate} date={date} submitted={submitted} />
-            <TimePicker setTime={setTime} time={time} submitted={submitted} />
+            <DatePicker
+              setDate={setDate}
+              date={date}
+              submitted={submitted}
+              category="date"
+            />
+            <DatePicker
+              setTime={setTime}
+              time={time}
+              submitted={submitted}
+              category="time"
+            />
           </View>
           <View style={styles.inputContainer}>
             <CustomInput
