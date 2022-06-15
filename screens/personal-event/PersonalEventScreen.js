@@ -98,27 +98,23 @@ const PersonalEventScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.root}>
+      <View style={styles.listTab}>
+        {listTab.map((tab, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[styles.btnTab, tab.status === status && styles.btnActive]}
+            onPress={() => handleFilter(tab.status)}
+          >
+            <Text style={styles.textTab}>{tab.status}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
       <View style={styles.container}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.listTab}>
-            {listTab.map((tab, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.btnTab,
-                  tab.status === status && styles.btnActive,
-                ]}
-                onPress={() => handleFilter(tab.status)}
-              >
-                <Text style={styles.textTab}>{tab.status}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
           <View style={styles.eventCardWrapper}>
             {mySessions.map((session, id) => {
               return (
@@ -141,10 +137,14 @@ const PersonalEventScreen = ({ navigation }) => {
 export default PersonalEventScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  root: {
     flex: 1,
     backgroundColor: Color.White,
     padding: 10,
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: 10,
   },
   titleStyle: {
     fontSize: 28,
@@ -166,24 +166,18 @@ const styles = StyleSheet.create({
     right: 30,
     bottom: 30,
   },
-  floatingButtonStyle: {
-    resizeMode: "contain",
-    width: 50,
-    height: 50,
-  },
   eventCardWrapper: {
     alignItems: "center",
     paddingHorizontal: 10,
   },
   listTab: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 10,
+    justifyContent: "space-evenly",
+    backgroundColor: Color.GrayMedium,
   },
   btnTab: {
-    backgroundColor: Color.GrayMedium,
     padding: 10,
-    width: 100,
+    width: 110,
   },
   btnActive: {
     backgroundColor: Color.GrayDark,
