@@ -59,8 +59,12 @@ const SettingScreen = ({ navigation }) => {
             <Dialog.Actions>
               {dialogType === "confirmation" && (
                 <>
-                  <Button onPress={hideDialog}>Cancel</Button>
-                  <Button onPress={deleteAccount}>Yes</Button>
+                  <Button onPress={hideDialog} color={Color.PrimaryMain}>
+                    Cancel
+                  </Button>
+                  <Button onPress={deleteAccount} color="grey">
+                    Yes
+                  </Button>
                 </>
               )}
             </Dialog.Actions>
