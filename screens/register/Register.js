@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
 	spacer : {},
 	text   : {},
 	button : {
-		color : "red"
+		color : 'red'
 	}
 });
