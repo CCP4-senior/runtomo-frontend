@@ -9,20 +9,18 @@ import {
 import React, { useState, useContext } from 'react';
 import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 import Color from '../../assets/themes/Color';
-import { AuthContext } from "../../context/authcontext/AuthContext";
+import { AuthContext } from '../../context/authcontext/AuthContext';
+import LongButton from '../../components/LongButton';
 
-
-
-
-const Register = ( { navigation }) => {
+const Register = ({ navigation }) => {
 	const { setUser } = useContext(AuthContext);
-	
+
 	const [ text, onChangeText ] = React.useState('Useless Text');
 	const [ number, onChangeNumber ] = React.useState(null);
-	
+
 	const handleRegister = () => {
-		setUser("Wane");
-		navigation.navigate("Register", { screen: "Home" });
+		setUser('Wade');
+		navigation.navigate('Register', { screen: 'Home' });
 	};
 
 	return (
@@ -67,10 +65,10 @@ const Register = ( { navigation }) => {
 
 			{/* Button */}
 			<View>
-				<Button
-					title="Register"
-					color={Color.PrimaryMain}
-					onPress={handleRegister}
+				<LongButton
+					buttonHandler={handleRegister}
+					buttonColor={Color.PrimaryMain}
+					buttonText="Register"
 				/>
 			</View>
 		</SafeAreaView>
