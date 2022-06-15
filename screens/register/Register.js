@@ -56,7 +56,7 @@ const Register = () => {
 
 			{/* Button */}
 			<View>
-				<Button title="Register" color="red" />
+				<Button title="Register" color={Color.PrimaryMain} />
 			</View>
 		</SafeAreaView>
 	);
