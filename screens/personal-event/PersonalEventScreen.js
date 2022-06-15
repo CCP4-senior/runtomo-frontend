@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   SafeAreaView,
@@ -19,6 +19,7 @@ const PersonalEventScreen = ({ navigation }) => {
       date: "2022-07-17T14:02:55.300Z",
       time: "2022-07-17T14:02:55.300Z",
       user: { id: 1, username: "Kumiko" },
+      participants: [2],
       owner_id: 1,
     },
     {
@@ -28,6 +29,7 @@ const PersonalEventScreen = ({ navigation }) => {
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
       user: { id: 2, username: "Wade" },
+      participants: [],
       owner_id: 2,
     },
     {
@@ -37,9 +39,32 @@ const PersonalEventScreen = ({ navigation }) => {
       date: "2022-09-02T12:03:55.300Z",
       time: "2022-09-02T12:03:55.300Z",
       user: { id: 3, username: "Kei" },
+      participants: [],
       owner_id: 3,
     },
   ];
+
+  const [mySessions, setMySessions] = useState([]);
+  const [currentUser, setCurrentUser] = useState({ id: 2 });
+
+  useEffect(() => {
+    if (currentUser) {
+      handleFilter();
+    }
+  }, []);
+
+  const handleFilter = () => {
+    const userSessions = mockdata.filter((session) => {
+      if (session.owner_id === 2) {
+        return session;
+      }
+      if (session.participants.includes(2)) {
+        return session;
+      }
+    });
+    setMySessions(userSessions);
+  };
+
   const selectEvent = (eventData) => {
     navigation.navigate("Event Details", {
       eventData: eventData,
@@ -54,7 +79,7 @@ const PersonalEventScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.eventCardWrapper}>
-            {mockdata.map((session, id) => {
+            {mySessions.map((session, id) => {
               return (
                 <EventCard
                   isHomePageCard={true}

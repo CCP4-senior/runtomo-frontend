@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Avatar, IconButton } from "react-native-paper";
-import HomeScreen from "../screens/home/HomeScreen";
 import PersonalEventScreen from "../screens/personal-event/PersonalEventScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
 import EventCreationNavigator from "./EventCreationNavigator";
