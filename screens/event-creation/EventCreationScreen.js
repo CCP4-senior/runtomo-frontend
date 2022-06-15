@@ -155,7 +155,12 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
               mode="outlined"
               outlineColor="#fff"
               activeOutlineColor={Color.GrayDark}
-              theme={{ roundness: 10 }}
+              theme={{
+                roundness: 10,
+                colors: {
+                  placeholder: Color.Text,
+                },
+              }}
               style={{ backgroundColor: "#fff", width: 335, height: 98 }}
               placeholder="Event Description"
               value={eventDescription}
