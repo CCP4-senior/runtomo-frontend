@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Avatar } from "react-native-paper";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
-import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
+import EventCreationNavigator from "./EventCreationNavigator";
 import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 
 const Stack = createStackNavigator();
@@ -37,7 +37,11 @@ const HomeNavigator = ({ navigation }) => {
         component={EventDetailsNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Create Event" component={EventCreationScreen} />
+      <Stack.Screen
+        name="Event Creation"
+        component={EventCreationNavigator}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Profile" component={UserProfileScreen} />
     </Stack.Navigator>
   );
