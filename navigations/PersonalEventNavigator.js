@@ -38,7 +38,7 @@ const PersonalEventNavigator = ({ navigation }) => {
         name="SoleMates"
         component={PersonalEventScreen}
         options={{
-          title: "Home",
+          title: "My Sessions",
           ...headerStyle,
           headerRight: () => (
             <TouchableOpacity
