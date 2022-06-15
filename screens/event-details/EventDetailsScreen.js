@@ -103,7 +103,7 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
             <Paragraph>{format(new Date(event.time), "p")}</Paragraph>
             <Paragraph>{event.ward}</Paragraph>
 
-            <View>
+            <View style={styles.section}>
               <Text style={styles.sectionTitle}>Description:</Text>
               <Text>
                 Lorem ipsum, or lipsum as it is sometimes known, is dummy text
@@ -111,12 +111,12 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
               </Text>
             </View>
 
-            <View>
+            <View style={styles.section}>
               <Text style={styles.sectionTitle}>Location:</Text>
               <Text>2-1 Yoyogikamizonocho, Shibuya City, Tokyo 151-0052</Text>
               <Image
                 source={require("../../assets/images/map.png")}
-                style={{ height: 280, width: 280 }}
+                style={{ height: 270, width: 285, alignSelf: "center" }}
               />
             </View>
           </Card.Content>
@@ -134,7 +134,7 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
             navigation.navigate("SoleMates");
           }}
           buttonColor={Color.PrimaryMain}
-          buttonText="Done"
+          buttonText="Join Event"
         />
       </View>
     </ScrollView>
@@ -153,21 +153,24 @@ const styles = StyleSheet.create({
   },
   card: {
     width: "90%",
-    height: 800,
+    height: 820,
     marginBottom: 20,
     marginTop: 10,
+    paddingBottom: 15,
   },
-  inputContainer: {
-    margin: 5,
+  section: {
+    marginTop: 18,
   },
-  description: {
-    height: 98,
-    borderRadius: 10,
+  sectionTitle: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontWeight: "700",
   },
-  pickerContainer: {
-    width: 335,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
+  // inputContainer: {
+  //   margin: 5,
+  // },
+  // description: {
+  //   height: 98,
+  //   borderRadius: 10,
+  // },
 });
