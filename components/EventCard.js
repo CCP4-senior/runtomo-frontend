@@ -1,24 +1,29 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { format } from "date-fns";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, selectEvent, isHomePageCard }) => {
   return (
-    <Card style={[styles.card]} theme={{ roundness: 10 }}>
-      <Card.Cover
-        source={{ uri: "https://picsum.photos/700" }}
-        style={{ height: 175 }}
-        theme={{ roundness: 10 }}
-      />
-      <Card.Content>
-        <Title>{event.eventTitle}</Title>
-        <Paragraph>{event.area}</Paragraph>
-        <Paragraph>
-          {format(new Date(event.date), "MMM d, yyyy")} at{" "}
-          {format(new Date(event.time), "p")}
-        </Paragraph>
-      </Card.Content>
+    <Card
+      style={[isHomePageCard ? styles.homePageCard : styles.card]}
+      theme={{ roundness: 10 }}
+    >
+      <TouchableOpacity onPress={() => selectEvent(event)}>
+        <Card.Cover
+          source={{ uri: "https://picsum.photos/700" }}
+          style={{ height: 175 }}
+          theme={{ roundness: 10 }}
+        />
+        <Card.Content>
+          <Title>{event.eventTitle || event.title}</Title>
+          <Paragraph>{event.area || event.ward}</Paragraph>
+          <Paragraph>
+            {format(new Date(event.date), "MMM d, yyyy")} at{" "}
+            {format(new Date(event.time), "p")}
+          </Paragraph>
+        </Card.Content>
+      </TouchableOpacity>
     </Card>
   );
 };
@@ -31,5 +36,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 270,
     // padding: 10,
+  },
+  homePageCard: {
+    width: "100%",
+    marginBottom: 20,
+    height: 270,
+    marginTop: 10,
   },
 });
