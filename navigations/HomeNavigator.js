@@ -68,6 +68,7 @@ const HomeNavigator = ({ navigation }) => {
       />
       <Stack.Screen
         name="Event Details"
+        title="Running Event"
         component={EventDetailsNavigator}
         options={{ headerShown: false }}
       />
