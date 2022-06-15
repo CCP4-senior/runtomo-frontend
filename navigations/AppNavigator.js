@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeNavigator from "../navigations/HomeNavigator";
-import PersonalEventScreen from "../screens/personal-event/PersonalEventScreen";
+import PersonalEventNavigator from "./PersonalEventNavigator";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Color from "../assets/themes/Color.js";
 
@@ -35,7 +35,13 @@ const AppNavigator = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen name="Your Session" component={PersonalEventScreen} />
+      <Tab.Screen
+        name="Your Session"
+        component={PersonalEventNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
