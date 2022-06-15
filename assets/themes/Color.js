@@ -10,9 +10,10 @@ const White = "#FFFFFF";
 const Black = "#000000";
 const Fill = "#F5F8FA";
 const Text = "#4E4B66";
+const HeaderTitle = "#455154";
 
 const Color = {
-  PrimaryMain,
+  PrimaryMain: PrimaryMain,
   PrimaryMedium,
   PrimaryLight,
   GrayLight,
@@ -22,6 +23,7 @@ const Color = {
   Black,
   Fill,
   Text,
+  HeaderTitle,
 };
 
 export default Color;
