@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
-import Colors from "../../assets/styles/colors.js";
+import Color from "../../assets/themes/Color.js"
 import LongButton from "../../components/LongButton.js";
 import EventCard from "../../components/EventCard.js";
 
@@ -25,7 +25,7 @@ const CreateConfirmationScreen = ({ navigation, newEvent }) => {
         buttonHandler={() => {
           Alert("Some edit page");
         }}
-        buttonColor={Colors.secondaryColor}
+        buttonColor={Color.GrayDark}
         buttonText="Edit Event"
         buttonTextColor="#555555"
       />
@@ -33,7 +33,7 @@ const CreateConfirmationScreen = ({ navigation, newEvent }) => {
         buttonHandler={() => {
           navigation.navigate("SoleMates");
         }}
-        buttonColor={Colors.primaryColor}
+        buttonColor={Color.PrimaryMain}
         buttonText="Done"
       />
     </View>
@@ -45,20 +45,19 @@ export default CreateConfirmationScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.fill,
+    backgroundColor: Color.fill,
     paddingTop: 10,
     alignItems: "center",
   },
   card: {
     width: "90%",
     marginBottom: 10,
-    // padding: 10,
     height: 170,
     padding: 10,
   },
   cardTopTitle: {
     textAlign: "center",
-    color: Colors.primaryColor,
+    color: Color.PrimaryMain,
     fontWeight: "bold",
     marginBottom: 10,
   },

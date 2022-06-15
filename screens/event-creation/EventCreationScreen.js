@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { TextInput, IconButton, Provider } from "react-native-paper";
-import Colors from "../../assets/styles/colors.js";
+import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
@@ -48,7 +48,6 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
 
     setNewEvent(event);
     navigation.navigate("Event Created");
-    setSubmitted(false);
   };
   const [submitted, setSubmitted] = useState(false);
 
@@ -138,14 +137,14 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
                   borderStyle: "dashed",
                   borderWidth: 1,
                   borderRadius: 10,
-                  borderColor: Colors.secondaryColor,
+                  borderColor: Color.GrayDark,
                   width: 80,
                   height: 80,
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <IconButton icon="camera" color={Colors.text} size={29} />
+                <IconButton icon="camera" color={Color.Text} size={29} />
                 <Text>Add Image</Text>
               </View>
             </View>
@@ -155,7 +154,7 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
               mutiline={true}
               mode="outlined"
               outlineColor="#fff"
-              activeOutlineColor={Colors.secondaryColor}
+              activeOutlineColor={Color.GrayDark}
               theme={{ roundness: 10 }}
               style={{ backgroundColor: "#fff", width: 335, height: 98 }}
               placeholder="Event Description"
@@ -165,7 +164,7 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
           </View>
           <LongButton
             buttonHandler={buttonHandler}
-            buttonColor={Colors.primaryColor}
+            buttonColor={Color.PrimaryMain}
             buttonText="Create Event"
           />
         </View>
@@ -179,7 +178,7 @@ export default EventCreationScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.fill,
+    backgroundColor: Color.Fill,
     padding: 10,
     alignItems: "center",
     overflow: "visible",

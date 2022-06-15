@@ -1,7 +1,6 @@
 import React from "react";
 import { TextInput } from "react-native-paper";
-// import Colors from "../assets/styles/colors";
-import Color from "../assets/themes/Color.js";
+import Color from "../assets/themes/Color";
 
 const CustomInput = ({
   placeholder,
@@ -15,22 +14,22 @@ const CustomInput = ({
   return (
     <TextInput
       mode="outlined"
-      outlineColor={!submitted ? "#fff" : value ? "#fff" : "red"}
+      outlineColor={!submitted ? "#fff" : value ? "#fff" : Color.PrimaryMain}
       activeOutlineColor={
         !submitted
-          ? Colors.secondaryColor
+          ? Color.GrayDark
           : value
-          ? Colors.secondaryColor
-          : "red"
+          ? Color.GrayLight
+          : Color.PrimaryMain
       }
       theme={{
         roundness: 25,
         colors: {
           placeholder: !submitted
-            ? Colors.text
+            ? Color.Text
             : value
-            ? Colors.secondaryColor
-            : "red",
+            ? Color.Text
+            : Color.PrimaryMain,
         },
       }}
       style={{ backgroundColor: "#fff", width: width || 335 }}
@@ -44,7 +43,7 @@ const CustomInput = ({
           ? placeholder
           : `${placeholder} Required`
       }
-      right={<TextInput.Icon name={icon ? icon : ""} color={Colors.text} />}
+      right={<TextInput.Icon name={icon ? icon : ""} color={Color.text} />}
     />
   );
 };

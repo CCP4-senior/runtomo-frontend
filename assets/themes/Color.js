@@ -4,6 +4,7 @@ const PrimaryLight = "#F5DADA";
 
 const GrayLight = "#FAFAFA";
 const GrayMedium = "#F0F2F5";
+const GrayDark = "#CDCDCD";
 
 const White = "#FFFFFF";
 const Black = "#000000";
@@ -16,6 +17,7 @@ const Color = {
   PrimaryLight,
   GrayLight,
   GrayMedium,
+  GrayDark,
   White,
   Black,
   Fill,

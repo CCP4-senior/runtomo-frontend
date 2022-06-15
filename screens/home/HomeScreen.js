@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Card, Title, Paragraph, IconButton } from "react-native-paper";
-import Colors from "../../assets/styles/colors.js";
+import Color from "../../assets/themes/Color.js";
 const HomeScreen = ({ navigation }) => {
   const mockdata = [
     {
@@ -57,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
           <IconButton
             icon="plus-circle"
             size={70}
-            color={Colors.primaryColor}
+            color={Color.PrimaryMain}
           ></IconButton>
         </TouchableOpacity>
       </View>
