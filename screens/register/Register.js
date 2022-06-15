@@ -11,12 +11,14 @@ import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 import Color from '../../assets/themes/Color';
 import { AuthContext } from '../../context/authcontext/AuthContext';
 import LongButton from '../../components/LongButton';
+import CustomInput from '../../components/CustomInput';
 
 const Register = ({ navigation }) => {
 	const { setUser } = useContext(AuthContext);
 
-	const [ text, onChangeText ] = React.useState('Useless Text');
-	const [ number, onChangeNumber ] = React.useState(null);
+	const [ email, setEmail ] = React.useState('');
+	const [ username, setUsername ] = React.useState('');
+	const [ password, setPassword ] = React.useState('');
 
 	const handleRegister = () => {
 		setUser('Wade');
@@ -28,38 +30,36 @@ const Register = ({ navigation }) => {
 			<Text style={styles.title}> Create a New Account </Text>
 
 			{/* Email input */}
-			<View>
+			<View style={styles.inputCard}>
 				<Text style={styles.text}>E-mail</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={onChangeNumber}
-					value={number}
-					placeholder="youremail@example.com"
-					keyboardType="numeric"
-				/>
+				<View>
+					<CustomInput
+						placeholder="email@example.com"
+						value={email}
+						changeHandler={(value) => setEmail(value)}
+					/>
+				</View>
 			</View>
 
 			{/* Username Input */}
-			<View>
+			<View style={styles.inputCard}>
 				<Text style={styles.text}>Username</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={onChangeNumber}
-					value={number}
-					placeholder="yourawesomeusername"
-					keyboardType="numeric"
-				/>
+				<View>
+					<CustomInput
+						placeholder="your username"
+						value={username}
+						changeHandler={(value) => setUsername(value)}
+					/>
+				</View>
 			</View>
 
 			{/* Password Input */}
-			<View>
+			<View style={styles.inputCard}>
 				<Text style={styles.text}>Password</Text>
-				<TextInput
-					style={styles.input}
-					onChangeText={onChangeNumber}
-					value={number}
-					placeholder="a strong password"
-					keyboardType="numeric"
+				<CustomInput
+					placeholder="use a strong password"
+					value={password}
+					changeHandler={(value) => setPassword(value)}
 				/>
 			</View>
 
@@ -90,14 +90,7 @@ const styles = StyleSheet.create({
 		fontWeight    : '700',
 		letterSpacing : 0.36
 	},
-	input  : {
-		height      : 40,
-		borderWidth : 1,
-		padding     : 10
+	inputCard  : {
+		marginVertical: 10
 	},
-	spacer : {},
-	text   : {},
-	button : {
-		color : 'red'
-	}
 });
