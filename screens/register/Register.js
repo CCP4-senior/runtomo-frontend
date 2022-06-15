@@ -6,13 +6,24 @@ import {
 	SafeAreaView,
 	Button
 } from 'react-native';
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 import Color from '../../assets/themes/Color';
+import { AuthContext } from "../../context/authcontext/AuthContext";
 
-const Register = () => {
+
+
+
+const Register = ( { navigation }) => {
+	const { setUser } = useContext(AuthContext);
+	
 	const [ text, onChangeText ] = React.useState('Useless Text');
 	const [ number, onChangeNumber ] = React.useState(null);
+	
+	const handleRegister = () => {
+		setUser("Wane");
+		navigation.navigate("Register", { screen: "Home" });
+	};
 
 	return (
 		<SafeAreaView style={styles.root}>
@@ -56,7 +67,11 @@ const Register = () => {
 
 			{/* Button */}
 			<View>
-				<Button title="Register" color={Color.PrimaryMain} />
+				<Button
+					title="Register"
+					color={Color.PrimaryMain}
+					onPress={handleRegister}
+				/>
 			</View>
 		</SafeAreaView>
 	);
