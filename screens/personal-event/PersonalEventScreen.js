@@ -5,8 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Text,
 } from "react-native";
-import { IconButton } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
@@ -44,22 +44,48 @@ const PersonalEventScreen = ({ navigation }) => {
     },
   ];
 
+  const listTab = [
+    {
+      status: "All",
+    },
+    {
+      status: "Owned",
+    },
+    {
+      status: "Joined",
+    },
+  ];
+
   const [mySessions, setMySessions] = useState([]);
   const [currentUser, setCurrentUser] = useState({ id: 2 });
+  const [status, setStatus] = useState("All");
 
   useEffect(() => {
     if (currentUser) {
-      handleFilter();
+      handleFilter(status);
     }
   }, []);
 
-  const handleFilter = () => {
+  const handleFilter = (status) => {
+    setStatus(status);
+
     const userSessions = mockdata.filter((session) => {
-      if (session.owner_id === 2) {
-        return session;
-      }
-      if (session.participants.includes(2)) {
-        return session;
+      switch (status) {
+        case "Owned":
+          if (session.owner_id === 2) {
+            return session;
+          }
+          break;
+        case "Joined":
+          if (session.participants.includes(2)) {
+            return session;
+          }
+          break;
+        default:
+          if (session.owner_id === 2 || session.participants.includes(2)) {
+            return session;
+          }
+          break;
       }
     });
     setMySessions(userSessions);
@@ -78,6 +104,21 @@ const PersonalEventScreen = ({ navigation }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
+          <View style={styles.listTab}>
+            {listTab.map((tab, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.btnTab,
+                  tab.status === status && styles.btnActive,
+                ]}
+                onPress={() => handleFilter(tab.status)}
+              >
+                <Text style={styles.textTab}>{tab.status}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
           <View style={styles.eventCardWrapper}>
             {mySessions.map((session, id) => {
               return (
@@ -102,7 +143,7 @@ export default PersonalEventScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: Color.White,
     padding: 10,
   },
   titleStyle: {
@@ -133,5 +174,22 @@ const styles = StyleSheet.create({
   eventCardWrapper: {
     alignItems: "center",
     paddingHorizontal: 10,
+  },
+  listTab: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 10,
+  },
+  btnTab: {
+    backgroundColor: Color.GrayMedium,
+    padding: 10,
+    width: 100,
+  },
+  btnActive: {
+    backgroundColor: Color.GrayDark,
+  },
+  textTab: {
+    textAlign: "center",
+    fontWeight: "500",
   },
 });
