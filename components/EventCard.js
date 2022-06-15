@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { format } from "date-fns";
 
@@ -12,8 +18,11 @@ const EventCard = ({ event, selectEvent, isHomePageCard }) => {
       <TouchableOpacity onPress={() => selectEvent(event)}>
         <Card.Cover
           source={{ uri: "https://picsum.photos/700" }}
-          style={{ height: 175 }}
-          theme={{ roundness: 10 }}
+          style={{
+            height: 175,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
+          }}
         />
         <Card.Content>
           <Title>{event.eventTitle || event.title}</Title>
@@ -35,7 +44,6 @@ const styles = StyleSheet.create({
     width: "90%",
     marginBottom: 10,
     height: 270,
-    // padding: 10,
   },
   homePageCard: {
     width: "100%",
