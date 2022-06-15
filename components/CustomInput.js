@@ -1,6 +1,7 @@
 import React from "react";
 import { TextInput } from "react-native-paper";
-import Colors from "../assets/styles/colors";
+// import Colors from "../assets/styles/colors";
+import Color from "../assets/themes/Color.js";
 
 const CustomInput = ({
   placeholder,
