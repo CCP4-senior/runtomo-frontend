@@ -1,14 +1,5 @@
-import React, { useState } from "react";
-import {
-  Text,
-  View,
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  useWindowDimensions,
-  ImageBackground,
-} from "react-native";
+import React, { useState, useContext } from "react";
+import { View, StyleSheet } from "react-native";
 import {
   Card,
   Title,
@@ -20,11 +11,13 @@ import {
   Dialog,
   Provider,
 } from "react-native-paper";
+import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import Color from "../../assets/themes/Color.js";
 
 const SettingScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [dialogType, setDialogType] = useState("confirmation");
+  const { user, setUser } = useContext(AuthContext);
 
   const showDialog = () => setVisible(true);
   const hideDialog = () => {
@@ -36,7 +29,10 @@ const SettingScreen = ({ navigation }) => {
   };
   const deleteAccount = () => {
     setDialogType("deleted");
-    // Some kind of logic to send user to authSelection page
+    setUser("");
+  };
+  const signOut = () => {
+    setUser("");
   };
 
   return (
@@ -91,7 +87,7 @@ const SettingScreen = ({ navigation }) => {
                 />
               </View>
               <View style={styles.accountDetails}>
-                <Title style={styles.cardTopTitle}>Kumiko Sato</Title>
+                <Title style={styles.cardTopTitle}>Wade Warren</Title>
                 <Paragraph style={styles.paragraph}>
                   example@example.com
                 </Paragraph>
@@ -136,6 +132,7 @@ const SettingScreen = ({ navigation }) => {
             <List.Item
               title="Sign Out"
               left={(props) => <List.Icon {...props} icon="logout-variant" />}
+              onPress={signOut}
             />
           </Card.Content>
         </Card>
