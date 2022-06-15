@@ -4,13 +4,29 @@ import AuthNavigator from "./navigations/AuthNavigator";
 import React from "react";
 import { AuthProvider } from "./context/authcontext/AuthContext";
 
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#CDCDCD",
+    accent: "#ff3131",
+    text: "#4E4B66",
+    placeholder: "#4E4B66",
+  },
+};
+
 export default function App() {
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        <AuthNavigator />
-      </NavigationContainer>
-    </AuthProvider>
+    <PaperProvider theme={theme}>
+      <AuthProvider>
+        <NavigationContainer>
+          <AuthNavigator />
+        </NavigationContainer>
+      </AuthProvider>
+    </PaperProvider>
   );
 }
 
