@@ -52,7 +52,7 @@ const PersonalEventScreen = ({ navigation }) => {
       status: "All",
     },
     {
-      status: "Owned",
+      status: "Created",
     },
     {
       status: "Joined",
@@ -74,7 +74,7 @@ const PersonalEventScreen = ({ navigation }) => {
 
     const userSessions = mockdata.filter((session) => {
       switch (status) {
-        case "Owned":
+        case "Created":
           if (session.owner_id === 2) {
             return session;
           }
