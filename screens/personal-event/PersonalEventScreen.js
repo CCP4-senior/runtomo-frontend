@@ -15,32 +15,35 @@ const PersonalEventScreen = ({ navigation }) => {
     {
       id: 1,
       title: "Imperial palace run",
-      ward: "Shibuya",
-      date: "2022-07-17T14:02:55.300Z",
-      time: "2022-07-17T14:02:55.300Z",
-      user: { id: 1, username: "Kumiko" },
+      ward: "Chiyoda",
+      date: "2022-09-10T14:02:55.300Z",
+      time: "2022-09-10T14:02:55.300Z",
+      user: { id: 1, username: "KumikoKM" },
       participants: [2],
       owner_id: 1,
+      hasJoined: true,
     },
     {
       id: 2,
-      title: "Tama river run",
+      title: "Yoyogi park run",
       ward: "Shibuya",
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
-      user: { id: 2, username: "Wade" },
+      user: { id: 2, username: "WayneWadeRuns" },
       participants: [],
       owner_id: 2,
+      hasJoined: true,
     },
     {
       id: 3,
       title: "Kanda river run",
       ward: "Shinjuku",
-      date: "2022-09-02T12:03:55.300Z",
-      time: "2022-09-02T12:03:55.300Z",
-      user: { id: 3, username: "Kei" },
+      date: "2022-09-15T12:03:55.300Z",
+      time: "2022-09-15T12:03:55.300Z",
+      user: { id: 3, username: "Kei666" },
       participants: [],
       owner_id: 3,
+      hasJoined: false,
     },
   ];
 
@@ -121,7 +124,7 @@ const PersonalEventScreen = ({ navigation }) => {
                 <EventCard
                   isHomePageCard={true}
                   style={styles.eventCard}
-                  selectEvent={selectEvent}
+                  handlePress={() => selectEvent(session)}
                   key={id}
                   event={session}
                 />
