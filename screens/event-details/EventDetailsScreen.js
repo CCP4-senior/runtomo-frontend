@@ -13,10 +13,6 @@ import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 
 const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
-  console.log("JESUS");
-  console.log("ED", eventData)
-  console.log("data", data)
-  
   const openCreatorProfile = () => {
     navigation.navigate("Creator Profile");
   };
