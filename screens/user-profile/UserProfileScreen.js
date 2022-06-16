@@ -16,8 +16,8 @@ const UserProfileScreen = ({ navigation }) => {
 
   const userData = {
     username: "WayneWadeRuns",
-    age: 28,
-    runnerType: ["casual", "social"],
+    age: 34,
+    runnerType: ["beginner", "social"],
   };
 
   return (
