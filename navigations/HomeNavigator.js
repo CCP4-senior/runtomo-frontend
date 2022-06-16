@@ -13,11 +13,6 @@ import Color from "../assets/themes/Color.js";
 const Stack = createStackNavigator();
 
 const HomeNavigator = ({ navigation }) => {
-  // const openProfileScreen = (eventData) => {
-  //   navigation.navigate("Profile", {
-  //     eventData: eventData,
-  //   });
-  // };
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -25,7 +20,7 @@ const HomeNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="SoleMates"
+        name="Home"
         component={HomeScreen}
         options={{
           title: "Home",

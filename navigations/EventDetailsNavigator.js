@@ -8,7 +8,7 @@ import HeaderStyle from "../assets/themes/HeaderStyle.js";
 const Stack = createStackNavigator();
 
 const EventDetailsNavigator = ({ route }) => {
-  const { eventData, data, setData } = route.params;
+  const { eventData, data, setData, id } = route.params;
   return (
     <Stack.Navigator>
       <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
@@ -18,6 +18,7 @@ const EventDetailsNavigator = ({ route }) => {
             eventData={eventData}
             data={data}
             setData={setData}
+            id={id}
           />
         )}
       </Stack.Screen>

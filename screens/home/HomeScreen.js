@@ -92,12 +92,12 @@ const HomeScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.eventCardWrapper}>
-            {data.map((session, id) => {
+            {data.map((session) => {
               return (
                 <EventCard
                   isHomePageCard={true}
                   style={styles.eventCard}
-                  key={id}
+                  key={session.id}
                   event={session}
                   handlePress={() => selectEvent(session)}
                 />
