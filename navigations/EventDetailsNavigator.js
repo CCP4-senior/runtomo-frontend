@@ -9,6 +9,7 @@ const Stack = createStackNavigator();
 
 const EventDetailsNavigator = ({ route }) => {
   const { eventData, data, setData } = route.params;
+  const user = eventData.user;
   return (
     <Stack.Navigator>
       <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
@@ -21,7 +22,9 @@ const EventDetailsNavigator = ({ route }) => {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="Creator Profile" component={PublicProfileScreen} />
+      <Stack.Screen name="Creator Profile" options={{ ...HeaderStyle }}>
+        {(props) => <PublicProfileScreen {...props} user={user} />}
+      </Stack.Screen>
       <Stack.Screen name="Event Joined" options={{ headerShown: false }}>
         {(props) => (
           <ConfirmationScreen {...props} event={eventData} actionType="join" />

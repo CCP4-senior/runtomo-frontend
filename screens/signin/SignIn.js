@@ -17,7 +17,7 @@ const SignIn = () => {
 
   const handleSignIn = () => {
     if (true) {
-      setUser("Wane");
+      setUser({ id: 2, username: "WayneWadeRuns" });
       navigation.navigate("SignIn", { screen: "Home" });
     } else {
       setUser("");
