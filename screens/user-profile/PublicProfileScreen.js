@@ -1,23 +1,23 @@
-import React from 'react';
+import React from "react";
 import {
-	Text,
-	View,
-	SafeAreaView,
-	StyleSheet,
-	ImageBackground,
-	Image,
-	useWindowDimensions
-} from 'react-native';
-import { Card, Title, List, Button } from 'react-native-paper';
+  Text,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  useWindowDimensions,
+} from "react-native";
+import { Card, Title, List, Button } from "react-native-paper";
 
-const PublicProfileScreen = ({ navigation }) => {
-	const { height } = useWindowDimensions();
+const PublicProfileScreen = ({ navigation, user }) => {
+  const { height } = useWindowDimensions();
 
-	const userData = {
-		username   : 'KumikoKM',
-		age        : 28,
-		runnerType : [ 'avid', 'social' ]
-	};
+  const userData = {
+    username: user.username,
+    age: 28,
+    runnerType: ["avid", "social"],
+  };
 
   return (
     <SafeAreaView style={styles.root}>
@@ -67,67 +67,66 @@ const PublicProfileScreen = ({ navigation }) => {
   );
 };
 
-
 export default PublicProfileScreen;
 
 const styles = StyleSheet.create({
-	root              : {
-		flex : 1
-	},
-	imageContainer    : {
-		alignItems : 'center'
-	},
-	backgroundImage   : {
-		width  : '100%',
-		height : 250
-	},
-	profilePicture    : {
-		width        : '48%',
-		maxHeight    : 200,
-		borderRadius : 10,
-		borderWidth  : 2,
-		borderColor  : 'black',
-		alignSelf    : 'center',
-		marginTop    : 'auto',
-		marginBottom : 'auto'
-	},
-	userInfoContainer : {
-		flex    : 2,
-		padding : 20
-	},
-	userFullName      : {
-		fontSize   : 24,
-		fontWeight : 'bold',
-		alignSelf  : 'center'
-	},
-	userInfoHeader    : {
-		flexDirection : 'row',
-		alignSelf     : 'center',
-		marginBottom  : 10
-	},
-	tagsContainer     : {
-		flexDirection : 'row',
-		alignItems    : 'center'
-	},
-	tags              : {
-		backgroundColor  : 'rgba(233, 4, 4, 0.9)',
-		marginHorizontal : 4,
-		borderRadius     : 6,
-		borderColor      : 'red',
-		borderWidth      : 0.2,
-		overflow         : 'hidden',
-		padding          : 3,
-		color            : 'white',
-		fontWeight       : 'bold'
-	},
-	userDataWrapper   : {
-		backgroundColor : '#F5F5F5',
-		borderRadius    : 20,
-		padding         : 20,
-		width           : '100%',
-		marginBottom    : 10
-	},
-	userDataFont      : {
-		fontSize : 16
-	}
+  root: {
+    flex: 1,
+  },
+  imageContainer: {
+    alignItems: "center",
+  },
+  backgroundImage: {
+    width: "100%",
+    height: 250,
+  },
+  profilePicture: {
+    width: "48%",
+    maxHeight: 200,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "black",
+    alignSelf: "center",
+    marginTop: "auto",
+    marginBottom: "auto",
+  },
+  userInfoContainer: {
+    flex: 2,
+    padding: 20,
+  },
+  userFullName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    alignSelf: "center",
+  },
+  userInfoHeader: {
+    flexDirection: "row",
+    alignSelf: "center",
+    marginBottom: 10,
+  },
+  tagsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  tags: {
+    backgroundColor: "rgba(233, 4, 4, 0.9)",
+    marginHorizontal: 4,
+    borderRadius: 6,
+    borderColor: "red",
+    borderWidth: 0.2,
+    overflow: "hidden",
+    padding: 3,
+    color: "white",
+    fontWeight: "bold",
+  },
+  userDataWrapper: {
+    backgroundColor: "#F5F5F5",
+    borderRadius: 20,
+    padding: 20,
+    width: "100%",
+    marginBottom: 10,
+  },
+  userDataFont: {
+    fontSize: 16,
+  },
 });

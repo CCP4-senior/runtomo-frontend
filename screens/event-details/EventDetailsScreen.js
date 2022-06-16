@@ -27,7 +27,9 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
   const openCreatorProfile = () => {
-    navigation.navigate("Creator Profile");
+    if (eventData.user.id !== user.id) navigation.navigate("Creator Profile");
+    // To avoid showing femal picture for Wade (current user). To be removed later
+    if (eventData.user.id === user.id) navigation.navigate("Profile");
   };
   const joinEvent = () => {
     let newData = data.map((event) => {
@@ -108,7 +110,11 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
                 onPress={openCreatorProfile}
                 style={[styles.listContainer]}
               >
-                <Avatar.Icon size={40} icon="account" />
+                <Avatar.Icon
+                  size={40}
+                  icon="account"
+                  style={{ backgroundColor: Color.GrayDark }}
+                />
                 <Text
                   style={{
                     fontSize: 18,
