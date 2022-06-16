@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
       ward: "Chiyoda",
       date: "2022-09-10T14:02:55.300Z",
       time: "2022-09-10T14:02:55.300Z",
-      user: { id: 1, username: "Kumiko" },
+      user: { id: 1, username: "KumikoKM" },
     },
     {
       id: 2,

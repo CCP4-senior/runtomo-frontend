@@ -55,10 +55,11 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
             </Text>
           </View>
           <Card.Content style={{ padding: 13 }}>
-            <View style={[styles.listContainer]}>
-              <TouchableOpacity onPress={openCreatorProfile}>
-                <Avatar.Icon size={40} icon="account" />
-              </TouchableOpacity>
+            <TouchableOpacity
+              onPress={openCreatorProfile}
+              style={[styles.listContainer]}
+            >
+              <Avatar.Icon size={40} icon="account" />
               <Text
                 style={{
                   fontSize: 18,
@@ -69,7 +70,7 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
               >
                 {eventData.user.username}
               </Text>
-            </View>
+            </TouchableOpacity>
             <Title
               style={{
                 fontSize: 25,
