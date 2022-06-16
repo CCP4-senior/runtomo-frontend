@@ -39,31 +39,31 @@ const PersonalEventNavigator = ({ navigation }) => {
         options={{
           title: "My Sessions",
           ...headerStyle,
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => openProfileScreen()}
-              style={[styles.iconContainer, styles.avatar]}
-            >
-              <Avatar.Icon icon="account" size={39} title="Info" />
-            </TouchableOpacity>
-          ),
-          headerLeft: () => (
-            <TouchableOpacity
-              style={[styles.iconContainer, styles.menu]}
-              onPress={openSetting}
-            >
-              <View
-                style={{
-                  width: 35,
-                  height: 35,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <IconButton icon="menu" color="grey" size={35} />
-              </View>
-            </TouchableOpacity>
-          ),
+          // headerRight: () => (
+          //   <TouchableOpacity
+          //     onPress={() => openProfileScreen()}
+          //     style={[styles.iconContainer, styles.avatar]}
+          //   >
+          //     <Avatar.Icon icon="account" size={39} title="Info" />
+          //   </TouchableOpacity>
+          // ),
+          // headerLeft: () => (
+          //   <TouchableOpacity
+          //     style={[styles.iconContainer, styles.menu]}
+          //     onPress={openSetting}
+          //   >
+          //     <View
+          //       style={{
+          //         width: 35,
+          //         height: 35,
+          //         alignItems: "center",
+          //         justifyContent: "center",
+          //       }}
+          //     >
+          //       <IconButton icon="menu" color="grey" size={35} />
+          //     </View>
+          //   </TouchableOpacity>
+          // ),
         }}
       />
       <Stack.Screen

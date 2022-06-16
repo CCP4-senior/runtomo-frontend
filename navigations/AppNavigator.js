@@ -46,7 +46,13 @@ const AppNavigator = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen name="My Sessions" component={PersonalEventNavigator} />
+      <Tab.Screen
+        name="My Sessions"
+        component={PersonalEventNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
