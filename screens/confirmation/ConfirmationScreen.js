@@ -1,6 +1,6 @@
 import React from "react";
-import { EdgeInsetsPropType, SafeAreaView, StyleSheet } from "react-native";
-import { Card, Paragraph, Title } from "react-native-paper";
+import { View, SafeAreaView, StyleSheet } from "react-native";
+import { Card, Paragraph, Title, TouchableOpacity } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import EventCard from "../../components/EventCard.js";
@@ -8,14 +8,14 @@ import EventCard from "../../components/EventCard.js";
 const ConfirmationScreen = ({ navigation, event, actionType }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <Card
+      <View
         style={[
           styles.card,
           actionType === "join" && styles.joinCard,
           styles.cardTop,
         ]}
         theme={{ roundness: 10 }}
-        onPress={() => {}}
+        accessible={true}
       >
         <Card.Content>
           {actionType === "create" && (
@@ -45,7 +45,7 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
             </>
           )}
         </Card.Content>
-      </Card>
+      </View>
 
       <EventCard event={event} />
       {actionType === "create" && (
@@ -82,8 +82,10 @@ const styles = StyleSheet.create({
     width: "90%",
     marginBottom: 10,
     height: 170,
-    padding: 10,
+    padding: 20,
     marginTop: 20,
+    backgroundColor: Color.White,
+    borderRadius: 10,
   },
   joinCard: {
     marginTop: 50,
