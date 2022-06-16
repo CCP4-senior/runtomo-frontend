@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { Card, Title, List, Button } from "react-native-paper";
+import Color from "../../assets/themes/Color";
 
 const PublicProfileScreen = ({ navigation, user }) => {
   const { height } = useWindowDimensions();
@@ -52,7 +53,7 @@ const PublicProfileScreen = ({ navigation, user }) => {
           <Text style={styles.userDataFont}>Runner Type</Text>
           {userData.runnerType.map((type, index) => {
             return (
-              <Text style={[styles.tags, styles.userDataFont]} key={index}>
+              <Text style={[styles.tags]} key={index}>
                 {" "}
                 {type}{" "}
               </Text>
@@ -81,11 +82,12 @@ const styles = StyleSheet.create({
     height: 250,
   },
   profilePicture: {
-    width: "48%",
+    width: 200,
     maxHeight: 200,
+    borderRadius: 200 / 2,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: Color.Black,
     alignSelf: "center",
     marginTop: "auto",
     marginBottom: "auto",
@@ -109,15 +111,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tags: {
-    backgroundColor: "rgba(233, 4, 4, 0.9)",
+    backgroundColor: Color.PrimaryMain,
     marginHorizontal: 4,
     borderRadius: 6,
-    borderColor: "red",
+    borderColor: Color.PrimaryMain,
     borderWidth: 0.2,
     overflow: "hidden",
     padding: 3,
-    color: "white",
+    color: Color.White,
     fontWeight: "bold",
+    fontSize: 16,
   },
   userDataWrapper: {
     backgroundColor: "#F5F5F5",
@@ -128,5 +131,7 @@ const styles = StyleSheet.create({
   },
   userDataFont: {
     fontSize: 16,
+    color: Color.Black,
+    fontWeight: "500",
   },
 });
