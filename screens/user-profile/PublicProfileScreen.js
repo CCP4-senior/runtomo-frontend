@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -13,11 +13,28 @@ import Color from "../../assets/themes/Color";
 
 const PublicProfileScreen = ({ navigation, user }) => {
   const { height } = useWindowDimensions();
+  const [imageUrl, setImageUrl] = useState("wade.png");
 
   const userData = {
     username: user.username,
-    age: 28,
+    age: user.age,
     runnerType: ["avid", "social"],
+  };
+
+  useEffect(() => {
+    handleUserUrl(user);
+  }, []);
+
+  const handleUserUrl = (user) => {
+    let url = "";
+    if (user.username === "KumikoKM") {
+      url += "kumiko.png";
+    } else if (user.username === "WayneWadeRuns") {
+      url += "wade.png";
+    } else {
+      url += "kei.png";
+    }
+    setImageUrl(url);
   };
 
   return (
@@ -32,9 +49,11 @@ const PublicProfileScreen = ({ navigation, user }) => {
         >
           <Image
             style={[styles.profilePicture, { height: height * 0.3 }]}
-            source={{
-              uri: "https://xsgames.co/randomusers/avatar.php?g=female",
-            }}
+            source={
+              user.username === "KumikoKM"
+                ? require("../../assets/images/demo/kumiko.png")
+                : require("../../assets/images/demo/kei.png")
+            }
             resizeMode="contain"
           />
         </ImageBackground>
@@ -85,12 +104,12 @@ const styles = StyleSheet.create({
     width: 200,
     maxHeight: 200,
     borderRadius: 200 / 2,
-    borderRadius: 10,
     borderWidth: 2,
     borderColor: Color.Black,
     alignSelf: "center",
     marginTop: "auto",
     marginBottom: "auto",
+    overflow: "hidden",
   },
   userInfoContainer: {
     flex: 2,

@@ -36,7 +36,6 @@ const UserProfileScreen = ({ navigation }) => {
             style={[styles.profilePicture, { height: height * 0.3 }]}
             source={require("../../assets/images/demo/wade.png")}
             resizeMode="contain"
-            onLoad={() => console.log("")}
           />
         </ImageBackground>
       </View>
