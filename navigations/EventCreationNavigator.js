@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
 import ConfirmationScreen from "../screens/confirmation/ConfirmationScreen";
+import HeaderStyle from "../assets/themes/HeaderStyle";
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,7 @@ const EventCreationNavigator = () => {
   const [newEvent, setNewEvent] = useState(initialEvent);
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Create Event">
+      <Stack.Screen name="Create Event" options={{ ...HeaderStyle }}>
         {(props) => (
           <EventCreationScreen
             {...props}
@@ -27,7 +28,7 @@ const EventCreationNavigator = () => {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="Event Created">
+      <Stack.Screen name="Event Created" options={{ ...HeaderStyle }}>
         {(props) => (
           <ConfirmationScreen
             {...props}

@@ -105,21 +105,6 @@ const HomeScreen = ({ navigation }) => {
             })}
           </View>
         </ScrollView>
-        {/* <Button
-          style={styles.createButton}
-          mode="contained"
-          color={Color.PrimaryMain}
-          uppercase={false}
-          labelStyle={{
-            lineHeight: 30,
-            letterSpacing: 0.1,
-            fontWeight: "800",
-            fontSize: 15,
-          }}
-          onPress={openEventCreation}
-        >
-          Create Event
-        </Button> */}
       </View>
     </SafeAreaView>
   );

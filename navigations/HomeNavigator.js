@@ -13,24 +13,14 @@ import Color from "../assets/themes/Color.js";
 const Stack = createStackNavigator();
 
 const HomeNavigator = ({ navigation }) => {
-  const openProfileScreen = (eventData) => {
-    navigation.navigate("Profile", {
-      eventData: eventData,
-    });
-  };
+  // const openProfileScreen = (eventData) => {
+  //   navigation.navigate("Profile", {
+  //     eventData: eventData,
+  //   });
+  // };
   const openSetting = () => {
     navigation.navigate("Setting");
   };
-  // const headerStyle = {
-  //   headerStyle: {
-  //     backgroundColor: Color.Fill,
-  //     height: 110,
-  //   },
-  //   headerTintColor: Color.HeaderTitle,
-  //   headerTitleStyle: {
-  //     fontWeight: "bold",
-  //   },
-  // };
 
   return (
     <Stack.Navigator>
@@ -42,10 +32,10 @@ const HomeNavigator = ({ navigation }) => {
           ...HeaderStyle,
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => openProfileScreen()}
               style={[styles.iconContainer, styles.avatar]}
+              onPress={() => alert("message icon is pressed!")}
             >
-              <Avatar.Icon icon="account" size={39} title="Info" />
+              <IconButton icon="forum-outline" size={32} color="grey" />
             </TouchableOpacity>
           ),
           headerLeft: () => (
@@ -96,7 +86,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   avatar: {
-    paddingVertical: 6,
+    // paddingVertical: 1,
   },
   menu: {
     paddingVertical: 11,

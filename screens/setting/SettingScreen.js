@@ -35,6 +35,12 @@ const SettingScreen = ({ navigation }) => {
     setUser("");
   };
 
+  const openProfileScreen = (eventData) => {
+    navigation.navigate("Profile", {
+      eventData: eventData,
+    });
+  };
+
   return (
     <Provider>
       <View style={styles.container}>
@@ -66,7 +72,11 @@ const SettingScreen = ({ navigation }) => {
             </Dialog.Actions>
           </Dialog>
         </Portal>
-        <Card style={[styles.card, styles.cardTop]} theme={{ roundness: 20 }}>
+        <Card
+          style={[styles.card, styles.cardTop]}
+          theme={{ roundness: 20 }}
+          onPress={() => openProfileScreen()}
+        >
           <Card.Content>
             <View style={styles.cardContent}>
               <View
