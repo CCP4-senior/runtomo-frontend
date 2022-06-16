@@ -9,9 +9,9 @@ import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent }) => {
-  const [eventTitle, setEventTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
-  const [area, setArea] = useState("");
+  const [ward, setWard] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [runningDuration, setRunningDuration] = useState("");
@@ -25,9 +25,9 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
   const [eventDescription, setEventDescription] = useState("");
   const buttonHandler = (data) => {
     const requiredFields = [
-      eventTitle,
+      title,
       meetingPoint,
-      area,
+      ward,
       date,
       time,
       runningDuration,
@@ -37,15 +37,14 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
       return;
     }
     const event = {
-      eventTitle,
+      title,
       meetingPoint,
-      area,
+      ward,
       date,
       time,
       runningDuration,
       eventDescription,
     };
-
     setNewEvent(event);
     navigation.navigate("Event Created");
   };
@@ -56,7 +55,7 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
       <AreaModal
         modalVisible={areaModalVisible}
         hideModal={hideModal}
-        setArea={setArea}
+        setWard={setWard}
       />
       <DurationModal
         modalVisible={durationModalVisible}
@@ -68,8 +67,8 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Event Title"
-              value={eventTitle}
-              changeHandler={(text) => setEventTitle(text)}
+              value={title}
+              changeHandler={(text) => setTitle(text)}
               submitted={submitted}
             />
           </View>
@@ -77,7 +76,7 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
             <CustomInput
               placeholder="Area"
               onFocus={() => setAreaModalVisible(true)}
-              value={area}
+              value={ward}
               submitted={submitted}
             />
           </View>

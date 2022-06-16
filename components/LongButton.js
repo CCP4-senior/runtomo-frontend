@@ -19,9 +19,10 @@ const LongButton = ({
         marginTop: 20,
       }}
       labelStyle={{
-        fontWeight: "bold",
+        fontWeight: "700",
         fontSize: 20,
         color: buttonTextColor || "#fff",
+        letterSpacing: 0.5,
       }}
       contentStyle={{
         padding: 7,

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
-import CreateConfirmationScreen from "../screens/event-creation/CreateConfirmationScreen";
+import ConfirmationScreen from "../screens/confirmation/ConfirmationScreen";
 
 const Stack = createStackNavigator();
 
 const EventCreationNavigator = () => {
   const initialEvent = Object.freeze({
-    eventTitle: "",
+    title: "",
     meetingPoint: "",
-    area: "",
+    ward: "",
     date: "",
     time: "",
     runningDuration: "",
@@ -29,10 +29,11 @@ const EventCreationNavigator = () => {
       </Stack.Screen>
       <Stack.Screen name="Event Created">
         {(props) => (
-          <CreateConfirmationScreen
+          <ConfirmationScreen
             {...props}
-            newEvent={newEvent}
+            event={newEvent}
             setNewEvent={setNewEvent}
+            actionType="create"
           />
         )}
       </Stack.Screen>
