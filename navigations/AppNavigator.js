@@ -18,7 +18,7 @@ const AppNavigator = () => {
           if (route.name === "Home Page") {
             iconName = "ios-home";
           }
-          if (route.name === "Your Session") {
+          if (route.name === "My Sessions") {
             iconName = "people";
           }
 
@@ -36,7 +36,7 @@ const AppNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Your Session"
+        name="My Sessions"
         component={PersonalEventNavigator}
         options={{
           headerShown: false,
