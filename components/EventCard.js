@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginBottom: 10,
     height: 270,
+    marginTop: 10,
   },
   homePageCard: {
     width: "100%",

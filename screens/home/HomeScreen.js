@@ -7,15 +7,9 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import {
-  Card,
-  Title,
-  Paragraph,
-  IconButton,
-  FAB,
-  Button,
-} from "react-native-paper";
+import { Button, TextInput, IconButton, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
@@ -56,6 +50,36 @@ const HomeScreen = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          mode="outlined"
+          outlineColor="#F4F6F6"
+          activeOutlineColor={Color.GrayDark}
+          placeholder="Search"
+          style={styles.searchbar}
+          left={<TextInput.Icon name="magnify" style={{ marginTop: 15 }} />}
+          theme={{ roundness: 8 }}
+        />
+      </View>
+      <View style={styles.topContainer}>
+        <TouchableOpacity onPress={() => Alert("Filters button pressed!")}>
+          <List.Item
+            style={styles.topElement}
+            title="SORT BY"
+            right={(props) => <List.Icon {...props} icon="text" />}
+            titleStyle={{ fontSize: 14, fontWeight: "700" }}
+            onPress={() => alert("Sort by button pressed!")}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
+          <List.Item
+            style={styles.topElement}
+            title="FILTERS"
+            right={(props) => <List.Icon {...props} icon="tune" />}
+            titleStyle={{ fontSize: 14, fontWeight: "700" }}
+          />
+        </TouchableOpacity>
+      </View>
       <View style={styles.container}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
@@ -100,7 +124,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: Color.Fill,
     padding: 10,
   },
   titleStyle: {
@@ -139,5 +163,29 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: 120,
     height: 50,
+  },
+  searchContainer: {
+    height: 70,
+    width: "100%",
+    backgroundColor: Color.White,
+  },
+  searchbar: {
+    borderRadius: 8,
+    backgroundColor: "#F4F6F6",
+    height: 40,
+    marginHorizontal: 15,
+    marginTop: 8,
+  },
+  topContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  topElement: {
+    paddingTop: 1,
+    margin: 8,
+    width: 170,
+    height: 40,
+    backgroundColor: Color.GrayDark,
+    borderRadius: 30,
   },
 });

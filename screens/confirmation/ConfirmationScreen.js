@@ -74,7 +74,7 @@ export default ConfirmationScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.fill,
+    backgroundColor: Color.Fill,
     paddingTop: 10,
     alignItems: "center",
   },
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 170,
     padding: 10,
+    marginTop: 20,
   },
   joinCard: {
     marginTop: 50,
