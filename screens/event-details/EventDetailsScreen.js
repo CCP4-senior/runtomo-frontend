@@ -54,8 +54,6 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
   };
 
   const event = eventData;
-  console.log(event.user.id);
-  console.log(user.id);
 
   return (
     <Provider>
