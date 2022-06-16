@@ -161,13 +161,16 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
             buttonText="Join Event"
           />
         )}
-        <Text>You've already joined the event</Text>
+
         {event.hasJoined && (
-          <LongButton
-            disabled={true}
-            buttonColor={Color.GrayDark}
-            buttonText="Join Event"
-          />
+          <>
+            <Text>You've already joined the event</Text>
+            <LongButton
+              disabled={true}
+              buttonColor={Color.GrayDark}
+              buttonText="Join Event"
+            />
+          </>
         )}
       </View>
     </ScrollView>
