@@ -37,7 +37,7 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
           {actionType === "join" && (
             <>
               <Paragraph style={styles.paragraph}>
-                You joined Kumiko's event!
+                You joined {event.user.username}'s event!
               </Paragraph>
               <Paragraph style={styles.paragraph}>
                 Don't forget to share with everyone. Thank you!
@@ -47,11 +47,18 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
         </Card.Content>
       </View>
 
-      <EventCard event={event} />
+      <EventCard
+        event={event}
+        handlePress={() =>
+          navigation.navigate("Running Event", {
+            eventData: event,
+          })
+        }
+      />
       {actionType === "create" && (
         <LongButton
           buttonHandler={() => {
-            Alert("Some edit page");
+            alert("Some edit page");
           }}
           buttonColor={Color.GrayDark}
           buttonText="Edit Event"

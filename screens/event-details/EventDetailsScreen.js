@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ScrollView,
   Text,
@@ -12,11 +12,13 @@ import { format } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 
-const EventDetailsScreen = ({ navigation, eventData }) => {
+const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
   const openCreatorProfile = () => {
     navigation.navigate("Creator Profile");
   };
+
   const event = eventData;
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -68,7 +70,7 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
                   marginLeft: 10,
                 }}
               >
-                {eventData.user.username}
+                {event.user.username}
               </Text>
             </TouchableOpacity>
             <Title
@@ -145,14 +147,28 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
           buttonTextColor="#555555"
         /> */}
         {/* Joining Event button only visible to joiner of the event */}
-        <LongButton
-          buttonHandler={() => {
-            // make API call
-            navigation.navigate("Event Joined");
-          }}
-          buttonColor={Color.PrimaryMain}
-          buttonText="Join Event"
-        />
+        {!event.hasJoined && (
+          <LongButton
+            buttonHandler={() => {
+              // make API call
+              // (event) => joinfunc(event);
+              let newData = data;
+              newData[0].hasJoined = true;
+              () => setData(newData);
+              navigation.navigate("Event Joined");
+            }}
+            buttonColor={Color.PrimaryMain}
+            buttonText="Join Event"
+          />
+        )}
+        <Text>You've already joined the event</Text>
+        {event.hasJoined && (
+          <LongButton
+            disabled={true}
+            buttonColor={Color.GrayDark}
+            buttonText="Join Event"
+          />
+        )}
       </View>
     </ScrollView>
   );

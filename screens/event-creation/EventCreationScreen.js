@@ -45,7 +45,6 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
       runningDuration,
       eventDescription,
     };
-    console.log(event);
     setNewEvent(event);
     navigation.navigate("Event Created");
   };

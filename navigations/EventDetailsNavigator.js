@@ -8,11 +8,18 @@ import HeaderStyle from "../assets/themes/HeaderStyle.js";
 const Stack = createStackNavigator();
 
 const EventDetailsNavigator = ({ route }) => {
-  const { eventData } = route.params;
+  const { eventData, data, setData } = route.params;
   return (
     <Stack.Navigator>
       <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
-        {(props) => <EventDetailsScreen {...props} eventData={eventData} />}
+        {(props) => (
+          <EventDetailsScreen
+            {...props}
+            eventData={eventData}
+            data={data}
+            setData={setData}
+          />
+        )}
       </Stack.Screen>
       <Stack.Screen name="Creator Profile" component={PublicProfileScreen} />
       <Stack.Screen name="Event Joined" options={{ headerShown: false }}>

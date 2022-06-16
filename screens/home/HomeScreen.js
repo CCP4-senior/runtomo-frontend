@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   SafeAreaView,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { Button, TextInput, List, FAB } from "react-native-paper";
+import { Button, TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
@@ -20,6 +20,7 @@ const HomeScreen = ({ navigation }) => {
       date: "2022-09-10T14:02:55.300Z",
       time: "2022-09-10T14:02:55.300Z",
       user: { id: 1, username: "KumikoKM" },
+      hasJoined: false,
     },
     {
       id: 2,
@@ -27,7 +28,8 @@ const HomeScreen = ({ navigation }) => {
       ward: "Shibuya",
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
-      user: { id: 2, username: "Wade" },
+      user: { id: 2, username: "WayneWadeRuns" },
+      hasJoined: false,
     },
     {
       id: 3,
@@ -35,17 +37,23 @@ const HomeScreen = ({ navigation }) => {
       ward: "Shinjuku",
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
-      user: { id: 3, username: "Kei" },
+      user: { id: 3, username: "Kei666" },
+      hasJoined: false,
     },
   ];
-  const selectEvent = (eventData) => {
+  const [data, setData] = useState(mockdata);
+
+  const selectEvent = (event) => {
     navigation.navigate("Event Details", {
-      eventData: eventData,
+      eventData: event,
+      data: data,
+      setData: setData,
     });
   };
   const openEventCreation = () => {
     navigation.navigate("Event Creation");
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchContainer}>
@@ -84,14 +92,14 @@ const HomeScreen = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.eventCardWrapper}>
-            {mockdata.map((session, id) => {
+            {data.map((session, id) => {
               return (
                 <EventCard
                   isHomePageCard={true}
                   style={styles.eventCard}
-                  selectEvent={selectEvent}
                   key={id}
                   event={session}
+                  handlePress={() => selectEvent(session)}
                 />
               );
             })}
