@@ -18,14 +18,14 @@ const HomeScreen = ({ navigation }) => {
     {
       id: 1,
       title: "Imperial palace run",
-      ward: "Shibuya",
+      ward: "Chiyoda",
       date: "2022-09-10T14:02:55.300Z",
       time: "2022-09-10T14:02:55.300Z",
       user: { id: 1, username: "Kumiko" },
     },
     {
       id: 2,
-      title: "Tama river run",
+      title: "Yoyogi park run",
       ward: "Shibuya",
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
