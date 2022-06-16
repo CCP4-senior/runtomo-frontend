@@ -7,6 +7,7 @@ import EventDetailsNavigator from "./EventDetailsNavigator";
 import EventCreationNavigator from "./EventCreationNavigator";
 import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 import SettingScreen from "../screens/setting/SettingScreen";
+import HeaderStyle from "../assets/themes/HeaderStyle";
 import Color from "../assets/themes/Color.js";
 
 const Stack = createStackNavigator();
@@ -20,16 +21,16 @@ const HomeNavigator = ({ navigation }) => {
   const openSetting = () => {
     navigation.navigate("Setting");
   };
-  const headerStyle = {
-    headerStyle: {
-      backgroundColor: Color.Fill,
-      height: 110,
-    },
-    headerTintColor: Color.HeaderTitle,
-    headerTitleStyle: {
-      fontWeight: "bold",
-    },
-  };
+  // const headerStyle = {
+  //   headerStyle: {
+  //     backgroundColor: Color.Fill,
+  //     height: 110,
+  //   },
+  //   headerTintColor: Color.HeaderTitle,
+  //   headerTitleStyle: {
+  //     fontWeight: "bold",
+  //   },
+  // };
 
   return (
     <Stack.Navigator>
@@ -38,7 +39,7 @@ const HomeNavigator = ({ navigation }) => {
         component={HomeScreen}
         options={{
           title: "Home",
-          ...headerStyle,
+          ...HeaderStyle,
           headerRight: () => (
             <TouchableOpacity
               onPress={() => openProfileScreen()}
@@ -80,7 +81,7 @@ const HomeNavigator = ({ navigation }) => {
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
-        options={{ ...headerStyle }}
+        options={{ ...HeaderStyle }}
       />
     </Stack.Navigator>
   );

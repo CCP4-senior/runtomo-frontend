@@ -29,7 +29,7 @@ const SettingScreen = ({ navigation }) => {
   };
   const deleteAccount = () => {
     setDialogType("deleted");
-    setUser("");
+    setTimeout(() => setUser(""), 5000);
   };
   const signOut = () => {
     setUser("");
