@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { format } from "date-fns";
 
@@ -15,7 +9,11 @@ const EventCard = ({ event, selectEvent, isHomePageCard }) => {
       style={[isHomePageCard ? styles.homePageCard : styles.card]}
       theme={{ roundness: 10 }}
     >
-      <TouchableOpacity onPress={() => selectEvent(event)}>
+      <TouchableOpacity
+        onPress={() => {
+          selectEvent && selectEvent(event);
+        }}
+      >
         <Card.Cover
           source={{ uri: "https://picsum.photos/700" }}
           style={{
@@ -25,8 +23,8 @@ const EventCard = ({ event, selectEvent, isHomePageCard }) => {
           }}
         />
         <Card.Content>
-          <Title>{event.eventTitle || event.title}</Title>
-          <Paragraph>{event.area || event.ward}</Paragraph>
+          <Title>{event.title}</Title>
+          <Paragraph>{event.ward}</Paragraph>
           <Paragraph>
             {format(new Date(event.date), "MMM d, yyyy")} at{" "}
             {format(new Date(event.time), "p")}

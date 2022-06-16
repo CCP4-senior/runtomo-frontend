@@ -6,6 +6,8 @@ const GrayLight = "#FAFAFA";
 const GrayMedium = "#F0F2F5";
 const GrayDark = "#CDCDCD";
 
+const AccentColor = "#11C9BD";
+
 const White = "#FFFFFF";
 const Black = "#000000";
 const Fill = "#F5F8FA";
@@ -24,6 +26,7 @@ const Color = {
   Fill,
   Text,
   HeaderTitle,
+  AccentColor,
 };
 
 export default Color;

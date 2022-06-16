@@ -8,7 +8,14 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { Card, Title, Paragraph, IconButton } from "react-native-paper";
+import {
+  Card,
+  Title,
+  Paragraph,
+  IconButton,
+  FAB,
+  Button,
+} from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
@@ -67,18 +74,22 @@ const HomeScreen = ({ navigation }) => {
               );
             })}
           </View>
-          <TouchableOpacity
-            onPress={openEventCreation}
-            activeOpacity={0.7}
-            style={styles.touchableOpacityStyle}
-          >
-            <IconButton
-              icon="plus-circle"
-              size={70}
-              color={Color.PrimaryMain}
-            ></IconButton>
-          </TouchableOpacity>
         </ScrollView>
+        <Button
+          style={styles.createButton}
+          mode="contained"
+          color={Color.PrimaryMain}
+          uppercase={false}
+          labelStyle={{
+            lineHeight: 30,
+            letterSpacing: 0.2,
+            fontWeight: "700",
+            fontSize: 13,
+          }}
+          onPress={openEventCreation}
+        >
+          Create Event
+        </Button>
       </View>
     </SafeAreaView>
   );
@@ -120,5 +131,13 @@ const styles = StyleSheet.create({
   eventCardWrapper: {
     alignItems: "center",
     paddingHorizontal: 10,
+  },
+  createButton: {
+    position: "absolute",
+    bottom: 30,
+    right: 13,
+    borderRadius: 30,
+    width: 120,
+    height: 50,
   },
 });

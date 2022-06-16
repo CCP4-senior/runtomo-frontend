@@ -2,7 +2,7 @@ import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { Modal, Portal, Card, Title, Paragraph } from "react-native-paper";
 
-const AreaModal = ({ modalVisible, hideModal, setArea }) => {
+const AreaModal = ({ modalVisible, hideModal, setWard }) => {
   const containerStyle = {
     backgroundColor: "#fff",
     height: "80%",
@@ -51,7 +51,7 @@ const AreaModal = ({ modalVisible, hideModal, setArea }) => {
                 <Card
                   key={ward.id}
                   onPress={() => {
-                    setArea(ward.name);
+                    setWard(ward.name);
                     hideModal();
                   }}
                 >

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { Avatar, Card, Title, Paragraph } from "react-native-paper";
+import { Avatar, Card, Title, Paragraph, IconButton } from "react-native-paper";
 import { format } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
@@ -16,14 +16,7 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
   const openCreatorProfile = () => {
     navigation.navigate("Creator Profile");
   };
-  const event = {
-    id: 1,
-    eventTitle: "Imperial palace run",
-    ward: "Shibuya",
-    date: "2022-09-10T14:02:55.300Z",
-    time: "2022-09-10T14:02:55.300Z",
-    user: { id: 1, username: "Kumiko" },
-  };
+  const event = eventData;
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -37,18 +30,7 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
             }}
           />
 
-          <View
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 15,
-              backgroundColor: "#11C9BD",
-              width: 55,
-              height: 75,
-              borderBottomLeftRadius: 25,
-              borderBottomRightRadius: 25,
-            }}
-          >
+          <View style={styles.label}>
             <Text
               style={{
                 textAlign: "center",
@@ -72,16 +54,16 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
               {format(new Date(event.date), "MMM")}
             </Text>
           </View>
-          <Card.Content style={{ padding: 12 }}>
-            <View style={{ flexDirection: "row" }}>
+          <Card.Content style={{ padding: 13 }}>
+            <View style={[styles.listContainer]}>
               <TouchableOpacity onPress={openCreatorProfile}>
-                <Avatar.Icon size={50} icon="account" />
+                <Avatar.Icon size={40} icon="account" />
               </TouchableOpacity>
               <Text
                 style={{
                   fontSize: 18,
                   fontWeight: "700",
-                  lineHeight: 50,
+                  lineHeight: 40,
                   marginLeft: 10,
                 }}
               >
@@ -90,18 +72,44 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
             </View>
             <Title
               style={{
-                fontSize: 24,
-                fontWeight: "600",
+                fontSize: 25,
+                fontWeight: "700",
                 color: Color.PrimaryMain,
                 paddingTop: 15,
               }}
             >
-              {event.eventTitle}
+              {event.title}
             </Title>
 
-            <Paragraph>{format(new Date(event.date), "MMM d, yyyy")}</Paragraph>
-            <Paragraph>{format(new Date(event.time), "p")}</Paragraph>
-            <Paragraph>{event.ward}</Paragraph>
+            <View style={styles.listLine}></View>
+
+            <View style={[styles.listContainer, styles.topListContainer]}>
+              <Avatar.Icon
+                color={Color.White}
+                size={40}
+                icon="calendar-month"
+                style={styles.listIcon}
+              />
+              <View style={styles.listContent}>
+                <Text style={styles.boldText}>
+                  {format(new Date(event.date), "E, MMM d, yyyy")}
+                </Text>
+                <Text>{format(new Date(event.time), "p")}</Text>
+              </View>
+            </View>
+
+            <View style={styles.listContainer}>
+              <Avatar.Icon
+                color={Color.White}
+                size={40}
+                icon="map-marker"
+                style={styles.listIcon}
+              />
+              <View style={styles.listContent}>
+                <Text style={styles.boldText}>{event.ward}</Text>
+                <Text>View map</Text>
+              </View>
+            </View>
 
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Description:</Text>
@@ -113,25 +121,33 @@ const EventDetailsScreen = ({ navigation, eventData }) => {
 
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Location:</Text>
-              <Text>2-1 Yoyogikamizonocho, Shibuya City, Tokyo 151-0052</Text>
+              <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
               <Image
                 source={require("../../assets/images/map.png")}
-                style={{ height: 270, width: 285, alignSelf: "center" }}
+                style={{
+                  height: 270,
+                  width: 285,
+                  alignSelf: "center",
+                  marginTop: 12,
+                }}
               />
             </View>
           </Card.Content>
         </Card>
-        <LongButton
+        {/* Edit Event button only visible to creator of the event */}
+        {/* <LongButton
           buttonHandler={() => {
             Alert("Some edit page");
           }}
           buttonColor={Color.GrayDark}
           buttonText="Edit Event"
           buttonTextColor="#555555"
-        />
+        /> */}
+        {/* Joining Event button only visible to joiner of the event */}
         <LongButton
           buttonHandler={() => {
-            navigation.navigate("SoleMates");
+            // make API call
+            navigation.navigate("Event Joined");
           }}
           buttonColor={Color.PrimaryMain}
           buttonText="Join Event"
@@ -151,20 +167,56 @@ const styles = StyleSheet.create({
     alignItems: "center",
     overflow: "visible",
   },
+  label: {
+    position: "absolute",
+    top: 0,
+    right: 15,
+    backgroundColor: Color.AccentColor,
+    width: 55,
+    height: 75,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+  },
   card: {
     width: "90%",
-    height: 820,
+    height: "auto",
     marginBottom: 20,
     marginTop: 10,
-    paddingBottom: 15,
+    paddingBottom: 12,
   },
   section: {
     marginTop: 18,
   },
+  boldText: {
+    fontWeight: "600",
+  },
+  listLine: {
+    position: "absolute",
+    top: 152,
+    left: 35,
+    width: 1,
+    height: 50,
+    backgroundColor: Color.GrayDark,
+  },
+  listContainer: {
+    flexDirection: "row",
+    marginTop: 15,
+  },
+  topListContainer: {
+    marginBottom: 15,
+  },
+  listContent: {
+    flexDirection: "column",
+    justifyContent: "center",
+    marginLeft: 12,
+  },
+  listIcon: {
+    backgroundColor: Color.AccentColor,
+  },
   sectionTitle: {
     fontSize: 16,
     marginBottom: 8,
-    fontWeight: "700",
+    fontWeight: "600",
   },
   // inputContainer: {
   //   margin: 5,
