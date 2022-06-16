@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   ScrollView,
   Text,
@@ -19,8 +19,10 @@ import {
 import { format } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
+import { AuthContext } from "../../context/authcontext/AuthContext";
 
 const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
+  const { user } = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
@@ -50,6 +52,8 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
   };
 
   const event = eventData;
+  console.log(event.user.id);
+  console.log(user.id);
 
   return (
     <Provider>
@@ -181,16 +185,27 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
             </Card.Content>
           </Card>
           {/* Edit Event button only visible to creator of the event */}
-          {/* <LongButton
-          buttonHandler={() => {
-            Alert("Some edit page");
-          }}
-          buttonColor={Color.GrayDark}
-          buttonText="Edit Event"
-          buttonTextColor="#555555"
-        /> */}
-          {/* Joining Event button only visible to joiner of the event */}
-          {!event.hasJoined && (
+          {event.user.id === user.id && (
+            <>
+              <LongButton
+                buttonHandler={() => {
+                  alert("edit event page");
+                }}
+                buttonColor={Color.GrayDark}
+                buttonText="Edit Event"
+                buttonTextColor="#555555"
+              />
+              <LongButton
+                buttonHandler={() => {
+                  alert("cancel event page");
+                }}
+                buttonColor={Color.PrimaryMain}
+                buttonText="Cancel Event"
+              />
+            </>
+          )}
+
+          {!event.hasJoined && event.user.id !== user.id && (
             <LongButton
               buttonHandler={joinEvent}
               buttonColor={Color.PrimaryMain}
@@ -198,7 +213,7 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
             />
           )}
 
-          {event.hasJoined && (
+          {event.hasJoined && event.user.id !== user.id && (
             <>
               <Text>You've already joined the event!</Text>
               <LongButton
@@ -275,11 +290,4 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontWeight: "600",
   },
-  // inputContainer: {
-  //   margin: 5,
-  // },
-  // description: {
-  //   height: 98,
-  //   borderRadius: 10,
-  // },
 });
