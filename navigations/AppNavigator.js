@@ -2,10 +2,9 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeNavigator from "../navigations/HomeNavigator";
 import EventCreationNavigator from "./EventCreationNavigator";
-import PersonalEventScreen from "../screens/personal-event/PersonalEventScreen";
+import PersonalEventNavigator from "./PersonalEventNavigator";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Color from "../assets/themes/Color.js";
-import HeaderStyle from "../assets/themes/HeaderStyle";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +19,7 @@ const AppNavigator = () => {
           if (route.name === "Home") {
             iconName = "ios-home";
           }
-          if (route.name === "My Session") {
+          if (route.name === "My Sessions") {
             iconName = "people";
           }
           if (route.name === "Create Event") {
@@ -47,7 +46,7 @@ const AppNavigator = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen name="My Session" component={PersonalEventScreen} />
+      <Tab.Screen name="My Sessions" component={PersonalEventNavigator} />
     </Tab.Navigator>
   );
 };

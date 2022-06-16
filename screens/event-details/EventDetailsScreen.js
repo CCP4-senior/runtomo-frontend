@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
-import { Avatar, Card, Title, Paragraph, IconButton } from "react-native-paper";
+import { Avatar, Card, Title } from "react-native-paper";
 import { format } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
