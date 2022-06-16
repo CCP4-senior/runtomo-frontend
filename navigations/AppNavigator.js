@@ -15,11 +15,14 @@ const AppNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === "Home Page") {
+          if (route.name === "Home") {
             iconName = "ios-home";
           }
-          if (route.name === "Your Session") {
+          if (route.name === "My Session") {
             iconName = "people";
+          }
+          if (route.name === "Create Event") {
+            iconName = "add-circle-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -29,13 +32,20 @@ const AppNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Home Page"
+        name="Home"
         component={HomeNavigator}
         options={{
           headerShown: false,
         }}
       />
-      <Tab.Screen name="Your Session" component={PersonalEventScreen} />
+      <Tab.Screen
+        name="Create Event"
+        component={HomeNavigator}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen name="My Session" component={PersonalEventScreen} />
     </Tab.Navigator>
   );
 };

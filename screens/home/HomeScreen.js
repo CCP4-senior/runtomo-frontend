@@ -105,7 +105,7 @@ const HomeScreen = ({ navigation }) => {
             })}
           </View>
         </ScrollView>
-        <Button
+        {/* <Button
           style={styles.createButton}
           mode="contained"
           color={Color.PrimaryMain}
@@ -119,7 +119,7 @@ const HomeScreen = ({ navigation }) => {
           onPress={openEventCreation}
         >
           Create Event
-        </Button>
+        </Button> */}
       </View>
     </SafeAreaView>
   );
