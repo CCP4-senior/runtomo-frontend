@@ -1,15 +1,13 @@
 import React from "react";
 import {
-  Text,
   View,
   SafeAreaView,
   StyleSheet,
-  Image,
   ScrollView,
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { Button, TextInput, IconButton, List } from "react-native-paper";
+import { Button, TextInput, List, FAB } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
@@ -106,9 +104,9 @@ const HomeScreen = ({ navigation }) => {
           uppercase={false}
           labelStyle={{
             lineHeight: 30,
-            letterSpacing: 0.2,
-            fontWeight: "700",
-            fontSize: 13,
+            letterSpacing: 0.1,
+            fontWeight: "800",
+            fontSize: 15,
           }}
           onPress={openEventCreation}
         >
@@ -161,8 +159,17 @@ const styles = StyleSheet.create({
     bottom: 30,
     right: 13,
     borderRadius: 30,
-    width: 120,
+    width: 140,
     height: 50,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4.84,
+
+    elevation: 5,
   },
   searchContainer: {
     height: 70,
