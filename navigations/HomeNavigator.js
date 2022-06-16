@@ -62,7 +62,11 @@ const HomeNavigator = ({ navigation }) => {
         component={EventCreationNavigator}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Profile" component={UserProfileScreen} />
+      <Stack.Screen
+        name="Profile"
+        component={UserProfileScreen}
+        options={{ ...HeaderStyle }}
+      />
       <Stack.Screen
         name="Setting"
         component={SettingScreen}

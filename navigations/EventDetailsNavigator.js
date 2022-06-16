@@ -22,7 +22,7 @@ const EventDetailsNavigator = ({ route }) => {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="Creator Profile">
+      <Stack.Screen name="Creator Profile" options={{ ...HeaderStyle }}>
         {(props) => <PublicProfileScreen {...props} user={user} />}
       </Stack.Screen>
       <Stack.Screen name="Event Joined" options={{ headerShown: false }}>
