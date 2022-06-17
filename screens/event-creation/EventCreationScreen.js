@@ -8,7 +8,7 @@ import DurationModal from "./DurationModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 
-const EventCreationScreen = ({ navigation, setNewEvent }) => {
+const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [ward, setWard] = useState("");
@@ -23,7 +23,7 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
     setDurationModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
-  const buttonHandler = (data) => {
+  const buttonHandler = () => {
     const requiredFields = [
       title,
       meetingPoint,
@@ -36,7 +36,15 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
       setSubmitted(true);
       return;
     }
+
     const event = {
+      id: 4,
+      user: {
+        id: 2,
+        username: "WayneWadeRuns",
+        age: 34,
+        image: require("../../assets/images/demo/wade.png"),
+      },
       title,
       meetingPoint,
       ward,
@@ -44,8 +52,12 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
       time,
       runningDuration,
       eventDescription,
+      participants: [],
+      owner_id: 2,
+      hasJoined: true,
     };
     setNewEvent(event);
+    setData([...data, event]);
     navigation.navigate("Event Created");
   };
   const [submitted, setSubmitted] = useState(false);
@@ -111,38 +123,10 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
               submitted={submitted}
             />
           </View>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              alignSelf: "flex-start",
-              marginLeft: 20,
-              marginTop: 10,
-            }}
-          >
+          <View style={styles.imageContainer}>
             <Text style={{ fontWeight: "bold" }}>Event Image</Text>
-            <View
-              backgroundColor="#fff"
-              style={{
-                width: 98,
-                height: 98,
-                borderRadius: 10,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <View
-                style={{
-                  borderStyle: "dashed",
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  borderColor: Color.GrayDark,
-                  width: 80,
-                  height: 80,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+            <View backgroundColor="#fff" style={styles.imageBackground}>
+              <View style={styles.imageLogo}>
                 <IconButton icon="camera" color={Color.Text} size={29} />
                 <Text>Add Image</Text>
               </View>
@@ -154,13 +138,8 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
               mode="outlined"
               outlineColor="#fff"
               activeOutlineColor={Color.GrayDark}
-              theme={{
-                roundness: 10,
-                colors: {
-                  placeholder: Color.Text,
-                },
-              }}
-              style={{ backgroundColor: "#fff", width: 335, height: 98 }}
+              theme={styles.inputTheme}
+              style={styles.input}
               placeholder="Event Description"
               value={eventDescription}
               onChangeText={(text) => setEventDescription(text)}
@@ -200,4 +179,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  imageContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-start",
+    marginLeft: 20,
+    marginTop: 10,
+  },
+  imageBackground: {
+    width: 98,
+    height: 98,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imageLogo: {
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Color.GrayDark,
+    width: 80,
+    height: 80,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputTheme: {
+    roundness: 10,
+    colors: {
+      placeholder: Color.Text,
+    },
+  },
+  input: { backgroundColor: "#fff", width: 335, height: 98 },
 });

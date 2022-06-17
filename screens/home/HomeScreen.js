@@ -11,47 +11,10 @@ import { Button, TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
-const HomeScreen = ({ navigation }) => {
-  const mockdata = [
-    {
-      id: 1,
-      title: "Imperial palace run",
-      ward: "Chiyoda",
-      date: "2022-09-10T14:02:55.300Z",
-      time: "2022-09-10T14:02:55.300Z",
-      user: { id: 1, username: "KumikoKM", age: 28 },
-      hasJoined: false,
-    },
-    {
-      id: 2,
-      title: "Yoyogi park run",
-      ward: "Shibuya",
-      date: "2022-08-20T19:30:45.300Z",
-      time: "2022-08-20T19:30:45.300Z",
-      user: { id: 2, username: "WayneWadeRuns", age: 34 },
-      hasJoined: false,
-    },
-    {
-      id: 3,
-      title: "Kanda river run",
-      ward: "Shinjuku",
-      date: "2022-09-15T12:03:55.300Z",
-      time: "2022-09-15T12:03:55.300Z",
-      user: { id: 3, username: "Kei666", age: 29 },
-      hasJoined: false,
-    },
-  ];
-  const [data, setData] = useState(mockdata);
-
+const HomeScreen = ({ navigation, setData, data, setCurrEvent }) => {
   const selectEvent = (event) => {
-    navigation.navigate("Event Details", {
-      eventData: event,
-      data: data,
-      setData: setData,
-    });
-  };
-  const openEventCreation = () => {
-    navigation.navigate("Event Creation");
+    setCurrEvent(event);
+    navigation.navigate("Event Details");
   };
 
   return (
@@ -100,6 +63,7 @@ const HomeScreen = ({ navigation }) => {
                   key={session.id}
                   event={session}
                   handlePress={() => selectEvent(session)}
+                  image={session.image}
                 />
               );
             })}

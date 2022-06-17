@@ -10,43 +10,7 @@ import {
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
-const PersonalEventScreen = ({ navigation }) => {
-  const mockdata = [
-    {
-      id: 1,
-      title: "Imperial palace run",
-      ward: "Chiyoda",
-      date: "2022-09-10T14:02:55.300Z",
-      time: "2022-09-10T14:02:55.300Z",
-      user: { id: 1, username: "KumikoKM", age: 28 },
-      participants: [2],
-      owner_id: 1,
-      hasJoined: true,
-    },
-    {
-      id: 2,
-      title: "Yoyogi park run",
-      ward: "Shibuya",
-      date: "2022-08-20T19:30:45.300Z",
-      time: "2022-08-20T19:30:45.300Z",
-      user: { id: 2, username: "WayneWadeRuns", age: 34 },
-      participants: [],
-      owner_id: 2,
-      hasJoined: true,
-    },
-    {
-      id: 3,
-      title: "Kanda river run",
-      ward: "Shinjuku",
-      date: "2022-09-15T12:03:55.300Z",
-      time: "2022-09-15T12:03:55.300Z",
-      user: { id: 3, username: "Kei666", age: 29 },
-      participants: [],
-      owner_id: 3,
-      hasJoined: false,
-    },
-  ];
-
+const PersonalEventScreen = ({ navigation, data, setCurrEvent, currEvent }) => {
   const listTab = [
     {
       status: "All",
@@ -72,7 +36,7 @@ const PersonalEventScreen = ({ navigation }) => {
   const handleFilter = (status) => {
     setStatus(status);
 
-    const userSessions = mockdata.filter((session) => {
+    const userSessions = data.filter((session) => {
       switch (status) {
         case "Created":
           if (session.owner_id === 2) {
@@ -95,9 +59,8 @@ const PersonalEventScreen = ({ navigation }) => {
   };
 
   const selectEvent = (eventData) => {
-    navigation.navigate("Event Details", {
-      eventData: eventData,
-    });
+    setCurrEvent(eventData);
+    navigation.navigate("Event Details");
   };
 
   return (
@@ -127,6 +90,7 @@ const PersonalEventScreen = ({ navigation }) => {
                   handlePress={() => selectEvent(session)}
                   key={id}
                   event={session}
+                  image={session.image}
                 />
               );
             })}

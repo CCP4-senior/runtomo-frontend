@@ -7,18 +7,24 @@ import HeaderStyle from "../assets/themes/HeaderStyle.js";
 
 const Stack = createStackNavigator();
 
-const EventDetailsNavigator = ({ route }) => {
-  const { eventData, data, setData } = route.params;
-  const user = eventData.user;
+const EventDetailsNavigator = ({
+  route,
+  setData,
+  data,
+  currEvent,
+  setCurrEvent,
+}) => {
+  const user = currEvent.user;
   return (
     <Stack.Navigator>
       <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
         {(props) => (
           <EventDetailsScreen
             {...props}
-            eventData={eventData}
+            eventData={currEvent}
             data={data}
             setData={setData}
+            setCurrEvent={setCurrEvent}
           />
         )}
       </Stack.Screen>
@@ -27,7 +33,7 @@ const EventDetailsNavigator = ({ route }) => {
       </Stack.Screen>
       <Stack.Screen name="Event Joined" options={{ headerShown: false }}>
         {(props) => (
-          <ConfirmationScreen {...props} event={eventData} actionType="join" />
+          <ConfirmationScreen {...props} event={currEvent} actionType="join" />
         )}
       </Stack.Screen>
     </Stack.Navigator>

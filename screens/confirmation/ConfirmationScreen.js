@@ -47,14 +47,18 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
         </Card.Content>
       </View>
 
-      <EventCard
-        event={event}
-        handlePress={() =>
-          navigation.navigate("Running Event", {
-            eventData: event,
-          })
-        }
-      />
+      {actionType === "create" && (
+        <EventCard
+          event={event}
+          handlePress={() => navigation.navigate("Home Page")}
+        />
+      )}
+      {actionType === "join" && (
+        <EventCard
+          event={event}
+          handlePress={() => navigation.navigate("Home")}
+        />
+      )}
       {actionType === "create" && (
         <LongButton
           buttonHandler={() => {
@@ -65,13 +69,24 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
           buttonTextColor="#555555"
         />
       )}
-      <LongButton
-        buttonHandler={() => {
-          navigation.navigate("Home");
-        }}
-        buttonColor={Color.PrimaryMain}
-        buttonText="Done"
-      />
+      {actionType === "create" && (
+        <LongButton
+          buttonHandler={() => {
+            navigation.navigate("Home Page");
+          }}
+          buttonColor={Color.PrimaryMain}
+          buttonText="Done"
+        />
+      )}
+      {actionType === "join" && (
+        <LongButton
+          buttonHandler={() => {
+            navigation.navigate("Home");
+          }}
+          buttonColor={Color.PrimaryMain}
+          buttonText="Done"
+        />
+      )}
     </SafeAreaView>
   );
 };

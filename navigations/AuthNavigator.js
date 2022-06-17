@@ -15,7 +15,7 @@ const AuthNavigator = ({ navigation }) => {
     <Stack.Navigator>
       {user ? (
         <Stack.Screen
-          name="Home"
+          name="Top Page"
           component={AppNavigator}
           options={{
             headerShown: false,

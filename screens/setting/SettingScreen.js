@@ -6,7 +6,6 @@ import {
   Paragraph,
   List,
   Button,
-  IconButton,
   Portal,
   Dialog,
   Provider,
@@ -80,17 +79,7 @@ const SettingScreen = ({ navigation }) => {
         >
           <Card.Content>
             <View style={styles.cardContent}>
-              <View
-                style={{
-                  borderRadius: 10,
-                  borderColor: Color.GrayDark,
-                  width: 80,
-                  height: 60,
-                  marginTop: 0,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <View style={styles.avatar}>
                 <Avatar.Image
                   size={60}
                   source={require("../../assets/images/demo/wade.png")}
@@ -108,11 +97,7 @@ const SettingScreen = ({ navigation }) => {
                   contentStyle={{ flexDirection: "row-reverse" }}
                   uppercase={false}
                   color={Color.Text}
-                  labelStyle={{
-                    fontSize: 16,
-                    fontWeight: "700",
-                    letterSpacing: 0.3,
-                  }}
+                  labelStyle={styles.label}
                   onPress={() => {
                     console.log("Presed");
                   }}
@@ -175,12 +160,25 @@ const styles = StyleSheet.create({
   cardTopTitle: {
     color: Color.Text,
     fontWeight: "bold",
-    // marginBottom: 10,
   },
   paragraph: {
     color: "#007AFF",
   },
   cardBottom: {
     height: 200,
+  },
+  avatar: {
+    borderRadius: 10,
+    borderColor: Color.GrayDark,
+    width: 80,
+    height: 60,
+    marginTop: 0,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "700",
+    letterSpacing: 0.3,
   },
 });

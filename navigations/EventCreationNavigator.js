@@ -3,10 +3,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
 import ConfirmationScreen from "../screens/confirmation/ConfirmationScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
+import createOptions from "./reusableOptions/appNavigatorOptions";
+import SettingScreen from "../screens/setting/SettingScreen";
+import EventDetailsScreen from "../screens/event-details/EventDetailsScreen";
 
 const Stack = createStackNavigator();
 
-const EventCreationNavigator = () => {
+const EventCreationNavigator = ({ navigation, setData, data }) => {
   const initialEvent = Object.freeze({
     title: "",
     meetingPoint: "",
@@ -17,18 +20,26 @@ const EventCreationNavigator = () => {
     eventDescription: "",
   });
   const [newEvent, setNewEvent] = useState(initialEvent);
+  const openSetting = () => {
+    navigation.navigate("Setting");
+  };
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Create Event" options={{ ...HeaderStyle }}>
+      <Stack.Screen name="Create Event" options={createOptions(openSetting)}>
         {(props) => (
           <EventCreationScreen
             {...props}
             newEvent={newEvent}
             setNewEvent={setNewEvent}
+            setData={setData}
+            data={data}
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="Event Created" options={{ ...HeaderStyle }}>
+      <Stack.Screen
+        name="Event Created"
+        options={{ ...HeaderStyle, headerShown: false }}
+      >
         {(props) => (
           <ConfirmationScreen
             {...props}
@@ -38,6 +49,21 @@ const EventCreationNavigator = () => {
           />
         )}
       </Stack.Screen>
+      <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
+        {(props) => (
+          <EventDetailsScreen
+            {...props}
+            eventData={newEvent}
+            data={data}
+            setData={setData}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen
+        name="Setting"
+        component={SettingScreen}
+        options={{ ...HeaderStyle }}
+      />
     </Stack.Navigator>
   );
 };

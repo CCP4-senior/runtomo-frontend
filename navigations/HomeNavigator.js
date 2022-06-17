@@ -1,67 +1,50 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Avatar, IconButton } from "react-native-paper";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
-import EventCreationNavigator from "./EventCreationNavigator";
 import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 import SettingScreen from "../screens/setting/SettingScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
-import Color from "../assets/themes/Color.js";
+import createOptions from "./reusableOptions/appNavigatorOptions";
 
 const Stack = createStackNavigator();
 
-const HomeNavigator = ({ navigation }) => {
+const HomeNavigator = ({
+  navigation,
+  setData,
+  data,
+  setCurrEvent,
+  currEvent,
+}) => {
   const openSetting = () => {
     navigation.navigate("Setting");
   };
 
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: "Home",
-          ...HeaderStyle,
-          headerRight: () => (
-            <TouchableOpacity
-              style={[styles.iconContainer, styles.avatar]}
-              onPress={() => alert("message icon is pressed!")}
-            >
-              <IconButton icon="forum-outline" size={32} color="grey" />
-            </TouchableOpacity>
-          ),
-          headerLeft: () => (
-            <TouchableOpacity
-              style={[styles.iconContainer, styles.menu]}
-              onPress={openSetting}
-            >
-              <View
-                style={{
-                  width: 35,
-                  height: 35,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <IconButton icon="menu" color="grey" size={35} />
-              </View>
-            </TouchableOpacity>
-          ),
-        }}
-      />
-      <Stack.Screen
-        name="Event Details"
-        component={EventDetailsNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Event Creation"
-        component={EventCreationNavigator}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="Home" options={createOptions(openSetting)}>
+        {(props) => (
+          <HomeScreen
+            {...props}
+            setData={setData}
+            data={data}
+            currEvent={currEvent}
+            setCurrEvent={setCurrEvent}
+          />
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen name="Event Details" options={{ headerShown: false }}>
+        {(props) => (
+          <EventDetailsNavigator
+            {...props}
+            setData={setData}
+            data={data}
+            currEvent={currEvent}
+            setCurrEvent={setCurrEvent}
+          />
+        )}
+      </Stack.Screen>
       <Stack.Screen
         name="Profile"
         component={UserProfileScreen}
@@ -77,17 +60,3 @@ const HomeNavigator = ({ navigation }) => {
 };
 
 export default HomeNavigator;
-
-const styles = StyleSheet.create({
-  iconContainer: {
-    flex: 1,
-    backgroundColor: "#F5F8FA",
-    paddingHorizontal: 30,
-  },
-  avatar: {
-    // paddingVertical: 1,
-  },
-  menu: {
-    paddingVertical: 11,
-  },
-});
