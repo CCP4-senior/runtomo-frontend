@@ -117,6 +117,7 @@ const AppNavigator = () => {
       <Tab.Screen
         name="My Sessions Main Page"
         options={{
+          title: "My Sessions",
           headerShown: false,
         }}
       >
