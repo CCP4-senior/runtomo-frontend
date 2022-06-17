@@ -28,7 +28,7 @@ const SignIn = () => {
 
 	const handleUsername = (text) => {
 		setUsername(text);
-	} 
+	};
 
 	const validateEmail = (text) => {
 		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
@@ -75,7 +75,8 @@ const SignIn = () => {
 
 			{/* Username */}
 
-			<TextInput
+			<View style={styles.usernameFieldWrapper}>
+				<TextInput
 					label="Username"
 					value={username}
 					mode="outlined"
@@ -87,8 +88,10 @@ const SignIn = () => {
 					style={{ height: 50 }}
 					onChangeText={handleUsername}
 				/>
+			</View>
 
 			{/*  Password */}
+
 			<View style={styles.passwordFieldWrapper}>
 				<TextInput
 					label="Password"
@@ -167,6 +170,14 @@ const styles = StyleSheet.create({
 	emailErrorMessage    : {
 		marginTop : 4,
 		color     : '#c7254e'
+	},
+	usernameFieldWrapper : {
+		position         : 'absolute',
+		width            : 315,
+		height           : 74,
+		left             : 30,
+		marginHorizontal : 20,
+		top              : 50
 	},
 	passwordFieldWrapper : {
 		position         : 'absolute',
