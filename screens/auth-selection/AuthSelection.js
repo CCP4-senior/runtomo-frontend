@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { Button } from "react-native-paper";
 import React from "react";
+import Color from "../../assets/themes/Color.js";
 
 const AuthSelection = ({ navigation }) => {
   const { height } = useWindowDimensions();
@@ -15,7 +16,7 @@ const AuthSelection = ({ navigation }) => {
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
         <Image
-          style={[styles.logo, { height: height * 0.3 }]}
+          style={{ width: 500 }}
           source={require("../../assets/images/logo.png")}
           resizeMode="cover"
         />
@@ -23,16 +24,18 @@ const AuthSelection = ({ navigation }) => {
       <View style={styles.buttonsWrapper}>
         <View style={styles.signInBtnWrapper}>
           <Button
-            color="black"
+            color={Color.Black}
             uppercase={false}
             contentStyle={{
               borderWidth: 1,
               borderRadius: 10,
-              borderColor: "black",
-              padding: 2,
+              borderColor: Color.Black,
+              padding: 5,
+              backgroundColor: Color.White,
             }}
             labelStyle={{
               fontWeight: "bold",
+              fontSize: 18,
             }}
             onPress={() => navigation.navigate("SignIn")}
           >
@@ -43,13 +46,14 @@ const AuthSelection = ({ navigation }) => {
           <Button
             mode="contained"
             uppercase={false}
-            color="#fa2600"
+            color={Color.PrimaryMain}
             style={{ borderRadius: 10 }}
             labelStyle={{
               fontWeight: "bold",
+              fontSize: 18,
             }}
             contentStyle={{
-              padding: 2,
+              padding: 5,
             }}
             onPress={() => navigation.navigate("Register")}
           >
@@ -71,12 +75,7 @@ const styles = StyleSheet.create({
     flex: 3,
     alignItems: "center",
     padding: 10,
-    marginTop: 50,
-  },
-  logo: {
-    width: "70%",
-    maxWidth: 350,
-    maxHeight: 250,
+    marginTop: 30,
   },
   buttonsWrapper: {
     flex: 1,
@@ -86,6 +85,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: "70%",
     borderRadius: 10,
+    backgroundColor: Color.White,
   },
   registerBtnWrapper: {
     width: "70%",

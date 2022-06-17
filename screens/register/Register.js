@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 		flexDirection  : 'column',
 		justifyContent : 'center',
 		alignItems     : 'flex-start',
-		margin         : 20
+		margin         : 20,
 	},
 	title  : {
 		fontSize      : 28,

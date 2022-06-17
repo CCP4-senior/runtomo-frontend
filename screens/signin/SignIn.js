@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Button, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
+import Color from "../../assets/themes/Color.js";
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -39,13 +40,13 @@ const SignIn = () => {
           label="Email"
           value={email}
           mode="outlined"
-          outlineColor="black"
-          activeOutlineColor="black"
+          outlineColor={Color.Black}
+          activeOutlineColor={Color.Black}
           autoCapitalize="none"
           textContentType="emailAddress"
           keyboardType="email-address"
           returnKeyType="next"
-          style={{ height: 50 }}
+          style={{ height: 50, backgroundColor: Color.White }}
           error={false}
           errorText={"TESTING"}
           onChangeText={(text) => {
@@ -69,11 +70,11 @@ const SignIn = () => {
           label="Password"
           value={password}
           mode="outlined"
-          outlineColor="black"
-          activeOutlineColor="black"
+          outlineColor={Color.Black}
+          activeOutlineColor={Color.Black}
           textContentType="password"
           secureTextEntry={true}
-          style={{ height: 50 }}
+          style={{ height: 50, backgroundColor: Color.White }}
           onChangeText={(text) => setPassword(text)}
         />
       </View>
@@ -87,13 +88,14 @@ const SignIn = () => {
         <Button
           mode="contained"
           uppercase={false}
-          color="#fa2600"
+          color={Color.PrimaryMain}
           style={{ borderRadius: 10 }}
           labelStyle={{
             fontWeight: "bold",
+            fontSize: 18,
           }}
           contentStyle={{
-            padding: 3,
+            padding: 5,
           }}
           onPress={() => handleSignIn()}
         >
@@ -156,9 +158,10 @@ const styles = StyleSheet.create({
   },
   forgotPasswordLink: {
     position: "absolute",
-    color: "#fa2600",
+    color: Color.PrimaryMain,
     top: 470,
     left: 245,
+    fontSize: 15,
   },
   signInBottomWrapper: {
     position: "absolute",
@@ -168,14 +171,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     left: 30,
     marginHorizontal: 20,
+    fontWeight: "500",
     justifyContent: "space-between",
   },
   signUpText: {
     alignSelf: "center",
     fontWeight: "500",
-    color: "rgba(60, 60, 67, 0.5)",
+    color: "rgba(60, 60, 67, 0.7)",
+    fontSize: 15,
   },
   signUpLink: {
-    color: "#fa2600",
+    color: Color.PrimaryMain,
+    fontSize: 15,
   },
 });
