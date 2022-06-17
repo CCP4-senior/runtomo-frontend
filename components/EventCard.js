@@ -17,7 +17,7 @@ const EventCard = ({
     >
       <TouchableOpacity onPress={handlePress}>
         <Card.Cover
-          source={image || { uri: "https://picsum.photos/700" }}
+          source={image || require("../assets/images/demo/defaultEvent.jpeg")}
           style={{
             height: 175,
             borderTopLeftRadius: 10,
