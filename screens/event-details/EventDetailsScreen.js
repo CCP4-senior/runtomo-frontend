@@ -39,23 +39,26 @@ const EventDetailsScreen = ({
     if (eventData.user.id === user.id) navigation.navigate("Profile");
   };
   const joinEvent = () => {
-    let newData = data.map((event) => {
+    const newData = data.map((event) => {
       if (event.id === eventData.id) {
         event.hasJoined = true;
+        event.participants.push(2); // For demo, use wade's id
+
         () => setCurrEvent(event);
       }
       return event;
     });
 
-    console.log(newData);
     () => setData(newData);
     navigation.navigate("Event Joined");
   };
 
   const cancelAttendance = () => {
     // make API call
-    let newData = data.map((event) => {
+    const newData = data.map((event) => {
       if (event.id === eventData.id) event.hasJoined = false;
+      event.participants.filter((id) => id !== 2); // For demo, use wade's id
+      () => setCurrEvent(event);
       return event;
     });
     () => setData(newData);
