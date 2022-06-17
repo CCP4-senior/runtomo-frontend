@@ -36,9 +36,15 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       setSubmitted(true);
       return;
     }
+
     const event = {
       id: 4,
-      user: { id: 2, username: "WayneWadeRuns", age: 34 },
+      user: {
+        id: 2,
+        username: "WayneWadeRuns",
+        age: 34,
+        image: require("../../assets/images/demo/wade.png"),
+      },
       title,
       meetingPoint,
       ward,
@@ -46,6 +52,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       time,
       runningDuration,
       eventDescription,
+      participants: [],
+      owner_id: 2,
+      hasJoined: true,
     };
     setNewEvent(event);
     setData([...data, event]);
