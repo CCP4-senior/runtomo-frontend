@@ -108,11 +108,16 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
                 onPress={openCreatorProfile}
                 style={[styles.listContainer]}
               >
-                <Avatar.Icon
-                  size={40}
-                  icon="account"
-                  style={{ backgroundColor: Color.GrayDark }}
-                />
+                {!event.user.image && (
+                  <Avatar.Icon
+                    size={40}
+                    icon="account"
+                    style={{ backgroundColor: Color.GrayDark }}
+                  />
+                )}
+                {event.user.image && (
+                  <Avatar.Image size={40} source={event.user.image} />
+                )}
                 <Text
                   style={{
                     fontSize: 18,
