@@ -95,6 +95,7 @@ const HomeScreen = ({ navigation, setData, data }) => {
                   key={session.id}
                   event={session}
                   handlePress={() => selectEvent(session)}
+                  image={session.image}
                 />
               );
             })}

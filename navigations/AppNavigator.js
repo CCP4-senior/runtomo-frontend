@@ -16,6 +16,7 @@ const AppNavigator = () => {
       ward: "Chiyoda",
       date: "2022-09-10T14:02:55.300Z",
       time: "2022-09-10T14:02:55.300Z",
+      image: require("../assets/images/demo/imperialpalace.jpeg"),
       user: {
         id: 1,
         username: "KumikoKM",
@@ -32,6 +33,7 @@ const AppNavigator = () => {
       ward: "Shibuya",
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
+      image: require("../assets/images/demo/yoyogipark.jpeg"),
       user: {
         id: 2,
         username: "WayneWadeRuns",
@@ -48,6 +50,7 @@ const AppNavigator = () => {
       ward: "Shinjuku",
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
+      image: require("../assets/images/demo/kandariver.jpeg"),
       user: {
         id: 3,
         username: "Kei666",

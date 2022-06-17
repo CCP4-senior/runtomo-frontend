@@ -70,10 +70,7 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
       <ScrollView>
         <View style={styles.container}>
           <Card style={styles.card} theme={{ roundness: 10 }}>
-            <Card.Cover
-              source={{ uri: "https://picsum.photos/700" }}
-              style={styles.eventImage}
-            />
+            <Card.Cover source={event.image} style={styles.eventImage} />
 
             <View style={styles.label}>
               <Text style={styles.labelDate}>

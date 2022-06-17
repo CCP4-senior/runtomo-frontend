@@ -3,7 +3,13 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { format } from "date-fns";
 
-const EventCard = ({ event, selectEvent, isHomePageCard, handlePress }) => {
+const EventCard = ({
+  event,
+  selectEvent,
+  isHomePageCard,
+  handlePress,
+  image,
+}) => {
   return (
     <Card
       style={[isHomePageCard ? styles.homePageCard : styles.card]}
@@ -11,7 +17,7 @@ const EventCard = ({ event, selectEvent, isHomePageCard, handlePress }) => {
     >
       <TouchableOpacity onPress={handlePress}>
         <Card.Cover
-          source={{ uri: "https://picsum.photos/700" }}
+          source={image}
           style={{
             height: 175,
             borderTopLeftRadius: 10,
