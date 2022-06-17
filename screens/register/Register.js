@@ -1,96 +1,184 @@
-import {
-	StyleSheet,
-	Text,
-	TextInput,
-	View,
-	SafeAreaView,
-	Button
-} from 'react-native';
-import React, { useState, useContext } from 'react';
-import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
-import Color from '../../assets/themes/Color';
+import { StyleSheet, View, SafeAreaView, Text, Linking } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/authcontext/AuthContext';
-import LongButton from '../../components/LongButton';
-import CustomInput from '../../components/CustomInput';
 
-const Register = ({ navigation }) => {
+const SignIn = () => {
+	const navigation = useNavigation();
 	const { setUser } = useContext(AuthContext);
+	const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const [ emailError, setEmailError ] = useState({
+		isTriggered : false,
+		message     : ''
+	});
+	const [ passwordError, setPasswordError ] = useState('');
 
-	const [ email, setEmail ] = React.useState('');
-	const [ username, setUsername ] = React.useState('');
-	const [ password, setPassword ] = React.useState('');
+	const handleSignIn = () => {
+		if (true) {
+			setUser({ id: 2, username: 'WayneWadeRuns' });
+			navigation.navigate('SignIn', { screen: 'Home' });
+		} else {
+			setUser('');
+		}
+	};
 
-	const handleRegister = () => {
-		setUser('Wade');
-		navigation.navigate('Register', { screen: 'Home' });
+	const validateEmail = (text) => {
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
+			const updatedEmailError = { isTriggered: false, message: '' };
+			setEmailError(updatedEmailError);
+		}
 	};
 
 	return (
 		<SafeAreaView style={styles.root}>
-			<Text style={styles.title}> Create a New Account </Text>
+			<Text style={styles.title}>Create a New Account</Text>
 
-			{/* Email input */}
-			<View style={styles.inputCard}>
-				<Text style={styles.text}>E-mail</Text>
-				<View>
-					<CustomInput
-						placeholder="email@example.com"
-						value={email}
-						changeHandler={(value) => setEmail(value)}
-					/>
-				</View>
+			{/* Email */}
+			<View style={styles.emailFieldWrapper}>
+				<TextInput
+					label="Email"
+					value={email}
+					mode="outlined"
+					outlineColor="black"
+					activeOutlineColor="black"
+					autoCapitalize="none"
+					textContentType="emailAddress"
+					keyboardType="email-address"
+					returnKeyType="next"
+					style={{ height: 50 }}
+					error={false}
+					errorText={'TESTING'}
+					onChangeText={(text) => {
+						if (emailError.isTriggered === false) {
+							const updatedEmailError = {
+								isTriggered : true,
+								message     : 'Please enter a valid email.'
+							};
+							setEmailError(updatedEmailError);
+						}
+						validateEmail(text);
+						return setEmail(text);
+					}}
+				/>
+				<Text style={styles.emailErrorMessage}>
+					{emailError.isTriggered && emailError.message}
+				</Text>
 			</View>
 
-			{/* Username Input */}
-			<View style={styles.inputCard}>
-				<Text style={styles.text}>Username</Text>
-				<View>
-					<CustomInput
-						placeholder="your username"
-						value={username}
-						changeHandler={(value) => setUsername(value)}
-					/>
-				</View>
-			</View>
-
-			{/* Password Input */}
-			<View style={styles.inputCard}>
-				<Text style={styles.text}>Password</Text>
-				<CustomInput
-					placeholder="use a strong password"
+			{/*  Password */}
+			<View style={styles.passwordFieldWrapper}>
+				<TextInput
+					label="Password"
 					value={password}
-					changeHandler={(value) => setPassword(value)}
+					mode="outlined"
+					outlineColor="black"
+					activeOutlineColor="black"
+					textContentType="password"
+					secureTextEntry={true}
+					style={{ height: 50 }}
+					onChangeText={(text) => setPassword(text)}
 				/>
 			</View>
 
-			{/* Button */}
-			<View>
-				<LongButton
-					buttonHandler={handleRegister}
-					buttonColor={Color.PrimaryMain}
-					buttonText="Register"
-				/>
+
+
+			{/* Register Button */}
+
+			<View style={styles.signInBottomWrapper}>
+				<Button
+					mode="contained"
+					uppercase={false}
+					color="#fa2600"
+					style={{ borderRadius: 10 }}
+					labelStyle={{
+						fontWeight : 'bold'
+					}}
+					contentStyle={{
+						padding : 3
+					}}
+					onPress={() => handleSignIn()}
+				>
+					Register
+				</Button>
+				<Text style={styles.signUpText}>
+					Already have an account?{' '}
+					<Text
+						style={styles.signUpLink}
+						onPress={() => navigation.navigate('SignIn')}
+					>
+						Sign In
+					</Text>
+				</Text>
 			</View>
 		</SafeAreaView>
 	);
 };
 
-export default Register;
+export default SignIn;
 
 const styles = StyleSheet.create({
-	root   : {
-		flex           : 1,
-		flexDirection  : 'column',
-		justifyContent : 'center',
-		alignItems     : 'flex-start',
-		margin         : 20
+	root                 : {
+		flex : 1
 	},
-	title  : {
-		fontSize      : 28,
-		fontWeight    : '700',
-		letterSpacing : 0.36
+	title                : {
+		position         : 'absolute',
+		width            : 305,
+		height           : 34,
+		left             : 35,
+		top              : 213,
+		fontSize         : 28,
+		fontWeight       : '700',
+		textAlign        : 'center',
+		marginHorizontal : 20,
+		letterSpacing    : 0.36
 	},
-	inputCard  : {
-		marginVertical: 10
+	emailFieldHeader     : {
+		marginBottom : 10
 	},
+	emailFieldWrapper    : {
+		position         : 'absolute',
+		width            : 315,
+		height           : 74,
+		top              : 304,
+		left             : 30,
+		marginHorizontal : 20
+	},
+	emailErrorMessage    : {
+		marginTop : 4,
+		color     : '#c7254e'
+	},
+	passwordFieldWrapper : {
+		position         : 'absolute',
+		width            : 315,
+		height           : 70,
+		top              : 398,
+		left             : 30,
+		marginHorizontal : 20
+	},
+	forgotPasswordLink   : {
+		position : 'absolute',
+		color    : '#fa2600',
+		top      : 470,
+		left     : 245
+	},
+	signInBottomWrapper  : {
+		position         : 'absolute',
+		width            : 315,
+		height           : 101,
+		top              : 525,
+		borderRadius     : 10,
+		left             : 30,
+		marginHorizontal : 20,
+		justifyContent   : 'space-between'
+	},
+	signUpText           : {
+		alignSelf  : 'center',
+		fontWeight : '500',
+		color      : 'rgba(60, 60, 67, 0.5)'
+	},
+	signUpLink           : {
+		color : '#fa2600'
+	}
 });
