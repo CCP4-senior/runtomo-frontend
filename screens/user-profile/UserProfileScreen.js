@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Text,
   View,
@@ -10,9 +10,11 @@ import {
   ImageBackground,
 } from "react-native";
 import { Card, Title, List, Button } from "react-native-paper";
+import Color from "../../assets/themes/Color";
 
 const UserProfileScreen = ({ navigation }) => {
   const { height } = useWindowDimensions();
+  const [isImageAvailable, setIsImageAvailable] = useState(false);
 
   const userData = {
     username: "WayneWadeRuns",
@@ -32,9 +34,7 @@ const UserProfileScreen = ({ navigation }) => {
         >
           <Image
             style={[styles.profilePicture, { height: height * 0.3 }]}
-            source={{
-              uri: "https://xsgames.co/randomusers/avatar.php?g=male",
-            }}
+            source={require("../../assets/images/demo/wade.png")}
             resizeMode="contain"
           />
         </ImageBackground>
@@ -45,7 +45,7 @@ const UserProfileScreen = ({ navigation }) => {
           <Button
             onPress={() => alert("Edit!")}
             icon="account-edit"
-            color="red"
+            color={Color.PrimaryMain}
             labelStyle={{ fontSize: 30 }}
           ></Button>
         </View>
@@ -53,7 +53,7 @@ const UserProfileScreen = ({ navigation }) => {
           <Text style={styles.userDataFont}>Runner Type</Text>
           {userData.runnerType.map((type, index) => {
             return (
-              <Text style={[styles.tags, styles.userDataFont]} key={index}>
+              <Text style={[styles.tags]} key={index}>
                 {" "}
                 {type}{" "}
               </Text>
@@ -82,14 +82,15 @@ const styles = StyleSheet.create({
     height: 250,
   },
   profilePicture: {
-    width: "48%",
+    width: 200,
     maxHeight: 200,
-    borderRadius: 10,
+    borderRadius: 200 / 2,
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: Color.Black,
     alignSelf: "center",
     marginTop: "auto",
     marginBottom: "auto",
+    overflow: "hidden",
   },
   userInfoContainer: {
     flex: 2,
@@ -110,15 +111,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   tags: {
-    backgroundColor: "rgba(233, 4, 4, 0.9)",
+    backgroundColor: Color.PrimaryMain,
     marginHorizontal: 4,
     borderRadius: 6,
-    borderColor: "red",
+    borderColor: Color.PrimaryMain,
     borderWidth: 0.2,
     overflow: "hidden",
     padding: 3,
-    color: "white",
+    color: Color.White,
     fontWeight: "bold",
+    fontSize: 16,
   },
   userDataWrapper: {
     backgroundColor: "#F5F5F5",
@@ -129,5 +131,7 @@ const styles = StyleSheet.create({
   },
   userDataFont: {
     fontSize: 16,
+    color: Color.Black,
+    fontWeight: "500",
   },
 });
