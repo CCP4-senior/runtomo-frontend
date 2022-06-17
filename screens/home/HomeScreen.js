@@ -46,12 +46,7 @@ const HomeScreen = ({ navigation, setData, data }) => {
   const selectEvent = (event) => {
     navigation.navigate("Event Details", {
       eventData: event,
-      data: data,
-      setData: setData,
     });
-  };
-  const openEventCreation = () => {
-    navigation.navigate("Event Creation");
   };
 
   return (

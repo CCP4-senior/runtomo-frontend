@@ -8,7 +8,7 @@ import DurationModal from "./DurationModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 
-const EventCreationScreen = ({ navigation, setNewEvent }) => {
+const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [ward, setWard] = useState("");
@@ -23,7 +23,7 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
     setDurationModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
-  const buttonHandler = (data) => {
+  const buttonHandler = () => {
     const requiredFields = [
       title,
       meetingPoint,
@@ -37,6 +37,8 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
       return;
     }
     const event = {
+      id: 4,
+      user: { id: 2, username: "WayneWadeRuns", age: 34 },
       title,
       meetingPoint,
       ward,
@@ -46,6 +48,8 @@ const EventCreationScreen = ({ navigation, setNewEvent }) => {
       eventDescription,
     };
     setNewEvent(event);
+    console.log(data);
+    setData([...data, event]);
     navigation.navigate("Event Created");
   };
   const [submitted, setSubmitted] = useState(false);

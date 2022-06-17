@@ -6,7 +6,7 @@ import HeaderStyle from "../assets/themes/HeaderStyle";
 
 const Stack = createStackNavigator();
 
-const EventCreationNavigator = () => {
+const EventCreationNavigator = ({ setData, data }) => {
   const initialEvent = Object.freeze({
     title: "",
     meetingPoint: "",
@@ -17,6 +17,7 @@ const EventCreationNavigator = () => {
     eventDescription: "",
   });
   const [newEvent, setNewEvent] = useState(initialEvent);
+  console.log("It's data!!!", data);
   return (
     <Stack.Navigator>
       <Stack.Screen name="Create Event" options={{ ...HeaderStyle }}>
@@ -25,6 +26,8 @@ const EventCreationNavigator = () => {
             {...props}
             newEvent={newEvent}
             setNewEvent={setNewEvent}
+            setData={setData}
+            data={data}
           />
         )}
       </Stack.Screen>
