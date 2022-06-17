@@ -12,7 +12,13 @@ import createOptions from "./reusableOptions/appNavigatorOptions";
 
 const Stack = createStackNavigator();
 
-const PersonalEventNavigator = ({ navigation, data, setData }) => {
+const PersonalEventNavigator = ({
+  navigation,
+  data,
+  setData,
+  setCurrEvent,
+  currEvent,
+}) => {
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -21,12 +27,23 @@ const PersonalEventNavigator = ({ navigation, data, setData }) => {
     <Stack.Navigator>
       <Stack.Screen name="My Sessions" options={createOptions(openSetting)}>
         {(props) => (
-          <PersonalEventScreen {...props} setData={setData} data={data} />
+          <PersonalEventScreen
+            {...props}
+            setData={setData}
+            data={data}
+            setCurrEvent={setCurrEvent}
+            currEvent={currEvent}
+          />
         )}
       </Stack.Screen>
       <Stack.Screen name="Event Details" options={{ headerShown: false }}>
         {(props) => (
-          <EventDetailsNavigator {...props} setData={setData} data={data} />
+          <EventDetailsNavigator
+            {...props}
+            setData={setData}
+            data={data}
+            currEvent={currEvent}
+          />
         )}
       </Stack.Screen>
       <Stack.Screen name="Profile" component={UserProfileScreen} />

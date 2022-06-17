@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
@@ -9,7 +9,13 @@ import createOptions from "./reusableOptions/appNavigatorOptions";
 
 const Stack = createStackNavigator();
 
-const HomeNavigator = ({ navigation, setData, data }) => {
+const HomeNavigator = ({
+  navigation,
+  setData,
+  data,
+  setCurrEvent,
+  currEvent,
+}) => {
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -17,12 +23,26 @@ const HomeNavigator = ({ navigation, setData, data }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" options={createOptions(openSetting)}>
-        {(props) => <HomeScreen {...props} setData={setData} data={data} />}
+        {(props) => (
+          <HomeScreen
+            {...props}
+            setData={setData}
+            data={data}
+            currEvent={currEvent}
+            setCurrEvent={setCurrEvent}
+          />
+        )}
       </Stack.Screen>
 
       <Stack.Screen name="Event Details" options={{ headerShown: false }}>
         {(props) => (
-          <EventDetailsNavigator {...props} setData={setData} data={data} />
+          <EventDetailsNavigator
+            {...props}
+            setData={setData}
+            data={data}
+            currEvent={currEvent}
+            setCurrEvent={setCurrEvent}
+          />
         )}
       </Stack.Screen>
       <Stack.Screen

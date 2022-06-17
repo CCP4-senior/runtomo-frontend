@@ -26,9 +26,9 @@ const EventDetailsScreen = ({
   eventData,
   data,
   setData,
-  // createdEventData,
+  setCurrEvent,
 }) => {
-  // if (createdEventData) eventData = createdEventData;
+  // const event = eventData;
   const { user } = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
@@ -40,9 +40,14 @@ const EventDetailsScreen = ({
   };
   const joinEvent = () => {
     let newData = data.map((event) => {
-      if (event.id === eventData.id) event.hasJoined = true;
+      if (event.id === eventData.id) {
+        event.hasJoined = true;
+        () => setCurrEvent(event);
+      }
       return event;
     });
+
+    console.log(newData);
     () => setData(newData);
     navigation.navigate("Event Joined");
   };
@@ -59,8 +64,6 @@ const EventDetailsScreen = ({
       navigation.navigate("Home");
     }, 2000);
   };
-
-  const event = eventData;
 
   return (
     <Provider>
@@ -79,7 +82,7 @@ const EventDetailsScreen = ({
           <Card style={styles.card} theme={{ roundness: 10 }}>
             <Card.Cover
               source={
-                event.image ||
+                eventData.image ||
                 require("../../assets/images/demo/defaultEvent.jpeg")
               }
               style={styles.eventImage}
@@ -87,10 +90,10 @@ const EventDetailsScreen = ({
 
             <View style={styles.label}>
               <Text style={styles.labelDate}>
-                {format(new Date(event.date), "d")}
+                {format(new Date(eventData.date), "d")}
               </Text>
               <Text style={styles.labelMonth}>
-                {format(new Date(event.date), "MMM")}
+                {format(new Date(eventData.date), "MMM")}
               </Text>
             </View>
             <Card.Content style={styles.creatorCard}>
@@ -98,15 +101,17 @@ const EventDetailsScreen = ({
                 onPress={openCreatorProfile}
                 style={[styles.listContainer]}
               >
-                {!event.user.image && (
+                {!eventData.user.image && (
                   <Avatar.Icon size={40} icon="account" style={styles.avatar} />
                 )}
-                {event.user.image && (
-                  <Avatar.Image size={40} source={event.user.image} />
+                {eventData.user.image && (
+                  <Avatar.Image size={40} source={eventData.user.image} />
                 )}
-                <Text style={styles.creatorName}>{event.user.username}</Text>
+                <Text style={styles.creatorName}>
+                  {eventData.user.username}
+                </Text>
               </TouchableOpacity>
-              <Title style={styles.eventTitle}>{event.title}</Title>
+              <Title style={styles.eventTitle}>{eventData.title}</Title>
 
               <View style={styles.listLine}></View>
 
@@ -119,9 +124,9 @@ const EventDetailsScreen = ({
                 />
                 <View style={styles.listContent}>
                   <Text style={styles.boldText}>
-                    {format(new Date(event.date), "E, MMM d, yyyy")}
+                    {format(new Date(eventData.date), "E, MMM d, yyyy")}
                   </Text>
-                  <Text>{format(new Date(event.time), "p")}</Text>
+                  <Text>{format(new Date(eventData.time), "p")}</Text>
                 </View>
               </View>
 
@@ -133,7 +138,7 @@ const EventDetailsScreen = ({
                   style={styles.listIcon}
                 />
                 <View style={styles.listContent}>
-                  <Text style={styles.boldText}>{event.ward}</Text>
+                  <Text style={styles.boldText}>{eventData.ward}</Text>
                   <Text>View map</Text>
                 </View>
               </View>
@@ -157,7 +162,7 @@ const EventDetailsScreen = ({
             </Card.Content>
           </Card>
 
-          {event.user.id === user.id && (
+          {eventData.user.id === user.id && (
             <>
               <LongButton
                 buttonHandler={() => {
@@ -177,7 +182,7 @@ const EventDetailsScreen = ({
             </>
           )}
 
-          {!event.hasJoined && event.user.id !== user.id && (
+          {!eventData.hasJoined && eventData.user.id !== user.id && (
             <LongButton
               buttonHandler={joinEvent}
               buttonColor={Color.PrimaryMain}
@@ -185,7 +190,7 @@ const EventDetailsScreen = ({
             />
           )}
 
-          {event.hasJoined && event.user.id !== user.id && (
+          {eventData.hasJoined && eventData.user.id !== user.id && (
             <>
               <Text>You've already joined the event!</Text>
               <LongButton

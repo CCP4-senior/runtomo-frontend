@@ -10,7 +10,7 @@ import {
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
-const PersonalEventScreen = ({ navigation, data }) => {
+const PersonalEventScreen = ({ navigation, data, setCurrEvent, currEvent }) => {
   const listTab = [
     {
       status: "All",
@@ -59,9 +59,8 @@ const PersonalEventScreen = ({ navigation, data }) => {
   };
 
   const selectEvent = (eventData) => {
-    navigation.navigate("Event Details", {
-      eventData: eventData,
-    });
+    setCurrEvent(eventData);
+    navigation.navigate("Event Details");
   };
 
   return (

@@ -63,6 +63,7 @@ const AppNavigator = () => {
     },
   ];
   const [data, setData] = useState(mockdata);
+  const [currEvent, setCurrEvent] = useState("");
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -93,7 +94,15 @@ const AppNavigator = () => {
           title: "Home",
         }}
       >
-        {(props) => <HomeNavigator {...props} setData={setData} data={data} />}
+        {(props) => (
+          <HomeNavigator
+            {...props}
+            setData={setData}
+            data={data}
+            setCurrEvent={setCurrEvent}
+            currEvent={currEvent}
+          />
+        )}
       </Tab.Screen>
       <Tab.Screen
         name="Event Creation"
@@ -112,7 +121,13 @@ const AppNavigator = () => {
         }}
       >
         {(props) => (
-          <PersonalEventNavigator {...props} setData={setData} data={data} />
+          <PersonalEventNavigator
+            {...props}
+            setData={setData}
+            data={data}
+            setCurrEvent={setCurrEvent}
+            currEvent={currEvent}
+          />
         )}
       </Tab.Screen>
     </Tab.Navigator>

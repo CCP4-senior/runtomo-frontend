@@ -11,7 +11,7 @@ import { Button, TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 
-const HomeScreen = ({ navigation, setData, data }) => {
+const HomeScreen = ({ navigation, setData, data, setCurrEvent }) => {
   // const mockdata = [
   //   {
   //     id: 1,
@@ -44,9 +44,8 @@ const HomeScreen = ({ navigation, setData, data }) => {
   // const [data, setData] = useState(mockdata);
 
   const selectEvent = (event) => {
-    navigation.navigate("Event Details", {
-      eventData: event,
-    });
+    setCurrEvent(event);
+    navigation.navigate("Event Details");
   };
 
   return (
