@@ -21,22 +21,6 @@ const PublicProfileScreen = ({ navigation, user }) => {
     runnerType: ["avid", "social"],
   };
 
-  //   useEffect(() => {
-  //     handleUserUrl(user);
-  //   }, []);
-
-  //   const handleUserUrl = (user) => {
-  //     let url = "";
-  //     if (user.username === "KumikoKM") {
-  //       url += "kumiko.png";
-  //     } else if (user.username === "WayneWadeRuns") {
-  //       url += "wade.png";
-  //     } else {
-  //       url += "kei.png";
-  //     }
-  //     setImageUrl(url);
-  //   };
-
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.imageContainer}>
@@ -49,11 +33,6 @@ const PublicProfileScreen = ({ navigation, user }) => {
         >
           <Image
             style={[styles.profilePicture, { height: height * 0.3 }]}
-            // source={
-            //   user.username === "KumikoKM"
-            //     ? require("../../assets/images/demo/kumiko.png")
-            //     : require("../../assets/images/demo/kei.png")
-            // }
             source={user.image}
             resizeMode="contain"
           />
