@@ -39,9 +39,13 @@ const SignIn = () => {
 
 	return (
 		<SafeAreaView style={styles.root}>
+
+			{/*  Title */}
+			
 			<Text style={styles.title}>Create a New Account</Text>
 
 			{/* Email */}
+
 			<View style={styles.emailFieldWrapper}>
 				<TextInput
 					label="Email"
@@ -106,9 +110,25 @@ const SignIn = () => {
 				/>
 			</View>
 
+			{/*  Second Password */}
+
+			<View style={styles.secondPasswordFieldWrapper}>
+				<TextInput
+					label="Password (retype)"
+					value={secondPassword}
+					mode="outlined"
+					outlineColor="black"
+					activeOutlineColor="black"
+					textContentType="password"
+					secureTextEntry={true}
+					style={{ height: 50 }}
+					onChangeText={(text) => setSecondPassword(text)}
+				/>
+			</View>
+
 			{/* Register Button */}
 
-			<View style={styles.signInBottomWrapper}>
+			<View style={styles.registerBottomWrapper}>
 				<Button
 					mode="contained"
 					uppercase={false}
@@ -124,10 +144,10 @@ const SignIn = () => {
 				>
 					Register
 				</Button>
-				<Text style={styles.signUpText}>
+				<Text style={styles.registerText}>
 					Already have an account?{' '}
 					<Text
-						style={styles.signUpLink}
+						style={styles.registerLink}
 						onPress={() => navigation.navigate('SignIn')}
 					>
 						Sign In
@@ -141,25 +161,25 @@ const SignIn = () => {
 export default SignIn;
 
 const styles = StyleSheet.create({
-	root                 : {
+	root                       : {
 		flex : 1
 	},
-	title                : {
+	title                      : {
 		position         : 'absolute',
 		width            : 305,
 		height           : 34,
 		left             : 35,
-		top              : 213,
+		top              : 125,
 		fontSize         : 28,
 		fontWeight       : '700',
 		textAlign        : 'center',
 		marginHorizontal : 20,
 		letterSpacing    : 0.36
 	},
-	emailFieldHeader     : {
+	emailFieldHeader           : {
 		marginBottom : 10
 	},
-	emailFieldWrapper    : {
+	emailFieldWrapper          : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 74,
@@ -167,48 +187,56 @@ const styles = StyleSheet.create({
 		left             : 30,
 		marginHorizontal : 20
 	},
-	emailErrorMessage    : {
+	emailErrorMessage          : {
 		marginTop : 4,
 		color     : '#c7254e'
 	},
-	usernameFieldWrapper : {
+	usernameFieldWrapper       : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 74,
 		left             : 30,
 		marginHorizontal : 20,
-		top              : 50
+		top              : 200
 	},
-	passwordFieldWrapper : {
+	passwordFieldWrapper       : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 70,
-		top              : 398,
+		top              : 400,
 		left             : 30,
 		marginHorizontal : 20
 	},
-	forgotPasswordLink   : {
+	secondPasswordFieldWrapper : {
+		position         : 'absolute',
+		width            : 315,
+		height           : 70,
+		top              : 500,
+		left             : 30,
+		marginHorizontal : 20
+	},
+	forgotPasswordLink         : {
 		position : 'absolute',
 		color    : '#fa2600',
 		top      : 470,
 		left     : 245
 	},
-	signInBottomWrapper  : {
+	registerBottomWrapper        : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 101,
-		top              : 525,
+		top              : 600,
 		borderRadius     : 10,
 		left             : 30,
 		marginHorizontal : 20,
 		justifyContent   : 'space-between'
 	},
-	signUpText           : {
+	registerText                 : {
 		alignSelf  : 'center',
 		fontWeight : '500',
 		color      : 'rgba(60, 60, 67, 0.5)'
 	},
-	signUpLink           : {
+	registerLink                 : {
 		color : '#fa2600'
 	}
 });
