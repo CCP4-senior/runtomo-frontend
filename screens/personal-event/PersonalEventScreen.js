@@ -91,6 +91,7 @@ const PersonalEventScreen = ({ navigation, data }) => {
                   handlePress={() => selectEvent(session)}
                   key={id}
                   event={session}
+                  image={session.image}
                 />
               );
             })}

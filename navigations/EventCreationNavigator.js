@@ -45,6 +45,16 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
           />
         )}
       </Stack.Screen>
+      <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
+        {(props) => (
+          <EventDetailsScreen
+            {...props}
+            eventData={eventData}
+            data={data}
+            setData={setData}
+          />
+        )}
+      </Stack.Screen>
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
