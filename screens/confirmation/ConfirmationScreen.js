@@ -49,11 +49,7 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
 
       <EventCard
         event={event}
-        handlePress={() =>
-          navigation.navigate("Running Event", {
-            eventData: event,
-          })
-        }
+        handlePress={() => navigation.navigate("Running Event")}
       />
       {actionType === "create" && (
         <LongButton

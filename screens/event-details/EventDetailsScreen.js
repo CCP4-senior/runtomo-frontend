@@ -26,9 +26,9 @@ const EventDetailsScreen = ({
   eventData,
   data,
   setData,
-  createdEventData,
+  // createdEventData,
 }) => {
-  if (createdEventData) eventData = createdEventData;
+  // if (createdEventData) eventData = createdEventData;
   const { user } = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);

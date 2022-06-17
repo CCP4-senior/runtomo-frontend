@@ -50,7 +50,7 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
         {(props) => (
           <EventDetailsScreen
             {...props}
-            createdEventData={newEvent}
+            eventData={newEvent}
             data={data}
             setData={setData}
           />
