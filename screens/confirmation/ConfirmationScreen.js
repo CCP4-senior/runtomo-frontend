@@ -63,7 +63,7 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
       )}
       <LongButton
         buttonHandler={() => {
-          navigation.navigate("Home");
+          navigation.navigate("Home Page");
         }}
         buttonColor={Color.PrimaryMain}
         buttonText="Done"
