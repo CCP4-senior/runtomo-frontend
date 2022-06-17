@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeNavigator from "../navigations/HomeNavigator";
 import EventCreationNavigator from "./EventCreationNavigator";

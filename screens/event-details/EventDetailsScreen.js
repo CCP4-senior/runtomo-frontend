@@ -21,6 +21,7 @@ import { format } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
+import { createNavigatorFactory } from "@react-navigation/native";
 
 const EventDetailsScreen = ({
   navigation,
@@ -71,9 +72,13 @@ const EventDetailsScreen = ({
     }, 2000);
   };
 
+  // Temporary implemenet for demo (need to be cancelled from the last)
   const cancelEvent = () => {
-    const newData = data.filter((event) => event.id !== eventData.id);
-    () => setData(newData);
+    // const newData = data.filter((event) => {
+    //   return event.id !== eventData.id;
+    // });
+    const newData = data.splice(eventData.id - 1, 1);
+    () => setData();
     setIsAttendanceCancellation(false);
     showDialog();
     setTimeout(() => {
