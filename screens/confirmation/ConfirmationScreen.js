@@ -61,13 +61,24 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
           buttonTextColor="#555555"
         />
       )}
-      <LongButton
-        buttonHandler={() => {
-          navigation.navigate("Home Page");
-        }}
-        buttonColor={Color.PrimaryMain}
-        buttonText="Done"
-      />
+      {actionType === "create" && (
+        <LongButton
+          buttonHandler={() => {
+            navigation.navigate("Home Page");
+          }}
+          buttonColor={Color.PrimaryMain}
+          buttonText="Done"
+        />
+      )}
+      {actionType === "join" && (
+        <LongButton
+          buttonHandler={() => {
+            navigation.navigate("Home");
+          }}
+          buttonColor={Color.PrimaryMain}
+          buttonText="Done"
+        />
+      )}
     </SafeAreaView>
   );
 };
