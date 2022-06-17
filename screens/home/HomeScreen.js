@@ -19,7 +19,7 @@ const HomeScreen = ({ navigation }) => {
       ward: "Chiyoda",
       date: "2022-09-10T14:02:55.300Z",
       time: "2022-09-10T14:02:55.300Z",
-      user: { id: 1, username: "KumikoKM" },
+      user: { id: 1, username: "KumikoKM", age: 28 },
       hasJoined: false,
     },
     {
@@ -28,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
       ward: "Shibuya",
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
-      user: { id: 2, username: "WayneWadeRuns" },
+      user: { id: 2, username: "WayneWadeRuns", age: 34 },
       hasJoined: false,
     },
     {
@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) => {
       ward: "Shinjuku",
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
-      user: { id: 3, username: "Kei666" },
+      user: { id: 3, username: "Kei666", age: 29 },
       hasJoined: false,
     },
   ];
