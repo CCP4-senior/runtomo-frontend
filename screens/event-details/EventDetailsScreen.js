@@ -21,7 +21,14 @@ import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 
-const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
+const EventDetailsScreen = ({
+  navigation,
+  eventData,
+  data,
+  setData,
+  createdEventData,
+}) => {
+  if (createdEventData) eventData = createdEventData;
   const { user } = useContext(AuthContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
@@ -70,7 +77,13 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
       <ScrollView>
         <View style={styles.container}>
           <Card style={styles.card} theme={{ roundness: 10 }}>
-            <Card.Cover source={event.image} style={styles.eventImage} />
+            <Card.Cover
+              source={
+                event.image ||
+                require("../../assets/images/demo/defaultEvent.jpeg")
+              }
+              style={styles.eventImage}
+            />
 
             <View style={styles.label}>
               <Text style={styles.labelDate}>

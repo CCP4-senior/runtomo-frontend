@@ -5,6 +5,7 @@ import ConfirmationScreen from "../screens/confirmation/ConfirmationScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
 import SettingScreen from "../screens/setting/SettingScreen";
+import EventDetailsScreen from "../screens/event-details/EventDetailsScreen";
 
 const Stack = createStackNavigator();
 
@@ -49,7 +50,7 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
         {(props) => (
           <EventDetailsScreen
             {...props}
-            eventData={eventData}
+            createdEventData={newEvent}
             data={data}
             setData={setData}
           />
