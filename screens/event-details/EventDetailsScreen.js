@@ -72,73 +72,31 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
           <Card style={styles.card} theme={{ roundness: 10 }}>
             <Card.Cover
               source={{ uri: "https://picsum.photos/700" }}
-              style={{
-                height: 175,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-              }}
+              style={styles.eventImage}
             />
 
             <View style={styles.label}>
-              <Text
-                style={{
-                  textAlign: "center",
-                  marginTop: 6,
-                  fontSize: 30,
-                  fontWeight: "700",
-                  color: Color.White,
-                }}
-              >
+              <Text style={styles.labelDate}>
                 {format(new Date(event.date), "d")}
               </Text>
-              <Text
-                style={{
-                  marginTop: 0,
-                  textAlign: "center",
-                  fontSize: 16,
-                  fontWeight: "700",
-                  color: Color.White,
-                }}
-              >
+              <Text style={styles.labelMonth}>
                 {format(new Date(event.date), "MMM")}
               </Text>
             </View>
-            <Card.Content style={{ padding: 13 }}>
+            <Card.Content style={styles.creatorCard}>
               <TouchableOpacity
                 onPress={openCreatorProfile}
                 style={[styles.listContainer]}
               >
                 {!event.user.image && (
-                  <Avatar.Icon
-                    size={40}
-                    icon="account"
-                    style={{ backgroundColor: Color.GrayDark }}
-                  />
+                  <Avatar.Icon size={40} icon="account" style={styles.avatar} />
                 )}
                 {event.user.image && (
                   <Avatar.Image size={40} source={event.user.image} />
                 )}
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "700",
-                    lineHeight: 40,
-                    marginLeft: 10,
-                  }}
-                >
-                  {event.user.username}
-                </Text>
+                <Text style={styles.creatorName}>{event.user.username}</Text>
               </TouchableOpacity>
-              <Title
-                style={{
-                  fontSize: 25,
-                  fontWeight: "700",
-                  color: Color.PrimaryMain,
-                  paddingTop: 15,
-                }}
-              >
-                {event.title}
-              </Title>
+              <Title style={styles.eventTitle}>{event.title}</Title>
 
               <View style={styles.listLine}></View>
 
@@ -183,17 +141,12 @@ const EventDetailsScreen = ({ navigation, eventData, data, setData }) => {
                 <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
                 <Image
                   source={require("../../assets/images/map.png")}
-                  style={{
-                    height: 270,
-                    width: 285,
-                    alignSelf: "center",
-                    marginTop: 12,
-                  }}
+                  style={styles.map}
                 />
               </View>
             </Card.Content>
           </Card>
-          {/* Edit Event button only visible to creator of the event */}
+
           {event.user.id === user.id && (
             <>
               <LongButton
@@ -298,5 +251,44 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
     fontWeight: "600",
+  },
+  eventImage: {
+    height: 175,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  labelDate: {
+    textAlign: "center",
+    marginTop: 6,
+    fontSize: 30,
+    fontWeight: "700",
+    color: Color.White,
+  },
+  labelMonth: {
+    marginTop: 0,
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "700",
+    color: Color.White,
+  },
+  creatorCard: { padding: 13 },
+  avatar: { backgroundColor: Color.GrayDark },
+  creatorName: {
+    fontSize: 18,
+    fontWeight: "700",
+    lineHeight: 40,
+    marginLeft: 10,
+  },
+  eventTitle: {
+    fontSize: 25,
+    fontWeight: "700",
+    color: Color.PrimaryMain,
+    paddingTop: 15,
+  },
+  map: {
+    height: 270,
+    width: 285,
+    alignSelf: "center",
+    marginTop: 12,
   },
 });
