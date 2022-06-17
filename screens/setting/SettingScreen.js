@@ -10,7 +10,6 @@ import {
   Portal,
   Dialog,
   Provider,
-  Avatar,
 } from "react-native-paper";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import Color from "../../assets/themes/Color.js";
@@ -91,9 +90,10 @@ const SettingScreen = ({ navigation }) => {
                   justifyContent: "center",
                 }}
               >
-                <Avatar.Image
+                <IconButton
+                  icon="account-circle"
+                  color={Color.GrayDark}
                   size={60}
-                  source={require("../../assets/images/demo/wade.png")}
                 />
               </View>
               <View style={styles.accountDetails}>
