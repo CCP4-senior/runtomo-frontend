@@ -17,7 +17,9 @@ const AppNavigator = () => {
       date: "2022-09-10T14:02:55.300Z",
       time: "2022-09-10T14:02:55.300Z",
       user: { id: 1, username: "KumikoKM", age: 28 },
-      hasJoined: false,
+      participants: [2],
+      owner_id: 1,
+      hasJoined: true,
     },
     {
       id: 2,
@@ -26,7 +28,9 @@ const AppNavigator = () => {
       date: "2022-08-20T19:30:45.300Z",
       time: "2022-08-20T19:30:45.300Z",
       user: { id: 2, username: "WayneWadeRuns", age: 34 },
-      hasJoined: false,
+      participants: [],
+      owner_id: 2,
+      hasJoined: true,
     },
     {
       id: 3,
@@ -35,6 +39,8 @@ const AppNavigator = () => {
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
       user: { id: 3, username: "Kei666", age: 29 },
+      participants: [],
+      owner_id: 3,
       hasJoined: false,
     },
   ];
@@ -49,7 +55,7 @@ const AppNavigator = () => {
           if (route.name === "Home Page") {
             iconName = "ios-home";
           }
-          if (route.name === "My Sessions") {
+          if (route.name === "My Sessions Main Page") {
             iconName = "people";
           }
           if (route.name === "Event Creation") {
@@ -64,7 +70,6 @@ const AppNavigator = () => {
     >
       <Tab.Screen
         name="Home Page"
-        // component={HomeNavigator}
         options={{
           headerShown: false,
           title: "Home",
@@ -74,7 +79,6 @@ const AppNavigator = () => {
       </Tab.Screen>
       <Tab.Screen
         name="Event Creation"
-        // component={EventCreationNavigator}
         options={{
           headerShown: false,
         }}
@@ -84,8 +88,7 @@ const AppNavigator = () => {
         )}
       </Tab.Screen>
       <Tab.Screen
-        name="My Sessions"
-        // component={PersonalEventNavigator}
+        name="My Sessions Main Page"
         options={{
           headerShown: false,
         }}

@@ -7,80 +7,33 @@ import EventDetailsNavigator from "./EventDetailsNavigator";
 import EventCreationNavigator from "./EventCreationNavigator";
 import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 import SettingScreen from "../screens/setting/SettingScreen";
-import Color from "../assets/themes/Color.js";
+import HeaderStyle from "../assets/themes/HeaderStyle";
+import createOptions from "./reusableOptions/appNavigatorOptions";
 
 const Stack = createStackNavigator();
 
-const PersonalEventNavigator = ({ navigation }) => {
-  const openProfileScreen = (eventData) => {
-    navigation.navigate("Profile", {
-      eventData: eventData,
-    });
-  };
+const PersonalEventNavigator = ({ navigation, data, setData }) => {
   const openSetting = () => {
     navigation.navigate("Setting");
-  };
-  const headerStyle = {
-    headerStyle: {
-      backgroundColor: Color.Fill,
-      height: 110,
-    },
-    headerTintColor: Color.HeaderTitle,
-    headerTitleStyle: {
-      fontWeight: "bold",
-    },
   };
 
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="My Sessions"
-        component={PersonalEventScreen}
-        options={{
-          title: "My Sessions",
-          ...headerStyle,
-          // headerRight: () => (
-          //   <TouchableOpacity
-          //     onPress={() => openProfileScreen()}
-          //     style={[styles.iconContainer, styles.avatar]}
-          //   >
-          //     <Avatar.Icon icon="account" size={39} title="Info" />
-          //   </TouchableOpacity>
-          // ),
-          // headerLeft: () => (
-          //   <TouchableOpacity
-          //     style={[styles.iconContainer, styles.menu]}
-          //     onPress={openSetting}
-          //   >
-          //     <View
-          //       style={{
-          //         width: 35,
-          //         height: 35,
-          //         alignItems: "center",
-          //         justifyContent: "center",
-          //       }}
-          //     >
-          //       <IconButton icon="menu" color="grey" size={35} />
-          //     </View>
-          //   </TouchableOpacity>
-          // ),
-        }}
-      />
-      <Stack.Screen
-        name="Event Details"
-        component={EventDetailsNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Event Creation"
-        component={EventCreationNavigator}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="My Sessions" options={createOptions(openSetting)}>
+        {(props) => (
+          <PersonalEventScreen {...props} setData={setData} data={data} />
+        )}
+      </Stack.Screen>
+      <Stack.Screen name="Event Details" options={{ headerShown: false }}>
+        {(props) => (
+          <EventDetailsNavigator {...props} setData={setData} data={data} />
+        )}
+      </Stack.Screen>
       <Stack.Screen name="Profile" component={UserProfileScreen} />
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
-        options={{ ...headerStyle }}
+        options={{ ...HeaderStyle }}
       />
     </Stack.Navigator>
   );

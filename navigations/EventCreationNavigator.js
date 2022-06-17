@@ -3,10 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
 import ConfirmationScreen from "../screens/confirmation/ConfirmationScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
+import createOptions from "./reusableOptions/appNavigatorOptions";
+import SettingScreen from "../screens/setting/SettingScreen";
 
 const Stack = createStackNavigator();
 
-const EventCreationNavigator = ({ setData, data }) => {
+const EventCreationNavigator = ({ navigation, setData, data }) => {
   const initialEvent = Object.freeze({
     title: "",
     meetingPoint: "",
@@ -17,10 +19,12 @@ const EventCreationNavigator = ({ setData, data }) => {
     eventDescription: "",
   });
   const [newEvent, setNewEvent] = useState(initialEvent);
-  console.log("It's data!!!", data);
+  const openSetting = () => {
+    navigation.navigate("Setting");
+  };
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Create Event" options={{ ...HeaderStyle }}>
+      <Stack.Screen name="Create Event" options={createOptions(openSetting)}>
         {(props) => (
           <EventCreationScreen
             {...props}
@@ -41,6 +45,11 @@ const EventCreationNavigator = ({ setData, data }) => {
           />
         )}
       </Stack.Screen>
+      <Stack.Screen
+        name="Setting"
+        component={SettingScreen}
+        options={{ ...HeaderStyle }}
+      />
     </Stack.Navigator>
   );
 };

@@ -1,15 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
   SafeAreaView,
   StyleSheet,
   Image,
-  TouchableOpacity,
   useWindowDimensions,
   ImageBackground,
 } from "react-native";
-import { Card, Title, List, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 
 const UserProfileScreen = ({ navigation }) => {

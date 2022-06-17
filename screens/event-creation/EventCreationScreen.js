@@ -48,7 +48,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       eventDescription,
     };
     setNewEvent(event);
-    console.log(data);
     setData([...data, event]);
     navigation.navigate("Event Created");
   };
@@ -115,38 +114,10 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               submitted={submitted}
             />
           </View>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              alignSelf: "flex-start",
-              marginLeft: 20,
-              marginTop: 10,
-            }}
-          >
+          <View style={styles.imageContainer}>
             <Text style={{ fontWeight: "bold" }}>Event Image</Text>
-            <View
-              backgroundColor="#fff"
-              style={{
-                width: 98,
-                height: 98,
-                borderRadius: 10,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <View
-                style={{
-                  borderStyle: "dashed",
-                  borderWidth: 1,
-                  borderRadius: 10,
-                  borderColor: Color.GrayDark,
-                  width: 80,
-                  height: 80,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+            <View backgroundColor="#fff" style={styles.imageBackground}>
+              <View style={styles.imageLogo}>
                 <IconButton icon="camera" color={Color.Text} size={29} />
                 <Text>Add Image</Text>
               </View>
@@ -158,13 +129,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               mode="outlined"
               outlineColor="#fff"
               activeOutlineColor={Color.GrayDark}
-              theme={{
-                roundness: 10,
-                colors: {
-                  placeholder: Color.Text,
-                },
-              }}
-              style={{ backgroundColor: "#fff", width: 335, height: 98 }}
+              theme={styles.inputTheme}
+              style={styles.input}
               placeholder="Event Description"
               value={eventDescription}
               onChangeText={(text) => setEventDescription(text)}
@@ -204,4 +170,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  imageContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-start",
+    marginLeft: 20,
+    marginTop: 10,
+  },
+  imageBackground: {
+    width: 98,
+    height: 98,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  imageLogo: {
+    borderStyle: "dashed",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: Color.GrayDark,
+    width: 80,
+    height: 80,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputTheme: {
+    roundness: 10,
+    colors: {
+      placeholder: Color.Text,
+    },
+  },
+  input: { backgroundColor: "#fff", width: 335, height: 98 },
 });
