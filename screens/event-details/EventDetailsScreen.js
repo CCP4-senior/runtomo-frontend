@@ -33,6 +33,8 @@ const EventDetailsScreen = ({
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
+  const [isAttendanceCancellation, setIsAttendanceCancellation] =
+    useState(true);
   const openCreatorProfile = () => {
     if (eventData.user.id !== user.id) navigation.navigate("Creator Profile");
     // To avoid showing femal picture for Wade (current user). To be removed later
@@ -62,6 +64,17 @@ const EventDetailsScreen = ({
       return event;
     });
     () => setData(newData);
+    setIsAttendanceCancellation(true);
+    showDialog();
+    setTimeout(() => {
+      navigation.navigate("Home");
+    }, 2000);
+  };
+
+  const cancelEvent = () => {
+    const newData = data.filter((event) => event.id !== eventData.id);
+    () => setData(newData);
+    setIsAttendanceCancellation(false);
     showDialog();
     setTimeout(() => {
       navigation.navigate("Home");
@@ -72,11 +85,21 @@ const EventDetailsScreen = ({
     <Provider>
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
-          <Dialog.Title>Attendance Canceled</Dialog.Title>
+          {isAttendanceCancellation ? (
+            <Dialog.Title>Attendance Canceled</Dialog.Title>
+          ) : (
+            <Dialog.Title>Event Canceled</Dialog.Title>
+          )}
           <Dialog.Content>
-            <Paragraph>
-              "Attendance to this event has been canceled successufully."
-            </Paragraph>
+            {isAttendanceCancellation ? (
+              <Paragraph>
+                "Attendance to this event has been canceled successufully."
+              </Paragraph>
+            ) : (
+              <Paragraph>
+                "This event has been canceled successufully."
+              </Paragraph>
+            )}
           </Dialog.Content>
         </Dialog>
       </Portal>
@@ -181,9 +204,7 @@ const EventDetailsScreen = ({
                   buttonTextColor="#555555"
                 />
                 <LongButton
-                  buttonHandler={() => {
-                    alert("cancel event page");
-                  }}
+                  buttonHandler={cancelEvent}
                   buttonColor={Color.PrimaryMain}
                   buttonText="Cancel Event"
                 />
