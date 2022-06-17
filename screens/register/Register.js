@@ -92,13 +92,13 @@ const SignIn = () => {
 					label="Email"
 					value={email}
 					mode="outlined"
-					outlineColor="black"
-					activeOutlineColor="black"
+					outlineColor={Color.Black}
+					activeOutlineColor={Color.Black}
 					autoCapitalize="none"
 					textContentType="emailAddress"
 					keyboardType="email-address"
 					returnKeyType="next"
-					style={{ height: 50 }}
+					style={{ height: 50, backgroundColor: Color.White }}
 					error={false}
 					errorText={'TESTING'}
 					onChangeText={(text) => {
@@ -125,12 +125,12 @@ const SignIn = () => {
 					label="Username"
 					value={username}
 					mode="outlined"
-					outlineColor="black"
-					activeOutlineColor="black"
+					outlineColor={Color.Black}
+					activeOutlineColor={Color.Black}
 					autoCapitalize="none"
 					keyboardType="default"
 					returnKeyType="next"
-					style={{ height: 50 }}
+					style={{ height: 50, backgroundColor: Color.White }}
 					onChangeText={handleUsername}
 				/>
 			</View>
@@ -142,11 +142,11 @@ const SignIn = () => {
 					label="Password"
 					value={password}
 					mode="outlined"
-					outlineColor="black"
-					activeOutlineColor="black"
+					outlineColor={Color.Black}
+					activeOutlineColor={Color.Black}
 					textContentType="password"
 					secureTextEntry={true}
-					style={{ height: 50 }}
+					style={{ height: 50, backgroundColor: Color.White }}
 					onChangeText={(text) => setPassword(text)}
 				/>
 			</View>
@@ -158,11 +158,11 @@ const SignIn = () => {
 					label="Password (retype)"
 					value={secondPassword}
 					mode="outlined"
-					outlineColor="black"
-					activeOutlineColor="black"
+					outlineColor={Color.Black}
+					activeOutlineColor={Color.Black}
 					textContentType="password"
 					secureTextEntry={true}
-					style={{ height: 50 }}
+					style={{ height: 50, backgroundColor: Color.White }}
 					onChangeText={(text) => setSecondPassword(text)}
 				/>
 			</View>
@@ -176,10 +176,11 @@ const SignIn = () => {
 					color={Color.PrimaryMain}
 					style={{ borderRadius: 10 }}
 					labelStyle={{
-						fontWeight : 'bold'
+						fontWeight : 'bold',
+						fontSize: 18,
 					}}
 					contentStyle={{
-						padding : 3
+						padding : 5
 					}}
 					onPress={() => handleSignIn()}
 				>
@@ -203,7 +204,7 @@ export default SignIn;
 
 const styles = StyleSheet.create({
 	root                       : {
-		flex : 1
+		flex           : 1,
 	},
 	title                      : {
 		position         : 'absolute',
