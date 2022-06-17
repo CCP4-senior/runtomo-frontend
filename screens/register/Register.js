@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Button, TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/authcontext/AuthContext';
+import Color from '../../assets/themes/Color.js';
 
 const SignIn = () => {
 	const navigation = useNavigation();
@@ -39,9 +40,8 @@ const SignIn = () => {
 
 	return (
 		<SafeAreaView style={styles.root}>
-
 			{/*  Title */}
-			
+
 			<Text style={styles.title}>Create a New Account</Text>
 
 			{/* Email */}
@@ -132,7 +132,7 @@ const SignIn = () => {
 				<Button
 					mode="contained"
 					uppercase={false}
-					color="#fa2600"
+					color={Color.PrimaryMain}
 					style={{ borderRadius: 10 }}
 					labelStyle={{
 						fontWeight : 'bold'
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
 	},
 	emailErrorMessage          : {
 		marginTop : 4,
-		color     : '#c7254e'
+		color     : Color.PrimaryMain
 	},
 	usernameFieldWrapper       : {
 		position         : 'absolute',
@@ -217,11 +217,11 @@ const styles = StyleSheet.create({
 	},
 	forgotPasswordLink         : {
 		position : 'absolute',
-		color    : '#fa2600',
+		color    : Color.PrimaryMain,
 		top      : 470,
 		left     : 245
 	},
-	registerBottomWrapper        : {
+	registerBottomWrapper      : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 101,
@@ -231,12 +231,12 @@ const styles = StyleSheet.create({
 		marginHorizontal : 20,
 		justifyContent   : 'space-between'
 	},
-	registerText                 : {
+	registerText               : {
 		alignSelf  : 'center',
 		fontWeight : '500',
-		color      : 'rgba(60, 60, 67, 0.5)'
+		color      : Color.Text
 	},
-	registerLink                 : {
-		color : '#fa2600'
+	registerLink               : {
+		color : Color.PrimaryMain
 	}
 });
