@@ -162,7 +162,11 @@ export default SignIn;
 
 const styles = StyleSheet.create({
 	root                       : {
-		flex : 1
+		flex           : 1,
+		flexDirection  : 'column',
+		justifyContent : 'center',
+		alignItems     : 'flex-start',
+		margin         : 20
 	},
 	title                      : {
 		position         : 'absolute',
