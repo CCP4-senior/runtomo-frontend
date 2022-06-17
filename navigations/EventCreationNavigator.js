@@ -36,7 +36,10 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="Event Created" options={{ ...HeaderStyle }}>
+      <Stack.Screen
+        name="Event Created"
+        options={{ ...HeaderStyle, headerShown: false }}
+      >
         {(props) => (
           <ConfirmationScreen
             {...props}
@@ -46,7 +49,10 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
+      <Stack.Screen
+        name="Running Event"
+        options={{ ...HeaderStyle, headerShown: false }}
+      >
         {(props) => (
           <EventDetailsScreen
             {...props}

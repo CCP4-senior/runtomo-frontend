@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  SafeAreaView,
 } from "react-native";
 import {
   Avatar,
@@ -80,131 +81,137 @@ const EventDetailsScreen = ({
           </Dialog.Content>
         </Dialog>
       </Portal>
-      <ScrollView>
-        <View style={styles.container}>
-          <Card style={styles.card} theme={{ roundness: 10 }}>
-            <Card.Cover
-              source={
-                eventData.image ||
-                require("../../assets/images/demo/defaultEvent.jpeg")
-              }
-              style={styles.eventImage}
-            />
+      <SafeAreaView>
+        <ScrollView>
+          <View style={styles.container}>
+            <Card style={styles.card} theme={{ roundness: 10 }}>
+              <Card.Cover
+                source={
+                  eventData.image ||
+                  require("../../assets/images/demo/defaultEvent.jpeg")
+                }
+                style={styles.eventImage}
+              />
 
-            <View style={styles.label}>
-              <Text style={styles.labelDate}>
-                {format(new Date(eventData.date), "d")}
-              </Text>
-              <Text style={styles.labelMonth}>
-                {format(new Date(eventData.date), "MMM")}
-              </Text>
-            </View>
-            <Card.Content style={styles.creatorCard}>
-              <TouchableOpacity
-                onPress={openCreatorProfile}
-                style={[styles.listContainer]}
-              >
-                {!eventData.user.image && (
-                  <Avatar.Icon size={40} icon="account" style={styles.avatar} />
-                )}
-                {eventData.user.image && (
-                  <Avatar.Image size={40} source={eventData.user.image} />
-                )}
-                <Text style={styles.creatorName}>
-                  {eventData.user.username}
+              <View style={styles.label}>
+                <Text style={styles.labelDate}>
+                  {format(new Date(eventData.date), "d")}
                 </Text>
-              </TouchableOpacity>
-              <Title style={styles.eventTitle}>{eventData.title}</Title>
-
-              <View style={styles.listLine}></View>
-
-              <View style={[styles.listContainer, styles.topListContainer]}>
-                <Avatar.Icon
-                  color={Color.White}
-                  size={40}
-                  icon="calendar-month"
-                  style={styles.listIcon}
-                />
-                <View style={styles.listContent}>
-                  <Text style={styles.boldText}>
-                    {format(new Date(eventData.date), "E, MMM d, yyyy")}
+                <Text style={styles.labelMonth}>
+                  {format(new Date(eventData.date), "MMM")}
+                </Text>
+              </View>
+              <Card.Content style={styles.creatorCard}>
+                <TouchableOpacity
+                  onPress={openCreatorProfile}
+                  style={[styles.listContainer]}
+                >
+                  {!eventData.user.image && (
+                    <Avatar.Icon
+                      size={40}
+                      icon="account"
+                      style={styles.avatar}
+                    />
+                  )}
+                  {eventData.user.image && (
+                    <Avatar.Image size={40} source={eventData.user.image} />
+                  )}
+                  <Text style={styles.creatorName}>
+                    {eventData.user.username}
                   </Text>
-                  <Text>{format(new Date(eventData.time), "p")}</Text>
+                </TouchableOpacity>
+                <Title style={styles.eventTitle}>{eventData.title}</Title>
+
+                <View style={styles.listLine}></View>
+
+                <View style={[styles.listContainer, styles.topListContainer]}>
+                  <Avatar.Icon
+                    color={Color.White}
+                    size={40}
+                    icon="calendar-month"
+                    style={styles.listIcon}
+                  />
+                  <View style={styles.listContent}>
+                    <Text style={styles.boldText}>
+                      {format(new Date(eventData.date), "E, MMM d, yyyy")}
+                    </Text>
+                    <Text>{format(new Date(eventData.time), "p")}</Text>
+                  </View>
                 </View>
-              </View>
 
-              <View style={styles.listContainer}>
-                <Avatar.Icon
-                  color={Color.White}
-                  size={40}
-                  icon="map-marker"
-                  style={styles.listIcon}
-                />
-                <View style={styles.listContent}>
-                  <Text style={styles.boldText}>{eventData.ward}</Text>
-                  <Text>View map</Text>
+                <View style={styles.listContainer}>
+                  <Avatar.Icon
+                    color={Color.White}
+                    size={40}
+                    icon="map-marker"
+                    style={styles.listIcon}
+                  />
+                  <View style={styles.listContent}>
+                    <Text style={styles.boldText}>{eventData.ward}</Text>
+                    <Text>View map</Text>
+                  </View>
                 </View>
-              </View>
 
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Description:</Text>
-                <Text>
-                  Lorem ipsum, or lipsum as it is sometimes known, is dummy text
-                  used in laying out print, graphic or web designs.
-                </Text>
-              </View>
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Description:</Text>
+                  <Text>
+                    Lorem ipsum, or lipsum as it is sometimes known, is dummy
+                    text used in laying out print, graphic or web designs.
+                  </Text>
+                </View>
 
-              <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Location:</Text>
-                <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
-                <Image
-                  source={require("../../assets/images/map.png")}
-                  style={styles.map}
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Location:</Text>
+                  <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
+                  <Image
+                    source={require("../../assets/images/map.png")}
+                    style={styles.map}
+                  />
+                </View>
+              </Card.Content>
+            </Card>
+
+            {eventData.user.id === user.id && (
+              <>
+                <LongButton
+                  buttonHandler={() => {
+                    alert("edit event page");
+                  }}
+                  buttonColor={Color.GrayDark}
+                  buttonText="Edit Event"
+                  buttonTextColor="#555555"
                 />
-              </View>
-            </Card.Content>
-          </Card>
+                <LongButton
+                  buttonHandler={() => {
+                    alert("cancel event page");
+                  }}
+                  buttonColor={Color.PrimaryMain}
+                  buttonText="Cancel Event"
+                />
+              </>
+            )}
 
-          {eventData.user.id === user.id && (
-            <>
+            {!eventData.hasJoined && eventData.user.id !== user.id && (
               <LongButton
-                buttonHandler={() => {
-                  alert("edit event page");
-                }}
-                buttonColor={Color.GrayDark}
-                buttonText="Edit Event"
-                buttonTextColor="#555555"
-              />
-              <LongButton
-                buttonHandler={() => {
-                  alert("cancel event page");
-                }}
+                buttonHandler={joinEvent}
                 buttonColor={Color.PrimaryMain}
-                buttonText="Cancel Event"
+                buttonText="Join Event"
               />
-            </>
-          )}
+            )}
 
-          {!eventData.hasJoined && eventData.user.id !== user.id && (
-            <LongButton
-              buttonHandler={joinEvent}
-              buttonColor={Color.PrimaryMain}
-              buttonText="Join Event"
-            />
-          )}
-
-          {eventData.hasJoined && eventData.user.id !== user.id && (
-            <>
-              <Text>You've already joined the event!</Text>
-              <LongButton
-                buttonHandler={cancelAttendance}
-                buttonColor={Color.PrimaryMain}
-                buttonText="Cancel Attendance"
-              />
-            </>
-          )}
-        </View>
-      </ScrollView>
+            {eventData.hasJoined && eventData.user.id !== user.id && (
+              <>
+                <Text>You've already joined the event!</Text>
+                <LongButton
+                  buttonHandler={cancelAttendance}
+                  buttonColor={Color.PrimaryMain}
+                  buttonText="Cancel Attendance"
+                />
+              </>
+            )}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </Provider>
   );
 };
