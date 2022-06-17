@@ -7,8 +7,8 @@ import HeaderStyle from "../assets/themes/HeaderStyle.js";
 
 const Stack = createStackNavigator();
 
-const EventDetailsNavigator = ({ route }) => {
-  const { eventData, data, setData } = route.params;
+const EventDetailsNavigator = ({ route, setData, data }) => {
+  const { eventData } = route.params;
   const user = eventData.user;
   return (
     <Stack.Navigator>

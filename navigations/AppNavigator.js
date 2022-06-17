@@ -16,7 +16,7 @@ const AppNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
+          if (route.name === "Home Page") {
             iconName = "ios-home";
           }
           if (route.name === "My Sessions") {
@@ -33,10 +33,11 @@ const AppNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="Home Page"
         component={HomeNavigator}
         options={{
           headerShown: false,
+          title: "Home",
         }}
       />
       <Tab.Screen

@@ -34,7 +34,7 @@ const PersonalEventNavigator = ({ navigation }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="My Sessions"
         component={PersonalEventScreen}
         options={{
           title: "My Sessions",
