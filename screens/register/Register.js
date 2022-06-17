@@ -8,6 +8,8 @@ const SignIn = () => {
 	const navigation = useNavigation();
 	const { setUser } = useContext(AuthContext);
 	const [ email, setEmail ] = useState('');
+	const [ username, setUsername ] = useState('');
+	const [ secondPassword, setSecondPassword ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ emailError, setEmailError ] = useState({
 		isTriggered : false,
@@ -23,6 +25,10 @@ const SignIn = () => {
 			setUser('');
 		}
 	};
+
+	const handleUsername = (text) => {
+		setUsername(text);
+	} 
 
 	const validateEmail = (text) => {
 		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
@@ -67,6 +73,21 @@ const SignIn = () => {
 				</Text>
 			</View>
 
+			{/* Username */}
+
+			<TextInput
+					label="Username"
+					value={username}
+					mode="outlined"
+					outlineColor="black"
+					activeOutlineColor="black"
+					autoCapitalize="none"
+					keyboardType="default"
+					returnKeyType="next"
+					style={{ height: 50 }}
+					onChangeText={handleUsername}
+				/>
+
 			{/*  Password */}
 			<View style={styles.passwordFieldWrapper}>
 				<TextInput
@@ -81,8 +102,6 @@ const SignIn = () => {
 					onChangeText={(text) => setPassword(text)}
 				/>
 			</View>
-
-
 
 			{/* Register Button */}
 
