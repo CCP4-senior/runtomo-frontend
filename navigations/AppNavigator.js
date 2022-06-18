@@ -5,6 +5,7 @@ import EventCreationNavigator from "./EventCreationNavigator";
 import PersonalEventNavigator from "./PersonalEventNavigator";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Color from "../assets/themes/Color.js";
+import axiosInstance from "./axios/axios";
 
 const Tab = createBottomTabNavigator();
 
@@ -62,6 +63,21 @@ const AppNavigator = () => {
       hasJoined: false,
     },
   ];
+
+  const getData = async () => {
+    try {
+      const response = await axiosInstance("/events/");
+      const data = response.data;
+      console.log(data);
+    } catch (e) {
+      alert("Something went wrong. Please try again");
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  });
+
   const [data, setData] = useState(mockdata);
   const [currEvent, setCurrEvent] = useState("");
   return (
