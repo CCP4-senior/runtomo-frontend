@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   SafeAreaView,
@@ -10,8 +10,11 @@ import {
 import { Button, TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
+import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const HomeScreen = ({ navigation, setData, data, setCurrEvent }) => {
+const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
+  const { allEvents } = useContext(DataContext);
+  const data = allEvents; // Remove this line when testing with mock data
   const selectEvent = (event) => {
     setCurrEvent(event);
     navigation.navigate("Event Details");

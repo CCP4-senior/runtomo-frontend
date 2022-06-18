@@ -5,6 +5,7 @@ import AuthSelection from "../screens/auth-selection/AuthSelection";
 import AppNavigator from "./AppNavigator";
 import { AuthContext } from "../context/authcontext/AuthContext";
 import React, { useContext } from "react";
+import { DataProvider } from "../context/datacontext/DataContext";
 
 const Stack = createStackNavigator();
 

@@ -64,19 +64,19 @@ const AppNavigator = () => {
     },
   ];
 
-  const getData = async () => {
-    try {
-      const response = await axiosInstance("/events/");
-      const data = response.data;
-      console.log(data);
-    } catch (e) {
-      alert("Something went wrong. Please try again");
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const response = await axiosInstance("/events/");
+  //     const data = response.data;
+  //     console.log(data);
+  //   } catch (e) {
+  //     alert("Something went wrong. Please try again");
+  //   }
+  // };
 
-  useEffect(() => {
-    getData();
-  });
+  // useEffect(() => {
+  //   getData();
+  // });
 
   const [data, setData] = useState(mockdata);
   const [currEvent, setCurrEvent] = useState("");

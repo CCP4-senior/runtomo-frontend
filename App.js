@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import AuthNavigator from "./navigations/AuthNavigator";
 import React from "react";
 import { AuthProvider } from "./context/authcontext/AuthContext";
+import { DataProvider } from "./context/datacontext/DataContext";
 
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 
@@ -22,9 +23,11 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <AuthProvider>
-        <NavigationContainer>
-          <AuthNavigator />
-        </NavigationContainer>
+        <DataProvider>
+          <NavigationContainer>
+            <AuthNavigator />
+          </NavigationContainer>
+        </DataProvider>
       </AuthProvider>
     </PaperProvider>
   );
