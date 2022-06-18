@@ -33,7 +33,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         title: "Test post run 3",
         location: "somewhere",
       });
-      console.log(response.data);
     } catch (e) {
       alert("Something went wrong. Please try again!");
     }

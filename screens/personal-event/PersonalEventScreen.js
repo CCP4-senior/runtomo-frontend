@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   SafeAreaView,
@@ -9,8 +9,14 @@ import {
 } from "react-native";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
+import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const PersonalEventScreen = ({ navigation, data, setCurrEvent, currEvent }) => {
+const PersonalEventScreen = ({
+  navigation,
+  /*data,*/ setCurrEvent,
+  currEvent,
+}) => {
+  const { createdEvents } = useContext(DataContext);
   const listTab = [
     {
       status: "All",
@@ -34,28 +40,30 @@ const PersonalEventScreen = ({ navigation, data, setCurrEvent, currEvent }) => {
   }, []);
 
   const handleFilter = (status) => {
-    setStatus(status);
+    // setStatus(status);
+    if (status === "Created") setMySessions(createdEvents);
+    else setMySessions([]);
 
-    const userSessions = data.filter((session) => {
-      switch (status) {
-        case "Created":
-          if (session.owner_id === 2) {
-            return session;
-          }
-          break;
-        case "Joined":
-          if (session.participants.includes(2)) {
-            return session;
-          }
-          break;
-        default:
-          if (session.owner_id === 2 || session.participants.includes(2)) {
-            return session;
-          }
-          break;
-      }
-    });
-    setMySessions(userSessions);
+    // const userSessions = data.filter((session) => {
+    //   switch (status) {
+    //     case "Created":
+    //       if (session.owner_id === 2) {
+    //         return session;
+    //       }
+    //       break;
+    //     case "Joined":
+    //       if (session.participants.includes(2)) {
+    //         return session;
+    //       }
+    //       break;
+    //     default:
+    //       if (session.owner_id === 2 || session.participants.includes(2)) {
+    //         return session;
+    //       }
+    //       break;
+    //   }
+    // });
+    // setMySessions(userSessions);
   };
 
   const selectEvent = (eventData) => {

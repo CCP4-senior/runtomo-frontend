@@ -42,7 +42,6 @@ const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         const data = response.data;
-        console.log(data);
         setUser(jwt_decode(data.access));
         await SecureStore.setItemAsync(
           "access_token",
