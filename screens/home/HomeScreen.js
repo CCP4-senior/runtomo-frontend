@@ -31,7 +31,7 @@ const HomeScreen = ({ navigation, setData, data, setCurrEvent }) => {
         />
       </View>
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={() => Alert("Filters button pressed!")}>
+        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
           <List.Item
             style={styles.topElement}
             title="SORT BY"

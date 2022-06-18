@@ -5,7 +5,7 @@ import EventCreationNavigator from "./EventCreationNavigator";
 import PersonalEventNavigator from "./PersonalEventNavigator";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Color from "../assets/themes/Color.js";
-import axiosInstance from "./axios/axios";
+import axiosInstance from "../axios/axios";
 
 const Tab = createBottomTabNavigator();
 
