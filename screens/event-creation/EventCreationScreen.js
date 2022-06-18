@@ -27,23 +27,12 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [eventDescription, setEventDescription] = useState("");
   const buttonHandler = async () => {
     try {
-      console.log("button handler ran");
       const tokenData = await SecureStore.getItemAsync("access_token");
       const token = JSON.parse(tokenData);
-      const response = await axiosInstance.post(
-        "/events/",
-        {
-          title: "Test post run 2",
-          location: "somewhere",
-        },
-        {
-          headers: {
-            Authorization: token ? `Bearer ${token}` : null,
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-        }
-      );
+      const response = await axiosInstance.post("/events/", {
+        title: "Test post run 3",
+        location: "somewhere",
+      });
       console.log(response.data);
     } catch (e) {
       alert("Something went wrong. Please try again!");

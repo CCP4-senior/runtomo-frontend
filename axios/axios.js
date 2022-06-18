@@ -1,4 +1,5 @@
 import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
 const baseURL = "https://solemates-backend-drf.herokuapp.com";
 
@@ -9,6 +10,32 @@ const axiosInstance = axios.create({
     accept: "application/json",
   },
 });
+
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const tokenData = await SecureStore.getItemAsync("access_token");
+    const token = JSON.parse(tokenData);
+    if (token) {
+      config.headers.Authorization = "Bearer " + token;
+    }
+    if (!token) {
+      config.headers.Authorization = null;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// const axiosInstance = axios.create({
+//   baseURL: baseURL,
+//   headers: {
+//     Authorization: token ? `Bearer ${token}` : null,
+//     "Content-Type": "application/json",
+//     accept: "application/json",
+//   },
+// });
 
 // const axiosInstance = axios.create({
 //   baseURL: baseURL,

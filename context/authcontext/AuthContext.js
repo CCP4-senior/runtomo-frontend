@@ -1,12 +1,12 @@
-import * as React from "react";
+import React, { useState, useEffect, createContext } from "react";
 import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 import axiosInstance from "../../axios/axios";
 
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = React.useState("");
+  const [user, setUser] = useState("");
 
   const createUser = async ({ username, email, password }) => {
     try {
