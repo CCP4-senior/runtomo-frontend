@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { TextInput, IconButton, Provider } from "react-native-paper";
+import * as SecureStore from "expo-secure-store";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
@@ -27,17 +28,17 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const buttonHandler = async () => {
     try {
       console.log("button handler ran");
+      const tokenData = await SecureStore.getItemAsync("access_token");
+      const token = JSON.parse(tokenData);
       const response = await axiosInstance.post(
         "/events/",
         {
-          title: "Test post run",
+          title: "Test post run 2",
           location: "somewhere",
         },
         {
           headers: {
-            Authorization: localStorage.getItem("access_token")
-              ? `Bearer ${String(localStorage.getItem("access_token"))}`
-              : null,
+            Authorization: token ? `Bearer ${token}` : null,
             "Content-Type": "application/json",
             accept: "application/json",
           },
