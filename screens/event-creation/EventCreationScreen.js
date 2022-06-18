@@ -27,10 +27,23 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const buttonHandler = async () => {
     try {
       console.log("button handler ran");
-      await axiosInstance.post("/events/", {
-        title: "Test post run",
-        location: "somewhere",
-      });
+      const response = await axiosInstance.post(
+        "/events/",
+        {
+          title: "Test post run",
+          location: "somewhere",
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("access_token")
+              ? `Bearer ${String(localStorage.getItem("access_token"))}`
+              : null,
+            "Content-Type": "application/json",
+            accept: "application/json",
+          },
+        }
+      );
+      console.log(response.data);
     } catch (e) {
       alert("Something went wrong. Please try again!");
     }

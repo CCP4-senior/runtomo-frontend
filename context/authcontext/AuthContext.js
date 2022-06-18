@@ -1,5 +1,6 @@
 import * as React from "react";
 import jwt_decode from "jwt-decode";
+import * as SecureStore from "expo-secure-store";
 import axiosInstance from "../../axios/axios";
 
 const AuthContext = React.createContext();
@@ -43,8 +44,14 @@ const AuthProvider = ({ children }) => {
         const data = response.data;
         console.log(data);
         setUser(jwt_decode(data.access));
-        localStorage.setItem("access_token", JSON.stringify(data.access));
-        localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
+        await SecureStore.setItemAsync(
+          "access_token",
+          JSON.stringify(data.access)
+        );
+        await SecureStore.setItemAsync(
+          "refresh_token",
+          JSON.stringify(data.refresh)
+        );
       }
     } catch (e) {
       alert("Something went wrong. Please try again!");
