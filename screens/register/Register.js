@@ -210,13 +210,13 @@ const styles = StyleSheet.create({
 		position         : 'absolute',
 		width            : 305,
 		height           : 34,
-		left             : 35,
 		top              : 125,
 		fontSize         : 28,
 		fontWeight       : '700',
 		textAlign        : 'center',
 		marginHorizontal : 20,
-		letterSpacing    : 0.36
+		letterSpacing    : 0.36,
+		alignSelf		 : 'center',
 	},
 	emailFieldHeader           : {
 		marginBottom : 10
@@ -226,8 +226,7 @@ const styles = StyleSheet.create({
 		width            : 315,
 		height           : 74,
 		top              : 304,
-		left             : 30,
-		marginHorizontal : 20
+		alignSelf		 : 'center',
 	},
 	emailErrorMessage          : {
 		marginTop : 4,
@@ -237,31 +236,22 @@ const styles = StyleSheet.create({
 		position         : 'absolute',
 		width            : 315,
 		height           : 74,
-		left             : 30,
-		marginHorizontal : 20,
-		top              : 200
+		top              : 200,
+		alignSelf		 : 'center',
 	},
 	passwordFieldWrapper       : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 70,
 		top              : 400,
-		left             : 30,
-		marginHorizontal : 20
+		alignSelf		 : 'center',
 	},
 	secondPasswordFieldWrapper : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 70,
 		top              : 500,
-		left             : 30,
-		marginHorizontal : 20
-	},
-	forgotPasswordLink         : {
-		position : 'absolute',
-		color    : Color.PrimaryMain,
-		top      : 470,
-		left     : 245
+		alignSelf		 : 'center',
 	},
 	registerBottomWrapper      : {
 		position         : 'absolute',
@@ -269,9 +259,9 @@ const styles = StyleSheet.create({
 		height           : 101,
 		top              : 600,
 		borderRadius     : 10,
-		left             : 30,
 		marginHorizontal : 20,
-		justifyContent   : 'space-between'
+		justifyContent   : 'space-between',
+		alignSelf		 : 'center',
 	},
 	registerText               : {
 		alignSelf  : 'center',
