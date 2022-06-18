@@ -13,11 +13,18 @@ import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
-  const { allEvents } = useContext(DataContext);
+  const { allEvents, setEventId, getCurrentEventData } =
+    useContext(DataContext);
   const data = allEvents; // Remove this line when testing with mock data
-  const selectEvent = (event) => {
-    setCurrEvent(event);
-    navigation.navigate("Event Details");
+  const selectEvent = async (event) => {
+    // setCurrEvent(event);
+    try {
+      setEventId(event.id);
+      await getCurrentEventData();
+      navigation.navigate("Event Details");
+    } catch (e) {
+      alert("Something went wrong. Please try again!");
+    }
   };
 
   return (

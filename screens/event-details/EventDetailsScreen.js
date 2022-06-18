@@ -21,21 +21,26 @@ import { format } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
-import { createNavigatorFactory } from "@react-navigation/native";
+import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const EventDetailsScreen = ({
   navigation,
-  eventData,
+  /*eventData,*/
   data,
   setData,
   setCurrEvent,
 }) => {
   const { user } = useContext(AuthContext);
+  const { currentEvent } = useContext(DataContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
   const [isAttendanceCancellation, setIsAttendanceCancellation] =
     useState(true);
+
+  const eventData = currentEvent;
+  console.log(eventData);
+
   const openCreatorProfile = () => {
     if (eventData.user.id !== user.id) navigation.navigate("Creator Profile");
     // To avoid showing femal picture for Wade (current user). To be removed later
