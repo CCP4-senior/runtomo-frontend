@@ -23,22 +23,10 @@ const AuthProvider = ({ children }) => {
 
   const signInUser = async ({ email, password }) => {
     try {
-      const response = await axiosInstance.post(
-        "/auth/jwt/create/",
-        {
-          email: email,
-          password: password,
-        }
-        // {
-        //   headers: {
-        //     Authorization: localStorage.getItem("access_token")
-        //       ? `JWT ${String(localStorage.getItem("access_token"))}`
-        //       : null,
-        //     "Content-Type": "application/json",
-        //     accept: "application/json",
-        //   },
-        // }
-      );
+      const response = await axiosInstance.post("/auth/jwt/create/", {
+        email: email,
+        password: password,
+      });
 
       if (response.status === 200) {
         const data = response.data;
@@ -57,11 +45,10 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const logoutUser = () => {
-    setUser(null);
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    navigate("/login");
+  const logoutUser = async () => {
+    setUser("");
+    await SecureStore.deleteItemAsync("access_token");
+    await SecureStore.deleteItemAsync("refresh_token");
   };
 
   const deleteAccount = async () => {

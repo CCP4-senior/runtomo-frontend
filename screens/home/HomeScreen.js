@@ -17,14 +17,15 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     useContext(DataContext);
   const data = allEvents; // Remove this line when testing with mock data
   const selectEvent = async (event) => {
-    // setCurrEvent(event);
-    try {
-      setEventId(event.id);
-      await getCurrentEventData();
-      navigation.navigate("Event Details");
-    } catch (e) {
-      alert("Something went wrong. Please try again!");
-    }
+    setCurrEvent(event);
+    navigation.navigate("Event Details");
+    // try {
+    //   setEventId(event.id);
+    //   await getCurrentEventData();
+    //   navigation.navigate("Event Details");
+    // } catch (e) {
+    //   alert("Something went wrong. Please try again!");
+    // }
   };
 
   return (

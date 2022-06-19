@@ -1,10 +1,12 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import * as SecureStore from "expo-secure-store";
 import axiosInstance from "../../axios/axios";
+import { AuthContext } from "../authcontext/AuthContext";
 
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
+  const { user } = useContext(AuthContext);
   const [allEvents, setAllEvents] = useState([]);
   const [createdEvents, setCreatedEvents] = useState([]);
   const [joinedEvents, setJoinedEvents] = useState([]);
@@ -12,8 +14,10 @@ const DataProvider = ({ children }) => {
   const [currentEvent, setCurrentEvent] = useState("");
 
   useEffect(() => {
-    getAllEventsData();
-    getCreatedEventsData();
+    if (user) {
+      getAllEventsData();
+      getCreatedEventsData();
+    }
   }, []);
   //   useEffect(() => {
   //     if (eventId) getCurrentEventData();
