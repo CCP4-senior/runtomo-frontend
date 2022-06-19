@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         const data = response.data;
-        setUser({ id: 2, username: jwt_decode(data.access) }); // id to be changed dynamically
+        setUser({ id: jwt_decode(data.access)["user_id"], username: "wade" }); // username to be changed dynamically
         await SecureStore.setItemAsync(
           "access_token",
           JSON.stringify(data.access)

@@ -30,7 +30,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const tokenData = await SecureStore.getItemAsync("access_token");
       const token = JSON.parse(tokenData);
       const response = await axiosInstance.post("/events/", {
-        title: "Test post run 3",
+        title: "Test post run 6",
         location: "somewhere",
       });
     } catch (e) {

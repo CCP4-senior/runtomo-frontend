@@ -12,7 +12,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const AppNavigator = () => {
   const { user } = useContext(AuthContext);
-  const { getAllEventsData } = useContext(DataContext);
+  // const { getAllEventsData } = useContext(DataContext);
   const mockdata = [
     {
       id: 1,
@@ -69,11 +69,11 @@ const AppNavigator = () => {
 
   const [data, setData] = useState(mockdata);
   const [currEvent, setCurrEvent] = useState("");
-  useEffect(() => {
-    if (user) {
-      getAllEventsData();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     getAllEventsData();
+  //   }
+  // }, []);
 
   return (
     <Stack.Navigator>

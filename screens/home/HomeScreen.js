@@ -22,6 +22,11 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     getAllEventsData,
     getCurrentEventData,
   } = useContext(DataContext);
+  useEffect(() => {
+    if (user) {
+      getAllEventsData();
+    }
+  }, []);
   const data = allEvents; // Remove this line when testing with mock data
   const selectEvent = async (event) => {
     // setCurrEvent(event);
