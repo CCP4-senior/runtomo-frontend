@@ -44,6 +44,7 @@ const PersonalEventScreen = ({
     if (status === "Created") setMySessions(createdEvents);
     else setMySessions([]);
 
+    // Mock data logic. Leave it as a reference.
     // const userSessions = data.filter((session) => {
     //   switch (status) {
     //     case "Created":
