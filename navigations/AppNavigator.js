@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeNavigator from "../navigations/HomeNavigator";
-import EventCreationNavigator from "./EventCreationNavigator";
-import PersonalEventNavigator from "./PersonalEventNavigator";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Color from "../assets/themes/Color.js";
-import axiosInstance from "../axios/axios";
+import { createStackNavigator } from "@react-navigation/stack";
+import SignOutScreen from "../screens/signout/SignOutScreen";
+import { AuthContext } from "../context/authcontext/AuthContext";
+import { DataContext } from "../context/datacontext/DataContext";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+import BottomTabNavigator from "./BottomTabNavigator";
 
 const AppNavigator = () => {
+  const { user } = useContext(AuthContext);
+  const { getAllEventsData } = useContext(DataContext);
   const mockdata = [
     {
       id: 1,
@@ -64,54 +67,19 @@ const AppNavigator = () => {
     },
   ];
 
-  // const getData = async () => {
-  //   try {
-  //     const response = await axiosInstance("/events/");
-  //     const data = response.data;
-  //     console.log(data);
-  //   } catch (e) {
-  //     alert("Something went wrong. Please try again");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getData();
-  // });
-
   const [data, setData] = useState(mockdata);
   const [currEvent, setCurrEvent] = useState("");
+  useEffect(() => {
+    if (user) {
+      getAllEventsData();
+    }
+  }, []);
+
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        unmountOnBlur: true,
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
-
-          if (route.name === "Home Page") {
-            iconName = "ios-home";
-          }
-          if (route.name === "My Sessions Main Page") {
-            iconName = "people";
-          }
-          if (route.name === "Event Creation") {
-            iconName = "add-circle-outline";
-          }
-
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: Color.PrimaryMain,
-        tabBarInactiveTintColor: "gray",
-      })}
-    >
-      <Tab.Screen
-        name="Home Page"
-        options={{
-          headerShown: false,
-          title: "Home",
-        }}
-      >
+    <Stack.Navigator>
+      <Stack.Screen name="Top Page" options={{ headerShown: false }}>
         {(props) => (
-          <HomeNavigator
+          <BottomTabNavigator
             {...props}
             setData={setData}
             data={data}
@@ -119,35 +87,9 @@ const AppNavigator = () => {
             currEvent={currEvent}
           />
         )}
-      </Tab.Screen>
-      <Tab.Screen
-        name="Event Creation"
-        options={{
-          headerShown: false,
-        }}
-      >
-        {(props) => (
-          <EventCreationNavigator {...props} setData={setData} data={data} />
-        )}
-      </Tab.Screen>
-      <Tab.Screen
-        name="My Sessions Main Page"
-        options={{
-          title: "My Sessions",
-          headerShown: false,
-        }}
-      >
-        {(props) => (
-          <PersonalEventNavigator
-            {...props}
-            setData={setData}
-            data={data}
-            setCurrEvent={setCurrEvent}
-            currEvent={currEvent}
-          />
-        )}
-      </Tab.Screen>
-    </Tab.Navigator>
+      </Stack.Screen>
+      <Stack.Screen name="SignOut" component={SignOutScreen} />
+    </Stack.Navigator>
   );
 };
 

@@ -39,7 +39,6 @@ const EventDetailsScreen = ({
     useState(true);
 
   const eventData = currentEvent;
-  console.log(eventData);
 
   const openCreatorProfile = () => {
     if (eventData.user.id !== user.id) navigation.navigate("Creator Profile");

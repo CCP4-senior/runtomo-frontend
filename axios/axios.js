@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as SecureStore from "expo-secure-store";
-
+import * as RootNavigation from "../navigations/RootNavigator";
 const baseURL = "https://solemates-backend-drf.herokuapp.com";
 
 const axiosInstance = axios.create({
@@ -28,28 +28,28 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// const axiosInstance = axios.create({
-//   baseURL: baseURL,
-//   headers: {
-//     Authorization: token ? `Bearer ${token}` : null,
-//     "Content-Type": "application/json",
-//     accept: "application/json",
-//   },
-// });
+axiosInstance.interceptors.response.use(
+  (response) =>
+    new Promise((resolve, reject) => {
+      resolve(response);
+    }),
+  (error) => {
+    if (!error.response) {
+      return new Promise((resolve, reject) => {
+        reject(error);
+      });
+    }
 
-// const axiosInstance = axios.create({
-//   baseURL: baseURL,
-//   timeout: 5000,
-//   headers: {
-//     Authorization: localStorage.getItem("access_token")
-//       ? `JWT ${String(localStorage.getItem("access_token"))}`
-//       : null,
-//     "Content-Type": "application/json",
-//     accept: "application/json",
-//   },
-// });
-// axiosInstance.defaults.xsrfCookieName = "csrftoken";
-// axiosInstance.defaults.xsrfHeaderName = "X-CSRFToken";
+    if (error.response.status === 401) {
+      console.log(error);
+      RootNavigation.navigate("SignOut", { tokenExpired: true });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject(error);
+      });
+    }
+  }
+);
 
 // axiosInstance.interceptors.response.use(
 //   (response) => {
@@ -80,7 +80,7 @@ axiosInstance.interceptors.request.use(
 //       error.response.status === 401 &&
 //       error.response.statusText === "Unauthorized"
 //     ) {
-//       const refreshToken = localStorage.getItem("refresh_token");
+//       const refreshToken = SecureStore.getItem("refresh_token");
 
 //       if (refreshToken) {
 //         const tokenParts = JSON.parse(atob(refreshToken.split(".")[1]));

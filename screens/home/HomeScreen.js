@@ -10,9 +10,11 @@ import {
 import { Button, TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
+import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
+  const { user } = useContext(AuthContext);
   const {
     allEvents,
     setCurrentEvent,
@@ -35,10 +37,6 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     //   alert("Something went wrong. Please try again!");
     // }
   };
-
-  useEffect(() => {
-    getAllEventsData();
-  });
 
   return (
     <SafeAreaView style={styles.container}>

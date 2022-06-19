@@ -19,6 +19,8 @@ const SignIn = () => {
   const handleSignIn = () => {
     signInUser({ email, password });
     navigation.navigate("SignIn", { screen: "Home" });
+    // navigation.navigate("Top Page");
+
     // if (true) {
     //   setUser({ id: 2, username: "WayneWadeRuns" });
     //   navigation.navigate("SignIn", { screen: "Home" });

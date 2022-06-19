@@ -1,7 +1,8 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, createContext } from "react";
 import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 import axiosInstance from "../../axios/axios";
+import * as RootNavigation from "../../navigations/RootNavigator.js";
 
 const AuthContext = createContext();
 
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
 
       if (response.status === 200) {
         const data = response.data;
-        setUser(jwt_decode(data.access));
+        setUser({ id: 2, username: jwt_decode(data.access) }); // id to be changed dynamically
         await SecureStore.setItemAsync(
           "access_token",
           JSON.stringify(data.access)
@@ -50,22 +51,17 @@ const AuthProvider = ({ children }) => {
       setUser("");
       await SecureStore.deleteItemAsync("access_token");
       await SecureStore.deleteItemAsync("refresh_token");
+      RootNavigation.navigate("AuthSelection", { tokenExpired: true });
     } catch (e) {
       alert("Something went wrong. Please try again!");
     }
   };
 
-  const deleteAccount = async () => {
-    await axiosInstance.delete("/api/delete_account", {
-      headers: {
-        Authorization: localStorage.getItem("access_token")
-          ? `JWT ${String(localStorage.getItem("access_token"))}`
-          : null,
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-    });
-  };
+  // To be implemented once endpoint is ready
+  // const deleteAccount = async () => {
+  //   await axiosInstance.delete("/api/delete_account", {
+  //   });
+  // };
 
   const contextData = {
     createUser,
@@ -74,7 +70,7 @@ const AuthProvider = ({ children }) => {
     signInUser,
     user,
     signOutUser,
-    deleteAccount,
+    /*deleteAccount,*/
   };
 
   return (

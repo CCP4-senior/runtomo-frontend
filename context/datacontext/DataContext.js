@@ -1,5 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
-import * as SecureStore from "expo-secure-store";
+import React, { useState, createContext, useContext } from "react";
 import axiosInstance from "../../axios/axios";
 import { AuthContext } from "../authcontext/AuthContext";
 
@@ -12,17 +11,6 @@ const DataProvider = ({ children }) => {
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
-
-  // useEffect(() => {
-  //   if (user) {
-  //     getAllEventsData();
-  //     getCreatedEventsData();
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (eventId) getCurrentEventData();
-  // }, [eventId]);
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
@@ -52,9 +40,8 @@ const DataProvider = ({ children }) => {
       const paddedData = data.map(paddData); // To be removed
       setAllEvents(paddedData); // To be changed to just data
     } catch (e) {
-      alert(
-        "From DataContext getAllEventsData, Something went wrong. Please try again"
-      );
+      alert("Something went wrong. Please try again");
+      console.log(e);
     }
   };
 
@@ -66,15 +53,12 @@ const DataProvider = ({ children }) => {
       const paddedData = data.map(paddData); // To be removed
       setCreatedEvents(paddedData); // To be changed to just "data"
     } catch (e) {
-      alert(
-        "From DataContext getCreatedEventsData, Something went wrong. Please try again"
-      );
+      alert("Something went wrong. Please try again");
+      console.log(e);
     }
   };
 
   const getCurrentEventData = async () => {
-    console.log("GetCurrentEventData ran!");
-    console.log(eventId);
     try {
       const response = await axiosInstance(`/events/${eventId}/`);
       const data = response.data;
@@ -82,9 +66,7 @@ const DataProvider = ({ children }) => {
       const paddedData = paddData(data); // To be removed
       setCurrentEvent(paddedData); // To be changed to just "data"
     } catch (e) {
-      alert(
-        "From DataContext getCurrentEventData, Something went wrong. Please try again"
-      );
+      alert("Something went wrong. Please try again");
       console.log(e);
     }
   };
