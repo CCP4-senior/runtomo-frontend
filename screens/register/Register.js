@@ -61,6 +61,8 @@ const SignIn = () => {
     } else {
       const user = { email, password, username };
       createUser(user);
+
+      // Mockdata logic. Leave as a reference until backend endpoints are fully ready
       // setUser({ id: 2, username: "WayneWadeRuns" });
       // navigation.navigate("SignIn", { screen: "Home" });
     }

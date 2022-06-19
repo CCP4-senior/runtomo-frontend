@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
         email: email.trim(),
         password: password.trim(),
       });
-      // await loginUser(e);
+      await signInUser({ email, password });
     } catch (e) {
       alert("Something went wrong. Please try again!");
     }
