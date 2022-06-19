@@ -46,9 +46,13 @@ const AuthProvider = ({ children }) => {
   };
 
   const signOutUser = async () => {
-    setUser("");
-    await SecureStore.deleteItemAsync("access_token");
-    await SecureStore.deleteItemAsync("refresh_token");
+    try {
+      setUser("");
+      await SecureStore.deleteItemAsync("access_token");
+      await SecureStore.deleteItemAsync("refresh_token");
+    } catch (e) {
+      alert("Something went wrong. Please try again!");
+    }
   };
 
   const deleteAccount = async () => {

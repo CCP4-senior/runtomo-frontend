@@ -20,9 +20,9 @@ const DataProvider = ({ children }) => {
   //   }
   // }, []);
 
-  //   useEffect(() => {
-  //     if (eventId) getCurrentEventData();
-  //   }, [eventId]);
+  // useEffect(() => {
+  //   if (eventId) getCurrentEventData();
+  // }, [eventId]);
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
