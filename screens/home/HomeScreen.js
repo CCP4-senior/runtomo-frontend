@@ -13,7 +13,7 @@ import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
-  const { allEvents, setEventId, getCurrentEventData } =
+  const { allEvents, setEventId, getAllEventsData, getCurrentEventData } =
     useContext(DataContext);
   const data = allEvents; // Remove this line when testing with mock data
   const selectEvent = async (event) => {
@@ -27,6 +27,10 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     //   alert("Something went wrong. Please try again!");
     // }
   };
+
+  useEffect(() => {
+    getAllEventsData();
+  });
 
   return (
     <SafeAreaView style={styles.container}>

@@ -13,12 +13,13 @@ const DataProvider = ({ children }) => {
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
 
-  useEffect(() => {
-    if (user) {
-      getAllEventsData();
-      getCreatedEventsData();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (user) {
+  //     getAllEventsData();
+  //     getCreatedEventsData();
+  //   }
+  // }, []);
+
   //   useEffect(() => {
   //     if (eventId) getCurrentEventData();
   //   }, [eventId]);
@@ -95,6 +96,8 @@ const DataProvider = ({ children }) => {
     setCurrentEvent,
     eventId,
     setEventId,
+    getAllEventsData,
+    getCreatedEventsData,
     getCurrentEventData,
   };
 

@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const logoutUser = async () => {
+  const signOutUser = async () => {
     setUser("");
     await SecureStore.deleteItemAsync("access_token");
     await SecureStore.deleteItemAsync("refresh_token");
@@ -69,7 +69,7 @@ const AuthProvider = ({ children }) => {
     setUser,
     signInUser,
     user,
-    logoutUser,
+    signOutUser,
     deleteAccount,
   };
 
