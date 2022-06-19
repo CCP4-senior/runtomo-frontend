@@ -33,7 +33,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     setCurrentEvent(event);
     navigation.navigate("Event Details");
 
-    // Following code left for when backend data is ready
+    // Following code will be used when backend endpoint is ready
     // try {
     //   setEventId(event.id);
     //   await getCurrentEventData();

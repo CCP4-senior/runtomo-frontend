@@ -25,10 +25,10 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     setDurationModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
+
+  // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
-      const tokenData = await SecureStore.getItemAsync("access_token");
-      const token = JSON.parse(tokenData);
       const response = await axiosInstance.post("/events/", {
         title: "Test post run 6",
         location: "somewhere",
@@ -37,6 +37,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       alert("Something went wrong. Please try again!");
     }
   };
+
+  // Leave as a reference. Once backend schema is ready, incorporate this data into the above buttonHandler.
   // const buttonHandler = () => {
   //   const requiredFields = [
   //     title,
@@ -74,6 +76,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   //   setData([...data, event]);
   //   navigation.navigate("Event Created");
   // };
+
   const [submitted, setSubmitted] = useState(false);
 
   return (

@@ -7,7 +7,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Color from "../assets/themes/Color.js";
 
 const Tab = createBottomTabNavigator();
-// const Stack = createStackNavigator();
 
 const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
   return (

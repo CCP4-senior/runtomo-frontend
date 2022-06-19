@@ -104,10 +104,6 @@ axiosInstance.interceptors.response.use(
     if (error.response.status === 401) {
       console.log(error);
       RootNavigation.navigate("SignOut", { tokenExpired: true });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject(error);
-      });
     }
 
     return new Promise((resolve, reject) => {

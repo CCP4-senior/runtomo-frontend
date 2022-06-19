@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // To be implemented once endpoint is ready
+  // DeleteAccount function: to be implemented once endpoint is ready
   // const deleteAccount = async () => {
   //   await axiosInstance.delete("/api/delete_account", {
   //   });
