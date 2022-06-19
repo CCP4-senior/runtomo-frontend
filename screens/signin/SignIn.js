@@ -7,7 +7,7 @@ import Color from "../../assets/themes/Color.js";
 
 const SignIn = () => {
   const navigation = useNavigation();
-  const { setUser } = useContext(AuthContext);
+  const { setUser, signInUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState({
@@ -17,12 +17,16 @@ const SignIn = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const handleSignIn = () => {
-    if (true) {
-      setUser({ id: 2, username: "WayneWadeRuns" });
-      navigation.navigate("SignIn", { screen: "Home" });
-    } else {
-      setUser("");
-    }
+    signInUser({ email, password });
+    navigation.navigate("SignIn", { screen: "Home" });
+
+    // Mockdata logic. Leave as a reference
+    // if (true) {
+    //   setUser({ id: 2, username: "WayneWadeRuns" });
+    //   navigation.navigate("SignIn", { screen: "Home" });
+    // } else {
+    //   setUser("");
+    // }
   };
 
   const validateEmail = (text) => {

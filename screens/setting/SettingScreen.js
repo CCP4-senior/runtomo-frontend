@@ -17,7 +17,7 @@ import Color from "../../assets/themes/Color.js";
 const SettingScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [dialogType, setDialogType] = useState("confirmation");
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, signOutUser } = useContext(AuthContext);
 
   const showDialog = () => setVisible(true);
   const hideDialog = () => {
@@ -32,7 +32,7 @@ const SettingScreen = ({ navigation }) => {
     setTimeout(() => setUser(""), 5000);
   };
   const signOut = () => {
-    setUser("");
+    signOutUser();
   };
 
   const openProfileScreen = (eventData) => {

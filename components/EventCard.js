@@ -3,13 +3,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { format } from "date-fns";
 
-const EventCard = ({
-  event,
-  selectEvent,
-  isHomePageCard,
-  handlePress,
-  image,
-}) => {
+const EventCard = ({ event, isHomePageCard, handlePress, image }) => {
   return (
     <Card
       style={[isHomePageCard ? styles.homePageCard : styles.card]}

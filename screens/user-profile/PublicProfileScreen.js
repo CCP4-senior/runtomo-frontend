@@ -8,7 +8,7 @@ import {
   Image,
   useWindowDimensions,
 } from "react-native";
-import { Card, Title, List, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 
 const PublicProfileScreen = ({ navigation, user }) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   SafeAreaView,
@@ -10,11 +10,37 @@ import {
 import { Button, TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
+import { AuthContext } from "../../context/authcontext/AuthContext.js";
+import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const HomeScreen = ({ navigation, setData, data, setCurrEvent }) => {
-  const selectEvent = (event) => {
-    setCurrEvent(event);
+const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
+  const { user } = useContext(AuthContext);
+  const {
+    allEvents,
+    setCurrentEvent,
+    setEventId,
+    getAllEventsData,
+    getCurrentEventData,
+  } = useContext(DataContext);
+  useEffect(() => {
+    if (user) {
+      getAllEventsData();
+    }
+  }, []);
+  const data = allEvents; // Remove this line when testing with mock data
+  const selectEvent = async (event) => {
+    // setCurrEvent(event);
+    setCurrentEvent(event);
     navigation.navigate("Event Details");
+
+    // Following code will be used when backend endpoint is ready
+    // try {
+    //   setEventId(event.id);
+    //   await getCurrentEventData();
+    //   navigation.navigate("Event Details");
+    // } catch (e) {
+    //   alert("Something went wrong. Please try again!");
+    // }
   };
 
   return (
@@ -31,7 +57,7 @@ const HomeScreen = ({ navigation, setData, data, setCurrEvent }) => {
         />
       </View>
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={() => Alert("Filters button pressed!")}>
+        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
           <List.Item
             style={styles.topElement}
             title="SORT BY"

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { TextInput, IconButton, Provider } from "react-native-paper";
+import * as SecureStore from "expo-secure-store";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
+import axiosInstance from "../../axios/axios.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
@@ -23,43 +25,58 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     setDurationModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
-  const buttonHandler = () => {
-    const requiredFields = [
-      title,
-      meetingPoint,
-      ward,
-      date,
-      time,
-      runningDuration,
-    ];
-    if (requiredFields.some((field) => field === "")) {
-      setSubmitted(true);
-      return;
-    }
 
-    const event = {
-      id: 4,
-      user: {
-        id: 2,
-        username: "WayneWadeRuns",
-        age: 34,
-        image: require("../../assets/images/demo/wade.png"),
-      },
-      title,
-      meetingPoint,
-      ward,
-      date,
-      time,
-      runningDuration,
-      eventDescription,
-      participants: [],
-      owner_id: 2,
-      hasJoined: true,
-    };
-    setNewEvent(event);
-    setData([...data, event]);
-    navigation.navigate("Event Created");
+  // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
+  const buttonHandler = async () => {
+    try {
+      const response = await axiosInstance.post("/events/", {
+        title: "Test post run 6",
+        location: "somewhere",
+      });
+    } catch (e) {
+      alert("Something went wrong. Please try again!");
+    }
   };
+
+  // Leave as a reference. Once backend schema is ready, incorporate this data into the above buttonHandler.
+  // const buttonHandler = () => {
+  //   const requiredFields = [
+  //     title,
+  //     meetingPoint,
+  //     ward,
+  //     date,
+  //     time,
+  //     runningDuration,
+  //   ];
+  //   if (requiredFields.some((field) => field === "")) {
+  //     setSubmitted(true);
+  //     return;
+  //   }
+
+  //   const event = {
+  //     id: 4,
+  //     user: {
+  //       id: 2,
+  //       username: "WayneWadeRuns",
+  //       age: 34,
+  //       image: require("../../assets/images/demo/wade.png"),
+  //     },
+  //     title,
+  //     meetingPoint,
+  //     ward,
+  //     date,
+  //     time,
+  //     runningDuration,
+  //     eventDescription,
+  //     participants: [],
+  //     owner_id: 2,
+  //     hasJoined: true,
+  //   };
+  //   setNewEvent(event);
+  //   setData([...data, event]);
+  //   navigation.navigate("Event Created");
+  // };
+
   const [submitted, setSubmitted] = useState(false);
 
   return (
