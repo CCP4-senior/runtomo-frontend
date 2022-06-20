@@ -1,30 +1,42 @@
-import React, { useState } from "react";
-import { ScrollView, View, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
+  VirtualizedList,
+} from "react-native";
 import { TextInput, IconButton, Provider } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
+import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
+/* google config */
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_API } from "@env";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
-  const [googleMeetingPoint, setGoogleMeetingPoint] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
   const [ward, setWard] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [runningDuration, setRunningDuration] = useState("");
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
+  const [googleModalVisible, setGoogleModalVisible] = useState(false);
 
   const hideModal = () => {
     setAreaModalVisible(false);
     setDurationModalVisible(false);
+    setGoogleModalVisible(false);
   };
   const [eventDescription, setEventDescription] = useState("");
 
@@ -93,7 +105,15 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         setRunningDuration={setRunningDuration}
         hideModal={hideModal}
       />
-      <ScrollView>
+      <GoogleSearchModal
+        modalVisible={googleModalVisible}
+        hideModal={hideModal}
+        setMeetingPoint={setMeetingPoint}
+        setLatitude={setLatitude}
+        setLongitude={setLongitude}
+      />
+
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <CustomInput
@@ -113,17 +133,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
           </View>
           <View style={styles.inputContainer}>
             <CustomInput
-              placeholder="Google Maps address"
-              value={googleMeetingPoint}
-              changeHandler={(text) => setGoogleMeetingPoint(text)}
-              submitted={submitted}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <CustomInput
               placeholder="Meeting Point Address"
+              onFocus={() => setGoogleModalVisible(true)}
               value={meetingPoint}
-              changeHandler={(text) => setMeetingPoint(text)}
               submitted={submitted}
             />
           </View>
