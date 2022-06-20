@@ -5,8 +5,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Image,
 } from "react-native";
-import { TextInput, IconButton, Provider } from "react-native-paper";
+import { TextInput, IconButton, Provider, Button } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
@@ -32,7 +33,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
 
   const [eventDescription, setEventDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const hideModal = () => {
@@ -105,14 +106,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [4, 3],
+        // aspect: [4, 3],
         quality: 1,
       });
 
       console.log(result);
 
       if (!result.cancelled) {
-        setImage(result.uri);
+        setImageUrl(result.uri);
       }
     } catch (e) {
       alert("Something went wrong. Please try again!");
@@ -191,15 +192,33 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
             />
           </View>
 
-          <TouchableOpacity style={styles.imageContainer} onPress={selectImage}>
-            <Text style={{ fontWeight: "bold" }}>Event Image</Text>
-            <View backgroundColor="#fff" style={styles.imageBackground}>
-              <View style={styles.imageLogo}>
-                <IconButton icon="camera" color={Color.Text} size={29} />
-                <Text>Add Image</Text>
+          {imageUrl == "" && (
+            <TouchableOpacity
+              style={styles.imagePlaceholderContainer}
+              onPress={selectImage}
+            >
+              <Text style={{ fontWeight: "bold" }}>Event Image</Text>
+              <View
+                backgroundColor="#fff"
+                style={styles.imagePlaceholderBackground}
+              >
+                <View style={styles.imageLogo}>
+                  <IconButton icon="camera" color={Color.Text} size={29} />
+                  <Text>Add Image</Text>
+                </View>
               </View>
+            </TouchableOpacity>
+          )}
+
+          {imageUrl !== "" && (
+            <View style={styles.imageBackground}>
+              <Text style={{ fontWeight: "bold" }}>Event Image</Text>
+              {imageUrl !== "" && (
+                <Image source={{ uri: imageUrl }} style={{ height: 175 }} />
+              )}
+              <Button>Delete</Button>
             </View>
-          </TouchableOpacity>
+          )}
 
           <View style={styles.inputContainer}>
             <TextInput
@@ -248,14 +267,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  imageContainer: {
+  imagePlaceholderContainer: {
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-start",
     marginLeft: 20,
     marginTop: 10,
   },
-  imageBackground: {
+  imagePlaceholderBackground: {
     width: 98,
     height: 98,
     borderRadius: 10,
@@ -271,6 +290,17 @@ const styles = StyleSheet.create({
     height: 80,
     alignItems: "center",
     justifyContent: "center",
+  },
+  imageBackground: {
+    width: "90%",
+    padding: 10,
+    paddingTop: 25,
+    height: 230,
+    backgroundColor: Color.White,
+    alignSelf: "center",
+    margin: 5,
+    justifyContent: "center",
+    borderRadius: 10,
   },
   inputTheme: {
     roundness: 10,
