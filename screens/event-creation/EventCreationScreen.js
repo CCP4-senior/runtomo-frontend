@@ -9,10 +9,12 @@ import DurationModal from "./DurationModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
+import { GOOGLE_PLACES_API } from "@env";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
+  const [googleMeetingPoint, setGoogleMeetingPoint] = useState("");
   const [ward, setWard] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -106,6 +108,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               placeholder="Area"
               onFocus={() => setAreaModalVisible(true)}
               value={ward}
+              submitted={submitted}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <CustomInput
+              placeholder="Google Maps address"
+              value={googleMeetingPoint}
+              changeHandler={(text) => setGoogleMeetingPoint(text)}
               submitted={submitted}
             />
           </View>
