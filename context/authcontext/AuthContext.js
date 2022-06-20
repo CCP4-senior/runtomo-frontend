@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 import axiosInstance from "../../axios/axios";
 import * as RootNavigation from "../../navigations/RootNavigator.js";
+import { Alert } from "react-native";
 
 const AuthContext = createContext();
 
@@ -28,7 +29,6 @@ const AuthProvider = ({ children }) => {
         email: email,
         password: password,
       });
-
       if (response.status === 200) {
         const data = response.data;
         setUser({ id: jwt_decode(data.access)["user_id"], username: "wade" }); // username to be changed dynamically
@@ -42,7 +42,13 @@ const AuthProvider = ({ children }) => {
         );
       }
     } catch (e) {
-      alert("Something went wrong. Please try again!");
+      Alert.alert("Error", e.response.data.detail, [
+        {
+          text: "OK",
+          onPress: () => null,
+          style: "cancel",
+        },
+      ]);
     }
   };
 

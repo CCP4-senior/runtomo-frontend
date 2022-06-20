@@ -11,28 +11,71 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState({
-    isTriggered: false,
+    isTriggered: true,
     message: "",
   });
-  const [passwordError, setPasswordError] = useState("");
+  const [isFormValidated, setIsFormValidated] = useState(false);
+  const [passwordError, setPasswordError] = useState({
+    isTriggered: true,
+    message: "",
+  });
 
   const handleSignIn = () => {
-    signInUser({ email, password });
-    navigation.navigate("SignIn", { screen: "Home" });
+    if (emailError.isTriggered) {
+      return alert("Please enter a valid email!");
+    }
+    if (!email) {
+      return alert("Please enter an email!");
+    }
 
-    // Mockdata logic. Leave as a reference
-    // if (true) {
-    //   setUser({ id: 2, username: "WayneWadeRuns" });
-    //   navigation.navigate("SignIn", { screen: "Home" });
-    // } else {
-    //   setUser("");
-    // }
+    signInUser({ email, password });
   };
 
   const validateEmail = (text) => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
       const updatedEmailError = { isTriggered: false, message: "" };
       setEmailError(updatedEmailError);
+      if (passwordError.isTriggered === false) {
+        setIsFormValidated(true);
+      }
+    } else if (text.length >= 1) {
+      const updatedEmailError = {
+        isTriggered: true,
+        message: "Please enter a valid email.",
+      };
+      setEmailError(updatedEmailError);
+      setIsFormValidated(false);
+    } else {
+      const updatedEmailError = {
+        isTriggered: true,
+        message: "",
+      };
+      setEmailError(updatedEmailError);
+      setIsFormValidated(false);
+    }
+  };
+
+  const validatePassword = (text) => {
+    if (text.length >= 9) {
+      const updatedPasswordError = { isTriggered: false, message: "" };
+      setPasswordError(updatedPasswordError);
+      if (emailError.isTriggered === false) {
+        setIsFormValidated(true);
+      }
+    } else if (text.length >= 1) {
+      const updatedPasswordError = {
+        isTriggered: true,
+        message: "Password must be at least 9 characters.",
+      };
+      setPasswordError(updatedPasswordError);
+      setIsFormValidated(false);
+    } else {
+      const updatedPasswordError = {
+        isTriggered: true,
+        message: "",
+      };
+      setPasswordError(updatedPasswordError);
+      setIsFormValidated(false);
     }
   };
 
@@ -52,15 +95,7 @@ const SignIn = () => {
           returnKeyType="next"
           style={{ height: 50, backgroundColor: Color.White }}
           error={false}
-          errorText={"TESTING"}
           onChangeText={(text) => {
-            if (emailError.isTriggered === false) {
-              const updatedEmailError = {
-                isTriggered: true,
-                message: "Please enter a valid email.",
-              };
-              setEmailError(updatedEmailError);
-            }
             validateEmail(text);
             return setEmail(text);
           }}
@@ -79,8 +114,14 @@ const SignIn = () => {
           textContentType="password"
           secureTextEntry={true}
           style={{ height: 50, backgroundColor: Color.White }}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => {
+            validatePassword(text);
+            return setPassword(text);
+          }}
         />
+        <Text style={styles.passwordErrorMessage}>
+          {passwordError.isTriggered && passwordError.message}
+        </Text>
       </View>
       <Text
         style={styles.forgotPasswordLink}
@@ -101,6 +142,7 @@ const SignIn = () => {
           contentStyle={{
             padding: 5,
           }}
+          disabled={!isFormValidated}
           onPress={() => handleSignIn()}
         >
           Sign In
@@ -151,6 +193,10 @@ const styles = StyleSheet.create({
     marginTop: 4,
     color: "#c7254e",
   },
+  passwordErrorMessage: {
+    marginTop: 4,
+    color: "#c7254e",
+  },
   passwordFieldWrapper: {
     position: "absolute",
     width: 315,
@@ -161,7 +207,7 @@ const styles = StyleSheet.create({
   forgotPasswordLink: {
     position: "absolute",
     color: Color.PrimaryMain,
-    top: 470,
+    top: 485,
     fontSize: 15,
     left: 230,
   },
