@@ -10,9 +10,12 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Button, TextInput, Chip } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../assets/themes/Color.js';
+import { AuthContext } from '../../context/authcontext/AuthContext';
+
 
 const RegisterExtraInfo = ({ route }) => {
 	const navigation = useNavigation();
+	const { setUser, createUser } = useContext(AuthContext);
 
 	const { username, email, password } = route.params;
 
