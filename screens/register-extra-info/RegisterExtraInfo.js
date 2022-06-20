@@ -116,15 +116,6 @@ const RegisterExtraInfo = ({ route }) => {
 				</Button>
 			</View>
 
-			{/* Testing */}
-
-			<View>
-
-				<Text> {username} </Text>
-				<Text> {email} </Text>
-				<Text> {password} </Text>
-				<Text> {age} </Text>
-			</View>
 		</SafeAreaView>
 	);
 };
