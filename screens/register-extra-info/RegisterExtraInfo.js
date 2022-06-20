@@ -12,22 +12,20 @@ import { useNavigation } from '@react-navigation/native';
 import Color from '../../assets/themes/Color.js';
 import { AuthContext } from '../../context/authcontext/AuthContext';
 
-
 const RegisterExtraInfo = ({ route }) => {
 	const navigation = useNavigation();
 	const { setUser, createUser } = useContext(AuthContext);
 
 	const { username, email, password } = route.params;
 
-	// const [ username, setUsername ] = useState('');
 	const [ age, setAge ] = useState('');
 	const [ runningLevel, setRunningLevel ] = useState('');
 	const [ pace, setPace ] = useState('');
 
 	const handlePress = () => {
 		const user = { username, email, password, age, runningLevel, pace };
+
 		createUser(user);
-		
 	};
 
 	return (
@@ -41,8 +39,6 @@ const RegisterExtraInfo = ({ route }) => {
 			{/* Input Fields */}
 
 			<View style={styles.inputs}>
-	
-
 				{/* Age */}
 
 				<View style={styles.input}>
@@ -115,7 +111,6 @@ const RegisterExtraInfo = ({ route }) => {
 					Continue
 				</Button>
 			</View>
-
 		</SafeAreaView>
 	);
 };

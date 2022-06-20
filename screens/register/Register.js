@@ -22,16 +22,11 @@ const Register = () => {
 	});
 	const [ passwordError, setPasswordError ] = useState('');
 
-	// const [email, setEmail] = useState("");
-	// const [username, setUsername] = useState("");
-	// const [secondPassword, setSecondPassword] = useState("");
-	// const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("");
+	const [username, setUsername] = useState("");
+	const [secondPassword, setSecondPassword] = useState("");
+	const [password, setPassword] = useState("");
 
-	// For testing
-	const [ email, setEmail ] = useState('abc@example.com');
-	const [ username, setUsername ] = useState('username123');
-	const [ secondPassword, setSecondPassword ] = useState('123454321');
-	const [ password, setPassword ] = useState('123454321');
 
 	const handleRegister = () => {
 		let inputError = false;
@@ -67,16 +62,11 @@ const Register = () => {
 				{ text: 'OK' }
 			]);
 		} else {
-			// const user = { email, password, username };
-
-      // Ravi's Note: this trigger's a re-render and sends user to the Home page
-			// createUser(user);
 
 			// Mockdata logic. Leave as a reference until backend endpoints are fully ready
 			// setUser({ id: 2, username: "WayneWadeRuns" });
 			// navigation.navigate("SignIn", { screen: "Home" });
 
-			// Testing - Ravi
 			navigation.navigate("RegisterExtraInfo", {username, email, password});
 		}
 	};
