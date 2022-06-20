@@ -10,16 +10,20 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Button, TextInput, Chip } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../assets/themes/Color.js';
+import { navigationRef } from '../../navigations/RootNavigator.js';
 
 const RegisterExtraInfo = () => {
 	const navigation = useNavigation();
+
 	const [ username, setUsername ] = useState('');
 	const [ age, setAge ] = useState('');
 	const [ runningLevel, setRunningLevel ] = useState('');
 	const [ pace, setPace ] = useState('');
 
 	const handlePress = () => {
-		console.warn('Pressed!');
+		// navigation.navigate('SignIn', {screen:'Home'});
+		navigation.navigate('Home');
+		// navigation.goBack();
 	};
 
 	return (
@@ -100,11 +104,7 @@ const RegisterExtraInfo = () => {
 						onChangeText={(value) => setPace(value)}
 					/>
 				</View>
-				
-
 			</View>
-
-			
 
 			{/* Continue Button */}
 
