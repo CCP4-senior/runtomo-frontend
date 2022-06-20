@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Modal, Portal, Card, Title, Paragraph } from "react-native-paper";
+import { Modal, Portal } from "react-native-paper";
 /* google config */
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_API } from "@env";
@@ -49,7 +49,7 @@ const GoogleSearchModal = ({
               key: `${GOOGLE_PLACES_API}`,
               language: "en",
               components: "country:jp",
-              radius: 50000,
+              radius: 75000,
               location: `${region.latitude}, ${region.longitude}`,
             }}
             styles={{

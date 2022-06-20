@@ -1,11 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  VirtualizedList,
-} from "react-native";
+import React, { useState } from "react";
+import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { TextInput, IconButton, Provider } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
 import Color from "../../assets/themes/Color.js";
@@ -16,9 +10,6 @@ import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
-/* google config */
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { GOOGLE_PLACES_API } from "@env";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
@@ -111,6 +102,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         setMeetingPoint={setMeetingPoint}
         setLatitude={setLatitude}
         setLongitude={setLongitude}
+        ward={ward}
       />
 
       <ScrollView keyboardShouldPersistTaps="handled">
