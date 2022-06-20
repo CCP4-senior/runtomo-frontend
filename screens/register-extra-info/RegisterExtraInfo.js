@@ -16,11 +16,17 @@ const RegisterExtraInfo = () => {
 	const [ username, setUsername ] = useState('');
 	const [ age, setAge ] = useState('');
 
+	const handlePress = () => {
+		console.warn("Pressed!");
+	}
+
 	return (
 		<SafeAreaView style={styles.root}>
 			{/*  Title */}
 
-			<Text style={styles.title}>Tell us about yourself!</Text>
+			<View style={styles.title}>
+				<Text style={styles.titleText}>Tell us about yourself!</Text>
+			</View>
 
 			{/* Input Fields */}
 
@@ -55,7 +61,7 @@ const RegisterExtraInfo = () => {
 						keyboardType="default"
 						returnKeyType="next"
 						style={{ height: 50, backgroundColor: Color.White }}
-						onChangeText={(text) => setUsername(text)}
+						onChangeText={(text) => setAge(text)}
 					/>
 				</View>
 			</View>
@@ -79,13 +85,13 @@ const RegisterExtraInfo = () => {
 				>
 					Continue
 				</Button>
+			</View>
 
-				{/* Testing */}
+			{/* Testing */}
 
-				<View>
-					<Text> {username} </Text>
-					<Text> {username} </Text>
-				</View>
+			<View>
+				<Text> {username} </Text>
+				<Text> {age} </Text>
 			</View>
 		</SafeAreaView>
 	);
@@ -95,38 +101,51 @@ export default RegisterExtraInfo;
 
 const styles = StyleSheet.create({
 	root                 : {
-		flex : 1
-	},
-	oldTitle             : {
-		position         : 'absolute',
-		width            : 305,
-		height           : 34,
-		top              : 125,
-		fontSize         : 28,
-		fontWeight       : '700',
-		textAlign        : 'center',
-		marginHorizontal : 20,
-		letterSpacing    : 0.36,
-		alignSelf        : 'center'
+		flex           : 1,
+		justifyContent : 'center'
 	},
 	title                : {
-		flex             : 1,
-		fontSize         : 28,
-		fontWeight       : '700',
-		textAlign        : 'center',
-		marginHorizontal : 20,
-		letterSpacing    : 0.36,
-		alignSelf        : 'center'
+		// flex            : 1,
+		// justifyContent  : 'center',
+		// backgroundColor : 'coral',
+		justifyContent  : 'center',
+		alignItems      : 'center',
+		marginVertical: 20
+	},
+	spacer               : {
+		flex            : 1,
+		backgroundColor : 'lime'
 	},
 	inputs               : {
-		flex : 1
+		// flex            : 1,
+		// backgroundColor : 'violet',
+		// justifyContent  : 'center',
+		alignItems: 'center'
+
+	},
+	button               : {
+		// flex             : 1,
+		width: "75%",
+		borderRadius     : 10,
+		// marginHorizontal : 20,
+		// justifyContent   : 'space-between',
+		alignSelf        : 'center',
+		// backgroundColor  : 'skyblue',
+		marginVertical: 20,
 	},
 	input                : {
-		padding : 20
+		width: '75%',
+		marginVertical: 20,
+
+	},
+	titleText            : {
+		fontSize      : 28,
+		fontWeight    : '700',
+		letterSpacing : 0.36
 	},
 	usernameFieldWrapper : {
 		position  : 'absolute',
-		width     : '75%',
+		width     : '70%',
 		height    : 74,
 		top       : 200,
 		alignSelf : 'center'
@@ -138,10 +157,7 @@ const styles = StyleSheet.create({
 		top       : 300,
 		alignSelf : 'center'
 	},
-	button: {
-		
-	},
-	oldButton               : {
+	oldButton            : {
 		position         : 'absolute',
 		width            : 315,
 		height           : 101,
@@ -149,6 +165,18 @@ const styles = StyleSheet.create({
 		borderRadius     : 10,
 		marginHorizontal : 20,
 		justifyContent   : 'space-between',
+		alignSelf        : 'center'
+	},
+	oldTitle             : {
+		position         : 'absolute',
+		width            : 305,
+		height           : 34,
+		top              : 125,
+		fontSize         : 28,
+		fontWeight       : '700',
+		textAlign        : 'center',
+		marginHorizontal : 20,
+		letterSpacing    : 0.36,
 		alignSelf        : 'center'
 	}
 });
