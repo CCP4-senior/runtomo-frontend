@@ -13,12 +13,23 @@ import Color from '../../assets/themes/Color.js';
 
 const RegisterExtraInfo = () => {
 	const navigation = useNavigation();
-	const [ username, setUsername ] = useState('');
+	// const [ username, setUsername ] = useState('');
 	const [ age, setAge ] = useState('');
 
+	const [ userInfo, setUserInfo ] = useState({
+		username : '',
+		age      : ''
+	});
+
+	const handleInputChange = (key, value) => {
+		let entry = {};
+		entry[key] = value;
+		setUserInfo({ ...userInfo, ...entry });
+	};
+
 	const handlePress = () => {
-		console.warn("Pressed!");
-	}
+		console.warn('Pressed!');
+	};
 
 	return (
 		<SafeAreaView style={styles.root}>
@@ -36,7 +47,7 @@ const RegisterExtraInfo = () => {
 				<View style={styles.input}>
 					<TextInput
 						label="Username"
-						value={username}
+						value={userInfo.username}
 						mode="outlined"
 						outlineColor={Color.Black}
 						activeOutlineColor={Color.Black}
@@ -44,7 +55,7 @@ const RegisterExtraInfo = () => {
 						keyboardType="default"
 						returnKeyType="next"
 						style={{ height: 50, backgroundColor: Color.White }}
-						onChangeText={(text) => setUsername(text)}
+						onChangeText={(value) => handleInputChange('username', value)}
 					/>
 				</View>
 
@@ -53,7 +64,7 @@ const RegisterExtraInfo = () => {
 				<View style={styles.input}>
 					<TextInput
 						label="Age"
-						value={age}
+						value={userInfo.age}
 						mode="outlined"
 						outlineColor={Color.Black}
 						activeOutlineColor={Color.Black}
@@ -61,7 +72,7 @@ const RegisterExtraInfo = () => {
 						keyboardType="default"
 						returnKeyType="next"
 						style={{ height: 50, backgroundColor: Color.White }}
-						onChangeText={(text) => setAge(text)}
+						onChangeText={(value) => handleInputChange('age', value)}
 					/>
 				</View>
 			</View>
@@ -90,8 +101,8 @@ const RegisterExtraInfo = () => {
 			{/* Testing */}
 
 			<View>
-				<Text> {username} </Text>
-				<Text> {age} </Text>
+				<Text> {userInfo.username} </Text>
+				<Text> {userInfo.age} </Text>
 			</View>
 		</SafeAreaView>
 	);
@@ -100,83 +111,32 @@ const RegisterExtraInfo = () => {
 export default RegisterExtraInfo;
 
 const styles = StyleSheet.create({
-	root                 : {
+	root      : {
 		flex           : 1,
 		justifyContent : 'center'
 	},
-	title                : {
-		// flex            : 1,
-		// justifyContent  : 'center',
-		// backgroundColor : 'coral',
-		justifyContent  : 'center',
-		alignItems      : 'center',
-		marginVertical: 20
+	title     : {
+		justifyContent : 'center',
+		alignItems     : 'center',
+		marginVertical : 20
 	},
-	spacer               : {
-		flex            : 1,
-		backgroundColor : 'lime'
+	inputs    : {
+		alignItems : 'center'
 	},
-	inputs               : {
-		// flex            : 1,
-		// backgroundColor : 'violet',
-		// justifyContent  : 'center',
-		alignItems: 'center'
+	button    : {
+		width          : '75%',
+		borderRadius   : 10,
 
+		alignSelf      : 'center',
+		marginVertical : 20
 	},
-	button               : {
-		// flex             : 1,
-		width: "75%",
-		borderRadius     : 10,
-		// marginHorizontal : 20,
-		// justifyContent   : 'space-between',
-		alignSelf        : 'center',
-		// backgroundColor  : 'skyblue',
-		marginVertical: 20,
+	input     : {
+		width          : '75%',
+		marginVertical : 20
 	},
-	input                : {
-		width: '75%',
-		marginVertical: 20,
-
-	},
-	titleText            : {
+	titleText : {
 		fontSize      : 28,
 		fontWeight    : '700',
 		letterSpacing : 0.36
-	},
-	usernameFieldWrapper : {
-		position  : 'absolute',
-		width     : '70%',
-		height    : 74,
-		top       : 200,
-		alignSelf : 'center'
-	},
-	ageField             : {
-		position  : 'absolute',
-		width     : '75%',
-		height    : 74,
-		top       : 300,
-		alignSelf : 'center'
-	},
-	oldButton            : {
-		position         : 'absolute',
-		width            : 315,
-		height           : 101,
-		top              : 600,
-		borderRadius     : 10,
-		marginHorizontal : 20,
-		justifyContent   : 'space-between',
-		alignSelf        : 'center'
-	},
-	oldTitle             : {
-		position         : 'absolute',
-		width            : 305,
-		height           : 34,
-		top              : 125,
-		fontSize         : 28,
-		fontWeight       : '700',
-		textAlign        : 'center',
-		marginHorizontal : 20,
-		letterSpacing    : 0.36,
-		alignSelf        : 'center'
 	}
 });
