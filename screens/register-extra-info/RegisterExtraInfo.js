@@ -7,7 +7,7 @@ import {
 	Alert
 } from 'react-native';
 import React, { useContext, useState, useEffect } from 'react';
-import { Button, TextInput } from 'react-native-paper';
+import { Button, TextInput, Chip } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../assets/themes/Color.js';
 
@@ -15,7 +15,8 @@ const RegisterExtraInfo = () => {
 	const navigation = useNavigation();
 	const [ username, setUsername ] = useState('');
 	const [ age, setAge ] = useState('');
-
+	const [ runningLevel, setRunningLevel ] = useState('');
+	const [ pace, setPace ] = useState('');
 
 	const handlePress = () => {
 		console.warn('Pressed!');
@@ -65,7 +66,45 @@ const RegisterExtraInfo = () => {
 						onChangeText={(value) => setAge(value)}
 					/>
 				</View>
+
+				{/* Running Level */}
+
+				<View style={styles.input}>
+					<TextInput
+						label="Running Level"
+						value={runningLevel}
+						mode="outlined"
+						outlineColor={Color.Black}
+						activeOutlineColor={Color.Black}
+						autoCapitalize="none"
+						keyboardType="default"
+						returnKeyType="next"
+						style={{ height: 50, backgroundColor: Color.White }}
+						onChangeText={(value) => setRunningLevel(value)}
+					/>
+				</View>
+
+				{/* Pace */}
+
+				<View style={styles.input}>
+					<TextInput
+						label="How long does it take to run 5km?"
+						value={pace}
+						mode="outlined"
+						outlineColor={Color.Black}
+						activeOutlineColor={Color.Black}
+						autoCapitalize="none"
+						keyboardType="default"
+						returnKeyType="next"
+						style={{ height: 50, backgroundColor: Color.White }}
+						onChangeText={(value) => setPace(value)}
+					/>
+				</View>
+				
+
 			</View>
+
+			
 
 			{/* Continue Button */}
 
