@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { ScrollView, View, StyleSheet, Text } from "react-native";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { TextInput, IconButton, Provider } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
 import Color from "../../assets/themes/Color.js";
@@ -10,6 +16,7 @@ import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
+import * as ImagePicker from "expo-image-picker";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
@@ -24,12 +31,15 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
 
+  const [eventDescription, setEventDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
   const hideModal = () => {
     setAreaModalVisible(false);
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
   };
-  const [eventDescription, setEventDescription] = useState("");
 
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
@@ -81,8 +91,34 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   //   setData([...data, event]);
   //   navigation.navigate("Event Created");
   // };
+  const options = {
+    mediaType: "photo",
+    maxWidth: 1000,
+    maxHeight: 1000,
+    quality: 0.8,
+    saveToPhotos: true,
+  };
 
-  const [submitted, setSubmitted] = useState(false);
+  const selectImage = async () => {
+    console.log("selectImage ran");
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      console.log(result);
+
+      if (!result.cancelled) {
+        setImage(result.uri);
+      }
+    } catch (e) {
+      alert("Something went wrong. Please try again!");
+      console.log(e);
+    }
+  };
 
   return (
     <Provider>
@@ -154,7 +190,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               submitted={submitted}
             />
           </View>
-          <View style={styles.imageContainer}>
+
+          <TouchableOpacity style={styles.imageContainer} onPress={selectImage}>
             <Text style={{ fontWeight: "bold" }}>Event Image</Text>
             <View backgroundColor="#fff" style={styles.imageBackground}>
               <View style={styles.imageLogo}>
@@ -162,7 +199,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
                 <Text>Add Image</Text>
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
+
           <View style={styles.inputContainer}>
             <TextInput
               mutiline={true}
