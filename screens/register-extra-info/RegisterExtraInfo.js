@@ -11,18 +11,20 @@ import { Button, TextInput, Chip } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../assets/themes/Color.js';
 
-const RegisterExtraInfo = () => {
+const RegisterExtraInfo = ({ route }) => {
 	const navigation = useNavigation();
 
-	const [ username, setUsername ] = useState('');
+	const { username, email, password } = route.params;
+
+	// const [ username, setUsername ] = useState('');
 	const [ age, setAge ] = useState('');
 	const [ runningLevel, setRunningLevel ] = useState('');
 	const [ pace, setPace ] = useState('');
 
 	const handlePress = () => {
-		// navigation.navigate('SignIn', {screen:'Home'});
-		navigation.navigate('Home');
-		// navigation.goBack();
+		const user = { username, email, password, age, runningLevel, pace };
+		createUser(user);
+		
 	};
 
 	return (
@@ -36,22 +38,7 @@ const RegisterExtraInfo = () => {
 			{/* Input Fields */}
 
 			<View style={styles.inputs}>
-				{/* Username */}
-
-				<View style={styles.input}>
-					<TextInput
-						label="Username"
-						value={username}
-						mode="outlined"
-						outlineColor={Color.Black}
-						activeOutlineColor={Color.Black}
-						autoCapitalize="none"
-						keyboardType="default"
-						returnKeyType="next"
-						style={{ height: 50, backgroundColor: Color.White }}
-						onChangeText={(value) => setUsername(value)}
-					/>
-				</View>
+	
 
 				{/* Age */}
 
@@ -129,7 +116,10 @@ const RegisterExtraInfo = () => {
 			{/* Testing */}
 
 			<View>
+
 				<Text> {username} </Text>
+				<Text> {email} </Text>
+				<Text> {password} </Text>
 				<Text> {age} </Text>
 			</View>
 		</SafeAreaView>

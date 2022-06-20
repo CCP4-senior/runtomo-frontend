@@ -67,7 +67,9 @@ const Register = () => {
 				{ text: 'OK' }
 			]);
 		} else {
-			const user = { email, password, username };
+			// const user = { email, password, username };
+
+      // Ravi's Note: this trigger's a re-render and sends user to the Home page
 			// createUser(user);
 
 			// Mockdata logic. Leave as a reference until backend endpoints are fully ready
@@ -75,12 +77,7 @@ const Register = () => {
 			// navigation.navigate("SignIn", { screen: "Home" });
 
 			// Testing - Ravi
-			navigation.navigate("RegisterExtraInfo");
-			// navigation.navigate("Register", { screen: "RegisterExtraInfo" });
-			// navigation.navigate('SignIn', { screen: 'Home' });
-			// navigation.navigate("SignIn", { screen: "Home" });
-			// navigation.navigate("Register", { screen: "Home" });
-			// navigation.navigate('Home');
+			navigation.navigate("RegisterExtraInfo", {username, email, password});
 		}
 	};
 
