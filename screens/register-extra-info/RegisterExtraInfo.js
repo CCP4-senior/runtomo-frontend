@@ -13,19 +13,9 @@ import Color from '../../assets/themes/Color.js';
 
 const RegisterExtraInfo = () => {
 	const navigation = useNavigation();
-	// const [ username, setUsername ] = useState('');
+	const [ username, setUsername ] = useState('');
 	const [ age, setAge ] = useState('');
 
-	const [ userInfo, setUserInfo ] = useState({
-		username : '',
-		age      : ''
-	});
-
-	const handleInputChange = (key, value) => {
-		let entry = {};
-		entry[key] = value;
-		setUserInfo({ ...userInfo, ...entry });
-	};
 
 	const handlePress = () => {
 		console.warn('Pressed!');
@@ -47,7 +37,7 @@ const RegisterExtraInfo = () => {
 				<View style={styles.input}>
 					<TextInput
 						label="Username"
-						value={userInfo.username}
+						value={username}
 						mode="outlined"
 						outlineColor={Color.Black}
 						activeOutlineColor={Color.Black}
@@ -55,7 +45,7 @@ const RegisterExtraInfo = () => {
 						keyboardType="default"
 						returnKeyType="next"
 						style={{ height: 50, backgroundColor: Color.White }}
-						onChangeText={(value) => handleInputChange('username', value)}
+						onChangeText={(value) => setUsername(value)}
 					/>
 				</View>
 
@@ -64,7 +54,7 @@ const RegisterExtraInfo = () => {
 				<View style={styles.input}>
 					<TextInput
 						label="Age"
-						value={userInfo.age}
+						value={age}
 						mode="outlined"
 						outlineColor={Color.Black}
 						activeOutlineColor={Color.Black}
@@ -72,7 +62,7 @@ const RegisterExtraInfo = () => {
 						keyboardType="default"
 						returnKeyType="next"
 						style={{ height: 50, backgroundColor: Color.White }}
-						onChangeText={(value) => handleInputChange('age', value)}
+						onChangeText={(value) => setAge(value)}
 					/>
 				</View>
 			</View>
@@ -101,8 +91,8 @@ const RegisterExtraInfo = () => {
 			{/* Testing */}
 
 			<View>
-				<Text> {userInfo.username} </Text>
-				<Text> {userInfo.age} </Text>
+				<Text> {username} </Text>
+				<Text> {age} </Text>
 			</View>
 		</SafeAreaView>
 	);
