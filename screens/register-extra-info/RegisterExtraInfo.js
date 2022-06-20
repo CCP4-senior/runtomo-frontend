@@ -10,7 +10,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Button, TextInput, Chip } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import Color from '../../assets/themes/Color.js';
-import { navigationRef } from '../../navigations/RootNavigator.js';
 
 const RegisterExtraInfo = () => {
 	const navigation = useNavigation();
