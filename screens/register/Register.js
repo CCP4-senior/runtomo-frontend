@@ -62,7 +62,8 @@ const Register = () => {
       const user = { email, password, username };
       createUser(user);
 
-      navigation.navigate("RegisterExtraInfo");
+      // navigation.navigate("RegisterExtraInfo");
+      navigation.navigate("Register", { screen: "RegisterExtraInfo" });
 
       // Mockdata logic. Leave as a reference until backend endpoints are fully ready
       // setUser({ id: 2, username: "WayneWadeRuns" });

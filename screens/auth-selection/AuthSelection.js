@@ -22,6 +22,9 @@ const AuthSelection = ({ navigation }) => {
         />
       </View>
       <View style={styles.buttonsWrapper}>
+
+        {/* Signin button */}
+
         <View style={styles.signInBtnWrapper}>
           <Button
             color={Color.Black}
@@ -42,6 +45,9 @@ const AuthSelection = ({ navigation }) => {
             Sign In
           </Button>
         </View>
+
+        {/* Register button */}
+
         <View style={styles.registerBtnWrapper}>
           <Button
             mode="contained"
@@ -58,6 +64,27 @@ const AuthSelection = ({ navigation }) => {
             onPress={() => navigation.navigate("Register")}
           >
             Register
+          </Button>
+        </View>
+
+        {/* ExtraInfo button */}
+
+        <View style={styles.registerBtnWrapper}>
+          <Button
+            mode="contained"
+            uppercase={false}
+            color={Color.PrimaryMain}
+            style={{ borderRadius: 10 }}
+            labelStyle={{
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+            contentStyle={{
+              padding: 5,
+            }}
+            onPress={() => navigation.navigate("RegisterExtraInfo")}
+          >
+            Extra Info
           </Button>
         </View>
       </View>
@@ -89,5 +116,6 @@ const styles = StyleSheet.create({
   },
   registerBtnWrapper: {
     width: "70%",
+    marginBottom: 20,
   },
 });

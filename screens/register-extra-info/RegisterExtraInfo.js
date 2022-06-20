@@ -1,254 +1,154 @@
 import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Text,
-  Linking,
-  Alert,
-} from "react-native";
-import React, { useContext, useState, useEffect } from "react";
-import { Button, TextInput } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from "../../context/authcontext/AuthContext";
-import Color from "../../assets/themes/Color.js";
+	StyleSheet,
+	View,
+	SafeAreaView,
+	Text,
+	Linking,
+	Alert
+} from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import Color from '../../assets/themes/Color.js';
 
 const RegisterExtraInfo = () => {
-  const navigation = useNavigation();
-  const { setUser, createUser } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [secondPassword, setSecondPassword] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState({
-    isTriggered: false,
-    message: "",
-  });
-  const [passwordError, setPasswordError] = useState("");
+	const navigation = useNavigation();
+	const [ username, setUsername ] = useState('');
+	const [ age, setAge ] = useState('');
 
-  const handlePress = () => {
-    let inputError = false;
-    let alertMessage = "";
+	return (
+		<SafeAreaView style={styles.root}>
+			{/*  Title */}
 
-    if (username.length < 5) {
-      alertMessage = "The username must be greater than 5 letters";
-      inputError = true;
-    } 
+			<Text style={styles.title}>Tell us about yourself!</Text>
 
-    if (inputError) {
-      Alert.alert("Try again!", alertMessage, [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        { text: "OK" },
-      ]);
-    } else {
-      const user = { email, password, username };
+			{/* Input Fields */}
 
-      navigation.navigate("Home");
+			<View style={styles.inputs}>
+				{/* Username */}
 
-      // for database
-      // createUser(user);
+				<View style={styles.input}>
+					<TextInput
+						label="Username"
+						value={username}
+						mode="outlined"
+						outlineColor={Color.Black}
+						activeOutlineColor={Color.Black}
+						autoCapitalize="none"
+						keyboardType="default"
+						returnKeyType="next"
+						style={{ height: 50, backgroundColor: Color.White }}
+						onChangeText={(text) => setUsername(text)}
+					/>
+				</View>
 
-      // Mockdata logic. Leave as a reference until backend endpoints are fully ready
-      // setUser({ id: 2, username: "WayneWadeRuns" });
+				{/* Age */}
 
-      // navigation.navigate("SignIn", { screen: "Home" });
-      
-    }
-  };
+				<View style={styles.input}>
+					<TextInput
+						label="Age"
+						value={age}
+						mode="outlined"
+						outlineColor={Color.Black}
+						activeOutlineColor={Color.Black}
+						autoCapitalize="none"
+						keyboardType="default"
+						returnKeyType="next"
+						style={{ height: 50, backgroundColor: Color.White }}
+						onChangeText={(text) => setUsername(text)}
+					/>
+				</View>
+			</View>
 
-  const handleUsername = (text) => {
-    setUsername(text);
-  };
+			{/* Continue Button */}
 
-  const validateEmail = (text) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(text)) {
-      const updatedEmailError = { isTriggered: false, message: "" };
-      setEmailError(updatedEmailError);
-    }
-  };
+			<View style={styles.button}>
+				<Button
+					mode="contained"
+					uppercase={false}
+					color={Color.PrimaryMain}
+					style={{ borderRadius: 10 }}
+					labelStyle={{
+						fontWeight : 'bold',
+						fontSize   : 18
+					}}
+					contentStyle={{
+						padding : 5
+					}}
+					onPress={() => handlePress()}
+				>
+					Continue
+				</Button>
 
-  const validatePassword = (text) => {
-    let result = true;
-  };
+				{/* Testing */}
 
-  return (
-    <SafeAreaView style={styles.root}>
-      {/*  Title */}
-
-      <Text style={styles.title}>Tell us about yourself!</Text>
-
-      {/* Email */}
-
-      <View style={styles.emailFieldWrapper}>
-        <TextInput
-          label="Email"
-          value={email}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          autoCapitalize="none"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          returnKeyType="next"
-          style={{ height: 50, backgroundColor: Color.White }}
-          error={false}
-          errorText={"TESTING"}
-          onChangeText={(text) => {
-            if (emailError.isTriggered === false) {
-              const updatedEmailError = {
-                isTriggered: true,
-                message: "Please enter a valid email.",
-              };
-              setEmailError(updatedEmailError);
-            }
-            validateEmail(text);
-            return setEmail(text);
-          }}
-        />
-        <Text style={styles.emailErrorMessage}>
-          {emailError.isTriggered && emailError.message}
-        </Text>
-      </View>
-
-      {/* Username */}
-
-      <View style={styles.usernameFieldWrapper}>
-        <TextInput
-          label="Username"
-          value={username}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          autoCapitalize="none"
-          keyboardType="default"
-          returnKeyType="next"
-          style={{ height: 50, backgroundColor: Color.White }}
-          onChangeText={handleUsername}
-        />
-      </View>
-
-      {/*  Password */}
-
-      <View style={styles.passwordFieldWrapper}>
-        <TextInput
-          label="Password"
-          value={password}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          textContentType="password"
-          secureTextEntry={true}
-          style={{ height: 50, backgroundColor: Color.White }}
-          onChangeText={(text) => setPassword(text)}
-        />
-      </View>
-
-     
-
-      {/* Register Button */}
-
-      <View style={styles.registerBottomWrapper}>
-        <Button
-          mode="contained"
-          uppercase={false}
-          color={Color.PrimaryMain}
-          style={{ borderRadius: 10 }}
-          labelStyle={{
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-          contentStyle={{
-            padding: 5,
-          }}
-          onPress={() => handlePress()}
-        >
-          Continue
-        </Button>
-        <Text style={styles.registerText}>
-          Already have an account?{" "}
-          <Text
-            style={styles.registerLink}
-            onPress={() => navigation.navigate("SignIn")}
-          >
-            Sign In
-          </Text>
-        </Text>
-      </View>
-    </SafeAreaView>
-  );
+				<View>
+					<Text> {username} </Text>
+					<Text> {username} </Text>
+				</View>
+			</View>
+		</SafeAreaView>
+	);
 };
 
-export default SignIn;
+export default RegisterExtraInfo;
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  title: {
-    position: "absolute",
-    width: 305,
-    height: 34,
-    top: 125,
-    fontSize: 28,
-    fontWeight: "700",
-    textAlign: "center",
-    marginHorizontal: 20,
-    letterSpacing: 0.36,
-    alignSelf: "center",
-  },
-  emailFieldHeader: {
-    marginBottom: 10,
-  },
-  emailFieldWrapper: {
-    position: "absolute",
-    width: 315,
-    height: 74,
-    top: 304,
-    alignSelf: "center",
-  },
-  emailErrorMessage: {
-    marginTop: 4,
-    color: Color.PrimaryMain,
-  },
-  usernameFieldWrapper: {
-    position: "absolute",
-    width: 315,
-    height: 74,
-    top: 200,
-    alignSelf: "center",
-  },
-  passwordFieldWrapper: {
-    position: "absolute",
-    width: 315,
-    height: 70,
-    top: 400,
-    alignSelf: "center",
-  },
-  secondPasswordFieldWrapper: {
-    position: "absolute",
-    width: 315,
-    height: 70,
-    top: 500,
-    alignSelf: "center",
-  },
-  registerBottomWrapper: {
-    position: "absolute",
-    width: 315,
-    height: 101,
-    top: 600,
-    borderRadius: 10,
-    marginHorizontal: 20,
-    justifyContent: "space-between",
-    alignSelf: "center",
-  },
-  registerText: {
-    alignSelf: "center",
-    fontWeight: "500",
-    color: Color.Text,
-  },
-  registerLink: {
-    color: Color.PrimaryMain,
-  },
+	root                 : {
+		flex : 1
+	},
+	oldTitle             : {
+		position         : 'absolute',
+		width            : 305,
+		height           : 34,
+		top              : 125,
+		fontSize         : 28,
+		fontWeight       : '700',
+		textAlign        : 'center',
+		marginHorizontal : 20,
+		letterSpacing    : 0.36,
+		alignSelf        : 'center'
+	},
+	title                : {
+		flex             : 1,
+		fontSize         : 28,
+		fontWeight       : '700',
+		textAlign        : 'center',
+		marginHorizontal : 20,
+		letterSpacing    : 0.36,
+		alignSelf        : 'center'
+	},
+	inputs               : {
+		flex : 1
+	},
+	input                : {
+		padding : 20
+	},
+	usernameFieldWrapper : {
+		position  : 'absolute',
+		width     : '75%',
+		height    : 74,
+		top       : 200,
+		alignSelf : 'center'
+	},
+	ageField             : {
+		position  : 'absolute',
+		width     : '75%',
+		height    : 74,
+		top       : 300,
+		alignSelf : 'center'
+	},
+	button: {
+		
+	},
+	oldButton               : {
+		position         : 'absolute',
+		width            : 315,
+		height           : 101,
+		top              : 600,
+		borderRadius     : 10,
+		marginHorizontal : 20,
+		justifyContent   : 'space-between',
+		alignSelf        : 'center'
+	}
 });
