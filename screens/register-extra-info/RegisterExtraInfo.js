@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color.js";
 
-const SignIn = () => {
+const RegisterExtraInfo = () => {
   const navigation = useNavigation();
   const { setUser, createUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
@@ -25,30 +25,14 @@ const SignIn = () => {
   });
   const [passwordError, setPasswordError] = useState("");
 
-  const handleSignIn = () => {
+  const handlePress = () => {
     let inputError = false;
     let alertMessage = "";
 
     if (username.length < 5) {
       alertMessage = "The username must be greater than 5 letters";
       inputError = true;
-    } else if (email === "") {
-      alertMessage = "Cannot have an empty field";
-      inputError = true;
-    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      alertMessage =
-        "The email does not look right. Did you type it correctly?";
-      inputError = true;
-    } else if (password.length < 9) {
-      alertMessage = "The password must be 9 or more characters";
-      inputError = true;
-    } else if (password !== secondPassword) {
-      alertMessage = "Passwords do not match";
-      inputError = true;
-    } else if (password === "" || secondPassword === "") {
-      alertMessage = "Cannot have an empty password";
-      inputError = true;
-    }
+    } 
 
     if (inputError) {
       Alert.alert("Try again!", alertMessage, [
@@ -60,11 +44,17 @@ const SignIn = () => {
       ]);
     } else {
       const user = { email, password, username };
-      createUser(user);
+
+      navigation.navigate("Home");
+
+      // for database
+      // createUser(user);
 
       // Mockdata logic. Leave as a reference until backend endpoints are fully ready
       // setUser({ id: 2, username: "WayneWadeRuns" });
+
       // navigation.navigate("SignIn", { screen: "Home" });
+      
     }
   };
 
@@ -87,7 +77,7 @@ const SignIn = () => {
     <SafeAreaView style={styles.root}>
       {/*  Title */}
 
-      <Text style={styles.title}>Create a New Account</Text>
+      <Text style={styles.title}>Tell us about yourself!</Text>
 
       {/* Email */}
 
@@ -155,21 +145,7 @@ const SignIn = () => {
         />
       </View>
 
-      {/*  Second Password */}
-
-      <View style={styles.secondPasswordFieldWrapper}>
-        <TextInput
-          label="Password (retype)"
-          value={secondPassword}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          textContentType="password"
-          secureTextEntry={true}
-          style={{ height: 50, backgroundColor: Color.White }}
-          onChangeText={(text) => setSecondPassword(text)}
-        />
-      </View>
+     
 
       {/* Register Button */}
 
@@ -186,9 +162,9 @@ const SignIn = () => {
           contentStyle={{
             padding: 5,
           }}
-          onPress={() => handleSignIn()}
+          onPress={() => handlePress()}
         >
-          Register
+          Continue
         </Button>
         <Text style={styles.registerText}>
           Already have an account?{" "}

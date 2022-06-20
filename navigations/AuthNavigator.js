@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import SignIn from "../screens/signin/SignIn";
 import Register from "../screens/register/Register";
+import RegisterExtraInfo from "../screens/register-extra-info/RegisterExtraInfo";
 import AuthSelection from "../screens/auth-selection/AuthSelection";
 import SignOutScreen from "../screens/signout/SignOutScreen";
 
@@ -17,6 +18,9 @@ const AuthNavigator = () => {
           headerShown: false,
         }}
       />
+
+      {/* SignIn */}
+
       <Stack.Screen
         name="SignIn"
         component={SignIn}
@@ -24,9 +28,19 @@ const AuthNavigator = () => {
           headerShown: false,
         }}
       />
+
+      {/* Registration */}
+
       <Stack.Screen
         name="Register"
         component={Register}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="RegisterExtraInfo"
+        component={RegisterExtraInfo}
         options={{
           headerShown: false,
         }}

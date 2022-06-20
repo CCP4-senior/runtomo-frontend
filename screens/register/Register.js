@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color.js";
 
-const SignIn = () => {
+const Register = () => {
   const navigation = useNavigation();
   const { setUser, createUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
@@ -25,7 +25,7 @@ const SignIn = () => {
   });
   const [passwordError, setPasswordError] = useState("");
 
-  const handleSignIn = () => {
+  const handleRegister = () => {
     let inputError = false;
     let alertMessage = "";
 
@@ -61,6 +61,8 @@ const SignIn = () => {
     } else {
       const user = { email, password, username };
       createUser(user);
+
+      navigation.navigate("RegisterExtraInfo");
 
       // Mockdata logic. Leave as a reference until backend endpoints are fully ready
       // setUser({ id: 2, username: "WayneWadeRuns" });
@@ -186,7 +188,7 @@ const SignIn = () => {
           contentStyle={{
             padding: 5,
           }}
-          onPress={() => handleSignIn()}
+          onPress={() => handleRegister()}
         >
           Register
         </Button>
@@ -204,7 +206,7 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Register;
 
 const styles = StyleSheet.create({
   root: {
