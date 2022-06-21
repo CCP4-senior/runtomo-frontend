@@ -22,7 +22,7 @@ import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import { DataContext } from "../../context/datacontext/DataContext.js";
-import MapView from "react-native-maps";
+import MapView, { Callout, Marker, Circle } from "react-native-maps";
 
 const EventDetailsScreen = ({
   navigation,
@@ -38,6 +38,7 @@ const EventDetailsScreen = ({
   const hideDialog = () => setVisible(false);
   const [isAttendanceCancellation, setIsAttendanceCancellation] =
     useState(true);
+  // Google Maps logic
   const [region, setRegion] = useState({
     latitude: 35.6828387,
     longitude: 139.7594549,
@@ -199,21 +200,36 @@ const EventDetailsScreen = ({
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Location:</Text>
                   <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
-                  {/* <Image
-                    source={require("../../assets/images/map.png")}
-                    style={styles.map}
-                  /> */}
                 </View>
                 <View style={styles.mapContainer}>
                   <MapView
                     style={styles.map}
                     initialRegion={{
-                      latitude: `${region.latitude}`,
-                      longitude: `${region.longitude}`,
-                      latitudeDelta: 0.0922,
-                      longitudeDelta: 0.0421,
+                      latitude: region.latitude,
+                      longitude: region.longitude,
+                      latitudeDelta: 0.002,
+                      longitudeDelta: 0.0121,
                     }}
-                  />
+                    provider="google"
+                  >
+                    <Marker
+                      coordinate={{
+                        latitude: region.latitude,
+                        longitude: region.longitude,
+                      }}
+                    >
+                      <Callout>
+                        <Text>Location placeholder</Text>
+                      </Callout>
+                    </Marker>
+                    <Circle
+                      center={{
+                        latitude: region.latitude,
+                        longitude: region.longitude,
+                      }}
+                      radius={200}
+                    ></Circle>
+                  </MapView>
                 </View>
               </Card.Content>
             </Card>
@@ -362,8 +378,8 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   map: {
-    height: 270,
-    width: 285,
+    height: 300,
+    width: "100%",
     alignSelf: "center",
     marginTop: 12,
   },
