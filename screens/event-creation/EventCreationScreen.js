@@ -18,7 +18,7 @@ import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
 import * as ImagePicker from "expo-image-picker";
 import { DataContext } from "../../context/datacontext/DataContext.js";
-import { ref, uploadString } from "firebase/storage";
+import { ref, uploadString, uploadBytes } from "firebase/storage";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const { storage } = useContext(DataContext);
@@ -51,6 +51,27 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   //     console.log("Uploaded a raw string!");
   //   });
   // }, []);
+
+  const uploadImage = async () => {
+    console.log("ButtonHandler ran!");
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", imageUrl, true);
+      xhr.send(null);
+    });
+
+    const storageRef = ref(storage, new Date().toISOString());
+    uploadBytes(storageRef, blob).then((snapshot) => {
+      console.log("Uploaded an image");
+    });
+  };
 
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
