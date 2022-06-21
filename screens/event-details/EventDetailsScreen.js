@@ -22,6 +22,7 @@ import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import { DataContext } from "../../context/datacontext/DataContext.js";
+import MapView from "react-native-maps";
 
 const EventDetailsScreen = ({
   navigation,
@@ -37,6 +38,10 @@ const EventDetailsScreen = ({
   const hideDialog = () => setVisible(false);
   const [isAttendanceCancellation, setIsAttendanceCancellation] =
     useState(true);
+  const [region, setRegion] = useState({
+    latitude: 35.6828387,
+    longitude: 139.7594549,
+  });
 
   const eventData = currentEvent;
 
@@ -194,9 +199,20 @@ const EventDetailsScreen = ({
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Location:</Text>
                   <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
-                  <Image
+                  {/* <Image
                     source={require("../../assets/images/map.png")}
                     style={styles.map}
+                  /> */}
+                </View>
+                <View style={styles.mapContainer}>
+                  <MapView
+                    style={styles.map}
+                    initialRegion={{
+                      latitude: `${region.latitude}`,
+                      longitude: `${region.longitude}`,
+                      latitudeDelta: 0.0922,
+                      longitudeDelta: 0.0421,
+                    }}
                   />
                 </View>
               </Card.Content>
@@ -254,6 +270,12 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     overflow: "visible",
+  },
+  mapContainer: {
+    flex: 1,
+    backgroundColor: Color.White,
+    alignItems: "center",
+    justifyContent: "center",
   },
   label: {
     position: "absolute",
