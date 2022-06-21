@@ -39,6 +39,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
+  const [downloadURL, setDownloadURL] = useState("");
 
   const [eventDescription, setEventDescription] = useState("");
   const [imageUri, setImageUri] = useState("");
@@ -93,10 +94,10 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const buttonHandler = async () => {
     try {
       uploadImage("event");
-      // const response = await axiosInstance.post("/events/", {
-      //   title: "Test post run 6",
-      //   location: "somewhere",
-      // });
+      const response = await axiosInstance.post("/events/", {
+        title: title,
+        location: meetingPoint,
+      });
     } catch (e) {
       alert("Something went wrong. Please try again!");
     }
@@ -147,7 +148,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        quality: 1,
+        quality: 0.7,
       });
 
       console.log(result);

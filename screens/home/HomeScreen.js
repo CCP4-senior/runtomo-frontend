@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Image,
 } from "react-native";
 import { Button, TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
