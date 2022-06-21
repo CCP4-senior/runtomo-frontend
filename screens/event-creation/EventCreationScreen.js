@@ -18,7 +18,13 @@ import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
 import * as ImagePicker from "expo-image-picker";
 import { DataContext } from "../../context/datacontext/DataContext.js";
-import { ref, uploadString, uploadBytes } from "firebase/storage";
+import {
+  ref,
+  uploadString,
+  uploadBytes,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const { storage } = useContext(DataContext);
@@ -35,7 +41,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
 
   const [eventDescription, setEventDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUri, setImageUri] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const hideModal = () => {
@@ -44,16 +50,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     setGoogleModalVisible(false);
   };
 
-  // useEffect(() => {
-  //   const storageRef = ref(storage, "test3");
-  //   const message = "This is my message.";
-  //   uploadString(storageRef, message).then((snapshot) => {
-  //     console.log("Uploaded a raw string!");
-  //   });
-  // }, []);
+  const uploadImage = async (type) => {
+    if (imageUri === "") return;
 
-  const uploadImage = async () => {
-    console.log("ButtonHandler ran!");
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -63,23 +62,41 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         reject(new TypeError("Network request failed"));
       };
       xhr.responseType = "blob";
-      xhr.open("GET", imageUrl, true);
+      xhr.open("GET", imageUri, true);
       xhr.send(null);
     });
 
-    const storageRef = ref(storage, new Date().toISOString());
-    uploadBytes(storageRef, blob).then((snapshot) => {
-      console.log("Uploaded an image");
-    });
+    if (!blob) return;
+
+    const storageRef = ref(
+      storage,
+      `images/${type}/${new Date().toISOString()}`
+    );
+
+    const uploadTask = uploadBytesResumable(storageRef, blob);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        alert("Image upload was unsuccessful. Please try again.");
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+        });
+      }
+    );
   };
 
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
-      const response = await axiosInstance.post("/events/", {
-        title: "Test post run 6",
-        location: "somewhere",
-      });
+      uploadImage("event");
+      // const response = await axiosInstance.post("/events/", {
+      //   title: "Test post run 6",
+      //   location: "somewhere",
+      // });
     } catch (e) {
       alert("Something went wrong. Please try again!");
     }
@@ -136,7 +153,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       console.log(result);
 
       if (!result.cancelled) {
-        setImageUrl(result.uri);
+        setImageUri(result.uri);
       }
     } catch (e) {
       alert("Something went wrong. Please try again!");
@@ -145,7 +162,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   };
 
   const deleteImage = () => {
-    setImageUrl("");
+    setImageUri("");
   };
 
   return (
@@ -219,7 +236,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
             />
           </View>
 
-          {imageUrl == "" && (
+          {imageUri == "" && (
             <TouchableOpacity
               style={styles.imagePlaceholderContainer}
               onPress={selectImage}
@@ -237,11 +254,11 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
             </TouchableOpacity>
           )}
 
-          {imageUrl !== "" && (
+          {imageUri !== "" && (
             <View style={styles.imageBackground}>
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
-              {imageUrl !== "" && (
-                <Image source={{ uri: imageUrl }} style={{ height: 175 }} />
+              {imageUri !== "" && (
+                <Image source={{ uri: imageUri }} style={{ height: 175 }} />
               )}
               <Button color={Color.PrimaryMain} onPress={deleteImage}>
                 Delete

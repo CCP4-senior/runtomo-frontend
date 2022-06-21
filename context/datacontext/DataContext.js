@@ -22,8 +22,6 @@ const DataProvider = ({ children }) => {
     setStorage(storage);
   }, []);
 
-  // Get a reference to the storage service, which is used to create references in your storage bucket
-
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
     return {
@@ -32,7 +30,7 @@ const DataProvider = ({ children }) => {
       ward: "Shibuya",
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
-      image: require("../../assets/images/demo/yoyogipark.jpeg"),
+      // image: require("../../assets/images/demo/yoyogipark.jpeg"),
       user: {
         id: 2,
         username: "wade",
