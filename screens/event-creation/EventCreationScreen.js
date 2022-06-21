@@ -121,6 +121,10 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     }
   };
 
+  const deleteImage = () => {
+    setImageUrl("");
+  };
+
   return (
     <Provider>
       <AreaModal
@@ -216,7 +220,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               {imageUrl !== "" && (
                 <Image source={{ uri: imageUrl }} style={{ height: 175 }} />
               )}
-              <Button>Delete</Button>
+              <Button color={Color.PrimaryMain} onPress={deleteImage}>
+                Delete
+              </Button>
             </View>
           )}
 
