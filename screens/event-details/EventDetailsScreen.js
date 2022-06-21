@@ -228,6 +228,7 @@ const EventDetailsScreen = ({
                         longitude: region.longitude,
                       }}
                       radius={200}
+                      strokeWidth={2}
                     ></Circle>
                   </MapView>
                 </View>
