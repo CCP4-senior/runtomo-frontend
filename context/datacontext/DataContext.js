@@ -1,6 +1,9 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import axiosInstance from "../../axios/axios";
 import { AuthContext } from "../authcontext/AuthContext";
+import { getStorage, ref, uploadString } from "firebase/storage";
+import firebaseConfig from "../../firebase.js";
+import { initializeApp } from "firebase/app";
 
 const DataContext = createContext();
 
@@ -11,6 +14,15 @@ const DataProvider = ({ children }) => {
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
+  const [storage, setStorage] = useState("");
+
+  useEffect(() => {
+    const firebaseApp = initializeApp(firebaseConfig);
+    const storage = getStorage(firebaseApp);
+    setStorage(storage);
+  }, []);
+
+  // Get a reference to the storage service, which is used to create references in your storage bucket
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
@@ -81,6 +93,7 @@ const DataProvider = ({ children }) => {
     getAllEventsData,
     getCreatedEventsData,
     getCurrentEventData,
+    storage,
   };
 
   return (

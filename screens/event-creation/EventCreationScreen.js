@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -8,7 +8,6 @@ import {
   Image,
 } from "react-native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
-import * as SecureStore from "expo-secure-store";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
@@ -18,8 +17,11 @@ import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
 import * as ImagePicker from "expo-image-picker";
+import { DataContext } from "../../context/datacontext/DataContext.js";
+import { ref, uploadString } from "firebase/storage";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
+  const { storage } = useContext(DataContext);
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -41,6 +43,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
   };
+
+  // useEffect(() => {
+  //   const storageRef = ref(storage, "test3");
+  //   const message = "This is my message.";
+  //   uploadString(storageRef, message).then((snapshot) => {
+  //     console.log("Uploaded a raw string!");
+  //   });
+  // }, []);
 
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
@@ -92,13 +102,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   //   setData([...data, event]);
   //   navigation.navigate("Event Created");
   // };
-  const options = {
-    mediaType: "photo",
-    maxWidth: 1000,
-    maxHeight: 1000,
-    quality: 0.8,
-    saveToPhotos: true,
-  };
 
   const selectImage = async () => {
     console.log("selectImage ran");
@@ -106,7 +109,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        // aspect: [4, 3],
         quality: 1,
       });
 
