@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -8,15 +8,20 @@ import {
   useWindowDimensions,
   ImageBackground,
 } from "react-native";
+import { AuthContext } from "../../context/authcontext/AuthContext";
 import { Button } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 
 const UserProfileScreen = ({ navigation }) => {
+  const { user } = useContext(AuthContext);
+  console.warn(user.username);
+
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
 
+  // TODO: update with 'user' when backend is ready
   const userData = {
-    username: "WayneWadeRuns",
+    username: user.username,
     age: 34,
     runnerType: ["beginner", "social"],
   };
