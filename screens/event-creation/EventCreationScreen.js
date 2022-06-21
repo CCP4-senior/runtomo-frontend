@@ -86,11 +86,12 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
 
   return (
     <Provider>
-      <AreaModal
+      {/* LEAVE FOR REFERENCE, WE MIGHT NEED TO PUT IT BACK*/}
+      {/* <AreaModal
         modalVisible={areaModalVisible}
         hideModal={hideModal}
         setWard={setWard}
-      />
+      /> */}
       <DurationModal
         modalVisible={durationModalVisible}
         setRunningDuration={setRunningDuration}
@@ -102,7 +103,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         setMeetingPoint={setMeetingPoint}
         setLatitude={setLatitude}
         setLongitude={setLongitude}
-        ward={ward}
+        setWard={setWard}
       />
 
       <ScrollView keyboardShouldPersistTaps="handled">
@@ -115,14 +116,19 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               submitted={submitted}
             />
           </View>
-          <View style={styles.inputContainer}>
+          {/* LEAVE FOR REFERENCE, WE MIGHT NEED TO PUT IT BACK*/}
+          {/* <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Area"
-              onFocus={() => setAreaModalVisible(true)}
+              onFocus={() => {
+                if (ward === "") {
+                  setAreaModalVisible(true);
+                }
+              }}
               value={ward}
               submitted={submitted}
             />
-          </View>
+          </View> */}
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Meeting Point Address"
