@@ -15,7 +15,6 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import * as ImagePicker from "expo-image-picker";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
@@ -26,6 +25,7 @@ import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../helpers/axios.js";
 import uploadImage from "../../helpers/uploadImage.js";
 import resizeImage from "../../helpers/resizeImage.js";
+import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
@@ -110,22 +110,22 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   //   navigation.navigate("Event Created");
   // };
 
-  const selectImage = async () => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        quality: 0.5,
-      });
+  // const selectImage = async () => {
+  //   try {
+  //     const result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //       allowsEditing: true,
+  //       quality: 0.5,
+  //     });
 
-      if (!result.cancelled) {
-        setImageUri(result.uri);
-      }
-    } catch (e) {
-      alert("Something went wrong. Please try again!");
-      console.log(e);
-    }
-  };
+  //     if (!result.cancelled) {
+  //       setImageUri(result.uri);
+  //     }
+  //   } catch (e) {
+  //     alert("Something went wrong. Please try again!");
+  //     console.log(e);
+  //   }
+  // };
 
   const deleteImage = () => {
     setImageUri("");
@@ -211,7 +211,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
           {imageUri === "" && (
             <TouchableOpacity
               style={styles.imagePlaceholderContainer}
-              onPress={selectImage}
+              onPress={async () => await selectImage(setImageUri)}
             >
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
               <View

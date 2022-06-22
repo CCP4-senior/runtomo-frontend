@@ -1,4 +1,4 @@
-import { manipulateAsync, FlipType, SaveFormat } from "expo-image-manipulator";
+import { manipulateAsync, SaveFormat } from "expo-image-manipulator";
 
 const resizeImage = async (imageUri, width = 200, height) => {
   const result = await manipulateAsync(
