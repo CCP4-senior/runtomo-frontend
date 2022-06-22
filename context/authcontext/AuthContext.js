@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
 				// TODO: user information will be updated dynamically when backend is ready
 				const mockData = {
-					username   : 'wadeWins',
+					username   : 'wadeRunner',
 					email      : 'wade@example.com',
 					age        : '34',
 					runnerType : [ 'beginner', 'social' ]

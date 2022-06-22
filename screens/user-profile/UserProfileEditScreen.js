@@ -11,6 +11,7 @@ import {
 	TextInput
 } from 'react-native';
 import { AuthContext } from '../../context/authcontext/AuthContext.js';
+import Validation from '../../utils/Validation';
 
 import Color from '../../assets/themes/Color';
 import CustomInput from '../../components/CustomInput';
@@ -34,11 +35,36 @@ const UserProfileEditScreen = ({ navigation }) => {
 	const [ runnerType, setRunnerType ] = useState(mockData.runnerType);
 
 	const doneButtonHandler = () => {
-		setUser({
-			...mockData,
-			...{ username: username, email: email, age: age, runnerType: runnerType }
-		});
-		navigation.navigate('Profile');
+		let inputError = false;
+		let alertMessage = '';
+
+		if (username.length < 5) {
+			alertMessage = 'The username must be greater than 5 letters';
+			inputError = true;
+		} else if (email === '') {
+			alertMessage = 'Cannot have an empty field';
+			inputError = true;
+		} else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+			alertMessage =
+				'The email does not look right. Did you type it correctly?';
+			inputError = true;
+		} 
+    
+    if (inputError) {
+      alert(alertMessage);
+    }
+    else {
+			setUser({
+				...mockData,
+				...{
+					username   : username,
+					email      : email,
+					age        : age,
+					runnerType : runnerType
+				}
+			});
+			navigation.navigate('Profile');
+		}
 	};
 
 	const cancelButtonHandler = () => {
