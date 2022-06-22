@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
   ScrollView,
   View,
@@ -37,6 +37,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [imageUri, setImageUri] = useState("");
   const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const inputRef = useRef();
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -179,13 +180,17 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               onFocus={setDurationModalVisible}
               value={runningDuration}
               submitted={submitted}
+              inputRef={inputRef}
             />
           </View>
 
           {imageUri === "" && (
             <TouchableOpacity
               style={styles.imagePlaceholderContainer}
-              onPress={async () => await selectImage(setImageUri)}
+              onPress={async () => {
+                inputRef.current?.blur();
+                await selectImage(setImageUri);
+              }}
             >
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
               <View
@@ -223,6 +228,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               placeholder="Event Description"
               value={eventDescription}
               onChangeText={(text) => setEventDescription(text)}
+              // ref={descriptionRef}
             />
           </View>
           <LongButton
