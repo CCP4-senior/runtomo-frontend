@@ -65,7 +65,7 @@ const FilterModal = ({ modalVisible, hideModal }) => {
                     marginBottom: 5,
                     borderBottomColor: Color.GrayDark,
                     borderBottomWidth: 1,
-                  }}
+                  }} 
                 >
                   <Checkbox
                     status={ward.isChecked ? "checked" : "unchecked"}
