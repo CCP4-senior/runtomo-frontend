@@ -51,9 +51,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const currentRef = await uploadImage("events", newUri);
       setImageRef(currentRef);
 
-      // Just for test. To be removed
-      setImageTestRef(currentRef);
-
       // To be used for api call
       // const response = await axiosInstance.post("/events/", {
       //   title: title,
