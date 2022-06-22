@@ -72,6 +72,9 @@ const SettingScreen = ({ navigation }) => {
             </Dialog.Actions>
           </Dialog>
         </Portal>
+
+        {/* Profile card */}
+
         <Card
           style={[styles.card, styles.cardTop]}
           theme={{ roundness: 20 }}
@@ -88,7 +91,7 @@ const SettingScreen = ({ navigation }) => {
               <View style={styles.accountDetails}>
                 <Title style={styles.cardTopTitle}>Wade Warren</Title>
                 <Paragraph style={styles.paragraph}>
-                  example@example.com
+                  { user.email }
                 </Paragraph>
               </View>
               <Card.Actions>
@@ -105,6 +108,9 @@ const SettingScreen = ({ navigation }) => {
             </View>
           </Card.Content>
         </Card>
+
+        {/* List of items */}
+
         <Card
           style={[styles.card, styles.cardBottom]}
           theme={{ roundness: 20 }}

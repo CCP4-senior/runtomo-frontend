@@ -43,6 +43,7 @@ const AuthProvider = ({ children }) => {
 				setUser({
 					id       : jwt_decode(data.access)['user_id'],
 					username : mockData.username,
+          email: mockData.email,
 					age      : mockData.age,
           runnerType: mockData.runnerType,
 				});

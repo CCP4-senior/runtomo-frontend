@@ -43,26 +43,44 @@ const UserProfileScreen = ({ navigation }) => {
 				</ImageBackground>
 			</View>
 			<View style={styles.userInfoContainer}>
+				{/* Username */}
+
 				<View style={styles.userInfoHeader}>
 					<Text style={styles.userFullName}>{userData.username}</Text>
+
+					{/* Edit Profile button */}
+
 					<Button
-						onPress={() => navigation.navigate("Edit Profile")}
+						onPress={() => navigation.navigate('Edit Profile')}
 						icon="account-edit"
 						color={Color.PrimaryMain}
 						labelStyle={{ fontSize: 30 }}
 					/>
 				</View>
-				<View style={[ styles.userDataWrapper, styles.tagsContainer ]}>
-					<Text style={styles.userDataFont}>Runner Type</Text>
-					{user.runnerType.map((type, index) => {
-						return (
-							<Text style={[ styles.tags ]} key={index}>
-								{' '}
-								{type}{' '}
-							</Text>
-						);
-					})}
+
+				{/* Runner Type and Tags */}
+				<View style={styles.userDataWrapper}>
+					{/* Title: Runner Type */}
+					<View style={{paddingBottom: 5}}>
+						<Text style={styles.userDataFont}>Runner Type</Text>
+					</View>
+
+					{/* Tags */}
+					<View style={styles.tagsContainer}>
+					{/* <View style={[ styles.userDataWrapper, styles.tagsContainer ]}> */}
+						{user.runnerType.map((type, index) => {
+							return (
+								<Text style={[ styles.tags ]} key={index}>
+									{' '}
+									{type}{' '}
+								</Text>
+							);
+						})}
+					</View>
 				</View>
+
+				{/* Age */}
+
 				<View style={styles.userDataWrapper}>
 					<Text style={styles.userDataFont}>Age: {userData.age}</Text>
 				</View>
@@ -110,8 +128,10 @@ const styles = StyleSheet.create({
 		marginBottom  : 10
 	},
 	tagsContainer     : {
+		display       : 'flex',
 		flexDirection : 'row',
-		alignItems    : 'center'
+		flexWrap      : 'wrap',
+		alignItems    : 'center',
 	},
 	tags              : {
 		backgroundColor  : Color.PrimaryMain,
@@ -123,7 +143,8 @@ const styles = StyleSheet.create({
 		padding          : 3,
 		color            : Color.White,
 		fontWeight       : 'bold',
-		fontSize         : 16
+		fontSize         : 16,
+		marginVertical   : 5
 	},
 	userDataWrapper   : {
 		backgroundColor : '#F5F5F5',
