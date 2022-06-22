@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
 import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
+import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen";
 import SettingScreen from "../screens/setting/SettingScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
@@ -48,6 +49,11 @@ const HomeNavigator = ({
       <Stack.Screen
         name="Profile"
         component={UserProfileScreen}
+        options={{ ...HeaderStyle }}
+      />
+      <Stack.Screen
+        name="Edit Profile"
+        component={UserProfileEditScreen}
         options={{ ...HeaderStyle }}
       />
       <Stack.Screen

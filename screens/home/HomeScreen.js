@@ -1,17 +1,19 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
   View,
+  Text,
   SafeAreaView,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Alert,
+  Image,
 } from "react-native";
-import { Button, TextInput, List } from "react-native-paper";
+import { TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -21,13 +23,16 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     setEventId,
     getAllEventsData,
     getCurrentEventData,
+    storage,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
       getAllEventsData();
     }
   }, []);
+
   const data = allEvents; // Remove this line when testing with mock data
+  const [url, setUrl] = useState("");
   const selectEvent = async (event) => {
     console.log(event.id, event);
     // setCurrEvent(event);
@@ -42,6 +47,14 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
       console.log(e);
       alert("Something went wrong. Please try again!");
     }
+  };
+
+  const downloadImage = async (imageRef) => {
+    const storage = getStorage();
+    const pathReference = ref(storage, imageRef);
+
+    const url = await getDownloadURL(pathReference);
+    setUrl(url);
   };
 
   return (

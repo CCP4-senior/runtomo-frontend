@@ -10,6 +10,7 @@ const CustomInput = ({
   value,
   changeHandler,
   submitted,
+  inputRef,
 }) => {
   return (
     <TextInput
@@ -44,6 +45,7 @@ const CustomInput = ({
           : `${placeholder} Required`
       }
       right={<TextInput.Icon name={icon ? icon : ""} color={Color.text} />}
+      ref={inputRef}
     />
   );
 };

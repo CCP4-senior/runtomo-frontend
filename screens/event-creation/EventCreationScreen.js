@@ -1,7 +1,13 @@
-import React, { useState } from "react";
-import { ScrollView, View, StyleSheet, Text } from "react-native";
-import { TextInput, IconButton, Provider } from "react-native-paper";
-import * as SecureStore from "expo-secure-store";
+import React, { useState, useContext, useRef } from "react";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+import { TextInput, IconButton, Provider, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
@@ -9,7 +15,11 @@ import DurationModal from "./DurationModal.js";
 import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
-import axiosInstance from "../../axios/axios.js";
+import axiosInstance from "../../helpers/axios.js";
+import uploadImage from "../../helpers/uploadImage.js";
+import resizeImage from "../../helpers/resizeImage.js";
+import selectImage from "../../helpers/selectImage.js";
+import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
@@ -23,22 +33,32 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
+  const [eventDescription, setEventDescription] = useState("");
+  const [imageUri, setImageUri] = useState("");
+  const [imageRef, setImageRef] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const inputRef = useRef();
 
   const hideModal = () => {
     setAreaModalVisible(false);
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
   };
-  const [eventDescription, setEventDescription] = useState("");
 
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
-      const response = await axiosInstance.post("/events/", {
-        title: "Test post run 6",
-        location: "somewhere",
-      });
+      const newUri = await resizeImage(imageUri, 300);
+      const currentRef = await uploadImage("events", newUri);
+      setImageRef(currentRef);
+
+      // To be used for api call
+      // const response = await axiosInstance.post("/events/", {
+      //   title: title,
+      //   location: meetingPoint,
+      // });
     } catch (e) {
+      console.log(e);
       alert("Something went wrong. Please try again!");
     }
   };
@@ -82,7 +102,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   //   navigation.navigate("Event Created");
   // };
 
-  const [submitted, setSubmitted] = useState(false);
+  const deleteImage = () => {
+    setImageUri("");
+  };
 
   return (
     <Provider>
@@ -158,17 +180,43 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               onFocus={setDurationModalVisible}
               value={runningDuration}
               submitted={submitted}
+              inputRef={inputRef}
             />
           </View>
-          <View style={styles.imageContainer}>
-            <Text style={{ fontWeight: "bold" }}>Event Image</Text>
-            <View backgroundColor="#fff" style={styles.imageBackground}>
-              <View style={styles.imageLogo}>
-                <IconButton icon="camera" color={Color.Text} size={29} />
-                <Text>Add Image</Text>
+
+          {imageUri === "" && (
+            <TouchableOpacity
+              style={styles.imagePlaceholderContainer}
+              onPress={async () => {
+                inputRef.current?.blur();
+                await selectImage(setImageUri);
+              }}
+            >
+              <Text style={{ fontWeight: "bold" }}>Event Image</Text>
+              <View
+                backgroundColor="#fff"
+                style={styles.imagePlaceholderBackground}
+              >
+                <View style={styles.imageLogo}>
+                  <IconButton icon="camera" color={Color.Text} size={29} />
+                  <Text>Add Image</Text>
+                </View>
               </View>
+            </TouchableOpacity>
+          )}
+
+          {imageUri !== "" && (
+            <View style={styles.imageBackground}>
+              <Text style={{ fontWeight: "bold" }}>Event Image</Text>
+              {imageUri !== "" && (
+                <Image source={{ uri: imageUri }} style={{ height: 175 }} />
+              )}
+              <Button color={Color.PrimaryMain} onPress={deleteImage}>
+                Delete
+              </Button>
             </View>
-          </View>
+          )}
+
           <View style={styles.inputContainer}>
             <TextInput
               mutiline={true}
@@ -180,6 +228,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               placeholder="Event Description"
               value={eventDescription}
               onChangeText={(text) => setEventDescription(text)}
+              // ref={descriptionRef}
             />
           </View>
           <LongButton
@@ -216,14 +265,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
-  imageContainer: {
+  imagePlaceholderContainer: {
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "flex-start",
     marginLeft: 20,
     marginTop: 10,
   },
-  imageBackground: {
+  imagePlaceholderBackground: {
     width: 98,
     height: 98,
     borderRadius: 10,
@@ -239,6 +288,17 @@ const styles = StyleSheet.create({
     height: 80,
     alignItems: "center",
     justifyContent: "center",
+  },
+  imageBackground: {
+    width: "90%",
+    padding: 10,
+    paddingTop: 25,
+    height: 230,
+    backgroundColor: Color.White,
+    alignSelf: "center",
+    margin: 5,
+    justifyContent: "center",
+    borderRadius: 10,
   },
   inputTheme: {
     roundness: 10,
