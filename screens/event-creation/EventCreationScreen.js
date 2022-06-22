@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -8,13 +8,6 @@ import {
   Image,
 } from "react-native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
-import {
-  ref,
-  uploadString,
-  uploadBytes,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
