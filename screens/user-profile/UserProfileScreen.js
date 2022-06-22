@@ -54,7 +54,7 @@ const UserProfileScreen = ({ navigation }) => {
 				</View>
 				<View style={[ styles.userDataWrapper, styles.tagsContainer ]}>
 					<Text style={styles.userDataFont}>Runner Type</Text>
-					{userData.runnerType.map((type, index) => {
+					{user.runnerType.map((type, index) => {
 						return (
 							<Text style={[ styles.tags ]} key={index}>
 								{' '}
