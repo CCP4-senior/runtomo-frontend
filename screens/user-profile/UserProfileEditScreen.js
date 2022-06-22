@@ -13,7 +13,7 @@ import {
 import Color from "../../assets/themes/Color";
 
 
-const PublicProfileEditScreen = ({ navigation, user }) => {
+const UserProfileEditScreen = ({ navigation, user }) => {
 
 
   const { height } = useWindowDimensions();
@@ -28,41 +28,12 @@ const PublicProfileEditScreen = ({ navigation, user }) => {
   return (
     <SafeAreaView style={styles.root}>
 
-      <View style={styles.userInfoContainer}>
-
-        <View style={styles.userInfoHeader}>
-          <Text style={styles.userFullName}>{userData.username}</Text>
-          <Button
-            onPress={() => alert("Edit!")}
-            icon="account-edit"
-            color="red"
-            labelStyle={{ fontSize: 30 }}
-          ></Button>
-        </View>
-
-        <View style={[styles.userDataWrapper, styles.tagsContainer]}>
-          <Text style={styles.userDataFont}>Runner Type</Text>
-          {userData.runnerType.map((type, index) => {
-            return (
-              <Text style={[styles.tags]} key={index}>
-                {" "}
-                {type}{" "}
-              </Text>
-            );
-          })}
-        </View>
-
-        <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Age: {userData.age}</Text>
-        </View>
-        
-      </View>
 
     </SafeAreaView>
   );
 };
 
-export default PublicProfileEditScreen;
+export default UserProfileEditScreen;
 
 const styles = StyleSheet.create({
   root: {

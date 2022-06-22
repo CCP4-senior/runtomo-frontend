@@ -14,7 +14,6 @@ import Color from '../../assets/themes/Color';
 
 const UserProfileScreen = ({ navigation }) => {
 	const { user } = useContext(AuthContext);
-	console.warn(user.username);
 
 	const { height } = useWindowDimensions();
 	const [ isImageAvailable, setIsImageAvailable ] = useState(false);
@@ -47,7 +46,7 @@ const UserProfileScreen = ({ navigation }) => {
 				<View style={styles.userInfoHeader}>
 					<Text style={styles.userFullName}>{userData.username}</Text>
 					<Button
-						onPress={() => alert('Edit!')}
+						onPress={() => navigation.navigate("Edit Profile")}
 						icon="account-edit"
 						color={Color.PrimaryMain}
 						labelStyle={{ fontSize: 30 }}
