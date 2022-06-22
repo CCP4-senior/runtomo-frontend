@@ -8,31 +8,35 @@ import {
 	Image,
 	useWindowDimensions,
 	Button,
-  TextInput
+	TextInput
 } from 'react-native';
 
 import Color from '../../assets/themes/Color';
+import CustomInput from '../../components/CustomInput';
 
 const UserProfileEditScreen = ({ navigation, user }) => {
 	const { height } = useWindowDimensions();
 
+	const [ username, setUsername ] = useState('my username');
+
 	return (
 		<SafeAreaView style={styles.root}>
-			<View>
-				<Text>Profile Edit Page</Text>
+			<View style={styles.container}>
+				{/* Username */}
+
+				<View>
+					<Text style={styles.text}>Username</Text>
+				</View>
+
+				<CustomInput
+					placeholder="please input a username"
+					value={username}
+					changeHandler={(value) => setUsername(value)}
+					width={'100%'}
+				/>
+
+				{/* Email */}
 			</View>
-      <View>
-				<Text>Username</Text>
-			</View>
-      <View style={styles.inputContainer}>
-            <CustomInput
-              placeholder="Running Duration"
-              customValue={runningDuration}
-              onFocus={setDurationModalVisible}
-              value={runningDuration}
-              submitted={submitted}
-            />
-          </View>
 		</SafeAreaView>
 	);
 };
@@ -40,17 +44,30 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 export default UserProfileEditScreen;
 
 const styles = StyleSheet.create({
-	root              : {
+	root           : {
 		flex : 1
 	},
-  container: {
-    flex: 1,
-    backgroundColor: Color.Fill,
-    padding: 10,
-    alignItems: "center",
-    overflow: "visible",
-  },
-  inputContainer: {
-    margin: 5,
-  },
+	container      : {
+		flex            : 1,
+		backgroundColor : Color.Fill,
+		padding         : 30,
+		alignItems      : 'flex-start',
+		overflow        : 'visible'
+	},
+	title          : {
+		fontSize  : 30,
+		alignSelf : 'center'
+	},
+	text           : {
+		fontSize       : 20,
+		marginVertical : 5,
+		alignSelf      : 'flex-start'
+	},
+	customInput    : {
+		// alignSelf : 'stretch'
+	},
+	inputContainer : {
+		// flex           : 1,
+		marginVertical : 5
+	}
 });
