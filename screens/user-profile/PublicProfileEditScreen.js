@@ -13,7 +13,7 @@ import {
 import Color from "../../assets/themes/Color";
 
 
-const PublicProfileScreenEdit = ({ navigation, user }) => {
+const PublicProfileEditScreen = ({ navigation, user }) => {
 
 
   const { height } = useWindowDimensions();
@@ -62,7 +62,7 @@ const PublicProfileScreenEdit = ({ navigation, user }) => {
   );
 };
 
-export default PublicProfileScreenEdit;
+export default PublicProfileEditScreen;
 
 const styles = StyleSheet.create({
   root: {
