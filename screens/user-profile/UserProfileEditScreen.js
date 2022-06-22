@@ -24,8 +24,8 @@ const UserProfileEditScreen = ({ navigation }) => {
 	const mockData = {
 		id         : user.id.toString(),
 		username   : user.username,
-		email      : 'wade@example.com',
-		age        : '34',
+		email      : user.email,
+		age        : user.age,
 		runnerType : 'social'
 	};
 
