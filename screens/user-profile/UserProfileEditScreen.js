@@ -48,12 +48,17 @@ const UserProfileEditScreen = ({ navigation }) => {
 			alertMessage =
 				'The email does not look right. Did you type it correctly?';
 			inputError = true;
-		} 
-    
-    if (inputError) {
-      alert(alertMessage);
-    }
-    else {
+		} else if (isNaN(age)) {
+			alertMessage = 'Did you input age correctly?';
+			inputError = true;
+		} else if (age < 18 || age > 130) {
+			alertMessage = 'Your age must be between 18 and 130!';
+			inputError = true;
+		}
+
+		if (inputError) {
+			alert(alertMessage);
+		} else {
 			setUser({
 				...mockData,
 				...{
