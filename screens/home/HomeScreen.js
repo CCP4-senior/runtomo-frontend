@@ -7,11 +7,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
-  Text,
   Image,
 } from "react-native";
 import { Button, TextInput, List, Modal } from "react-native-paper";
-import { TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
