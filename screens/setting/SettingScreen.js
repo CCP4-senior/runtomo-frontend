@@ -98,11 +98,8 @@ const SettingScreen = ({ navigation }) => {
                   uppercase={false}
                   color={Color.Text}
                   labelStyle={styles.label}
-                  onPress={() => {
-                    console.log("Pressed");
-                  }}
-                >
-                  Edit
+                  
+                >Profile
                 </Button>
               </Card.Actions>
             </View>
