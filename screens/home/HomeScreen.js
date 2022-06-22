@@ -28,7 +28,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
   useEffect(() => {
     if (user) {
       getAllEventsData();
-      downloadImage();
+      // downloadImage();
     }
   }, [url]);
   const data = allEvents; // Remove this line when testing with mock data
@@ -48,9 +48,9 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     // }
   };
 
-  const downloadImage = async () => {
+  const downloadImage = async (ref) => {
     console.log("downloadImage ran");
-    const pathReference = ref(storage, "images/event/2022-06-22T02:14:23.488Z");
+    const pathReference = ref(storage, ref);
     // `url` is the download URL for 'images/stars.jpg'
 
     const url = await getDownloadURL(pathReference);
@@ -95,9 +95,9 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          {url !== "" && (
+          {/* {url !== "" && (
             <Image source={{ uri: url }} style={{ height: 175, width: 200 }} />
-          )}
+          )} */}
           <View style={styles.eventCardWrapper}>
             {data.map((session) => {
               return (

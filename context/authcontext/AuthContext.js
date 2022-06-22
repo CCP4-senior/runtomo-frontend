@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
 import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
-import axiosInstance from "../../axios/axios";
+import axiosInstance from "../../helpers/axios";
 import * as RootNavigation from "../../navigations/RootNavigator.js";
 import { Alert } from "react-native";
 

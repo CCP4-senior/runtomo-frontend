@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
-import axiosInstance from "../../axios/axios";
+import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
 import { getStorage, ref, uploadString } from "firebase/storage";
 import firebaseConfig from "../../firebase.js";

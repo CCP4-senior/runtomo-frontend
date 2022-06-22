@@ -8,7 +8,6 @@ import {
   Image,
 } from "react-native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
-import uuid from "react-native-uuid";
 import {
   ref,
   uploadString,
@@ -24,7 +23,8 @@ import DurationModal from "./DurationModal.js";
 import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
-import axiosInstance from "../../axios/axios.js";
+import axiosInstance from "../../helpers/axios.js";
+import uploadImage from "../../helpers/uploadImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
@@ -51,49 +51,12 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     setGoogleModalVisible(false);
   };
 
-  const uploadImage = async (type) => {
-    if (imageUri === "") return;
-
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function () {
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", imageUri, true);
-      xhr.send(null);
-    });
-
-    if (!blob) return;
-
-    const id = uuid.v4();
-    console.log(id);
-    const currentRef = `images/${type}/${id}`;
-
-    const storageRef = ref(storage, currentRef);
-
-    const uploadTask = uploadBytesResumable(storageRef, blob);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {},
-      (error) => {
-        alert("Image upload was unsuccessful. Please try again.");
-      },
-      () => {
-        setImageRef(currentRef);
-        console.log(currentRef);
-      }
-    );
-  };
-
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
-      await uploadImage("events");
+      const currentRef = await uploadImage("events", imageUri);
+      setImageRef(currentRef);
+      console.log("ref from imageUpload", currentRef);
       // const response = await axiosInstance.post("/events/", {
       //   title: title,
       //   location: meetingPoint,
@@ -149,10 +112,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        quality: 0.7,
+        quality: 0.5,
       });
-
-      console.log(result);
 
       if (!result.cancelled) {
         setImageUri(result.uri);
