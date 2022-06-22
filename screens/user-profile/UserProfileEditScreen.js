@@ -18,24 +18,48 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 	const { height } = useWindowDimensions();
 
 	const [ username, setUsername ] = useState('my username');
+	const [ email, setEmail ] = useState('myemail@example.com');
 
 	return (
 		<SafeAreaView style={styles.root}>
 			<View style={styles.container}>
 				{/* Username */}
 
-				<View>
+				<View style={styles.field}>
 					<Text style={styles.text}>Username</Text>
+
+					<CustomInput
+						placeholder="please input a username"
+						value={username}
+						changeHandler={(value) => setUsername(value)}
+						width={'100%'}
+					/>
 				</View>
 
-				<CustomInput
-					placeholder="please input a username"
-					value={username}
-					changeHandler={(value) => setUsername(value)}
-					width={'100%'}
-				/>
-
 				{/* Email */}
+
+				<View style={styles.field}>
+					<Text style={styles.text}>Email</Text>
+
+					<CustomInput
+						placeholder="please input a username"
+						value={email}
+						changeHandler={(value) => setEmail(value)}
+						width={'100%'}
+					/>
+				</View>
+
+				{/* Age */}
+				<View style={styles.field}>
+					<Text style={styles.text}>Email</Text>
+
+					<CustomInput
+						placeholder="please input a username"
+						value={email}
+						changeHandler={(value) => setEmail(value)}
+						width={'100%'}
+					/>
+				</View>
 			</View>
 		</SafeAreaView>
 	);
@@ -49,10 +73,13 @@ const styles = StyleSheet.create({
 	},
 	container      : {
 		flex            : 1,
-		backgroundColor : Color.Fill,
+		// backgroundColor : Color.Fill,
+    backgroundColor: 'coral',
 		padding         : 30,
+		justifyContent  : 'flex-start',
 		alignItems      : 'flex-start',
-		overflow        : 'visible'
+		overflow        : 'visible',
+		width           : '100%'
 	},
 	title          : {
 		fontSize  : 30,
@@ -63,11 +90,16 @@ const styles = StyleSheet.create({
 		marginVertical : 5,
 		alignSelf      : 'flex-start'
 	},
-	customInput    : {
-		// alignSelf : 'stretch'
+	field          : {
+		flex           : 1,
+		justifyContent : 'flex-start',
+		alignItems     : 'flex-start',
+		width          : '100%',
+    borderWidth: 2
 	},
+	customInput    : {},
 	inputContainer : {
-		// flex           : 1,
+		flex           : 1,
 		marginVertical : 5
 	}
 });
