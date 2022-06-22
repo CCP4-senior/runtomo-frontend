@@ -6,16 +6,18 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
   Image,
 } from "react-native";
-import { TextInput, List } from "react-native-paper";
+import { Button, TextInput, List, Modal } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
+import FilterModal from "./FilterModal.js";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
+const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
   const {
     allEvents,
@@ -23,6 +25,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     setEventId,
     getAllEventsData,
     getCurrentEventData,
+    filteredEvents,
     storage,
   } = useContext(DataContext);
   useEffect(() => {
@@ -31,7 +34,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     }
   }, []);
 
-  const data = allEvents; // Remove this line when testing with mock data
+  // const data = allEvents; // Remove this line when testing with mock data
   const [url, setUrl] = useState("");
   const selectEvent = async (event) => {
     console.log(event.id, event);
@@ -49,6 +52,13 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     }
   };
 
+  const data = allEvents;
+  const [filterModalVisible, setfilterModalVisible] = useState(false);
+  /* modal */
+  const hideModal = () => {
+    setfilterModalVisible(false);
+  };
+
   const downloadImage = async (imageRef) => {
     const storage = getStorage();
     const pathReference = ref(storage, imageRef);
@@ -59,7 +69,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <TextInput
           mode="outlined"
           outlineColor="#F4F6F6"
@@ -69,7 +79,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
           left={<TextInput.Icon name="magnify" style={{ marginTop: 15 }} />}
           theme={{ roundness: 8 }}
         />
-      </View>
+      </View> */}
       <View style={styles.topContainer}>
         <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
           <List.Item
@@ -80,7 +90,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
             onPress={() => alert("Sort by button pressed!")}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
+        <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
           <List.Item
             style={styles.topElement}
             title="FILTERS"
@@ -90,24 +100,12 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
+        <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.eventCardWrapper}>
-            {data.map((session) => {
-              return (
-                <EventCard
-                  isHomePageCard={true}
-                  style={styles.eventCard}
-                  key={session.id}
-                  event={session}
-                  handlePress={() => selectEvent(session)}
-                  image={session.image}
-                />
-              );
-            })}
-          </View>
+          <EventsDataPage />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -115,6 +113,56 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
 };
 
 export default HomeScreen;
+
+const EventsDataPage = () => {
+  const { allEvents, filteredEvents, isDataFiltered, setIsDataFiltered } =
+    useContext(DataContext);
+  const data = allEvents;
+
+  if (isDataFiltered && filteredEvents.length >= 1) {
+    return (
+      <View style={styles.eventCardWrapper}>
+        {filteredEvents.map((session) => {
+          return (
+            <EventCard
+              isHomePageCard={true}
+              style={styles.eventCard}
+              key={session.id}
+              event={session}
+              handlePress={() => selectEvent(session)}
+              image={session.image}
+            />
+          );
+        })}
+      </View>
+    );
+  } else if (isDataFiltered && filteredEvents.length < 1) {
+    return (
+      <View style={styles.eventCardWrapper}>
+        <Text>No running events available for this location</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.eventCardWrapper}>
+        {data.map((session) => {
+          return (
+            <EventCard
+              isHomePageCard={true}
+              style={styles.eventCard}
+              key={session.id}
+              event={session}
+              handlePress={() => selectEvent(session)}
+              image={session.image}
+            />
+          );
+        })}
+      </View>
+    );
+  }
+};
+
+/* Styling */
 
 const styles = StyleSheet.create({
   container: {
