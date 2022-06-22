@@ -11,13 +11,15 @@ const DataProvider = ({ children }) => {
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
+  const [filteredEvents, setFilteredEvents] = useState(null);
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
+    const randomWard = Math.floor(Math.random() * 2);
     return {
       id: el.id,
       title: el.title,
-      ward: "Shibuya",
+      ward: randomWard === 0 ? "Shibuya" : "Meguro",
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
       image: require("../../assets/images/demo/yoyogipark.jpeg"),
@@ -81,6 +83,8 @@ const DataProvider = ({ children }) => {
     getAllEventsData,
     getCreatedEventsData,
     getCurrentEventData,
+    setFilteredEvents,
+    filteredEvents,
   };
 
   return (

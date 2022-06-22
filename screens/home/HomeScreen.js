@@ -14,7 +14,7 @@ import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import FilterModal from "./FilterModal.js";
 
-const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
+const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
   const {
     allEvents,
@@ -22,13 +22,15 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     setEventId,
     getAllEventsData,
     getCurrentEventData,
+    filteredEvents,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
       getAllEventsData();
     }
   }, []);
-  const data = allEvents; // Remove this line when testing with mock data
+
+  // const data = allEvents; // Remove this line when testing with mock data
   const selectEvent = async (event) => {
     // setCurrEvent(event);
     setCurrentEvent(event);
@@ -44,6 +46,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     // }
   };
 
+  const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
   /* modal */
   const hideModal = () => {
@@ -89,18 +92,31 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.eventCardWrapper}>
-            {data.map((session) => {
-              return (
-                <EventCard
-                  isHomePageCard={true}
-                  style={styles.eventCard}
-                  key={session.id}
-                  event={session}
-                  handlePress={() => selectEvent(session)}
-                  image={session.image}
-                />
-              );
-            })}
+            {filteredEvents
+              ? filteredEvents.map((session) => {
+                  return (
+                    <EventCard
+                      isHomePageCard={true}
+                      style={styles.eventCard}
+                      key={session.id}
+                      event={session}
+                      handlePress={() => selectEvent(session)}
+                      image={session.image}
+                    />
+                  );
+                })
+              : data.map((session) => {
+                  return (
+                    <EventCard
+                      isHomePageCard={true}
+                      style={styles.eventCard}
+                      key={session.id}
+                      event={session}
+                      handlePress={() => selectEvent(session)}
+                      image={session.image}
+                    />
+                  );
+                })}
           </View>
         </ScrollView>
       </View>
