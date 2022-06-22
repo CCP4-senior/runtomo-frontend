@@ -24,19 +24,12 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     getAllEventsData,
     getCurrentEventData,
     storage,
-    imageTestRef,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
       getAllEventsData();
     }
   }, []);
-
-  // Just for image display test. To be removed
-  useEffect(() => {
-    if (imageTestRef === "") return;
-    downloadImage(imageTestRef);
-  }, [imageTestRef]);
 
   const data = allEvents; // Remove this line when testing with mock data
   const [url, setUrl] = useState("");
@@ -100,17 +93,6 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          {/*The following  is for image downlod test. To be removed */}
-          {url !== "" && (
-            <>
-              <Text>This is a image download test</Text>
-              <Image
-                source={{ uri: url }}
-                style={{ width: 300, height: 200, alignSelf: "center" }}
-              />
-            </>
-          )}
-
           <View style={styles.eventCardWrapper}>
             {data.map((session) => {
               return (

@@ -22,7 +22,6 @@ import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
-  const { imageTestRef, setImageTestRef } = useContext(DataContext);
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -103,23 +102,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   //   setNewEvent(event);
   //   setData([...data, event]);
   //   navigation.navigate("Event Created");
-  // };
-
-  // const selectImage = async () => {
-  //   try {
-  //     const result = await ImagePicker.launchImageLibraryAsync({
-  //       mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //       allowsEditing: true,
-  //       quality: 0.5,
-  //     });
-
-  //     if (!result.cancelled) {
-  //       setImageUri(result.uri);
-  //     }
-  //   } catch (e) {
-  //     alert("Something went wrong. Please try again!");
-  //     console.log(e);
-  //   }
   // };
 
   const deleteImage = () => {

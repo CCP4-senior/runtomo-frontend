@@ -14,7 +14,6 @@ const DataProvider = ({ children }) => {
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
-  const [imageTestRef, setImageTestRef] = useState("");
 
   useEffect(() => {
     const firebaseApp = initializeApp(firebaseConfig);
@@ -89,8 +88,6 @@ const DataProvider = ({ children }) => {
     getAllEventsData,
     getCreatedEventsData,
     getCurrentEventData,
-    imageTestRef,
-    setImageTestRef,
   };
 
   return (
