@@ -94,17 +94,7 @@ const SettingScreen = ({ navigation }) => {
                   { user.email }
                 </Paragraph>
               </View>
-              <Card.Actions>
-                <Button
-                  icon="chevron-right"
-                  contentStyle={{ flexDirection: "row-reverse" }}
-                  uppercase={false}
-                  color={Color.Text}
-                  labelStyle={styles.label}
-                  
-                >Profile
-                </Button>
-              </Card.Actions>
+ 
             </View>
           </Card.Content>
         </Card>
