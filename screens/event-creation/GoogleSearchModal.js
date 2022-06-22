@@ -15,8 +15,8 @@ const GoogleSearchModal = ({
 }) => {
   //default region set to tokyo
   const [region, setRegion] = useState({
-    latitude: 35.652832,
-    longitude: 139.839478,
+    latitude: 35.6828387,
+    longitude: 139.7594549,
   });
 
   const tokyo23wards = [
