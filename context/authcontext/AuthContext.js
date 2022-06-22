@@ -31,7 +31,23 @@ const AuthProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const data = response.data;
-        setUser({ id: jwt_decode(data.access)["user_id"], username: "wade" }); // username to be changed dynamically
+
+        // TODO: user information will be updated dynamically when backend is ready
+        const mockData = {
+          username: "wadeRunner",
+          email: "wade@example.com",
+          age: "34",
+          runnerType: ["beginner", "social"],
+        };
+
+        setUser({
+          id: jwt_decode(data.access)["user_id"],
+          username: mockData.username,
+          email: mockData.email,
+          age: mockData.age,
+          runnerType: mockData.runnerType,
+        });
+
         await SecureStore.setItemAsync(
           "access_token",
           JSON.stringify(data.access)
@@ -74,7 +90,6 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     signInUser,
-    user,
     signOutUser,
     /*deleteAccount,*/
   };
