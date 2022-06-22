@@ -12,6 +12,7 @@ web-build/
 dummyData/
 .env
 .prettierignore
+.env.local
 
 
 # macOS

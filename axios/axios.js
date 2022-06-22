@@ -49,7 +49,7 @@ axiosInstance.interceptors.response.use(
 
     if (
       error.response.status === 401 &&
-      originalRequest.url === baseURL + "/auth/jwt/refresh/"
+      originalRequest.url === "/auth/jwt/refresh/"
     ) {
       RootNavigation.navigate("SignOut", { tokenExpired: true });
       return Promise.reject(error);
@@ -101,7 +101,12 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    if (error.response.status === 401) {
+    if (
+      error.response.status === 401 &&
+      originalRequest.url === "/auth/jwt/create/"
+    ) {
+      console.log("Login with invalid credentials");
+    } else if (error.response.status === 401) {
       console.log(error);
       RootNavigation.navigate("SignOut", { tokenExpired: true });
     }

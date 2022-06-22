@@ -1,9 +1,9 @@
-import { StyleSheet, View, SafeAreaView, Text, Linking } from "react-native";
-import React, { useContext, useState, useEffect } from "react";
-import { Button, TextInput } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from "../../context/authcontext/AuthContext";
-import Color from "../../assets/themes/Color.js";
+import { StyleSheet, View, SafeAreaView, Text, Linking } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { Button, TextInput } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../context/authcontext/AuthContext';
+import Color from '../../assets/themes/Color.js';
 
 const SignIn = () => {
   const navigation = useNavigation();

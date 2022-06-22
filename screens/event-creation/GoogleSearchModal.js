@@ -11,12 +11,59 @@ const GoogleSearchModal = ({
   setMeetingPoint,
   setLatitude,
   setLongitude,
+  setWard,
 }) => {
   //default region set to tokyo
   const [region, setRegion] = useState({
-    latitude: 35.652832,
-    longitude: 139.839478,
+    latitude: 35.6828387,
+    longitude: 139.7594549,
   });
+
+  const tokyo23wards = [
+    "Chiyoda",
+    "Bunkyo",
+    "Shinjuku",
+    "Shibuya",
+    "Minato",
+    "Chuo",
+    "Taito",
+    "Toshima",
+    "Nakano",
+    "Suginami",
+    "Setagaya",
+    "Meguro",
+    "Shinagawa",
+    "Ota",
+    "Koto",
+    "Edogawa",
+    "Sumida",
+    "Arakawa",
+    "Katsushika",
+    "Nerima",
+    "Itabashi",
+    "Adachi",
+    "Kita",
+  ];
+
+  const getWard = (address_components, formatted_address) => {
+    const filteredData = address_components.filter((component) => {
+      return component.types.includes("locality");
+    });
+    let wardName = "";
+    if (filteredData[0] !== undefined) {
+      wardName = filteredData[0].long_name.replace("City", "");
+      wardName = wardName.replace(/\s/g, "");
+    } else {
+      const splitAddress = formatted_address.replace(/,/g, "").split(" ");
+      for (const item of splitAddress) {
+        if (tokyo23wards.includes(item)) {
+          wardName = item;
+          break;
+        }
+      }
+    }
+    return wardName;
+  };
 
   const containerStyle = {
     backgroundColor: "#fff",
@@ -40,9 +87,14 @@ const GoogleSearchModal = ({
               rankby: "distance",
             }}
             onPress={(data, details = null) => {
+              const ward = getWard(
+                details.address_components,
+                details.formatted_address
+              );
               setMeetingPoint(details.formatted_address);
               setLatitude(details.geometry.location.lat);
               setLongitude(details.geometry.location.lng);
+              setWard(ward);
               hideModal();
             }}
             query={{
