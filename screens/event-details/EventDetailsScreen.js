@@ -22,7 +22,13 @@ import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import { DataContext } from "../../context/datacontext/DataContext.js";
-import MapView, { Callout, Marker, Circle } from "react-native-maps";
+import MapView, {
+  Callout,
+  Marker,
+  Circle,
+  PROVIDER_GOOGLE,
+  PROVIDER_DEFAULT,
+} from "react-native-maps";
 
 const EventDetailsScreen = ({
   navigation,
@@ -210,7 +216,7 @@ const EventDetailsScreen = ({
                       latitudeDelta: 0.002,
                       longitudeDelta: 0.0121,
                     }}
-                    provider="google"
+                    provider={PROVIDER_GOOGLE}
                   >
                     <Marker
                       coordinate={{
@@ -289,7 +295,6 @@ const styles = StyleSheet.create({
     overflow: "visible",
   },
   mapContainer: {
-    flex: 1,
     backgroundColor: Color.White,
     alignItems: "center",
     justifyContent: "center",
