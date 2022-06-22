@@ -7,7 +7,8 @@ import {
 	ImageBackground,
 	Image,
 	useWindowDimensions,
-	Button
+	Button,
+  TextInput
 } from 'react-native';
 
 import Color from '../../assets/themes/Color';
@@ -20,6 +21,18 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 			<View>
 				<Text>Profile Edit Page</Text>
 			</View>
+      <View>
+				<Text>Username</Text>
+			</View>
+      <View style={styles.inputContainer}>
+            <CustomInput
+              placeholder="Running Duration"
+              customValue={runningDuration}
+              onFocus={setDurationModalVisible}
+              value={runningDuration}
+              submitted={submitted}
+            />
+          </View>
 		</SafeAreaView>
 	);
 };
@@ -30,64 +43,14 @@ const styles = StyleSheet.create({
 	root              : {
 		flex : 1
 	},
-	imageContainer    : {
-		alignItems : 'center'
-	},
-	backgroundImage   : {
-		width  : '100%',
-		height : 250
-	},
-	profilePicture    : {
-		width        : 200,
-		maxHeight    : 200,
-		borderRadius : 200 / 2,
-		borderWidth  : 2,
-		borderColor  : Color.Black,
-		alignSelf    : 'center',
-		marginTop    : 'auto',
-		marginBottom : 'auto',
-		overflow     : 'hidden'
-	},
-	userInfoContainer : {
-		flex    : 2,
-		padding : 20
-	},
-	userFullName      : {
-		fontSize   : 24,
-		fontWeight : 'bold',
-		alignSelf  : 'center'
-	},
-	userInfoHeader    : {
-		flexDirection : 'row',
-		alignSelf     : 'center',
-		marginBottom  : 10
-	},
-	tagsContainer     : {
-		flexDirection : 'row',
-		alignItems    : 'center'
-	},
-	tags              : {
-		backgroundColor  : Color.PrimaryMain,
-		marginHorizontal : 4,
-		borderRadius     : 6,
-		borderColor      : Color.PrimaryMain,
-		borderWidth      : 0.2,
-		overflow         : 'hidden',
-		padding          : 3,
-		color            : Color.White,
-		fontWeight       : 'bold',
-		fontSize         : 16
-	},
-	userDataWrapper   : {
-		backgroundColor : '#F5F5F5',
-		borderRadius    : 20,
-		padding         : 20,
-		width           : '100%',
-		marginBottom    : 10
-	},
-	userDataFont      : {
-		fontSize   : 16,
-		color      : Color.Black,
-		fontWeight : '500'
-	}
+  container: {
+    flex: 1,
+    backgroundColor: Color.Fill,
+    padding: 10,
+    alignItems: "center",
+    overflow: "visible",
+  },
+  inputContainer: {
+    margin: 5,
+  },
 });

@@ -99,7 +99,7 @@ const SettingScreen = ({ navigation }) => {
                   color={Color.Text}
                   labelStyle={styles.label}
                   onPress={() => {
-                    console.log("Presed");
+                    console.log("Pressed");
                   }}
                 >
                   Edit
