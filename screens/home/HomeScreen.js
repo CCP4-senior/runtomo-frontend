@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Text,
 } from "react-native";
 import { Button, TextInput, List, Modal } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
@@ -105,7 +106,7 @@ const EventsDataPage = () => {
     useContext(DataContext);
   const data = allEvents;
 
-  if (isDataFiltered) {
+  if (isDataFiltered && filteredEvents.length >= 1) {
     return (
       <View style={styles.eventCardWrapper}>
         {filteredEvents.map((session) => {
@@ -120,6 +121,12 @@ const EventsDataPage = () => {
             />
           );
         })}
+      </View>
+    );
+  } else if (isDataFiltered && filteredEvents.length < 1) {
+    return (
+      <View style={styles.eventCardWrapper}>
+        <Text>No running events available for this location</Text>
       </View>
     );
   } else {
