@@ -91,33 +91,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.eventCardWrapper}>
-            {filteredEvents
-              ? filteredEvents.map((session) => {
-                  return (
-                    <EventCard
-                      isHomePageCard={true}
-                      style={styles.eventCard}
-                      key={session.id}
-                      event={session}
-                      handlePress={() => selectEvent(session)}
-                      image={session.image}
-                    />
-                  );
-                })
-              : data.map((session) => {
-                  return (
-                    <EventCard
-                      isHomePageCard={true}
-                      style={styles.eventCard}
-                      key={session.id}
-                      event={session}
-                      handlePress={() => selectEvent(session)}
-                      image={session.image}
-                    />
-                  );
-                })}
-          </View>
+          <EventsDataPage />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -125,6 +99,50 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 };
 
 export default HomeScreen;
+
+const EventsDataPage = () => {
+  const { allEvents, filteredEvents, isDataFiltered, setIsDataFiltered } =
+    useContext(DataContext);
+  const data = allEvents;
+
+  if (isDataFiltered) {
+    return (
+      <View style={styles.eventCardWrapper}>
+        {filteredEvents.map((session) => {
+          return (
+            <EventCard
+              isHomePageCard={true}
+              style={styles.eventCard}
+              key={session.id}
+              event={session}
+              handlePress={() => selectEvent(session)}
+              image={session.image}
+            />
+          );
+        })}
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.eventCardWrapper}>
+        {data.map((session) => {
+          return (
+            <EventCard
+              isHomePageCard={true}
+              style={styles.eventCard}
+              key={session.id}
+              event={session}
+              handlePress={() => selectEvent(session)}
+              image={session.image}
+            />
+          );
+        })}
+      </View>
+    );
+  }
+};
+
+/* Styling */
 
 const styles = StyleSheet.create({
   container: {

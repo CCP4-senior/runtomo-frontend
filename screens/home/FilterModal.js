@@ -27,7 +27,8 @@ const FilterModal = ({ modalVisible, hideModal }) => {
     justifyContent: "center",
   };
   const [tokyo23wards, setTokyo23wards] = useState(tokyoWards);
-  const { allEvents, setFilteredEvents } = useContext(DataContext);
+  const { allEvents, setFilteredEvents, setIsDataFiltered } =
+    useContext(DataContext);
 
   const handleFilter = (action) => {
     if (action === "reset") {
@@ -40,7 +41,6 @@ const FilterModal = ({ modalVisible, hideModal }) => {
         }
       });
       const events = allEvents.filter((event) => {
-        console.log(event.ward);
         return selectedWards.includes(event.ward);
       });
       setFilteredEvents(events);
@@ -119,6 +119,7 @@ const FilterModal = ({ modalVisible, hideModal }) => {
                   ];
                   setTokyo23wards(reseted23Wards);
                   handleFilter("reset");
+                  setIsDataFiltered(false);
                   hideModal();
                 }}
               >
@@ -127,6 +128,7 @@ const FilterModal = ({ modalVisible, hideModal }) => {
               <Button
                 onPress={() => {
                   handleFilter();
+                  setIsDataFiltered(true);
                   hideModal();
                 }}
               >

@@ -12,6 +12,7 @@ const DataProvider = ({ children }) => {
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(null);
+  const [isDataFiltered, setIsDataFiltered] = useState(false);
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
@@ -85,6 +86,8 @@ const DataProvider = ({ children }) => {
     getCurrentEventData,
     setFilteredEvents,
     filteredEvents,
+    isDataFiltered,
+    setIsDataFiltered,
   };
 
   return (
