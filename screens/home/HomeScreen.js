@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { Button, TextInput, List } from "react-native-paper";
+import { Button, TextInput, List, Modal } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
+import FilterModal from "./FilterModal.js";
 
 const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -43,9 +44,15 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     // }
   };
 
+  const [filterModalVisible, setfilterModalVisible] = useState(false);
+  /* modal */
+  const hideModal = () => {
+    setfilterModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <TextInput
           mode="outlined"
           outlineColor="#F4F6F6"
@@ -55,7 +62,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
           left={<TextInput.Icon name="magnify" style={{ marginTop: 15 }} />}
           theme={{ roundness: 8 }}
         />
-      </View>
+      </View> */}
       <View style={styles.topContainer}>
         <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
           <List.Item
@@ -66,7 +73,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
             onPress={() => alert("Sort by button pressed!")}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
+        <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
           <List.Item
             style={styles.topElement}
             title="FILTERS"
@@ -76,6 +83,7 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
+        <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
