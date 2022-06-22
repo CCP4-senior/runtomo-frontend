@@ -216,7 +216,7 @@ const EventDetailsScreen = ({
                       latitudeDelta: 0.002,
                       longitudeDelta: 0.0121,
                     }}
-                    provider={PROVIDER_GOOGLE}
+                    provider={PROVIDER_DEFAULT}
                   >
                     <Marker
                       coordinate={{
