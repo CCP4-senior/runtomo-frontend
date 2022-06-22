@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
 import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
-import axiosInstance from "../../axios/axios";
+import axiosInstance from "../../helpers/axios";
 import * as RootNavigation from "../../navigations/RootNavigator.js";
 import { Alert } from "react-native";
 
@@ -31,7 +31,23 @@ const AuthProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const data = response.data;
-        setUser({ id: jwt_decode(data.access)["user_id"], username: "wade" }); // username to be changed dynamically
+
+        // TODO: user information will be updated dynamically when backend is ready
+        const mockData = {
+          username: "wadeRunner",
+          email: "wade@example.com",
+          age: "34",
+          runnerType: ["beginner", "social"],
+        };
+
+        setUser({
+          id: jwt_decode(data.access)["user_id"],
+          username: mockData.username,
+          email: mockData.email,
+          age: mockData.age,
+          runnerType: mockData.runnerType,
+        });
+
         await SecureStore.setItemAsync(
           "access_token",
           JSON.stringify(data.access)
@@ -74,7 +90,6 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     signInUser,
-    user,
     signOutUser,
     /*deleteAccount,*/
   };

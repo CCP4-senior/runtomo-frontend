@@ -8,10 +8,14 @@ import {
   Image,
   useWindowDimensions,
 } from "react-native";
+
 import { Button } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 
+
 const PublicProfileScreen = ({ navigation, user }) => {
+
+
   const { height } = useWindowDimensions();
   const [imageUrl, setImageUrl] = useState("wade.png");
 

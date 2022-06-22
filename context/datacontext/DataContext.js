@@ -1,6 +1,9 @@
-import React, { useState, createContext, useContext } from "react";
-import axiosInstance from "../../axios/axios";
+import React, { useState, createContext, useContext, useEffect } from "react";
+import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
+import { getStorage, ref, uploadString } from "firebase/storage";
+import firebaseConfig from "../../firebase.js";
+import { initializeApp } from "firebase/app";
 
 const DataContext = createContext();
 
@@ -13,6 +16,10 @@ const DataProvider = ({ children }) => {
   const [currentEvent, setCurrentEvent] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(null);
   const [isDataFiltered, setIsDataFiltered] = useState(false);
+
+  useEffect(() => {
+    const firebaseApp = initializeApp(firebaseConfig);
+  }, []);
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
