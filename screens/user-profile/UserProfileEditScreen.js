@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
 	Text,
 	View,
@@ -10,25 +10,38 @@ import {
 	Button,
 	TextInput
 } from 'react-native';
+import { AuthContext } from '../../context/authcontext/AuthContext.js';
 
 import Color from '../../assets/themes/Color';
 import CustomInput from '../../components/CustomInput';
 import LongButton from '../../components/LongButton';
 
-const UserProfileEditScreen = ({ navigation, user }) => {
+const UserProfileEditScreen = ({ navigation }) => {
+	const { user, setUser } = useContext(AuthContext);
 	const { height } = useWindowDimensions();
 
-	const [ username, setUsername ] = useState('my username');
-	const [ email, setEmail ] = useState('myemail@example.com');
-	const [ age, setAge ] = useState('34');
-	const [ runnerType, setRunnerType ] = useState('social');
+	// Todo - Ravi: replace mockData with db data when Users is available
+	const mockData = {
+		id         : user.id.toString(),
+		username   : user.username,
+		email      : 'wade@example.com',
+		age        : '34',
+		runnerType : 'social'
+	};
+
+	const [ id, setId ] = useState(mockData.id);
+	const [ username, setUsername ] = useState(mockData.username);
+	const [ email, setEmail ] = useState(mockData.email);
+	const [ age, setAge ] = useState(mockData.age);
+	const [ runnerType, setRunnerType ] = useState(mockData.runnerType);
 
 	const doneButtonHandler = () => {
-		alert('Done!');
+		setUser({ ...mockData, ...{ username: username } });
+		navigation.navigate('Profile');
 	};
 
 	const cancelButtonHandler = () => {
-		alert('Canceled!');
+		navigation.navigate('Profile');
 	};
 
 	return (
@@ -44,6 +57,7 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 						value={username}
 						changeHandler={(value) => setUsername(value)}
 						width={'100%'}
+						editable={false}
 					/>
 				</View>
 
@@ -78,7 +92,7 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 
 					<CustomInput
 						placeholder="your type of running"
-						value={age}
+						value={runnerType}
 						changeHandler={(value) => setRunnerType(value)}
 						width={'100%'}
 					/>
@@ -94,7 +108,7 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 					<LongButton
 						buttonHandler={cancelButtonHandler}
 						buttonColor={Color.White}
-            buttonTextColor={Color.PrimaryMain}
+						buttonTextColor={Color.PrimaryMain}
 						buttonText="Cancel"
 					/>
 				</View>

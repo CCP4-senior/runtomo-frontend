@@ -78,7 +78,6 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     signInUser,
-    user,
     signOutUser,
     /*deleteAccount,*/
   };
