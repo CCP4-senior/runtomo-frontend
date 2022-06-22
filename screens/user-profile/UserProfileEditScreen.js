@@ -13,6 +13,7 @@ import {
 
 import Color from '../../assets/themes/Color';
 import CustomInput from '../../components/CustomInput';
+import LongButton from '../../components/LongButton';
 
 const UserProfileEditScreen = ({ navigation, user }) => {
 	const { height } = useWindowDimensions();
@@ -20,6 +21,15 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 	const [ username, setUsername ] = useState('my username');
 	const [ email, setEmail ] = useState('myemail@example.com');
 	const [ age, setAge ] = useState('34');
+	const [ runnerType, setRunnerType ] = useState('social');
+
+	const doneButtonHandler = () => {
+		alert('Done!');
+	};
+
+	const cancelButtonHandler = () => {
+		alert('Canceled!');
+	};
 
 	return (
 		<SafeAreaView style={styles.root}>
@@ -61,6 +71,33 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 						width={'100%'}
 					/>
 				</View>
+
+				{/* Runner type */}
+				<View style={styles.field}>
+					<Text style={styles.text}>Runner Type</Text>
+
+					<CustomInput
+						placeholder="your type of running"
+						value={age}
+						changeHandler={(value) => setRunnerType(value)}
+						width={'100%'}
+					/>
+				</View>
+
+				{/* Buttons */}
+				<View>
+					<LongButton
+						buttonHandler={doneButtonHandler}
+						buttonColor={Color.PrimaryMain}
+						buttonText="Done"
+					/>
+					<LongButton
+						buttonHandler={cancelButtonHandler}
+						buttonColor={Color.White}
+            buttonTextColor={Color.PrimaryMain}
+						buttonText="Cancel"
+					/>
+				</View>
 			</View>
 		</SafeAreaView>
 	);
@@ -70,17 +107,17 @@ export default UserProfileEditScreen;
 
 const styles = StyleSheet.create({
 	root           : {
-		flex : 1,
+		flex : 1
 	},
 	container      : {
 		flex            : 1,
 		backgroundColor : Color.Fill,
-    // backgroundColor: 'coral',
+		// backgroundColor: 'coral',
 		padding         : 30,
 		justifyContent  : 'flex-start',
 		alignItems      : 'flex-start',
 		overflow        : 'visible',
-		width           : '100%',
+		width           : '100%'
 	},
 	title          : {
 		fontSize  : 30,
@@ -88,15 +125,15 @@ const styles = StyleSheet.create({
 	},
 	text           : {
 		fontSize       : 20,
-		marginVertical : 5,
+		marginVertical : 5
 	},
 	field          : {
 		// flex           : 1,
 		justifyContent : 'center',
-    alignItems: "flex-start",
+		alignItems     : 'flex-start',
 		width          : '100%',
-    marginVertical: 5,
-    // borderWidth: 2
+		marginVertical : 5
+		// borderWidth: 2
 	},
 	customInput    : {},
 	inputContainer : {
