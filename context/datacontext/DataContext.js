@@ -58,7 +58,7 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  const getCurrentEventData = async () => {
+  const getCurrentEventData = async (eventId) => {
     try {
       const response = await axiosInstance(`/events/${eventId}/`);
       const data = response.data;

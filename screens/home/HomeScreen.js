@@ -29,18 +29,19 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
   }, []);
   const data = allEvents; // Remove this line when testing with mock data
   const selectEvent = async (event) => {
+    console.log(event.id, event);
     // setCurrEvent(event);
-    setCurrentEvent(event);
-    navigation.navigate("Event Details");
-
+    // setCurrentEvent(event);
     // Following code will be used when backend endpoint is ready
-    // try {
-    //   setEventId(event.id);
-    //   await getCurrentEventData();
-    //   navigation.navigate("Event Details");
-    // } catch (e) {
-    //   alert("Something went wrong. Please try again!");
-    // }
+    try {
+      // setEventId(event.id);
+      const event = await getCurrentEventData(event.id);
+      setCurrentEvent(event);
+      navigation.navigate("Event Details");
+    } catch (e) {
+      console.log(e);
+      alert("Something went wrong. Please try again!");
+    }
   };
 
   return (
