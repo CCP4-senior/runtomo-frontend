@@ -197,15 +197,12 @@ const EventDetailsScreen = ({
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text>
-                    Lorem ipsum, or lipsum as it is sometimes known, is dummy
-                    text used in laying out print, graphic or web designs.
-                  </Text>
+                  <Text>{eventData.description}</Text>
                 </View>
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Location:</Text>
-                  <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
+                  <Text>{eventData.location}</Text>
                 </View>
                 <View style={styles.mapContainer}>
                   <MapView

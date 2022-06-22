@@ -27,6 +27,7 @@ const DataProvider = ({ children }) => {
     return {
       id: el.id,
       title: el.title,
+      location: el.location || "2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052",
       ward: randomWard === 0 ? "Shibuya" : "Meguro",
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
@@ -40,6 +41,8 @@ const DataProvider = ({ children }) => {
       participants: [],
       owner_id: 2,
       hasJoined: true,
+      description:
+        "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
     };
   };
 
@@ -72,7 +75,6 @@ const DataProvider = ({ children }) => {
     try {
       const response = await axiosInstance(`/events/${eventId}/`);
       const data = response.data;
-      console.log(data);
       const paddedData = paddData(data); // To be removed
       setCurrentEvent(paddedData); // To be changed to just "data"
     } catch (e) {
