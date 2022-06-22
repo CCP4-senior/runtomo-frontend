@@ -8,6 +8,15 @@ import {
   Image,
 } from "react-native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
+import uuid from "react-native-uuid";
+import {
+  ref,
+  uploadString,
+  uploadBytes,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import * as ImagePicker from "expo-image-picker";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
 import AreaModal from "./AreaModal.js";
@@ -16,15 +25,7 @@ import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../axios/axios.js";
-import * as ImagePicker from "expo-image-picker";
 import { DataContext } from "../../context/datacontext/DataContext.js";
-import {
-  ref,
-  uploadString,
-  uploadBytes,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const { storage } = useContext(DataContext);
@@ -68,7 +69,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
 
     if (!blob) return;
 
-    const currentRef = `images/${type}/${new Date().toISOString()}`;
+    const id = uuid.v4();
+    console.log(id);
+    const currentRef = `images/${type}/${id}`;
 
     const storageRef = ref(storage, currentRef);
 
@@ -96,6 +99,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       //   location: meetingPoint,
       // });
     } catch (e) {
+      console.log(e);
       alert("Something went wrong. Please try again!");
     }
   };
@@ -240,7 +244,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
             />
           </View>
 
-          {imageUri == "" && (
+          {imageUri === "" && (
             <TouchableOpacity
               style={styles.imagePlaceholderContainer}
               onPress={selectImage}
