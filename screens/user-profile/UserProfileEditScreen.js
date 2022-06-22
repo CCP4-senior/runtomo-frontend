@@ -131,7 +131,7 @@ const UserProfileEditScreen = ({ navigation }) => {
 				</View>
 
 				{/* Buttons */}
-				<View>
+				<View style={styles.buttonsContainer}>
 					<LongButton
 						buttonHandler={doneButtonHandler}
 						buttonColor={Color.PrimaryMain}
@@ -158,7 +158,6 @@ const styles = StyleSheet.create({
 	container      : {
 		flex            : 1,
 		backgroundColor : Color.Fill,
-		// backgroundColor: 'coral',
 		padding         : 30,
 		justifyContent  : 'flex-start',
 		alignItems      : 'flex-start',
@@ -174,16 +173,17 @@ const styles = StyleSheet.create({
 		marginVertical : 5
 	},
 	field          : {
-		// flex           : 1,
 		justifyContent : 'center',
 		alignItems     : 'flex-start',
 		width          : '100%',
 		marginVertical : 5
-		// borderWidth: 2
 	},
 	customInput    : {},
 	inputContainer : {
 		flex           : 1,
 		marginVertical : 5
-	}
+	},
+  buttonsContainer: {
+    alignSelf: 'center'
+  }
 });
