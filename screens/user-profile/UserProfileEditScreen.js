@@ -19,6 +19,7 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 
 	const [ username, setUsername ] = useState('my username');
 	const [ email, setEmail ] = useState('myemail@example.com');
+	const [ age, setAge ] = useState('34');
 
 	return (
 		<SafeAreaView style={styles.root}>
@@ -51,12 +52,12 @@ const UserProfileEditScreen = ({ navigation, user }) => {
 
 				{/* Age */}
 				<View style={styles.field}>
-					<Text style={styles.text}>Email</Text>
+					<Text style={styles.text}>Age</Text>
 
 					<CustomInput
-						placeholder="please input a username"
-						value={email}
-						changeHandler={(value) => setEmail(value)}
+						placeholder="your age"
+						value={age}
+						changeHandler={(value) => setAge(value)}
 						width={'100%'}
 					/>
 				</View>
@@ -69,17 +70,17 @@ export default UserProfileEditScreen;
 
 const styles = StyleSheet.create({
 	root           : {
-		flex : 1
+		flex : 1,
 	},
 	container      : {
 		flex            : 1,
-		// backgroundColor : Color.Fill,
-    backgroundColor: 'coral',
+		backgroundColor : Color.Fill,
+    // backgroundColor: 'coral',
 		padding         : 30,
 		justifyContent  : 'flex-start',
 		alignItems      : 'flex-start',
 		overflow        : 'visible',
-		width           : '100%'
+		width           : '100%',
 	},
 	title          : {
 		fontSize  : 30,
@@ -88,14 +89,14 @@ const styles = StyleSheet.create({
 	text           : {
 		fontSize       : 20,
 		marginVertical : 5,
-		alignSelf      : 'flex-start'
 	},
 	field          : {
-		flex           : 1,
-		justifyContent : 'flex-start',
-		alignItems     : 'flex-start',
+		// flex           : 1,
+		justifyContent : 'center',
+    alignItems: "flex-start",
 		width          : '100%',
-    borderWidth: 2
+    marginVertical: 5,
+    // borderWidth: 2
 	},
 	customInput    : {},
 	inputContainer : {
