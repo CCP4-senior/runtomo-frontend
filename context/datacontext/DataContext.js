@@ -22,23 +22,6 @@ const DataProvider = ({ children }) => {
     setStorage(storage);
   }, []);
 
-  const downloadImage = (url) => {
-    // `url` is the download URL for 'images/stars.jpg'
-
-    // This can be downloaded directly:
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = "blob";
-    xhr.onload = (event) => {
-      const blob = xhr.response;
-    };
-    xhr.open("GET", url);
-    xhr.send();
-
-    // Or inserted into an <img> element
-    // const img = document.getElementById("myimg");
-    // img.setAttribute("src", url);
-  };
-
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
     return {

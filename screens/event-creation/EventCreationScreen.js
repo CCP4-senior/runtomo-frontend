@@ -39,10 +39,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
-  const [downloadURL, setDownloadURL] = useState("");
-
   const [eventDescription, setEventDescription] = useState("");
   const [imageUri, setImageUri] = useState("");
+  const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const hideModal = () => {
@@ -69,10 +68,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
 
     if (!blob) return;
 
-    const storageRef = ref(
-      storage,
-      `images/${type}/${new Date().toISOString()}`
-    );
+    const currentRef = `images/${type}/${new Date().toISOString()}`;
+
+    const storageRef = ref(storage, currentRef);
 
     const uploadTask = uploadBytesResumable(storageRef, blob);
 
@@ -83,9 +81,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         alert("Image upload was unsuccessful. Please try again.");
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-        });
+        setImageRef(currentRef);
+        console.log(currentRef);
       }
     );
   };
@@ -93,11 +90,11 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
-      uploadImage("event");
-      const response = await axiosInstance.post("/events/", {
-        title: title,
-        location: meetingPoint,
-      });
+      await uploadImage("events");
+      // const response = await axiosInstance.post("/events/", {
+      //   title: title,
+      //   location: meetingPoint,
+      // });
     } catch (e) {
       alert("Something went wrong. Please try again!");
     }

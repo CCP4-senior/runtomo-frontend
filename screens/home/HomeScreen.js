@@ -13,6 +13,7 @@ import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -22,13 +23,16 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     setEventId,
     getAllEventsData,
     getCurrentEventData,
+    storage,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
       getAllEventsData();
+      downloadImage();
     }
-  }, []);
+  }, [url]);
   const data = allEvents; // Remove this line when testing with mock data
+  const [url, setUrl] = useState("");
   const selectEvent = async (event) => {
     // setCurrEvent(event);
     setCurrentEvent(event);
@@ -42,6 +46,16 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     // } catch (e) {
     //   alert("Something went wrong. Please try again!");
     // }
+  };
+
+  const downloadImage = async () => {
+    console.log("downloadImage ran");
+    const pathReference = ref(storage, "images/event/2022-06-22T02:14:23.488Z");
+    // `url` is the download URL for 'images/stars.jpg'
+
+    const url = await getDownloadURL(pathReference);
+    setUrl(url);
+    console.log(url);
   };
 
   return (
@@ -81,6 +95,9 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
+          {url !== "" && (
+            <Image source={{ uri: url }} style={{ height: 175, width: 200 }} />
+          )}
           <View style={styles.eventCardWrapper}>
             {data.map((session) => {
               return (
