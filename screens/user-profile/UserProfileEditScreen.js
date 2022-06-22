@@ -25,7 +25,7 @@ const UserProfileEditScreen = ({ navigation }) => {
 		username   : user.username,
 		email      : user.email,
 		age        : user.age,
-		runnerType : [ 'beginner', 'social' ]
+		runnerType : user.runnerType
 	};
 
 	const [ username, setUsername ] = useState(mockData.username);

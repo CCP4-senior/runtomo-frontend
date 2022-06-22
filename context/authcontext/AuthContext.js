@@ -37,12 +37,14 @@ const AuthProvider = ({ children }) => {
 					username   : 'wadeWins',
 					email      : 'wade@example.com',
 					age        : '34',
+					runnerType : [ 'beginner', 'social' ]
 				};
 
 				setUser({
 					id       : jwt_decode(data.access)['user_id'],
 					username : mockData.username,
 					age      : mockData.age,
+          runnerType: mockData.runnerType,
 				});
 
 				await SecureStore.setItemAsync(
