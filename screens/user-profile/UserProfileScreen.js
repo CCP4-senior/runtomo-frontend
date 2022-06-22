@@ -18,10 +18,10 @@ const UserProfileScreen = ({ navigation }) => {
 	const { height } = useWindowDimensions();
 	const [ isImageAvailable, setIsImageAvailable ] = useState(false);
 
-	// TODO: update with 'user' when backend is ready
+	// TODO: replace userData with db info User is ready
 	const userData = {
 		username   : user.username,
-		age        : 34,
+		age        : user.age,
 		runnerType : [ 'beginner', 'social' ]
 	};
 

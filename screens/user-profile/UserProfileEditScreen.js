@@ -22,21 +22,19 @@ const UserProfileEditScreen = ({ navigation }) => {
 
 	// Todo - Ravi: replace mockData with db data when Users is available
 	const mockData = {
-		id         : user.id.toString(),
 		username   : user.username,
 		email      : user.email,
 		age        : user.age,
 		runnerType : 'social'
 	};
 
-	const [ id, setId ] = useState(mockData.id);
 	const [ username, setUsername ] = useState(mockData.username);
 	const [ email, setEmail ] = useState(mockData.email);
 	const [ age, setAge ] = useState(mockData.age);
 	const [ runnerType, setRunnerType ] = useState(mockData.runnerType);
 
 	const doneButtonHandler = () => {
-		setUser({ ...mockData, ...{ username: username } });
+		setUser({ ...mockData, ...{ username: username, email: email, age: age } });
 		navigation.navigate('Profile');
 	};
 
