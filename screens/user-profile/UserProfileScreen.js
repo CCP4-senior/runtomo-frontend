@@ -63,9 +63,6 @@ const UserProfileScreen = ({ navigation }) => {
 							alignSelf: 'center'
 						}}
 					/>
-					<TouchableOpacity>
-						<Icon name="chevron-left" />
-					</TouchableOpacity>
 				</View>
 
 				{/* Runner Type and Tags */}
