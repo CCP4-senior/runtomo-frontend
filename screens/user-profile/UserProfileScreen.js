@@ -6,11 +6,13 @@ import {
 	StyleSheet,
 	Image,
 	useWindowDimensions,
-	ImageBackground
+	ImageBackground,
+	Icon
 } from 'react-native';
 import { AuthContext } from '../../context/authcontext/AuthContext';
 import { Button } from 'react-native-paper';
 import Color from '../../assets/themes/Color';
+import { TouchableOpacity } from 'react-native-web';
 
 const UserProfileScreen = ({ navigation }) => {
 	const { user } = useContext(AuthContext);
@@ -54,20 +56,28 @@ const UserProfileScreen = ({ navigation }) => {
 						onPress={() => navigation.navigate('Edit Profile')}
 						icon="account-edit"
 						color={Color.PrimaryMain}
-						labelStyle={{ fontSize: 30 }}
+						labelStyle={{
+							fontSize: 30,
+							justifyContent: 'center',
+							alignItems: 'center',
+							alignSelf: 'center'
+						}}
 					/>
+					<TouchableOpacity>
+						<Icon name="chevron-left" />
+					</TouchableOpacity>
 				</View>
 
 				{/* Runner Type and Tags */}
 				<View style={styles.userDataWrapper}>
 					{/* Title: Runner Type */}
-					<View style={{paddingBottom: 5}}>
+					<View style={{ paddingBottom: 5 }}>
 						<Text style={styles.userDataFont}>Runner Type</Text>
 					</View>
 
 					{/* Tags */}
 					<View style={styles.tagsContainer}>
-					{/* <View style={[ styles.userDataWrapper, styles.tagsContainer ]}> */}
+						{/* <View style={[ styles.userDataWrapper, styles.tagsContainer ]}> */}
 						{user.runnerType.map((type, index) => {
 							return (
 								<Text style={[ styles.tags ]} key={index}>
@@ -131,7 +141,7 @@ const styles = StyleSheet.create({
 		display       : 'flex',
 		flexDirection : 'row',
 		flexWrap      : 'wrap',
-		alignItems    : 'center',
+		alignItems    : 'center'
 	},
 	tags              : {
 		backgroundColor  : Color.PrimaryMain,
