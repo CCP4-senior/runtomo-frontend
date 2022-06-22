@@ -1,8 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import SignOutScreen from "../screens/signout/SignOutScreen";
 import { AuthContext } from "../context/authcontext/AuthContext";
+import { getFunctions, httpsCallable } from "firebase/functions";
+
+// import saveResizedImage from "../helpers/resizeImage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

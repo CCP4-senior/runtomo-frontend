@@ -1,10 +1,5 @@
 import uuid from "react-native-uuid";
-import {
-  getStorage,
-  ref,
-  uploadString,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
 const uploadImage = async (type, imageUri) => {
   const storage = getStorage();
@@ -26,24 +21,25 @@ const uploadImage = async (type, imageUri) => {
   if (!blob) return;
 
   const id = uuid.v4();
-  console.log(id);
   const currentRef = `images/${type}/${id}`;
 
   const storageRef = ref(storage, currentRef);
 
   const uploadTask = uploadBytesResumable(storageRef, blob);
 
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {},
-    (error) => {
-      alert("Image upload was unsuccessful. Please try again.");
-    },
-    () => {
-      //   console.log(currentRef);
-      return currentRef;
-    }
-  );
+  return new Promise((resolve, reject) => {
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        alert("Image upload was unsuccessful. Please try again.");
+        reject(error);
+      },
+      () => {
+        resolve(currentRef);
+      }
+    );
+  });
 };
 
 export default uploadImage;

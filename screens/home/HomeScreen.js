@@ -51,11 +51,9 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
   const downloadImage = async (ref) => {
     console.log("downloadImage ran");
     const pathReference = ref(storage, ref);
-    // `url` is the download URL for 'images/stars.jpg'
 
     const url = await getDownloadURL(pathReference);
     setUrl(url);
-    console.log(url);
   };
 
   return (

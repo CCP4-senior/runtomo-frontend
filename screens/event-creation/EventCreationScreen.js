@@ -25,6 +25,7 @@ import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../helpers/axios.js";
 import uploadImage from "../../helpers/uploadImage.js";
+import resizeImage from "../../helpers/resizeImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
@@ -54,9 +55,12 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
-      const currentRef = await uploadImage("events", imageUri);
+      const newUri = await resizeImage(imageUri, 300);
+      const currentRef = await uploadImage("events", newUri);
       setImageRef(currentRef);
       console.log("ref from imageUpload", currentRef);
+
+      // To be used for api call
       // const response = await axiosInstance.post("/events/", {
       //   title: title,
       //   location: meetingPoint,
@@ -107,7 +111,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   // };
 
   const selectImage = async () => {
-    console.log("selectImage ran");
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
