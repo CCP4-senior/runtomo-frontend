@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import {
   View,
+  Text,
   SafeAreaView,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Alert,
   Image,
 } from "react-native";
-import { Button, TextInput, List } from "react-native-paper";
+import { TextInput, List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
@@ -24,13 +24,20 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     getAllEventsData,
     getCurrentEventData,
     storage,
+    imageTestRef,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
       getAllEventsData();
-      // downloadImage();
     }
-  }, [url]);
+  }, []);
+
+  // Just for image display test. To be removed
+  useEffect(() => {
+    if (imageTestRef === "") return;
+    downloadImage(imageTestRef);
+  }, [imageTestRef]);
+
   const data = allEvents; // Remove this line when testing with mock data
   const [url, setUrl] = useState("");
   const selectEvent = async (event) => {
@@ -48,9 +55,9 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
     // }
   };
 
-  const downloadImage = async (ref) => {
-    console.log("downloadImage ran");
-    const pathReference = ref(storage, ref);
+  const downloadImage = async (imageRef) => {
+    const storage = getStorage();
+    const pathReference = ref(storage, imageRef);
 
     const url = await getDownloadURL(pathReference);
     setUrl(url);
@@ -93,9 +100,17 @@ const HomeScreen = ({ navigation, setData, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          {/* {url !== "" && (
-            <Image source={{ uri: url }} style={{ height: 175, width: 200 }} />
-          )} */}
+          {/*The following  is for image downlod test. To be removed */}
+          {url !== "" && (
+            <>
+              <Text>This is a image download test</Text>
+              <Image
+                source={{ uri: url }}
+                style={{ width: 300, height: 200, alignSelf: "center" }}
+              />
+            </>
+          )}
+
           <View style={styles.eventCardWrapper}>
             {data.map((session) => {
               return (

@@ -22,7 +22,7 @@ import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
-  const { storage } = useContext(DataContext);
+  const { imageTestRef, setImageTestRef } = useContext(DataContext);
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -51,7 +51,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const newUri = await resizeImage(imageUri, 300);
       const currentRef = await uploadImage("events", newUri);
       setImageRef(currentRef);
-      console.log("ref from imageUpload", currentRef);
+
+      // Just for test. To be removed
+      setImageTestRef(currentRef);
 
       // To be used for api call
       // const response = await axiosInstance.post("/events/", {

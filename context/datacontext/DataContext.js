@@ -14,12 +14,10 @@ const DataProvider = ({ children }) => {
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
-  const [storage, setStorage] = useState("");
+  const [imageTestRef, setImageTestRef] = useState("");
 
   useEffect(() => {
     const firebaseApp = initializeApp(firebaseConfig);
-    const storage = getStorage(firebaseApp);
-    setStorage(storage);
   }, []);
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
@@ -91,7 +89,8 @@ const DataProvider = ({ children }) => {
     getAllEventsData,
     getCreatedEventsData,
     getCurrentEventData,
-    storage,
+    imageTestRef,
+    setImageTestRef,
   };
 
   return (
