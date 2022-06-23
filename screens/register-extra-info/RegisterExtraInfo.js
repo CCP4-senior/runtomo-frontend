@@ -51,7 +51,7 @@ const RegisterExtraInfo = ({ route }) => {
 						autoCapitalize="none"
 						keyboardType="default"
 						returnKeyType="next"
-						style={{ height: 50, backgroundColor: Color.White }}
+						style={{ height: 50, backgroundColor: Color.GrayLight }}
 						onChangeText={(value) => setAge(value)}
 					/>
 				</View>
@@ -68,7 +68,7 @@ const RegisterExtraInfo = ({ route }) => {
 						autoCapitalize="none"
 						keyboardType="default"
 						returnKeyType="next"
-						style={{ height: 50, backgroundColor: Color.White }}
+						style={{ height: 50, backgroundColor: Color.GrayLight }}
 						onChangeText={(value) => setRunningLevel(value)}
 					/>
 				</View>
@@ -85,7 +85,7 @@ const RegisterExtraInfo = ({ route }) => {
 						autoCapitalize="none"
 						keyboardType="default"
 						returnKeyType="next"
-						style={{ height: 50, backgroundColor: Color.White }}
+						style={{ height: 50, backgroundColor: Color.GrayLight }}
 						onChangeText={(value) => setPace(value)}
 					/>
 				</View>
@@ -120,7 +120,8 @@ export default RegisterExtraInfo;
 const styles = StyleSheet.create({
 	root      : {
 		flex           : 1,
-		justifyContent : 'center'
+		justifyContent : 'center',
+		backgroundColor: Color.White,
 	},
 	title     : {
 		justifyContent : 'center',

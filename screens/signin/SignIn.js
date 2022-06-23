@@ -93,7 +93,7 @@ const SignIn = () => {
           textContentType="emailAddress"
           keyboardType="email-address"
           returnKeyType="next"
-          style={{ height: 50, backgroundColor: Color.White }}
+          style={{ height: 50, backgroundColor: Color.GrayLight }}
           error={false}
           onChangeText={(text) => {
             validateEmail(text);
@@ -113,7 +113,7 @@ const SignIn = () => {
           activeOutlineColor={Color.Black}
           textContentType="password"
           secureTextEntry={true}
-          style={{ height: 50, backgroundColor: Color.White }}
+          style={{ height: 50, backgroundColor: Color.GrayLight }}
           onChangeText={(text) => {
             validatePassword(text);
             return setPassword(text);
@@ -166,6 +166,7 @@ export default SignIn;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: Color.White,
   },
   title: {
     position: "absolute",
@@ -209,7 +210,8 @@ const styles = StyleSheet.create({
     color: Color.PrimaryMain,
     top: 485,
     fontSize: 15,
-    left: 230,
+    left: 225,
+    fontWeight: "500",
   },
   signInBottomWrapper: {
     position: "absolute",
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
   signUpText: {
     alignSelf: "center",
     fontWeight: "500",
-    color: "rgba(60, 60, 67, 0.7)",
+    color: "rgba(60, 60, 67, 0.8)",
     fontSize: 15,
   },
   signUpLink: {
