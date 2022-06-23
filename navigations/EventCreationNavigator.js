@@ -7,6 +7,7 @@ import createOptions from "./reusableOptions/appNavigatorOptions";
 import SettingScreen from "../screens/setting/SettingScreen";
 import EventDetailsScreen from "../screens/event-details/EventDetailsScreen";
 import * as RootNavigation from "./RootNavigator";
+import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen";
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,11 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
+        options={{ ...HeaderStyle }}
+      />
+      <Stack.Screen
+        name="Edit Profile"
+        component={UserProfileEditScreen}
         options={{ ...HeaderStyle }}
       />
     </Stack.Navigator>

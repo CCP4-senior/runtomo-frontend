@@ -9,6 +9,7 @@ import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 import SettingScreen from "../screens/setting/SettingScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
+import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,11 @@ const PersonalEventNavigator = ({
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
+        options={{ ...HeaderStyle }}
+      />
+      <Stack.Screen
+        name="Edit Profile"
+        component={UserProfileEditScreen}
         options={{ ...HeaderStyle }}
       />
     </Stack.Navigator>
