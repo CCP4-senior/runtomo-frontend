@@ -29,6 +29,7 @@ import MapView, {
   PROVIDER_GOOGLE,
   PROVIDER_DEFAULT,
 } from "react-native-maps";
+import axiosInstance from "../../helpers/axios.js";
 
 const EventDetailsScreen = ({
   navigation,
@@ -89,12 +90,9 @@ const EventDetailsScreen = ({
   };
 
   // Temporary implemenet for demo (need to be cancelled from the last)
-  const cancelEvent = () => {
-    // const newData = data.filter((event) => {
-    //   return event.id !== eventData.id;
-    // });
-    const newData = data.splice(eventData.id - 1, 1);
-    () => setData();
+  const cancelEvent = async (id) => {
+    await axiosInstance.delete(`/events/${id}/`);
+
     setIsAttendanceCancellation(false);
     showDialog();
     setTimeout(() => {
@@ -249,7 +247,7 @@ const EventDetailsScreen = ({
                   buttonTextColor="#555555"
                 />
                 <LongButton
-                  buttonHandler={cancelEvent}
+                  buttonHandler={() => cancelEvent(eventData.id)}
                   buttonColor={Color.PrimaryMain}
                   buttonText="Cancel Event"
                 />
