@@ -26,36 +26,35 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     getAllEventsData,
     getCurrentEventData,
     filteredEvents,
-    storage,
+    setUserData,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
       getAllEventsData();
+      setUserData(user.id);
     }
   }, []);
 
   // const data = allEvents; // Remove this line when testing with mock data
   const [url, setUrl] = useState("");
-  const selectEvent = async (event) => {
-    // setCurrEvent(event);
-    setCurrentEvent(event);
-    navigation.navigate("Event Details");
-
-    // Following code will be used when backend endpoint is ready
-    // try {
-    //   setEventId(event.id);
-    //   await getCurrentEventData();
-    //   navigation.navigate("Event Details");
-    // } catch (e) {
-    //   alert("Something went wrong. Please try again!");
-    // }
-  };
 
   const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
   /* modal */
   const hideModal = () => {
     setfilterModalVisible(false);
+  };
+
+  const selectEvent = async (event) => {
+    const eventId = event.id;
+    try {
+      const event = await getCurrentEventData(eventId);
+      navigation.navigate("Event Details");
+    } catch (e) {
+      console.log(e);
+      console.log(e.config.url);
+      alert("Something went wrong. Please try again!");
+    }
   };
 
   const downloadImage = async (imageRef) => {
@@ -104,7 +103,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <EventsDataPage selectEvent={selectEvent} />
+          <EventsDataPage selectEvent={selectEvent} navigation={navigation} />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -114,8 +113,13 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 export default HomeScreen;
 
 const EventsDataPage = ({ selectEvent }) => {
-  const { allEvents, filteredEvents, isDataFiltered, setIsDataFiltered } =
-    useContext(DataContext);
+  const {
+    allEvents,
+    filteredEvents,
+    isDataFiltered,
+    setIsDataFiltered,
+    getCurrentEventData,
+  } = useContext(DataContext);
   const data = allEvents;
 
   if (isDataFiltered && filteredEvents.length >= 1) {

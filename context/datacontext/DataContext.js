@@ -8,7 +8,7 @@ import { initializeApp } from "firebase/app";
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [allEvents, setAllEvents] = useState([]);
   const [createdEvents, setCreatedEvents] = useState([]);
   const [joinedEvents, setJoinedEvents] = useState([]);
@@ -16,10 +16,18 @@ const DataProvider = ({ children }) => {
   const [currentEvent, setCurrentEvent] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(null);
   const [isDataFiltered, setIsDataFiltered] = useState(false);
+  const [tokyoWards, setTokyoWards] = useState([]);
 
   useEffect(() => {
-    const firebaseApp = initializeApp(firebaseConfig);
+    initializeApp(firebaseConfig);
+    getWards();
   }, []);
+
+  const getWards = async () => {
+    const response = await axiosInstance("/wards");
+    const tokyo23wardsData = response.data;
+    setTokyoWards(tokyo23wardsData);
+  };
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
@@ -27,6 +35,7 @@ const DataProvider = ({ children }) => {
     return {
       id: el.id,
       title: el.title,
+      location: el.location || "2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052",
       ward: randomWard === 0 ? "Shibuya" : "Meguro",
       date: "2022-09-15T12:03:55.300Z",
       time: "2022-09-15T12:03:55.300Z",
@@ -40,7 +49,33 @@ const DataProvider = ({ children }) => {
       participants: [],
       owner_id: 2,
       hasJoined: true,
+      description:
+        "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
     };
+  };
+  const setUserData = async (userId) => {
+    // The mockdata is to be removed
+    const mockData = {
+      username: "wadeRunner",
+      email: "wade@example.com",
+      age: "34",
+      runnerType: ["beginner", "social"],
+    };
+    try {
+      const response = await axiosInstance(`/users/${userId}/`);
+
+      console.log(response.data); // For visual test
+      setUser({
+        ...user,
+        ...response.data,
+        age: mockData.age, //To be updated to use backend data
+        runnerType: mockData.runnerType, //To be updated to use backend data
+      });
+    } catch (e) {
+      alert("Something went wrong. Please try again!");
+      console.log(e);
+      console.log(e.config.url);
+    }
   };
 
   const getAllEventsData = async () => {
@@ -68,11 +103,10 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  const getCurrentEventData = async () => {
+  const getCurrentEventData = async (eventId) => {
     try {
       const response = await axiosInstance(`/events/${eventId}/`);
       const data = response.data;
-      console.log(data);
       const paddedData = paddData(data); // To be removed
       setCurrentEvent(paddedData); // To be changed to just "data"
     } catch (e) {
@@ -95,6 +129,7 @@ const DataProvider = ({ children }) => {
     filteredEvents,
     isDataFiltered,
     setIsDataFiltered,
+    setUserData,
   };
 
   return (

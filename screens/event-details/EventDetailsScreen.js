@@ -29,6 +29,7 @@ import MapView, {
   PROVIDER_GOOGLE,
   PROVIDER_DEFAULT,
 } from "react-native-maps";
+import axiosInstance from "../../helpers/axios.js";
 
 const EventDetailsScreen = ({
   navigation,
@@ -89,12 +90,9 @@ const EventDetailsScreen = ({
   };
 
   // Temporary implemenet for demo (need to be cancelled from the last)
-  const cancelEvent = () => {
-    // const newData = data.filter((event) => {
-    //   return event.id !== eventData.id;
-    // });
-    const newData = data.splice(eventData.id - 1, 1);
-    () => setData();
+  const cancelEvent = async (id) => {
+    await axiosInstance.delete(`/events/${id}/`);
+
     setIsAttendanceCancellation(false);
     showDialog();
     setTimeout(() => {
@@ -197,15 +195,12 @@ const EventDetailsScreen = ({
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text>
-                    Lorem ipsum, or lipsum as it is sometimes known, is dummy
-                    text used in laying out print, graphic or web designs.
-                  </Text>
+                  <Text>{eventData.description}</Text>
                 </View>
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Location:</Text>
-                  <Text>2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052</Text>
+                  <Text>{eventData.location}</Text>
                 </View>
                 <View style={styles.mapContainer}>
                   <MapView
@@ -252,7 +247,7 @@ const EventDetailsScreen = ({
                   buttonTextColor="#555555"
                 />
                 <LongButton
-                  buttonHandler={cancelEvent}
+                  buttonHandler={() => cancelEvent(eventData.id)}
                   buttonColor={Color.PrimaryMain}
                   buttonText="Cancel Event"
                 />

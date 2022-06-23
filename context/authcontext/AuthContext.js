@@ -32,21 +32,9 @@ const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         const data = response.data;
 
-        // TODO: user information will be updated dynamically when backend is ready
-        const mockData = {
-          username: "wadeRunner",
-          email: "wade@example.com",
-          age: "34",
-          runnerType: ["beginner", "social"],
-        };
-
-        setUser({
-          id: jwt_decode(data.access)["user_id"],
-          username: mockData.username,
-          email: mockData.email,
-          age: mockData.age,
-          runnerType: mockData.runnerType,
-        });
+        // TODO: user information will be updated dynamically when backend is ready => Done in setUserData in DataContext
+        const userId = jwt_decode(data.access)["user_id"];
+        setUser({ id: userId });
 
         await SecureStore.setItemAsync(
           "access_token",
