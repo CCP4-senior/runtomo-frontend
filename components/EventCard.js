@@ -42,24 +42,26 @@ const styles = StyleSheet.create({
   },
   homePageCard: {
     width: "100%",
-    marginBottom: 10,
-    height: 230,
+    marginBottom: 8,
+    height: 240,
     marginTop: 10,
   },
   title: {
-    paddingTop: 5,
-    paddingBottom: 2,
-    fontSize: 18,
+    paddingTop: 8,
+    paddingBottom: 3,
+    fontSize: 16,
     fontWeight: "700",
     color: "#363D4E",
   },
   ward: {
-    paddingLeft: 2,
+    paddingLeft: 3,
+    paddingBottom: 2,
+    fontSize: 12,
     color: "#4E4B66",
   },
   date: {
     paddingLeft: 2,
     fontSize: 12,
-    color: "red",
+    color: "#FA4048",
   },
 });
