@@ -6,6 +6,7 @@ import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
 import SettingScreen from "../screens/setting/SettingScreen";
 import EventDetailsScreen from "../screens/event-details/EventDetailsScreen";
+import * as RootNavigation from "./RootNavigator";
 
 const Stack = createStackNavigator();
 
@@ -21,7 +22,8 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
   });
   const [newEvent, setNewEvent] = useState(initialEvent);
   const openSetting = () => {
-    navigation.navigate("Setting");
+    RootNavigation.navigate("Setting");
+    // navigation.navigate("Setting");
   };
   return (
     <Stack.Navigator>
