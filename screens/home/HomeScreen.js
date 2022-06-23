@@ -91,11 +91,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-<<<<<<< HEAD
-          <EventsDataPage navigation={navigation} />
-=======
-          <EventsDataPage selectEvent={selectEvent} />
->>>>>>> main
+          <EventsDataPage selectEvent={selectEvent} navigation={navigation}/>
         </ScrollView>
       </View>
     </SafeAreaView>
