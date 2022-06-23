@@ -21,7 +21,7 @@ const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
           }
           if (route.name === "My Sessions Main Page") {
             // iconName = "people";
-            iconName = "walk";
+            iconName = "calendar";
           }
           if (route.name === "Event Creation") {
             iconName = "add-circle-outline";
