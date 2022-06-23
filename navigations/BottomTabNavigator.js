@@ -20,7 +20,8 @@ const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
             iconName = "ios-home";
           }
           if (route.name === "My Sessions Main Page") {
-            iconName = "people";
+            // iconName = "people";
+            iconName = "walk";
           }
           if (route.name === "Event Creation") {
             iconName = "add-circle-outline";
