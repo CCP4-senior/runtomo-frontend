@@ -45,6 +45,18 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     setfilterModalVisible(false);
   };
 
+  const selectEvent = async (event) => {
+    const eventId = event.id;
+    try {
+      const event = await getCurrentEventData(eventId);
+      navigation.navigate("Event Details");
+    } catch (e) {
+      console.log(e);
+      console.log(e.config.url);
+      alert("Something went wrong. Please try again!");
+    }
+  };
+
   const downloadImage = async (imageRef) => {
     const storage = getStorage();
     const pathReference = ref(storage, imageRef);
@@ -100,7 +112,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
 export default HomeScreen;
 
-const EventsDataPage = ({ selectEvent, navigation }) => {
+const EventsDataPage = ({ selectEvent }) => {
   const {
     allEvents,
     filteredEvents,
@@ -109,18 +121,6 @@ const EventsDataPage = ({ selectEvent, navigation }) => {
     getCurrentEventData,
   } = useContext(DataContext);
   const data = allEvents;
-
-  const selectEvent = async (event) => {
-    const eventId = event.id;
-    try {
-      const event = await getCurrentEventData(eventId);
-      navigation.navigate("Event Details");
-    } catch (e) {
-      console.log(e);
-      console.log(e.config.url);
-      alert("Something went wrong. Please try again!");
-    }
-  };
 
   if (isDataFiltered && filteredEvents.length >= 1) {
     return (
