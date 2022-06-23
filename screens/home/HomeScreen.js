@@ -26,31 +26,17 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     getAllEventsData,
     getCurrentEventData,
     filteredEvents,
-    storage,
+    setUserData,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
       getAllEventsData();
+      setUserData(user.id);
     }
   }, []);
 
   // const data = allEvents; // Remove this line when testing with mock data
   const [url, setUrl] = useState("");
-  // const selectEvent = async (event) => {
-  //   console.log(event.id, event);
-  //   // setCurrEvent(event);
-  //   // setCurrentEvent(event);
-  //   // Following code will be used when backend endpoint is ready
-  //   try {
-  //     // setEventId(event.id);
-  //     const event = await getCurrentEventData(event.id);
-  //     setCurrentEvent(event);
-  //     navigation.navigate("Event Details");
-  //   } catch (e) {
-  //     console.log(e);
-  //     alert("Something went wrong. Please try again!");
-  //   }
-  // };
 
   const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
@@ -132,6 +118,7 @@ const EventsDataPage = ({ navigation }) => {
       navigation.navigate("Event Details");
     } catch (e) {
       console.log(e);
+      console.log(e.config.url);
       alert("Something went wrong. Please try again!");
     }
   };

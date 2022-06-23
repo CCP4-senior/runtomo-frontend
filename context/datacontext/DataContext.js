@@ -8,7 +8,7 @@ import { initializeApp } from "firebase/app";
 const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
   const [allEvents, setAllEvents] = useState([]);
   const [createdEvents, setCreatedEvents] = useState([]);
   const [joinedEvents, setJoinedEvents] = useState([]);
@@ -18,7 +18,7 @@ const DataProvider = ({ children }) => {
   const [isDataFiltered, setIsDataFiltered] = useState(false);
 
   useEffect(() => {
-    const firebaseApp = initializeApp(firebaseConfig);
+    initializeApp(firebaseConfig);
   }, []);
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
@@ -44,6 +44,30 @@ const DataProvider = ({ children }) => {
       description:
         "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
     };
+  };
+  const setUserData = async (userId) => {
+    // The mockdata is to be removed
+    const mockData = {
+      username: "wadeRunner",
+      email: "wade@example.com",
+      age: "34",
+      runnerType: ["beginner", "social"],
+    };
+    try {
+      const response = await axiosInstance(`/users/${userId}/`);
+
+      console.log(response.data); // For visual test
+      setUser({
+        ...user,
+        ...response.data,
+        age: mockData.age, //To be updated to use backend data
+        runnerType: mockData.runnerType, //To be updated to use backend data
+      });
+    } catch (e) {
+      alert("Something went wrong. Please try again!");
+      console.log(e);
+      console.log(e.config.url);
+    }
   };
 
   const getAllEventsData = async () => {
@@ -97,6 +121,7 @@ const DataProvider = ({ children }) => {
     filteredEvents,
     isDataFiltered,
     setIsDataFiltered,
+    setUserData,
   };
 
   return (

@@ -1,13 +1,13 @@
-import { StyleSheet, View, SafeAreaView, Text, Linking } from 'react-native';
-import React, { useContext, useState, useEffect } from 'react';
-import { Button, TextInput } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { AuthContext } from '../../context/authcontext/AuthContext';
-import Color from '../../assets/themes/Color.js';
+import { StyleSheet, View, SafeAreaView, Text, Linking } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import { Button, TextInput } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../../context/authcontext/AuthContext";
+import Color from "../../assets/themes/Color.js";
 
 const SignIn = () => {
   const navigation = useNavigation();
-  const { setUser, signInUser } = useContext(AuthContext);
+  const { signInUser } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState({
@@ -20,7 +20,7 @@ const SignIn = () => {
     message: "",
   });
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (emailError.isTriggered) {
       return alert("Please enter a valid email!");
     }
@@ -28,7 +28,7 @@ const SignIn = () => {
       return alert("Please enter an email!");
     }
 
-    signInUser({ email, password });
+    await signInUser({ email, password });
   };
 
   const validateEmail = (text) => {
