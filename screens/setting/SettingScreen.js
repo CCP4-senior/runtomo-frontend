@@ -92,8 +92,8 @@ const SettingScreen = ({ navigation }) => {
                 />
               </View>
               <View style={styles.accountDetails}>
-                <Title style={styles.cardTopTitle}>Wade Warren</Title>
-                <Paragraph style={styles.paragraph}>{user.email}</Paragraph>
+                <Title style={styles.cardTopTitle}>Edit Profile</Title>
+                {/* <Paragraph style={styles.paragraph}>{user.email}</Paragraph> */}
               </View>
             </View>
           </Card.Content>
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
   },
   accountDetails: {
     width: 170,
+    justifyContent: "center",
   },
   card: {
     width: "95%",
