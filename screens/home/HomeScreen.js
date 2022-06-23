@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,8 @@ import {
   Alert,
   Image,
 } from "react-native";
-import { Button, TextInput, List, Modal } from "react-native-paper";
+import { useFocusEffect } from "@react-navigation/native";
+import { List } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
@@ -30,10 +31,17 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
-      getAllEventsData();
       setUserData(user.id);
     }
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (user) {
+        getAllEventsData();
+      }
+    }, [])
+  );
 
   // const data = allEvents; // Remove this line when testing with mock data
   const [url, setUrl] = useState("");
