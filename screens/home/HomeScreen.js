@@ -205,11 +205,6 @@ const styles = StyleSheet.create({
     right: 30,
     bottom: 30,
   },
-  floatingButtonStyle: {
-    resizeMode: "contain",
-    width: 50,
-    height: 50,
-  },
   eventCardWrapper: {
     alignItems: "center",
     paddingHorizontal: 10,
@@ -247,12 +242,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     // justifyContent: "center",
-    height: 38,
+    height: 41,
     padding: 0,
   },
   topElement: {
     paddingTop: 0,
-    marginTop: 3,
+    marginTop: 6,
     // margin: 8,
     width: 165,
     height: 35,
