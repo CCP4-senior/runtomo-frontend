@@ -3,7 +3,7 @@ import Color from "./Color";
 const HeaderStyle = {
   headerStyle: {
     backgroundColor: Color.Fill,
-    height: 90,
+    height: 70,
   },
   headerTintColor: Color.HeaderTitle,
   headerTitleStyle: {
