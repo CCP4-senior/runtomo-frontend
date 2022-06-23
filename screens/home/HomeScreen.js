@@ -91,7 +91,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
         >
-          <EventsDataPage selectEvent={selectEvent} navigation={navigation}/>
+          <EventsDataPage selectEvent={selectEvent} navigation={navigation} />
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -100,10 +100,14 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
 export default HomeScreen;
 
-const EventsDataPage = ({ navigation }) => {
-const EventsDataPage = ({ selectEvent }) => {
-  const { allEvents, filteredEvents, isDataFiltered, setIsDataFiltered,  getCurrentEventData, } =
-    useContext(DataContext);
+const EventsDataPage = ({ selectEvent, navigation }) => {
+  const {
+    allEvents,
+    filteredEvents,
+    isDataFiltered,
+    setIsDataFiltered,
+    getCurrentEventData,
+  } = useContext(DataContext);
   const data = allEvents;
 
   const selectEvent = async (event) => {
