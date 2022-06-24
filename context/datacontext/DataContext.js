@@ -21,6 +21,7 @@ const DataProvider = ({ children }) => {
   useEffect(() => {
     initializeApp(firebaseConfig);
     getWards();
+    getCreatedEventsData();
   }, []);
 
   const getWards = async () => {
@@ -63,8 +64,8 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
+      console.log(response.data);
 
-      console.log(response.data); // For visual test
       setUser({
         ...user,
         ...response.data,
@@ -74,19 +75,16 @@ const DataProvider = ({ children }) => {
     } catch (e) {
       alert("Something went wrong. Please try again!");
       console.log(e);
-      // console.log(e.config.url);
     }
   };
 
   const downloadImage = async (imageRef) => {
-    console.log(imageRef);
     const storage = getStorage();
 
     const pathReference = ref(storage, imageRef);
 
     const url = await getDownloadURL(pathReference);
     return url;
-    // setUrl(url);
   };
 
   const getAllEventsData = async () => {

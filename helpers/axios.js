@@ -2,8 +2,8 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import * as RootNavigation from "../navigations/RootNavigator";
 import { decode as atob } from "base-64";
-// const baseURL = "https://senior-pj-prod.herokuapp.com";
-const baseURL = "http://127.0.0.1:8000";
+const baseURL = "https://senior-pj-prod.herokuapp.com";
+// const baseURL = "http://127.0.0.1:8000";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,
