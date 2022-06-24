@@ -16,7 +16,6 @@ import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import FilterModal from "./FilterModal.js";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -63,14 +62,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
       console.log(e.config.url);
       alert("Something went wrong. Please try again!");
     }
-  };
-
-  const downloadImage = async (imageRef) => {
-    const storage = getStorage();
-    const pathReference = ref(storage, imageRef);
-
-    const url = await getDownloadURL(pathReference);
-    setUrl(url);
   };
 
   return (

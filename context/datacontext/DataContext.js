@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
 import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
-import { getStorage, ref, uploadString } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import firebaseConfig from "../../firebase.js";
 import { initializeApp } from "firebase/app";
 
@@ -78,12 +78,32 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  const downloadImage = async (imageRef) => {
+    console.log(imageRef);
+    // const storage = getStorage();
+
+    // const pathReference = ref(storage, imageRef);
+
+    // const url = await getDownloadURL(pathReference);
+    // setUrl(url);
+  };
+
   const getAllEventsData = async () => {
     try {
       const response = await axiosInstance("/events/");
       const data = response.data;
-      const paddedData = data.map(paddData); // To be removed
-      setAllEvents(paddedData); // To be changed to just data
+      const dataWithImage = [];
+      for (let i = 0; i < data.length; i++) {
+        const imageUrl = await downloadImage(data[i].image);
+        const event = { ...data[i], imageUrl };
+        dataWithImage(event);
+      }
+      console.log(dataWithImage);
+
+      setAllEvents(dataWithImage);
+
+      // const paddedData = data.map(paddData); // To be removed
+      // setAllEvents(paddedData);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
