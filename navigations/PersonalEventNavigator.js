@@ -1,10 +1,8 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Avatar, IconButton } from "react-native-paper";
 import PersonalEventScreen from "../screens/personal-event/PersonalEventScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
-import EventCreationNavigator from "./EventCreationNavigator";
 import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 import SettingScreen from "../screens/setting/SettingScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
@@ -58,22 +56,20 @@ const PersonalEventNavigator = ({
         component={UserProfileEditScreen}
         options={{ ...HeaderStyle }}
       />
+
+      <Stack.Screen name="Home" options={createOptions(openSetting)}>
+        {(props) => (
+          <HomeScreen
+            {...props}
+            setData={setData}
+            data={data}
+            currEvent={currEvent}
+            setCurrEvent={setCurrEvent}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };
 
 export default PersonalEventNavigator;
-
-const styles = StyleSheet.create({
-  iconContainer: {
-    flex: 1,
-    backgroundColor: "#F5F8FA",
-    paddingHorizontal: 30,
-  },
-  avatar: {
-    paddingVertical: 6,
-  },
-  menu: {
-    paddingVertical: 11,
-  },
-});

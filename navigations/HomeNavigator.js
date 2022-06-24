@@ -35,6 +35,18 @@ const HomeNavigator = ({
         )}
       </Stack.Screen>
 
+      <Stack.Screen name="My Sessions" options={createOptions(openSetting)}>
+        {(props) => (
+          <PersonalEventScreen
+            {...props}
+            setData={setData}
+            data={data}
+            setCurrEvent={setCurrEvent}
+            currEvent={currEvent}
+          />
+        )}
+      </Stack.Screen>
+
       <Stack.Screen name="Event Details" options={{ headerShown: false }}>
         {(props) => (
           <EventDetailsNavigator

@@ -53,6 +53,7 @@ const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
       <Tab.Screen
         name="Event Creation"
         options={{
+          title: "Post Event",
           headerShown: false,
         }}
       >

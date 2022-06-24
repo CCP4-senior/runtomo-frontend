@@ -50,7 +50,7 @@ const ConfirmationScreen = ({ navigation, event, actionType }) => {
       {actionType === "create" && (
         <EventCard
           event={event}
-          handlePress={() => navigation.navigate("Home Page")}
+          handlePress={() => navigation.navigate("Running Event")}
         />
       )}
       {actionType === "join" && (

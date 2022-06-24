@@ -23,8 +23,9 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
   });
   const [newEvent, setNewEvent] = useState(initialEvent);
   const openSetting = () => {
-    RootNavigation.navigate("Setting");
-    // navigation.navigate("Setting");
+    // RootNavigation.navigate("Setting");
+    navigation.navigate("Setting");
+    // navigation.navigate("Home Page", { Screen: "Setting" });
   };
   return (
     <Stack.Navigator>
@@ -72,6 +73,18 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
         component={UserProfileEditScreen}
         options={{ ...HeaderStyle }}
       />
+
+      <Stack.Screen name="Home" options={createOptions(openSetting)}>
+        {(props) => (
+          <HomeScreen
+            {...props}
+            setData={setData}
+            data={data}
+            currEvent={currEvent}
+            setCurrEvent={setCurrEvent}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };
