@@ -83,6 +83,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       console.log(event);
 
       const response = await axiosInstance.post("/events/", event);
+      setNewEvent(event);
+      navigation.navigate("Event Created");
     } catch (e) {
       console.log(e);
       alert("Something went wrong. Please try again!");
