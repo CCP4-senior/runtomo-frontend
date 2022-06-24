@@ -2,7 +2,7 @@ import axios from "axios";
 import * as SecureStore from "expo-secure-store";
 import * as RootNavigation from "../navigations/RootNavigator";
 import { decode as atob } from "base-64";
-const baseURL = "https://solemates-backend-drf.herokuapp.com";
+const baseURL = "https://senior-pj-prod.herokuapp.com";
 
 const axiosInstance = axios.create({
   baseURL: baseURL,

@@ -87,6 +87,8 @@ const DataProvider = ({ children }) => {
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
+      console.log(e.config.url);
+      console.log(e.config);
     }
   };
 

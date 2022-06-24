@@ -48,14 +48,36 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
-      // const newUri = await resizeImage(imageUri, 300);
-      // const currentRef = await uploadImage("events", newUri);
-      // setImageRef(currentRef);
+      let currentRef;
+      if (imageUri !== "") {
+        const newUri = await resizeImage(imageUri, 300);
+        currentRef = await uploadImage("events", newUri);
+        setImageRef(currentRef);
+      }
 
-      // To be used for api call
+      const requiredFields = [
+        title,
+        meetingPoint,
+        // ward,
+        date,
+        time,
+        runningDuration,
+      ];
+
+      if (requiredFields.some((field) => field === "")) {
+        setSubmitted(true);
+        return;
+      }
+
       const response = await axiosInstance.post("/events/", {
         title: title,
         location: meetingPoint,
+        // ward: ward,
+        date: date,
+        time: time,
+        running_duration: runningDuration,
+        description: eventDescription,
+        image: currentRef,
       });
     } catch (e) {
       console.log(e);
