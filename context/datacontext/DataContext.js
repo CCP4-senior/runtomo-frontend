@@ -74,17 +74,18 @@ const DataProvider = ({ children }) => {
     } catch (e) {
       alert("Something went wrong. Please try again!");
       console.log(e);
-      console.log(e.config.url);
+      // console.log(e.config.url);
     }
   };
 
   const downloadImage = async (imageRef) => {
     console.log(imageRef);
-    // const storage = getStorage();
+    const storage = getStorage();
 
-    // const pathReference = ref(storage, imageRef);
+    const pathReference = ref(storage, imageRef);
 
-    // const url = await getDownloadURL(pathReference);
+    const url = await getDownloadURL(pathReference);
+    return url;
     // setUrl(url);
   };
 
@@ -94,21 +95,17 @@ const DataProvider = ({ children }) => {
       const data = response.data;
       const dataWithImage = [];
       for (let i = 0; i < data.length; i++) {
-        const imageUrl = await downloadImage(data[i].image);
+        let imageUrl;
+        if (data[i].image) {
+          imageUrl = await downloadImage(data[i].image);
+        }
         const event = { ...data[i], imageUrl };
-        dataWithImage(event);
+        dataWithImage.push(event);
       }
-      console.log(dataWithImage);
-
       setAllEvents(dataWithImage);
-
-      // const paddedData = data.map(paddData); // To be removed
-      // setAllEvents(paddedData);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
-      console.log(e.config.url);
-      console.log(e.config);
     }
   };
 
