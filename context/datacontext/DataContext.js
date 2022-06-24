@@ -126,8 +126,12 @@ const DataProvider = ({ children }) => {
     try {
       const response = await axiosInstance(`/events/${eventId}/`);
       const data = response.data;
-      const paddedData = paddData(data); // To be removed
-      setCurrentEvent(paddedData); // To be changed to just "data"
+      let imageUrl;
+      if (data.image) {
+        imageUrl = await downloadImage(data.image);
+      }
+      const currentEvent = { ...data, imageUrl };
+      setCurrentEvent(currentEvent);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);

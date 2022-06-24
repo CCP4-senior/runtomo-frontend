@@ -33,7 +33,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
-  const [eventDescription, setEventDescription] = useState("");
+  const [eventDescription, setEventDescription] = useState(null);
   const [imageUri, setImageUri] = useState("");
   const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
