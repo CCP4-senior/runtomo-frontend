@@ -23,7 +23,8 @@ const RegisterExtraInfo = ({ route }) => {
 	const [ pace, setPace ] = useState('');
 
 	const handlePress = () => {
-		const user = { username, email, password, age, runningLevel, pace };
+		// const user = { username, email, password, age, runningLevel, pace };
+		const user = { username, email, password };
 
 		createUser(user);
 	};
