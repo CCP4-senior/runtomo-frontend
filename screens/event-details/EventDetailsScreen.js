@@ -40,6 +40,7 @@ const EventDetailsScreen = ({
 }) => {
   useEffect(() => {
     getUser();
+    getAllParticipants();
   }, []);
 
   const { user } = useContext(AuthContext);
@@ -55,6 +56,7 @@ const EventDetailsScreen = ({
     longitude: 139.7594549,
   });
   const [creator, setCreator] = useState({});
+  const [participants, setParticipants] = useState([]);
 
   const eventData = currentEvent;
 
@@ -63,6 +65,17 @@ const EventDetailsScreen = ({
       const response = await axiosInstance(`/users/${eventData.creator}/`);
       setCreator(response.data);
     } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getAllParticipants = async () => {
+    try {
+      const response = await axiosInstance(`/event_users/${eventData.id}/`);
+      console.log(response.data);
+      setParticipants(response.data);
+    } catch (e) {
+      console.log(e.config);
       console.log(e);
     }
   };
@@ -152,13 +165,6 @@ const EventDetailsScreen = ({
                   style={styles.eventImage}
                 />
               )}
-              {/* <Card.Cover
-                source={
-                  eventData.image ||
-                  require("../../assets/images/demo/defaultEvent.jpeg")
-                }
-                style={styles.eventImage}
-              /> */}
 
               <View style={styles.label}>
                 <Text style={styles.labelDate}>
