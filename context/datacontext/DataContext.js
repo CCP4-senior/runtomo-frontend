@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
 import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
-import { getStorage, ref, uploadString } from "firebase/storage";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import firebaseConfig from "../../firebase.js";
 import { initializeApp } from "firebase/app";
 
@@ -21,6 +21,7 @@ const DataProvider = ({ children }) => {
   useEffect(() => {
     initializeApp(firebaseConfig);
     getWards();
+    getCreatedEventsData();
   }, []);
 
   const getWards = async () => {
@@ -63,8 +64,8 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
+      console.log(response.data);
 
-      console.log(response.data); // For visual test
       setUser({
         ...user,
         ...response.data,
@@ -74,16 +75,32 @@ const DataProvider = ({ children }) => {
     } catch (e) {
       alert("Something went wrong. Please try again!");
       console.log(e);
-      console.log(e.config);
     }
+  };
+
+  const downloadImage = async (imageRef) => {
+    const storage = getStorage();
+
+    const pathReference = ref(storage, imageRef);
+
+    const url = await getDownloadURL(pathReference);
+    return url;
   };
 
   const getAllEventsData = async () => {
     try {
       const response = await axiosInstance("/events/");
       const data = response.data;
-      const paddedData = data.map(paddData); // To be removed
-      setAllEvents(paddedData); // To be changed to just data
+      const dataWithImage = [];
+      for (let i = 0; i < data.length; i++) {
+        let imageUrl;
+        if (data[i].image) {
+          imageUrl = await downloadImage(data[i].image);
+        }
+        const event = { ...data[i], imageUrl };
+        dataWithImage.push(event);
+      }
+      setAllEvents(dataWithImage);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
@@ -107,8 +124,12 @@ const DataProvider = ({ children }) => {
     try {
       const response = await axiosInstance(`/events/${eventId}/`);
       const data = response.data;
-      const paddedData = paddData(data); // To be removed
-      setCurrentEvent(paddedData); // To be changed to just "data"
+      let imageUrl;
+      if (data.image) {
+        imageUrl = await downloadImage(data.image);
+      }
+      const currentEvent = { ...data, imageUrl };
+      setCurrentEvent(currentEvent);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);

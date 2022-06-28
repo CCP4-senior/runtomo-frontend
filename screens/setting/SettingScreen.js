@@ -92,8 +92,8 @@ const SettingScreen = ({ navigation }) => {
                 />
               </View>
               <View style={styles.accountDetails}>
-                <Title style={styles.cardTopTitle}>Edit Profile</Title>
-                {/* <Paragraph style={styles.paragraph}>{user.email}</Paragraph> */}
+                <Title style={styles.cardTopTitle}>{user.username}</Title>
+                <Paragraph style={styles.paragraph}>{user.email}</Paragraph>
               </View>
             </View>
           </Card.Content>

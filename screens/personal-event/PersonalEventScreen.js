@@ -11,12 +11,8 @@ import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const PersonalEventScreen = ({
-  navigation,
-  /*data,*/ setCurrEvent,
-  currEvent,
-}) => {
-  const { createdEvents } = useContext(DataContext);
+const PersonalEventScreen = ({ navigation }) => {
+  const { createdEvents, setCurrentEvent } = useContext(DataContext);
   const listTab = [
     {
       status: "All",
@@ -68,7 +64,7 @@ const PersonalEventScreen = ({
   };
 
   const selectEvent = (eventData) => {
-    setCurrEvent(eventData);
+    setCurrentEvent(eventData);
     navigation.navigate("Event Details");
   };
 

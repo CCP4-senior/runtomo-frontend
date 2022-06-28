@@ -10,10 +10,10 @@ const DurationModal = ({ modalVisible, hideModal, setRunningDuration }) => {
     justifyContent: "center",
   };
   const runningDuration = [
-    { id: 1, name: "15 mins" },
-    { id: 2, name: "30 mins" },
-    { id: 3, name: "1 hr" },
-    { id: 4, name: "More" },
+    { id: 1, name: "15 mins", num: 15 },
+    { id: 2, name: "30 mins", num: 30 },
+    { id: 3, name: "1 hr", num: 60 },
+    { id: 4, name: "More", num: null },
   ];
   return (
     <View>
@@ -32,7 +32,10 @@ const DurationModal = ({ modalVisible, hideModal, setRunningDuration }) => {
                 <Card
                   key={duration.id}
                   onPress={() => {
-                    setRunningDuration(duration.name);
+                    setRunningDuration({
+                      name: duration.name,
+                      num: duration.num,
+                    });
                     hideModal();
                   }}
                 >

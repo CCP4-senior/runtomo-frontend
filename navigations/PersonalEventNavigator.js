@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import PersonalEventScreen from "../screens/personal-event/PersonalEventScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
@@ -8,16 +7,11 @@ import SettingScreen from "../screens/setting/SettingScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
 import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen";
+import HomeScreen from "../screens/home/HomeScreen";
 
 const Stack = createStackNavigator();
 
-const PersonalEventNavigator = ({
-  navigation,
-  data,
-  setData,
-  setCurrEvent,
-  currEvent,
-}) => {
+const PersonalEventNavigator = ({ navigation }) => {
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -25,27 +19,11 @@ const PersonalEventNavigator = ({
   return (
     <Stack.Navigator>
       <Stack.Screen name="My Sessions" options={createOptions(openSetting)}>
-        {(props) => (
-          <PersonalEventScreen
-            {...props}
-            setData={setData}
-            data={data}
-            setCurrEvent={setCurrEvent}
-            currEvent={currEvent}
-          />
-        )}
+        {(props) => <PersonalEventScreen {...props} />}
       </Stack.Screen>
       <Stack.Screen name="Event Details" options={{ headerShown: false }}>
-        {(props) => (
-          <EventDetailsNavigator
-            {...props}
-            setData={setData}
-            data={data}
-            currEvent={currEvent}
-          />
-        )}
+        {(props) => <EventDetailsNavigator {...props} />}
       </Stack.Screen>
-      <Stack.Screen name="Profile" component={UserProfileScreen} />
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
@@ -56,17 +34,14 @@ const PersonalEventNavigator = ({
         component={UserProfileEditScreen}
         options={{ ...HeaderStyle }}
       />
+      <Stack.Screen
+        name="Profile"
+        component={UserProfileScreen}
+        options={{ ...HeaderStyle }}
+      />
 
       <Stack.Screen name="Home" options={createOptions(openSetting)}>
-        {(props) => (
-          <HomeScreen
-            {...props}
-            setData={setData}
-            data={data}
-            currEvent={currEvent}
-            setCurrEvent={setCurrEvent}
-          />
-        )}
+        {(props) => <HomeScreen {...props} />}
       </Stack.Screen>
     </Stack.Navigator>
   );

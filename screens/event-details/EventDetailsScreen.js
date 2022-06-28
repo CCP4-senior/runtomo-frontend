@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   ScrollView,
   Text,
@@ -31,13 +31,11 @@ import MapView, {
 } from "react-native-maps";
 import axiosInstance from "../../helpers/axios.js";
 
-const EventDetailsScreen = ({
-  navigation,
-  /*eventData,*/
-  data,
-  setData,
-  setCurrEvent,
-}) => {
+const EventDetailsScreen = ({ navigation }) => {
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const { user } = useContext(AuthContext);
   const { currentEvent } = useContext(DataContext);
   const [visible, setVisible] = useState(false);
@@ -50,13 +48,23 @@ const EventDetailsScreen = ({
     latitude: 35.6828387,
     longitude: 139.7594549,
   });
+  const [creator, setCreator] = useState({});
 
   const eventData = currentEvent;
 
+  const getUser = async () => {
+    try {
+      const response = await axiosInstance(`/users/${eventData.creator}/`);
+      setCreator(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const openCreatorProfile = () => {
-    if (eventData.user.id !== user.id) navigation.navigate("Creator Profile");
+    if (creator.id !== user.id) navigation.navigate("Creator Profile");
     // To avoid showing femal picture for Wade (current user). To be removed later
-    if (eventData.user.id === user.id) navigation.navigate("Profile");
+    if (creator.id === user.id) navigation.navigate("Profile");
   };
   const joinEvent = () => {
     const newData = data.map((event) => {
@@ -126,13 +134,18 @@ const EventDetailsScreen = ({
         <ScrollView>
           <View style={styles.container}>
             <Card style={styles.card} theme={{ roundness: 10 }}>
-              <Card.Cover
-                source={
-                  eventData.image ||
-                  require("../../assets/images/demo/defaultEvent.jpeg")
-                }
-                style={styles.eventImage}
-              />
+              {eventData.imageUrl && (
+                <Card.Cover
+                  source={{ uri: eventData.imageUrl }}
+                  style={styles.eventImage}
+                />
+              )}
+              {eventData.imageUrl === undefined && (
+                <Card.Cover
+                  source={require("../../assets/images/demo/defaultEvent.jpeg")}
+                  style={styles.eventImage}
+                />
+              )}
 
               <View style={styles.label}>
                 <Text style={styles.labelDate}>
@@ -147,19 +160,17 @@ const EventDetailsScreen = ({
                   onPress={openCreatorProfile}
                   style={[styles.listContainer]}
                 >
-                  {!eventData.user.image && (
+                  {!creator?.image && (
                     <Avatar.Icon
                       size={40}
                       icon="account"
                       style={styles.avatar}
                     />
                   )}
-                  {eventData.user.image && (
-                    <Avatar.Image size={40} source={eventData.user.image} />
+                  {creator?.image && (
+                    <Avatar.Image size={40} source={creator.image} />
                   )}
-                  <Text style={styles.creatorName}>
-                    {eventData.user.username}
-                  </Text>
+                  <Text style={styles.creatorName}>{creator.username}</Text>
                 </TouchableOpacity>
                 <Title style={styles.eventTitle}>{eventData.title}</Title>
 
@@ -236,7 +247,7 @@ const EventDetailsScreen = ({
               </Card.Content>
             </Card>
 
-            {eventData.user.id === user.id && (
+            {creator.id === user.id && (
               <>
                 <LongButton
                   buttonHandler={() => {
@@ -254,7 +265,7 @@ const EventDetailsScreen = ({
               </>
             )}
 
-            {!eventData.hasJoined && eventData.user.id !== user.id && (
+            {!eventData.hasJoined && creator.id !== user.id && (
               <LongButton
                 buttonHandler={joinEvent}
                 buttonColor={Color.PrimaryMain}
@@ -262,7 +273,7 @@ const EventDetailsScreen = ({
               />
             )}
 
-            {eventData.hasJoined && eventData.user.id !== user.id && (
+            {eventData.hasJoined && creator.id !== user.id && (
               <>
                 <Text>You've already joined the event!</Text>
                 <LongButton

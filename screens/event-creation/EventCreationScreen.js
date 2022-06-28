@@ -33,7 +33,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
-  const [eventDescription, setEventDescription] = useState("");
+  const [eventDescription, setEventDescription] = useState(null);
   const [imageUri, setImageUri] = useState("");
   const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -46,66 +46,49 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   };
 
   // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
-  // const buttonHandler = async () => {
-  //   try {
-  //     // const newUri = await resizeImage(imageUri, 300);
-  //     // const currentRef = await uploadImage("events", newUri);
-  //     // setImageRef(currentRef);
+  const buttonHandler = async () => {
+    try {
+      let currentRef;
+      if (imageUri !== "") {
+        const newUri = await resizeImage(imageUri, 300);
+        currentRef = await uploadImage("events", newUri);
+        setImageRef(currentRef);
+      }
 
-  //     const newEvent = {
-  //       title: title,
-  //       location: meetingPoint,
-  //     };
-  //     // To be used for api call
-  //     // const response = await axiosInstance.post("/events/", {
-  //     //   title: title,
-  //     //   location: meetingPoint,
-  //     // });
-  //     setNewEvent(newEvent);
-  //     navigation.navigate("Event Created");
-  //   } catch (e) {
-  //     console.log(e);
-  //     alert("Something went wrong. Please try again!");
-  //   }
-  // };
+      const requiredFields = [
+        title,
+        meetingPoint,
+        // ward,
+        date,
+        time,
+        runningDuration,
+      ];
 
-  // Leave as a reference. Once backend schema is ready, incorporate this data into the above buttonHandler.
-  const buttonHandler = () => {
-    const requiredFields = [
-      title,
-      meetingPoint,
-      ward,
-      date,
-      time,
-      runningDuration,
-    ];
-    if (requiredFields.some((field) => field === "")) {
-      setSubmitted(true);
-      return;
+      if (requiredFields.some((field) => field === "")) {
+        setSubmitted(true);
+        return;
+      }
+
+      const event = {
+        title: title,
+        location: meetingPoint,
+        // ward: ward,
+        date: date,
+        time: time,
+        running_duration: runningDuration.num,
+        description: eventDescription,
+        image: currentRef,
+      };
+
+      console.log(event);
+
+      const response = await axiosInstance.post("/events/", event);
+      setNewEvent(event);
+      navigation.navigate("Event Created");
+    } catch (e) {
+      console.log(e);
+      alert("Something went wrong. Please try again!");
     }
-
-    const event = {
-      id: 4,
-      user: {
-        id: 2,
-        username: "WayneWadeRuns",
-        age: 34,
-        image: require("../../assets/images/demo/wade.png"),
-      },
-      title,
-      meetingPoint,
-      ward,
-      date,
-      time,
-      runningDuration,
-      eventDescription,
-      participants: [],
-      owner_id: 2,
-      hasJoined: true,
-    };
-    setNewEvent(event);
-    setData([...data, event]);
-    navigation.navigate("Event Created");
   };
 
   const deleteImage = () => {
@@ -182,9 +165,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Running Duration"
-              customValue={runningDuration}
               onFocus={setDurationModalVisible}
-              value={runningDuration}
+              value={runningDuration.name}
               submitted={submitted}
               inputRef={inputRef}
             />
