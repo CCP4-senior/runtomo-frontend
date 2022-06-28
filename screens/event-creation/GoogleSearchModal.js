@@ -28,25 +28,24 @@ const GoogleSearchModal = ({
     const filteredData = address_components.filter((component) => {
       return component.types.includes("locality");
     });
-    console.log(address_components, formatted_address, filteredData);
     let wardName = "";
-    let wardItem;
     if (filteredData[0] !== undefined) {
       wardName = filteredData[0].long_name.replace("City", "");
       wardName = wardName.replace(/\s/g, "");
     } else {
       const splitAddress = formatted_address.replace(/,/g, "").split(" ");
+      if (splitAddress.some((el) => el === "River")) {
+        alert("Location is too broad. Please choose more specific address");
+        throw new Error();
+      }
       for (const item of splitAddress) {
         if (tokyo23wards.some((el) => el.ward_name === item)) {
-          wardItem = el;
+          wardName = item;
           break;
         }
       }
     }
-    console.log(wardName);
-    return wardItem !== undefined
-      ? wardItem
-      : tokyo23wards.find((el) => el.ward_name === wardName);
+    return tokyo23wards.find((el) => el.ward_name === wardName);
   };
 
   const containerStyle = {
@@ -71,15 +70,19 @@ const GoogleSearchModal = ({
               rankby: "distance",
             }}
             onPress={(data, details = null) => {
-              const ward = getWard(
-                details.address_components,
-                details.formatted_address
-              );
-              setMeetingPoint(details.formatted_address);
-              setLatitude(details.geometry.location.lat);
-              setLongitude(details.geometry.location.lng);
-              setWard(ward);
-              hideModal();
+              try {
+                const ward = getWard(
+                  details.address_components,
+                  details.formatted_address
+                );
+                setMeetingPoint(details.formatted_address);
+                setLatitude(details.geometry.location.lat);
+                setLongitude(details.geometry.location.lng);
+                setWard(ward);
+                hideModal();
+              } catch (e) {
+                console.log(e);
+              }
             }}
             query={{
               key: `${GOOGLE_PLACES_API}`,

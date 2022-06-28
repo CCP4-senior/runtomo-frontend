@@ -33,13 +33,13 @@ import axiosInstance from "../../helpers/axios.js";
 
 const EventDetailsScreen = ({
   navigation,
-  /*eventData,*/
+  // eventData,
   data,
   setData,
   setCurrEvent,
 }) => {
   useEffect(() => {
-    getUser();
+    // getUser(); // Leave as a reference. Case where api call is made to get creator info
   }, []);
 
   const { user } = useContext(AuthContext);
@@ -54,9 +54,10 @@ const EventDetailsScreen = ({
     latitude: 35.6828387,
     longitude: 139.7594549,
   });
-  const [creator, setCreator] = useState({});
-
   const eventData = currentEvent;
+  // Leave as a reference. Case where api call is made to get creator info
+  // const [creator, setCreator] = useState({});
+  const [creator, setCreator] = useState(eventData.creator);
 
   const getUser = async () => {
     try {
@@ -212,7 +213,9 @@ const EventDetailsScreen = ({
                     style={styles.listIcon}
                   />
                   <View style={styles.listContent}>
-                    <Text style={styles.boldText}>{eventData.ward}</Text>
+                    <Text style={styles.boldText}>
+                      {eventData.ward || "Non 23 ward"}
+                    </Text>
                     <Text>View map</Text>
                   </View>
                 </View>

@@ -32,7 +32,7 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
         )}
         <Card.Content>
           <Title>{event.title}</Title>
-          <Paragraph>{event.ward}</Paragraph>
+          <Paragraph>{event.ward || "Non 23 ward"}</Paragraph>
           <Paragraph>
             {format(new Date(event.date), "MMM d, yyyy")} at{" "}
             {format(new Date(event.time), "p")}

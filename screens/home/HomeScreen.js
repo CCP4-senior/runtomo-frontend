@@ -52,16 +52,22 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     setfilterModalVisible(false);
   };
 
-  const selectEvent = async (event) => {
-    const eventId = event.id;
-    try {
-      const event = await getCurrentEventData(eventId);
-      navigation.navigate("Event Details");
-    } catch (e) {
-      console.log(e);
-      console.log(e.config.url);
-      alert("Something went wrong. Please try again!");
-    }
+  // Leave as a reference. Case where api call is made
+  // const selectEvent = async (event) => {
+  //   const eventId = event.id;
+  //   try {
+  //     const event = await getCurrentEventData(eventId);
+  //     navigation.navigate("Event Details");
+  //   } catch (e) {
+  //     console.log(e);
+  //     console.log(e.config.url);
+  //     alert("Something went wrong. Please try again!");
+  //   }
+  // };
+
+  const selectEvent = (event) => {
+    setCurrentEvent(event);
+    navigation.navigate("Event Details");
   };
 
   return (
@@ -118,6 +124,7 @@ const EventsDataPage = ({ selectEvent }) => {
     isDataFiltered,
     setIsDataFiltered,
     getCurrentEventData,
+    setCurrentEvent,
   } = useContext(DataContext);
   const data = allEvents;
 
