@@ -23,33 +23,6 @@ const GoogleSearchModal = ({
   const { tokyoWards } = useContext(DataContext);
 
   const tokyo23wards = tokyoWards;
-  // [{id: 1, ward_name: "Adachi"}, ...]
-
-  // const tokyo23wards = [
-  //   "Chiyoda",
-  //   "Bunkyo",
-  //   "Shinjuku",
-  //   "Shibuya",
-  //   "Minato",
-  //   "Chuo",
-  //   "Taito",
-  //   "Toshima",
-  //   "Nakano",
-  //   "Suginami",
-  //   "Setagaya",
-  //   "Meguro",
-  //   "Shinagawa",
-  //   "Ota",
-  //   "Koto",
-  //   "Edogawa",
-  //   "Sumida",
-  //   "Arakawa",
-  //   "Katsushika",
-  //   "Nerima",
-  //   "Itabashi",
-  //   "Adachi",
-  //   "Kita",
-  // ];
 
   const getWard = (address_components, formatted_address) => {
     const filteredData = address_components.filter((component) => {
