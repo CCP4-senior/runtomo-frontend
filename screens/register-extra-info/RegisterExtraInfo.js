@@ -30,12 +30,34 @@ const RegisterExtraInfo = ({ route }) => {
   const handlePress = () => {
     const obj = {
       date: date,
+      timesPerWeek: timesPerWeek,
       estimated5k: estimated5k,
       estimated10k: estimated10k,
     };
-    // console.log("object created", obj);
-    // const user = { username, email, password };
-    // createUser(user);
+
+    // age validation
+    if (!date) {
+      return alert("Please enter date of birth");
+    }
+    const isAgeValid = validateAge(date);
+
+    if (!isAgeValid) {
+      return alert("You must be at least 18 years old to register.");
+    }
+
+    if (!timesPerWeek) {
+      return alert("Please select running frequency per week");
+    }
+
+    if (!estimated5k) {
+      return alert("Please select estimated 5k time");
+    }
+
+    if (!estimated10k) {
+      return alert("Please select estimated 10k time");
+    }
+
+    console.log(obj);
   };
 
   const handleTPWBtnClick = (buttonValue) => {
@@ -48,6 +70,26 @@ const RegisterExtraInfo = ({ route }) => {
 
   const handle10BtnClick = (buttonValue) => {
     setEstimated10k(buttonValue);
+  };
+
+  const validateAge = (userAge) => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    const userBirthYear = new Date(userAge).getFullYear();
+    const userBirthMonth = new Date(userAge).getMonth() + 1;
+
+    // Not accounting for days
+
+    if (currentYear - userBirthYear < 18) {
+      return false;
+    } else if (currentYear - userBirthYear === 18) {
+      if (currentMonth - userBirthMonth < 0) {
+        return false;
+      }
+      return true;
+    } else {
+      return true;
+    }
   };
 
   return (
