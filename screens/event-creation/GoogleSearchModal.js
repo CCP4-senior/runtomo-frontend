@@ -28,6 +28,7 @@ const GoogleSearchModal = ({
     const filteredData = address_components.filter((component) => {
       return component.types.includes("locality");
     });
+    console.log(address_components, formatted_address, filteredData);
     let wardName = "";
     let wardItem;
     if (filteredData[0] !== undefined) {
@@ -42,6 +43,7 @@ const GoogleSearchModal = ({
         }
       }
     }
+    console.log(wardName);
     return wardItem !== undefined
       ? wardItem
       : tokyo23wards.find((el) => el.ward_name === wardName);

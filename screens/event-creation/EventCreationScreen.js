@@ -63,7 +63,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const event = {
         title: title,
         location: meetingPoint,
-        ward: ward.id,
+        ward: ward?.id || null,
         date: date,
         time: time,
         running_duration: runningDuration.num,
