@@ -45,7 +45,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     setGoogleModalVisible(false);
   };
 
-  // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
       let currentRef;
@@ -55,14 +54,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         setImageRef(currentRef);
       }
 
-      const requiredFields = [
-        title,
-        meetingPoint,
-        // ward,
-        date,
-        time,
-        runningDuration,
-      ];
+      const requiredFields = [title, meetingPoint, date, time, runningDuration];
 
       if (requiredFields.some((field) => field === "")) {
         setSubmitted(true);
@@ -72,12 +64,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const event = {
         title: title,
         location: meetingPoint,
-        // ward: ward,
+        ward: ward.id,
         date: date,
         time: time,
         running_duration: runningDuration.num,
         description: eventDescription,
         image: currentRef,
+        lat: latitude,
+        long: longitude,
       };
 
       console.log(event);

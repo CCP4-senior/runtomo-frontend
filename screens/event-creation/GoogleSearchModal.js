@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 /* google config */
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_API } from "@env";
+import { DataContext } from "../../context/datacontext/DataContext";
 
 const GoogleSearchModal = ({
   modalVisible,
@@ -19,51 +20,79 @@ const GoogleSearchModal = ({
     longitude: 139.7594549,
   });
 
-  const tokyo23wards = [
-    "Chiyoda",
-    "Bunkyo",
-    "Shinjuku",
-    "Shibuya",
-    "Minato",
-    "Chuo",
-    "Taito",
-    "Toshima",
-    "Nakano",
-    "Suginami",
-    "Setagaya",
-    "Meguro",
-    "Shinagawa",
-    "Ota",
-    "Koto",
-    "Edogawa",
-    "Sumida",
-    "Arakawa",
-    "Katsushika",
-    "Nerima",
-    "Itabashi",
-    "Adachi",
-    "Kita",
-  ];
+  const { tokyoWards } = useContext(DataContext);
+
+  const tokyo23wards = tokyoWards;
+  // [{id: 1, ward_name: "Adachi"}, ...]
+
+  // const tokyo23wards = [
+  //   "Chiyoda",
+  //   "Bunkyo",
+  //   "Shinjuku",
+  //   "Shibuya",
+  //   "Minato",
+  //   "Chuo",
+  //   "Taito",
+  //   "Toshima",
+  //   "Nakano",
+  //   "Suginami",
+  //   "Setagaya",
+  //   "Meguro",
+  //   "Shinagawa",
+  //   "Ota",
+  //   "Koto",
+  //   "Edogawa",
+  //   "Sumida",
+  //   "Arakawa",
+  //   "Katsushika",
+  //   "Nerima",
+  //   "Itabashi",
+  //   "Adachi",
+  //   "Kita",
+  // ];
 
   const getWard = (address_components, formatted_address) => {
     const filteredData = address_components.filter((component) => {
       return component.types.includes("locality");
     });
     let wardName = "";
+    let wardItem;
     if (filteredData[0] !== undefined) {
       wardName = filteredData[0].long_name.replace("City", "");
       wardName = wardName.replace(/\s/g, "");
     } else {
       const splitAddress = formatted_address.replace(/,/g, "").split(" ");
       for (const item of splitAddress) {
-        if (tokyo23wards.includes(item)) {
-          wardName = item;
+        if (tokyo23wards.some((el) => el.ward_name === item)) {
+          wardItem = el;
           break;
         }
       }
     }
-    return wardName;
+    return wardItem !== undefined
+      ? wardItem
+      : tokyo23wards.find((el) => el.ward_name === wardName);
   };
+
+  // const getWard = (address_components, formatted_address) => {
+  //   const filteredData = address_components.filter((component) => {
+  //     return component.types.includes("locality");
+  //   });
+  //   let wardName = "";
+  //   if (filteredData[0] !== undefined) {
+  //     wardName = filteredData[0].long_name.replace("City", "");
+  //     wardName = wardName.replace(/\s/g, "");
+  //   } else {
+  //     const splitAddress = formatted_address.replace(/,/g, "").split(" ");
+  //     for (const item of splitAddress) {
+  //       if (tokyo23wards.includes(item)) {
+  //         wardName = item;
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   return wardName;
+  // };
 
   const containerStyle = {
     backgroundColor: "#fff",
