@@ -102,6 +102,19 @@ const UserProfileEditScreen = ({ navigation }) => {
           />
         </View>
 
+        {/* Email */}
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Email</Text>
+
+          <CustomInput
+            placeholder="please input a username"
+            value={email}
+            changeHandler={(value) => setEmail(value)}
+            width={"100%"}
+          />
+        </View>
+
         {/* Buttons */}
         <View style={styles.buttonsContainer}>
           <LongButton

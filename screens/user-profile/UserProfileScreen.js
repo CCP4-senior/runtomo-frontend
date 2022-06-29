@@ -21,6 +21,12 @@ const UserProfileScreen = ({ navigation }) => {
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
 
+  const mockData = {
+    username: "wadeMock",
+    email: "wadeMock@app.com",
+    age: "34",
+  };
+
   // TODO: replace userData with db info User is ready
   const userData = {
     username: user.username,
@@ -67,7 +73,7 @@ const UserProfileScreen = ({ navigation }) => {
 
         {/* Run Frequency */}
         <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Run Frequency: {userData.runFrequency} times a week</Text>
+          <Text style={styles.userDataFont}>Run Frequency: {user["profile"]["run_frequency"]} times a week</Text>
         </View>
 
         <View style={styles.userDataWrapper}>
