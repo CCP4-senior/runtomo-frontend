@@ -166,8 +166,6 @@ const styles = StyleSheet.create({
   },
   userDataWrapper: {
     backgroundColor: Color.White,
-    // backgroundColor: Color.PrimaryLight,
-    // backgroundColor: Color.GrayDark,
     borderRadius: 20,
     padding: 20,
     width: "100%",
