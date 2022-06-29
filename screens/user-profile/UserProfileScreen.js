@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Text,
   View,
@@ -16,6 +16,7 @@ import { TouchableOpacity } from "react-native-web";
 
 const UserProfileScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
+  console.log('🍎 user:', user);
 
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
@@ -26,6 +27,8 @@ const UserProfileScreen = ({ navigation }) => {
     age: user.age,
     runnerType: ["beginner", "social"],
   };
+
+
 
   return (
     <SafeAreaView style={styles.root}>
@@ -65,32 +68,14 @@ const UserProfileScreen = ({ navigation }) => {
           />
         </View>
 
-        {/* Runner Type and Tags */}
-        <View style={styles.userDataWrapper}>
-          {/* Title: Runner Type */}
-          <View style={{ paddingBottom: 5 }}>
-            <Text style={styles.userDataFont}>Runner Type</Text>
-          </View>
-
-          {/* Tags */}
-          <View style={styles.tagsContainer}>
-            {/* <View style={[ styles.userDataWrapper, styles.tagsContainer ]}> */}
-            {user.runnerType.map((type, index) => {
-              return (
-                <Text style={[styles.tags]} key={index}>
-                  {" "}
-                  {type}{" "}
-                </Text>
-              );
-            })}
-          </View>
-        </View>
+{/* Run Frequency */}
+<View style={styles.userDataWrapper}></View>
 
         {/* Age */}
 
-        <View style={styles.userDataWrapper}>
+        {/* <View style={styles.userDataWrapper}>
           <Text style={styles.userDataFont}>Age: {userData.age}</Text>
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );
