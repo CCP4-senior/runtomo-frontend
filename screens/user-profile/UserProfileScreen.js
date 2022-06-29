@@ -16,7 +16,7 @@ import { TouchableOpacity } from "react-native-web";
 
 const UserProfileScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
-  console.log('🍎 user:', user);
+  console.log("🍎 user:", user);
 
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
@@ -27,8 +27,6 @@ const UserProfileScreen = ({ navigation }) => {
     age: user.age,
     runnerType: ["beginner", "social"],
   };
-
-
 
   return (
     <SafeAreaView style={styles.root}>
@@ -68,8 +66,18 @@ const UserProfileScreen = ({ navigation }) => {
           />
         </View>
 
-{/* Run Frequency */}
-<View style={styles.userDataWrapper}></View>
+        {/* Run Frequency */}
+        <View style={styles.userDataWrapper}>
+          <Text style={styles.userDataFont}>Run Frequency: {user["profile"]["run_frequency"]} times a week</Text>
+        </View>
+
+        <View style={styles.userDataWrapper}>
+          <Text style={styles.userDataFont}>Estimated 5k: {user["profile"]["estimated5k"]}</Text>
+        </View>
+
+        <View style={styles.userDataWrapper}>
+          <Text style={styles.userDataFont}>Estimated 10k: {user["profile"]["estimated10k"]}</Text>
+        </View>
 
         {/* Age */}
 
