@@ -118,7 +118,7 @@ const UserProfileEditScreen = ({ navigation }) => {
           <Text style={styles.text}>Email</Text>
 
           <CustomInput
-            placeholder="please input a username"
+            placeholder="ex: cheetah@example.com"
             value={email}
             changeHandler={(value) => setEmail(value)}
             width={"100%"}
@@ -142,7 +142,7 @@ const UserProfileEditScreen = ({ navigation }) => {
         <View style={styles.field}>
           <Text style={styles.text}>Run Frequency / week</Text>
           <CustomInput
-            placeholder="ex: 1990-09-25"
+            placeholder="ex: 2-3"
             value={runFrequency}
             changeHandler={(value) => setRunFrequency(value)}
             width={"100%"}
@@ -154,7 +154,7 @@ const UserProfileEditScreen = ({ navigation }) => {
         <View style={styles.field}>
           <Text style={styles.text}>Estimated 5k</Text>
           <CustomInput
-            placeholder="ex: 1990-09-25"
+            placeholder="ex: 25-30 mins"
             value={estimated5k}
             changeHandler={(value) => setEstimated5k(value)}
             width={"100%"}
@@ -166,7 +166,7 @@ const UserProfileEditScreen = ({ navigation }) => {
         <View style={styles.field}>
           <Text style={styles.text}>Estimated 10k</Text>
           <CustomInput
-            placeholder="ex: 1990-09-25"
+            placeholder="ex: 55-60 mins"
             value={estimated10k}
             changeHandler={(value) => setEstimated10k(value)}
             width={"100%"}
