@@ -34,8 +34,9 @@ const UserProfileEditScreen = ({ navigation }) => {
     age: mockData.email,
   };
 
-  const [username, setUsername] = useState(userData.username);
-  const [email, setEmail] = useState(userData.email);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [dateOfBirth, setDateOfBirth] = useState(user["profile"]["date_of_birth"]);
   // const [age, setAge] = useState(mockData.age);
 
   const doneButtonHandler = () => {
@@ -102,15 +103,15 @@ const UserProfileEditScreen = ({ navigation }) => {
           />
         </View>
 
-        {/* Email */}
+        {/* Date of Birth */}
 
         <View style={styles.field}>
-          <Text style={styles.text}>Email</Text>
+          <Text style={styles.text}>Date of Birth</Text>
 
           <CustomInput
-            placeholder="please input a username"
-            value={email}
-            changeHandler={(value) => setEmail(value)}
+            placeholder="ex: 1990-09-25"
+            value={dateOfBirth}
+            changeHandler={(value) => setDateOfBirth(value)}
             width={"100%"}
           />
         </View>

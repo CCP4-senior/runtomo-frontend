@@ -54,7 +54,7 @@ const UserProfileScreen = ({ navigation }) => {
         {/* Username */}
 
         <View style={styles.userInfoHeader}>
-          <Text style={styles.userFullName}>{userData.username}</Text>
+          <Text style={styles.userFullName}>{user.username}</Text>
 
           {/* Edit Profile button */}
 
