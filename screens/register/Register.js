@@ -64,8 +64,19 @@ const Register = () => {
       // Mockdata logic. Leave as a reference until backend endpoints are fully ready
       // setUser({ id: 2, username: "WayneWadeRuns" });
       // navigation.navigate("SignIn", { screen: "Home" });
-
-      navigation.navigate("RegisterExtraInfo", { username, email, password });
+      try {
+        const user = { username, email, password };
+        createUser(user);
+        navigation.navigate("RegisterExtraInfo", { username, email, password });
+      } catch (error) {
+        Alert.alert("Error", e.response.data.detail, [
+          {
+            text: "OK",
+            onPress: () => null,
+            style: "cancel",
+          },
+        ]);
+      }
     }
   };
 
