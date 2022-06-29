@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   ScrollView,
   View,
@@ -42,6 +42,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     setAreaModalVisible(false);
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
+    inputRef.current?.blur();
   };
 
   const buttonHandler = async () => {
@@ -63,7 +64,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const event = {
         title: title,
         location: meetingPoint,
-        ward: ward?.id || null,
+        ward: ward?.ward_name || null,
         date: date,
         time: time,
         running_duration: runningDuration.num,
@@ -79,7 +80,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       setNewEvent(event);
       navigation.navigate("Event Created");
     } catch (e) {
-      console.log(e);
+      console.log(e.config);
       alert("Something went wrong. Please try again!");
     }
   };
@@ -147,12 +148,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               date={date}
               submitted={submitted}
               category="date"
+              inputRef={inputRef}
             />
             <DatePicker
               setTime={setTime}
               time={time}
               submitted={submitted}
               category="time"
+              inputRef={inputRef}
             />
           </View>
           <View style={styles.inputContainer}>

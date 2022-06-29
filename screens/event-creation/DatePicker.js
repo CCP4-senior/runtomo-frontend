@@ -4,7 +4,15 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
 import CustomInput from "../../components/CustomInput.js";
 
-const DatePicker = ({ setDate, date, time, setTime, submitted, category }) => {
+const DatePicker = ({
+  setDate,
+  date,
+  time,
+  setTime,
+  submitted,
+  category,
+  inputRef,
+}) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const showDatePicker = () => {
@@ -17,7 +25,6 @@ const DatePicker = ({ setDate, date, time, setTime, submitted, category }) => {
 
   const handleConfirm = (data) => {
     category === "date" ? setDate(data) : setTime(data);
-
     hideDatePicker();
   };
 
@@ -36,6 +43,7 @@ const DatePicker = ({ setDate, date, time, setTime, submitted, category }) => {
         }
         width={160}
         submitted={submitted}
+        inputRef={inputRef}
       />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}

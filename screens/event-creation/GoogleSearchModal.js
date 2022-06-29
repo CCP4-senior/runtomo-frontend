@@ -45,7 +45,9 @@ const GoogleSearchModal = ({
         }
       }
     }
-    return tokyo23wards.find((el) => el.ward_name === wardName);
+    return tokyo23wards.find(
+      (el) => el.ward_name === wardName || el.ward_name === "Other"
+    );
   };
 
   const containerStyle = {
