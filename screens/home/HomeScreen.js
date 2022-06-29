@@ -82,8 +82,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           <List.Item
             style={styles.topElement}
             title="SORT BY"
-            right={(props) => <List.Icon {...props} icon="text" />}
-            titleStyle={{ fontSize: 14, fontWeight: "700" }}
+            right={(props) => (
+              <List.Icon {...props} icon="text" style={styles.topIcon} />
+            )}
+            titleStyle={{ fontSize: 12, fontWeight: "700" }}
             onPress={() => alert("Sort by button pressed!")}
           />
         </TouchableOpacity>
@@ -91,8 +93,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           <List.Item
             style={styles.topElement}
             title="FILTERS"
-            right={(props) => <List.Icon {...props} icon="tune" />}
-            titleStyle={{ fontSize: 14, fontWeight: "700" }}
+            right={(props) => (
+              <List.Icon {...props} icon="tune" style={styles.topIcon} />
+            )}
+            titleStyle={{ fontSize: 12, fontWeight: "700" }}
           />
         </TouchableOpacity>
       </View>
@@ -192,11 +196,6 @@ const styles = StyleSheet.create({
     right: 30,
     bottom: 30,
   },
-  floatingButtonStyle: {
-    resizeMode: "contain",
-    width: 50,
-    height: 50,
-  },
   eventCardWrapper: {
     alignItems: "center",
     paddingHorizontal: 10,
@@ -232,14 +231,22 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    // justifyContent: "center",
+    height: 41,
+    padding: 0,
   },
   topElement: {
-    paddingTop: 1,
-    margin: 8,
-    width: 170,
-    height: 40,
+    paddingTop: 0,
+    marginTop: 6,
+    // margin: 8,
+    width: 165,
+    height: 35,
     backgroundColor: Color.GrayDark,
     borderRadius: 30,
+  },
+  topIcon: {
+    paddingTop: 0,
+    height: 18,
   },
 });

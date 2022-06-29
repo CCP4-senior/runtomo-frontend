@@ -31,13 +31,7 @@ import MapView, {
 } from "react-native-maps";
 import axiosInstance from "../../helpers/axios.js";
 
-const EventDetailsScreen = ({
-  navigation,
-  /*eventData,*/
-  data,
-  setData,
-  setCurrEvent,
-}) => {
+const EventDetailsScreen = ({ navigation }) => {
   useEffect(() => {
     getUser();
   }, []);
@@ -152,13 +146,6 @@ const EventDetailsScreen = ({
                   style={styles.eventImage}
                 />
               )}
-              {/* <Card.Cover
-                source={
-                  eventData.image ||
-                  require("../../assets/images/demo/defaultEvent.jpeg")
-                }
-                style={styles.eventImage}
-              /> */}
 
               <View style={styles.label}>
                 <Text style={styles.labelDate}>

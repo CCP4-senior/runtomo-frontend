@@ -8,10 +8,10 @@ const createOptions = (settingPressHandler, messagePressaHandler) => {
     ...HeaderStyle,
     headerRight: () => (
       <TouchableOpacity
-        style={[styles.iconContainer, styles.avatar]}
+        style={[styles.iconContainer, styles.menu]}
         onPress={() => alert("message icon is pressed!")}
       >
-        <IconButton icon="forum-outline" size={32} color="grey" />
+        <IconButton icon="forum-outline" size={25} color="grey" />
       </TouchableOpacity>
     ),
     headerLeft: () => (
@@ -19,16 +19,16 @@ const createOptions = (settingPressHandler, messagePressaHandler) => {
         style={[styles.iconContainer, styles.menu]}
         onPress={settingPressHandler}
       >
-        <View
+        {/* <View
           style={{
             width: 35,
             height: 35,
             alignItems: "center",
             justifyContent: "center",
           }}
-        >
-          <IconButton icon="menu" color="grey" size={35} />
-        </View>
+        > */}
+        <IconButton icon="menu" color="grey" size={25} />
+        {/* </View> */}
       </TouchableOpacity>
     ),
   };
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     backgroundColor: "#F5F8FA",
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
   },
   menu: {
-    paddingVertical: 11,
+    justifyContent: "center",
   },
 });
