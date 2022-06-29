@@ -29,6 +29,12 @@ const UserProfileEditScreen = ({ navigation }) => {
     runnerType: user.runnerType || ["Avid"], // Added to avoid error
   };
 
+  const userData = {
+    username: user.username,
+    age: user.email,
+  };
+
+
   const [username, setUsername] = useState(mockData.username);
   const [email, setEmail] = useState(mockData.email);
   const [age, setAge] = useState(mockData.age);
@@ -65,7 +71,7 @@ const UserProfileEditScreen = ({ navigation }) => {
           username: username,
           email: email,
           age: age,
-          runnerType: runnerType,
+          // runnerType: runnerType,
         },
       });
       navigation.navigate("Profile");
@@ -102,30 +108,6 @@ const UserProfileEditScreen = ({ navigation }) => {
             placeholder="please input a username"
             value={email}
             changeHandler={(value) => setEmail(value)}
-            width={"100%"}
-          />
-        </View>
-
-        {/* Age */}
-        <View style={styles.field}>
-          <Text style={styles.text}>Age</Text>
-
-          <CustomInput
-            placeholder="your age"
-            value={age}
-            changeHandler={(value) => setAge(value)}
-            width={"100%"}
-          />
-        </View>
-
-        {/* Runner type */}
-        <View style={styles.field}>
-          <Text style={styles.text}>Runner Type</Text>
-
-          <CustomInput
-            placeholder="your type of running"
-            value={runnerType.join(", ")}
-            changeHandler={(value) => setRunnerType(value.split(", "))}
             width={"100%"}
           />
         </View>

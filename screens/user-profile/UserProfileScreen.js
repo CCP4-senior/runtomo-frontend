@@ -25,7 +25,6 @@ const UserProfileScreen = ({ navigation }) => {
   const userData = {
     username: user.username,
     age: user.age,
-    runnerType: ["beginner", "social"],
   };
 
   return (
@@ -68,7 +67,7 @@ const UserProfileScreen = ({ navigation }) => {
 
         {/* Run Frequency */}
         <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Run Frequency: {user["profile"]["run_frequency"]} times a week</Text>
+          <Text style={styles.userDataFont}>Run Frequency: {userData.runFrequency} times a week</Text>
         </View>
 
         <View style={styles.userDataWrapper}>
@@ -79,11 +78,7 @@ const UserProfileScreen = ({ navigation }) => {
           <Text style={styles.userDataFont}>Estimated 10k: {user["profile"]["estimated10k"]}</Text>
         </View>
 
-        {/* Age */}
 
-        {/* <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Age: {userData.age}</Text>
-        </View> */}
       </View>
     </SafeAreaView>
   );
