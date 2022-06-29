@@ -30,11 +30,6 @@ const UserProfileEditScreen = ({ navigation }) => {
     age: "34",
   };
 
-  const userData = {
-    username: user.username,
-    email: user.email,
-    age: mockData.email,
-  };
 
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);

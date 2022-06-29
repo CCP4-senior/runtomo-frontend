@@ -39,11 +39,7 @@ const SettingScreen = ({ navigation }) => {
   const openProfileScreen = (eventData) => {
 
     RootNavigation.navigate("Profile");
-    // RootNavigation.navigateReplace("Edit Profile");
-    // RootNavigation.navigate("Edit Profile");
-    // navigation.navigate("Profile", {
-    //   eventData: eventData,
-    // });
+
   };
 
   return (

@@ -27,12 +27,6 @@ const UserProfileScreen = ({ navigation }) => {
     age: "34",
   };
 
-  // TODO: replace userData with db info User is ready
-  const userData = {
-    username: user.username,
-    age: user.age,
-  };
-
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
