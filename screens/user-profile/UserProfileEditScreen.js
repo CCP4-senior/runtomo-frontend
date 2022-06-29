@@ -25,20 +25,18 @@ const UserProfileEditScreen = ({ navigation }) => {
   const mockData = {
     username: user.username,
     email: user.email,
-    age: user.age || 35, // Added to avoid error
-    runnerType: user.runnerType || ["Avid"], // Added to avoid error
+    age: "34",
   };
 
   const userData = {
     username: user.username,
-    age: user.email,
+    email: user.email,
+    age: mockData.email,
   };
 
-
-  const [username, setUsername] = useState(mockData.username);
-  const [email, setEmail] = useState(mockData.email);
-  const [age, setAge] = useState(mockData.age);
-  const [runnerType, setRunnerType] = useState(mockData.runnerType);
+  const [username, setUsername] = useState(userData.username);
+  const [email, setEmail] = useState(userData.email);
+  // const [age, setAge] = useState(mockData.age);
 
   const doneButtonHandler = () => {
     let inputError = false;
@@ -54,13 +52,7 @@ const UserProfileEditScreen = ({ navigation }) => {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
-    } else if (isNaN(age)) {
-      alertMessage = "Did you input age correctly?";
-      inputError = true;
-    } else if (age < 18 || age > 130) {
-      alertMessage = "Your age must be between 18 and 130!";
-      inputError = true;
-    }
+    } 
 
     if (inputError) {
       alert(alertMessage);
@@ -70,8 +62,6 @@ const UserProfileEditScreen = ({ navigation }) => {
         ...{
           username: username,
           email: email,
-          age: age,
-          // runnerType: runnerType,
         },
       });
       navigation.navigate("Profile");
