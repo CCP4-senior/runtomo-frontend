@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { format } from "date-fns";
 
@@ -14,7 +14,7 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
           <Card.Cover
             source={{ uri: event.imageUrl }}
             style={{
-              height: 175,
+              height: 160,
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
             }}
@@ -24,19 +24,19 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
           <Card.Cover
             source={require("../assets/images/demo/defaultEvent.jpeg")}
             style={{
-              height: 175,
+              height: 160,
               borderTopLeftRadius: 10,
               borderTopRightRadius: 10,
             }}
           />
         )}
         <Card.Content>
-          <Title>{event.title}</Title>
-          <Paragraph>{event.ward}</Paragraph>
-          <Paragraph>
+          <Text style={styles.title}>{event.title}</Text>
+          <Text style={styles.ward}>{event.ward}</Text>
+          <Text style={styles.date}>
             {format(new Date(event.date), "MMM d, yyyy")} at{" "}
             {format(new Date(event.time), "p")}
-          </Paragraph>
+          </Text>
         </Card.Content>
       </TouchableOpacity>
     </Card>
@@ -54,8 +54,26 @@ const styles = StyleSheet.create({
   },
   homePageCard: {
     width: "100%",
-    marginBottom: 20,
-    height: 270,
+    marginBottom: 8,
+    height: 240,
     marginTop: 10,
+  },
+  title: {
+    paddingTop: 8,
+    paddingBottom: 3,
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#363D4E",
+  },
+  ward: {
+    paddingLeft: 3,
+    paddingBottom: 2,
+    fontSize: 12,
+    color: "#4E4B66",
+  },
+  date: {
+    paddingLeft: 2,
+    fontSize: 12,
+    color: "#FA4048",
   },
 });
