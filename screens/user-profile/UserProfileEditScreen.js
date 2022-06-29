@@ -9,6 +9,8 @@ import {
   useWindowDimensions,
   Button,
   TextInput,
+  FlatList,
+  ScrollView,
 } from "react-native";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import Validation from "../../utils/Validation";
@@ -87,7 +89,7 @@ const UserProfileEditScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         {/* Username */}
 
         <View style={styles.field}>
@@ -177,7 +179,7 @@ const UserProfileEditScreen = ({ navigation }) => {
             buttonText="Cancel"
           />
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -189,7 +191,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
     backgroundColor: Color.Fill,
     padding: 30,
     justifyContent: "flex-start",
