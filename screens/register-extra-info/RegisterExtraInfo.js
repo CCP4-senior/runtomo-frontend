@@ -442,14 +442,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     flexWrap: "wrap",
-    marginLeft: 20,
+    justifyContent: "center",
+    marginLeft: 10,
   },
   estimatedKmBtnWrapper: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
     flexWrap: "wrap",
-    marginLeft: 20,
+    justifyContent: "center",
+    marginLeft: 10,
   },
   timesPerWeekBtns: {
     borderRadius: 20,
