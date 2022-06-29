@@ -8,7 +8,7 @@ import Color from "../assets/themes/Color.js";
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
+const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -20,7 +20,7 @@ const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
             iconName = "ios-home";
           }
           if (route.name === "My Sessions Main Page") {
-            iconName = "people";
+            iconName = "calendar";
           }
           if (route.name === "Event Creation") {
             iconName = "add-circle-outline";
@@ -39,25 +39,16 @@ const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
           title: "Home",
         }}
       >
-        {(props) => (
-          <HomeNavigator
-            {...props}
-            setData={setData}
-            data={data}
-            setCurrEvent={setCurrEvent}
-            currEvent={currEvent}
-          />
-        )}
+        {(props) => <HomeNavigator {...props} />}
       </Tab.Screen>
       <Tab.Screen
         name="Event Creation"
         options={{
+          title: "Post Event",
           headerShown: false,
         }}
       >
-        {(props) => (
-          <EventCreationNavigator {...props} setData={setData} data={data} />
-        )}
+        {(props) => <EventCreationNavigator {...props} />}
       </Tab.Screen>
       <Tab.Screen
         name="My Sessions Main Page"
@@ -66,15 +57,7 @@ const BottomTabNavigator = ({ setData, data, currEvent, setCurrEvent }) => {
           headerShown: false,
         }}
       >
-        {(props) => (
-          <PersonalEventNavigator
-            {...props}
-            setData={setData}
-            data={data}
-            setCurrEvent={setCurrEvent}
-            currEvent={currEvent}
-          />
-        )}
+        {(props) => <PersonalEventNavigator {...props} />}
       </Tab.Screen>
     </Tab.Navigator>
   );

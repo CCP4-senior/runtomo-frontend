@@ -5,7 +5,10 @@ import ConfirmationScreen from "../screens/confirmation/ConfirmationScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
 import SettingScreen from "../screens/setting/SettingScreen";
-import EventDetailsScreen from "../screens/event-details/EventDetailsScreen";
+import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen";
+import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
+import EventDetailsNavigator from "./EventDetailsNavigator";
+import HomeScreen from "../screens/home/HomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -49,21 +52,29 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
           />
         )}
       </Stack.Screen>
-      <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
-        {(props) => (
-          <EventDetailsScreen
-            {...props}
-            eventData={newEvent}
-            data={data}
-            setData={setData}
-          />
-        )}
+      <Stack.Screen name="Event Details" options={{ headerShown: false }}>
+        {(props) => <EventDetailsNavigator {...props} />}
       </Stack.Screen>
+
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
         options={{ ...HeaderStyle }}
       />
+      <Stack.Screen
+        name="Profile"
+        component={UserProfileScreen}
+        options={{ ...HeaderStyle }}
+      />
+      <Stack.Screen
+        name="Edit Profile"
+        component={UserProfileEditScreen}
+        options={{ ...HeaderStyle }}
+      />
+
+      <Stack.Screen name="Home" options={createOptions(openSetting)}>
+        {(props) => <HomeScreen {...props} />}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

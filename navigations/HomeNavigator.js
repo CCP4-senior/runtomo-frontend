@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
@@ -10,13 +10,7 @@ import createOptions from "./reusableOptions/appNavigatorOptions";
 
 const Stack = createStackNavigator();
 
-const HomeNavigator = ({
-  navigation,
-  setData,
-  data,
-  setCurrEvent,
-  currEvent,
-}) => {
+const HomeNavigator = ({ navigation }) => {
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -24,27 +18,15 @@ const HomeNavigator = ({
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" options={createOptions(openSetting)}>
-        {(props) => (
-          <HomeScreen
-            {...props}
-            setData={setData}
-            data={data}
-            currEvent={currEvent}
-            setCurrEvent={setCurrEvent}
-          />
-        )}
+        {(props) => <HomeScreen {...props} />}
+      </Stack.Screen>
+
+      <Stack.Screen name="My Sessions" options={createOptions(openSetting)}>
+        {(props) => <PersonalEventScreen {...props} />}
       </Stack.Screen>
 
       <Stack.Screen name="Event Details" options={{ headerShown: false }}>
-        {(props) => (
-          <EventDetailsNavigator
-            {...props}
-            setData={setData}
-            data={data}
-            currEvent={currEvent}
-            setCurrEvent={setCurrEvent}
-          />
-        )}
+        {(props) => <EventDetailsNavigator {...props} />}
       </Stack.Screen>
       <Stack.Screen
         name="Profile"

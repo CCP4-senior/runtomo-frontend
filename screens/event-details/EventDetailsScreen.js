@@ -31,13 +31,7 @@ import MapView, {
 } from "react-native-maps";
 import axiosInstance from "../../helpers/axios.js";
 
-const EventDetailsScreen = ({
-  navigation,
-  /*eventData,*/
-  data,
-  setData,
-  setCurrEvent,
-}) => {
+const EventDetailsScreen = ({ navigation }) => {
   useEffect(() => {
     getUser();
     getAllParticipants();
