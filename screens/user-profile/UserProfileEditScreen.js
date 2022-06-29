@@ -52,17 +52,14 @@ const UserProfileEditScreen = ({ navigation }) => {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
-    } 
+    }
 
     if (inputError) {
       alert(alertMessage);
     } else {
       setUser({
-        ...mockData,
-        ...{
-          username: username,
-          email: email,
-        },
+        username: username,
+        email: email,
       });
       navigation.navigate("Profile");
     }
