@@ -59,6 +59,7 @@ const EventDetailsScreen = ({ navigation }) => {
       const response = await axiosInstance(`/users/${eventData.creator}/`);
       setCreator(response.data);
     } catch (e) {
+      console.log(e.config.url);
       console.log(e);
     }
   };
