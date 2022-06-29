@@ -52,14 +52,17 @@ const UserProfileEditScreen = ({ navigation }) => {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
-    }
+    } 
 
     if (inputError) {
       alert(alertMessage);
     } else {
       setUser({
-        username: username,
-        email: email,
+        ...user,
+        ...{
+          username: username,
+          email: email,
+        },
       });
       navigation.navigate("Profile");
     }
