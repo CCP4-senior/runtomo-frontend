@@ -13,6 +13,7 @@ import {
 } from "react-native-paper";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import Color from "../../assets/themes/Color.js";
+import * as RootNavigation from "../../navigations/RootNavigator.js";
 
 const SettingScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
@@ -36,9 +37,11 @@ const SettingScreen = ({ navigation }) => {
   };
 
   const openProfileScreen = (eventData) => {
-    navigation.navigate("Profile", {
-      eventData: eventData,
-    });
+    // RootNavigation.navigateReplace("Edit Profile");
+    RootNavigation.navigate("Edit Profile");
+    // navigation.navigate("Profile", {
+    //   eventData: eventData,
+    // });
   };
 
   return (
@@ -141,6 +144,7 @@ const styles = StyleSheet.create({
   },
   accountDetails: {
     width: 170,
+    justifyContent: "center",
   },
   card: {
     width: "95%",
