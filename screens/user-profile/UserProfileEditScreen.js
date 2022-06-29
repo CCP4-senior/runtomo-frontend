@@ -76,7 +76,15 @@ const UserProfileEditScreen = ({ navigation }) => {
         ...{
           username: username,
           email: email,
-          run_frequency: runFrequency,
+          profile: {
+            ...user.profile,
+            ...{
+              date_of_birth: dateOfBirth,
+              run_frequency: runFrequency,
+              estimated5k: estimated5k,
+              estimated10k: estimated10k,
+            },
+          },
         },
       });
       navigation.navigate("Profile");
