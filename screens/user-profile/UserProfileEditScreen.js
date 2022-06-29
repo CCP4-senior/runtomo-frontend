@@ -36,7 +36,13 @@ const UserProfileEditScreen = ({ navigation }) => {
 
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
-  const [dateOfBirth, setDateOfBirth] = useState(user["profile"]["date_of_birth"]);
+  const [dateOfBirth, setDateOfBirth] = useState(
+    user["profile"]["date_of_birth"]
+  );
+  const [runFrequency, setRunFrequency] = useState(
+    user["profile"]["run_frequency"]
+  );
+  const [estimated5k, setEstimated5k] = useState(user["profile"]["estimated5k"]);
   // const [age, setAge] = useState(mockData.age);
 
   const doneButtonHandler = () => {
@@ -53,7 +59,7 @@ const UserProfileEditScreen = ({ navigation }) => {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
-    } 
+    }
 
     if (inputError) {
       alert(alertMessage);
@@ -63,6 +69,7 @@ const UserProfileEditScreen = ({ navigation }) => {
         ...{
           username: username,
           email: email,
+          "run_frequency": runFrequency
         },
       });
       navigation.navigate("Profile");
@@ -107,11 +114,34 @@ const UserProfileEditScreen = ({ navigation }) => {
 
         <View style={styles.field}>
           <Text style={styles.text}>Date of Birth</Text>
-
           <CustomInput
             placeholder="ex: 1990-09-25"
             value={dateOfBirth}
             changeHandler={(value) => setDateOfBirth(value)}
+            width={"100%"}
+          />
+        </View>
+
+        {/* Run Frequency */}
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Run Frequency / week</Text>
+          <CustomInput
+            placeholder="ex: 1990-09-25"
+            value={runFrequency}
+            changeHandler={(value) => setRunFrequency(value)}
+            width={"100%"}
+          />
+        </View>
+
+        {/* Estimate 5km */}
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Estimated 5k</Text>
+          <CustomInput
+            placeholder="ex: 1990-09-25"
+            value={estimated5k}
+            changeHandler={(value) => setEstimated5k(value)}
             width={"100%"}
           />
         </View>
