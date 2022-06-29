@@ -42,7 +42,12 @@ const UserProfileEditScreen = ({ navigation }) => {
   const [runFrequency, setRunFrequency] = useState(
     user["profile"]["run_frequency"]
   );
-  const [estimated5k, setEstimated5k] = useState(user["profile"]["estimated5k"]);
+  const [estimated5k, setEstimated5k] = useState(
+    user["profile"]["estimated5k"]
+  );
+  const [estimated10k, setEstimated10k] = useState(
+    user["profile"]["estimated10k"]
+  );
   // const [age, setAge] = useState(mockData.age);
 
   const doneButtonHandler = () => {
@@ -69,7 +74,7 @@ const UserProfileEditScreen = ({ navigation }) => {
         ...{
           username: username,
           email: email,
-          "run_frequency": runFrequency
+          run_frequency: runFrequency,
         },
       });
       navigation.navigate("Profile");
@@ -134,7 +139,7 @@ const UserProfileEditScreen = ({ navigation }) => {
           />
         </View>
 
-        {/* Estimate 5km */}
+        {/* Estimate 5k */}
 
         <View style={styles.field}>
           <Text style={styles.text}>Estimated 5k</Text>
@@ -142,6 +147,18 @@ const UserProfileEditScreen = ({ navigation }) => {
             placeholder="ex: 1990-09-25"
             value={estimated5k}
             changeHandler={(value) => setEstimated5k(value)}
+            width={"100%"}
+          />
+        </View>
+
+        {/* Estimate 10k */}
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Estimated 10k</Text>
+          <CustomInput
+            placeholder="ex: 1990-09-25"
+            value={estimated10k}
+            changeHandler={(value) => setEstimated10k(value)}
             width={"100%"}
           />
         </View>
