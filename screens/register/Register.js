@@ -31,43 +31,53 @@ const Register = () => {
     let inputError = false;
     let alertMessage = "";
 
-    // if (username.length < 5) {
-    //   alertMessage = "The username must be greater than 5 letters";
-    //   inputError = true;
-    // } else if (email === "") {
-    //   alertMessage = "Cannot have an empty field";
-    //   inputError = true;
-    // } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-    //   alertMessage =
-    //     "The email does not look right. Did you type it correctly?";
-    //   inputError = true;
-    // } else if (password.length < 9) {
-    //   alertMessage = "The password must be 9 or more characters";
-    //   inputError = true;
-    // } else if (password !== secondPassword) {
-    //   alertMessage = "Passwords do not match";
-    //   inputError = true;
-    // } else if (password === "" || secondPassword === "") {
-    //   alertMessage = "Cannot have an empty password";
-    //   inputError = true;
-    // }
+    if (username.length < 5) {
+      alertMessage = "The username must be greater than 5 letters";
+      inputError = true;
+    } else if (email === "") {
+      alertMessage = "Cannot have an empty field";
+      inputError = true;
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      alertMessage =
+        "The email does not look right. Did you type it correctly?";
+      inputError = true;
+    } else if (password.length < 9) {
+      alertMessage = "The password must be 9 or more characters";
+      inputError = true;
+    } else if (password !== secondPassword) {
+      alertMessage = "Passwords do not match";
+      inputError = true;
+    } else if (password === "" || secondPassword === "") {
+      alertMessage = "Cannot have an empty password";
+      inputError = true;
+    }
 
-    // if (inputError) {
-    //   Alert.alert("Try again!", alertMessage, [
-    //     {
-    //       text: "Cancel",
-    //       style: "cancel",
-    //     },
-    //     { text: "OK" },
-    //   ]);
-    // } else {
-    //   // Mockdata logic. Leave as a reference until backend endpoints are fully ready
-    //   // setUser({ id: 2, username: "WayneWadeRuns" });
-    //   // navigation.navigate("SignIn", { screen: "Home" });
-
-    //   navigation.navigate("RegisterExtraInfo", { username, email, password });
-    // }
-    navigation.navigate("RegisterExtraInfo", { username, email, password });
+    if (inputError) {
+      Alert.alert("Try again!", alertMessage, [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "OK" },
+      ]);
+    } else {
+      // Mockdata logic. Leave as a reference until backend endpoints are fully ready
+      // setUser({ id: 2, username: "WayneWadeRuns" });
+      // navigation.navigate("SignIn", { screen: "Home" });
+      try {
+        const user = { username, email, password };
+        createUser(user);
+        navigation.navigate("RegisterExtraInfo", { username, email, password });
+      } catch (error) {
+        Alert.alert("Error", e.response.data.detail, [
+          {
+            text: "OK",
+            onPress: () => null,
+            style: "cancel",
+          },
+        ]);
+      }
+    }
   };
 
   const handleUsername = (text) => {

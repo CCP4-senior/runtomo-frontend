@@ -15,7 +15,7 @@ import DatePicker from "../event-creation/DatePicker.js";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
-  const { setUser, createUser } = useContext(AuthContext);
+  const { user, createUserProfile, idForProfile } = useContext(AuthContext);
 
   const { username, email, password } = route.params;
 
@@ -28,13 +28,6 @@ const RegisterExtraInfo = ({ route }) => {
   const [timesPerWeek, setTimesPerWeek] = useState("");
 
   const handlePress = () => {
-    const obj = {
-      date: date,
-      timesPerWeek: timesPerWeek,
-      estimated5k: estimated5k,
-      estimated10k: estimated10k,
-    };
-
     // age validation
     if (!date) {
       return alert("Please enter date of birth");
@@ -56,8 +49,20 @@ const RegisterExtraInfo = ({ route }) => {
     if (!estimated10k) {
       return alert("Please select estimated 10k time");
     }
+    const formattedDate = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()}`;
+    const userProfileData = {
+      date_of_birth: formattedDate,
+      run_frequency: timesPerWeek,
+      estimated5k: estimated5k,
+      estimated10k: estimated10k,
+      userId: idForProfile,
+      email: email,
+      password: password,
+    };
 
-    console.log(obj);
+    createUserProfile(userProfileData);
   };
 
   const handleTPWBtnClick = (buttonValue) => {
@@ -375,7 +380,7 @@ const RegisterExtraInfo = ({ route }) => {
           }}
           onPress={() => handlePress()}
         >
-          Continue
+          Add Info
         </Button>
       </View>
     </SafeAreaView>
