@@ -205,7 +205,7 @@ const EventDetailsScreen = ({ navigation }) => {
                   />
                   <View style={styles.listContent}>
                     <Text style={styles.boldText}>
-                      {eventData.ward || "Non 23 ward"}
+                      {eventData.ward || "Other"}
                     </Text>
                     <Text>View map</Text>
                   </View>

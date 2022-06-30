@@ -39,7 +39,7 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
         )}
         <Card.Content>
           <Text style={styles.title}>{event.title}</Text>
-          <Text style={styles.ward}>{event.ward || "Non 23 ward"}</Text>
+          <Text style={styles.ward}>{event.ward || "Other"}</Text>
           <Text style={styles.date}>
             {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
           </Text>
