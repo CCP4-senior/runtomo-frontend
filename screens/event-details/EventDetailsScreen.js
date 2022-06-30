@@ -87,7 +87,7 @@ const EventDetailsScreen = ({ navigation }) => {
           user: user,
         }
       );
-      setCurrentEvent({ ...eventData, user: user }); // To be changed when user object is available with event
+      setCurrentEvent({ ...eventData, user: user });
       navigation.navigate("Event Joined");
     } catch (e) {
       console.log(e);

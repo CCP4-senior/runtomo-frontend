@@ -35,9 +35,6 @@ const DataProvider = ({ children }) => {
     try {
       const response = await axiosInstance(`/users/${id}/`);
       setCurrentUser(response.data);
-      console.log("Here is current user data", response.data);
-      // // Mockdata. To be removed
-      // setCreator({ id: 2, username: "wadeRuns", email: "wade@example.com" });
     } catch (e) {
       console.log(e);
     }
@@ -118,7 +115,6 @@ const DataProvider = ({ children }) => {
         dataWithImage.push(event);
       }
       setAllEvents(dataWithImage);
-      console.log(dataWithImage);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
