@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import EventCard from "../../components/EventCard.js";
+import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const ConfirmationScreen = ({ navigation, event, actionType }) => {
+const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
+  const { currentEvent } = useContext(DataContext);
+  const event = currentEvent;
   return (
     <SafeAreaView style={styles.container}>
       <View

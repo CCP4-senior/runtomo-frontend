@@ -17,7 +17,7 @@ import {
   Portal,
   Paragraph,
 } from "react-native-paper";
-import { format, addHours } from "date-fns";
+import { format, addMinutes, addHours } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
@@ -30,14 +30,16 @@ import MapView, {
   PROVIDER_DEFAULT,
 } from "react-native-maps";
 import axiosInstance from "../../helpers/axios.js";
+import StackedAvatars from "./StackedAvatars.js";
 
 const EventDetailsScreen = ({ navigation }) => {
   useEffect(() => {
+    getAllParticipants();
     // getUser(); // Leave as a reference. Case where api call is made to get creator info
   }, []);
 
   const { user } = useContext(AuthContext);
-  const { currentEvent } = useContext(DataContext);
+  const { currentEvent, setCurrentEvent, getUser } = useContext(DataContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
@@ -48,6 +50,9 @@ const EventDetailsScreen = ({ navigation }) => {
     latitude: 35.6828387,
     longitude: 139.7594549,
   });
+  const [participants, setParticipants] = useState([]);
+  const [hasJoined, setHasJoined] = useState(false);
+
   const eventData = currentEvent;
   // Leave as a reference. Case where api call is made to get creator info
   // const [creator, setCreator] = useState({});
@@ -57,44 +62,40 @@ const EventDetailsScreen = ({ navigation }) => {
   const zonedDate = (date, addHours(date, 9));
   const zonedTime = (time, addHours(date, 9));
 
-  const getUser = async () => {
+  const getAllParticipants = async () => {
     try {
-      const response = await axiosInstance(`/users/${eventData.creator}/`);
-      setCreator(response.data);
+      const response = await axiosInstance(`/event_users/${eventData.id}/`);
+      setParticipants(response.data);
+      if (response.data.find((el) => el.user === user.id)) setHasJoined(true);
     } catch (e) {
       console.log(e);
     }
   };
 
-  const openCreatorProfile = () => {
+  // To be modified
+  const openCreatorProfile = async () => {
+    await getUser(eventData.creator.id);
     if (creator.id !== user.id) navigation.navigate("Creator Profile");
-    // To avoid showing femal picture for Wade (current user). To be removed later
     if (creator.id === user.id) navigation.navigate("Profile");
   };
-  const joinEvent = () => {
-    const newData = data.map((event) => {
-      if (event.id === eventData.id) {
-        event.hasJoined = true;
-        event.participants.push(2); // For demo, use wade's id
-
-        () => setCurrEvent(event);
-      }
-      return event;
-    });
-
-    () => setData(newData);
-    navigation.navigate("Event Joined");
+  const joinEvent = async () => {
+    try {
+      const response = await axiosInstance.post(
+        `/event_users/${eventData.id}/`,
+        {
+          event: eventData.id,
+          user: user,
+        }
+      );
+      setCurrentEvent({ ...eventData, user: user });
+      navigation.navigate("Event Joined");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const cancelAttendance = () => {
-    // make API call
-    const newData = data.map((event) => {
-      if (event.id === eventData.id) event.hasJoined = false;
-      event.participants.filter((id) => id !== 2); // For demo, use wade's id
-      () => setCurrEvent(event);
-      return event;
-    });
-    () => setData(newData);
+  const cancelAttendance = async () => {
+    await axiosInstance.delete(`/event_users/${eventData.id}/`);
     setIsAttendanceCancellation(true);
     showDialog();
     setTimeout(() => {
@@ -102,7 +103,6 @@ const EventDetailsScreen = ({ navigation }) => {
     }, 2000);
   };
 
-  // Temporary implemenet for demo (need to be cancelled from the last)
   const cancelEvent = async (id) => {
     await axiosInstance.delete(`/events/${id}/`);
 
@@ -161,22 +161,40 @@ const EventDetailsScreen = ({ navigation }) => {
                 </Text>
               </View>
               <Card.Content style={styles.creatorCard}>
-                <TouchableOpacity
-                  onPress={openCreatorProfile}
-                  style={[styles.listContainer]}
-                >
-                  {!creator?.image && (
-                    <Avatar.Icon
-                      size={40}
-                      icon="account"
-                      style={styles.avatar}
+                <View style={styles.avatarsContainer}>
+                  <TouchableOpacity
+                    onPress={openCreatorProfile}
+                    style={[styles.listContainer]}
+                  >
+                    {!eventData.creator?.image && (
+                      <Avatar.Icon
+                        size={40}
+                        icon="account"
+                        style={styles.avatar}
+                      />
+                    )}
+                    {eventData.creator?.image && (
+                      <Avatar.Image
+                        size={40}
+                        source={eventData.creator.image}
+                      />
+                    )}
+                    <Text style={styles.creatorName}>
+                      {eventData.creator.username}
+                    </Text>
+                  </TouchableOpacity>
+                  <View style={styles.stackedAvatarContainer}>
+                    <StackedAvatars
+                      color={"#007AFF"}
+                      eventId={eventData.id}
+                      // participantsArray={participants}
                     />
-                  )}
-                  {creator?.image && (
-                    <Avatar.Image size={40} source={creator.image} />
-                  )}
-                  <Text style={styles.creatorName}>{creator.username}</Text>
-                </TouchableOpacity>
+                    <Text style={{ color: "#007AFF", ...styles.joinText }}>
+                      Joined
+                    </Text>
+                  </View>
+                </View>
+
                 <Title style={styles.eventTitle}>{eventData.title}</Title>
 
                 <View style={styles.listLine}></View>
@@ -192,7 +210,16 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.boldText}>
                       {format(new Date(zonedDate), "E, MMM d, yyyy")}
                     </Text>
-                    <Text>{format(new Date(zonedTime), "p")}</Text>
+                    <Text>
+                      {format(new Date(zonedTime), "p")} to{" "}
+                      {format(
+                        addMinutes(
+                          new Date(zonedTime),
+                          Number(eventData.running_duration)
+                        ),
+                        "p"
+                      )}
+                    </Text>
                   </View>
                 </View>
 
@@ -207,13 +234,13 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.boldText}>
                       {eventData.ward || "Other"}
                     </Text>
-                    <Text>View map</Text>
+                    <Text>Exact location available upon joining</Text>
                   </View>
                 </View>
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text>{eventData.description}</Text>
+                  <Text>{eventData.description || "Not provided"}</Text>
                 </View>
 
                 <View style={styles.section}>
@@ -254,7 +281,7 @@ const EventDetailsScreen = ({ navigation }) => {
               </Card.Content>
             </Card>
 
-            {creator.id === user.id && (
+            {eventData.creator.id === user.id && (
               <>
                 <LongButton
                   buttonHandler={() => {
@@ -272,7 +299,7 @@ const EventDetailsScreen = ({ navigation }) => {
               </>
             )}
 
-            {!eventData.hasJoined && creator.id !== user.id && (
+            {eventData.creator.id !== user.id && !hasJoined && (
               <LongButton
                 buttonHandler={joinEvent}
                 buttonColor={Color.PrimaryMain}
@@ -280,7 +307,7 @@ const EventDetailsScreen = ({ navigation }) => {
               />
             )}
 
-            {eventData.hasJoined && creator.id !== user.id && (
+            {hasJoined && (
               <>
                 <Text>You've already joined the event!</Text>
                 <LongButton
@@ -401,5 +428,21 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     marginTop: 12,
+  },
+  avatarsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    height: 50,
+    justifyContent: "space-between",
+  },
+  stackedAvatarContainer: {
+    height: 50,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingTop: 15,
+  },
+  joinText: {
+    fontSize: 13,
   },
 });

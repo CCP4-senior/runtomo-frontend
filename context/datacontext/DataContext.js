@@ -17,6 +17,7 @@ const DataProvider = ({ children }) => {
   const [filteredEvents, setFilteredEvents] = useState(null);
   const [isDataFiltered, setIsDataFiltered] = useState(false);
   const [tokyoWards, setTokyoWards] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     initializeApp(firebaseConfig);
@@ -28,6 +29,15 @@ const DataProvider = ({ children }) => {
     const response = await axiosInstance("/wards");
     const tokyo23wardsData = response.data;
     setTokyoWards(tokyo23wardsData);
+  };
+
+  const getUser = async (id) => {
+    try {
+      const response = await axiosInstance(`/users/${id}/`);
+      setCurrentUser(response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
@@ -156,6 +166,8 @@ const DataProvider = ({ children }) => {
     setIsDataFiltered,
     setUserData,
     tokyoWards,
+    getUser,
+    currentUser,
   };
 
   return (
