@@ -17,7 +17,7 @@ import {
   Portal,
   Paragraph,
 } from "react-native-paper";
-import { format } from "date-fns";
+import { format, addHours } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
@@ -33,7 +33,7 @@ import axiosInstance from "../../helpers/axios.js";
 
 const EventDetailsScreen = ({ navigation }) => {
   useEffect(() => {
-    getUser();
+    // getUser(); // Leave as a reference. Case where api call is made to get creator info
   }, []);
 
   const { user } = useContext(AuthContext);
@@ -48,9 +48,14 @@ const EventDetailsScreen = ({ navigation }) => {
     latitude: 35.6828387,
     longitude: 139.7594549,
   });
-  const [creator, setCreator] = useState({});
-
   const eventData = currentEvent;
+  // Leave as a reference. Case where api call is made to get creator info
+  // const [creator, setCreator] = useState({});
+  const [creator, setCreator] = useState(eventData.creator);
+  const date = new Date(eventData.date);
+  const time = new Date(eventData.time);
+  const zonedDate = (date, addHours(date, 9));
+  const zonedTime = (time, addHours(date, 9));
 
   const getUser = async () => {
     try {
@@ -149,10 +154,10 @@ const EventDetailsScreen = ({ navigation }) => {
 
               <View style={styles.label}>
                 <Text style={styles.labelDate}>
-                  {format(new Date(eventData.date), "d")}
+                  {format(new Date(zonedDate), "d")}
                 </Text>
                 <Text style={styles.labelMonth}>
-                  {format(new Date(eventData.date), "MMM")}
+                  {format(new Date(zonedDate), "MMM")}
                 </Text>
               </View>
               <Card.Content style={styles.creatorCard}>
@@ -185,9 +190,9 @@ const EventDetailsScreen = ({ navigation }) => {
                   />
                   <View style={styles.listContent}>
                     <Text style={styles.boldText}>
-                      {format(new Date(eventData.date), "E, MMM d, yyyy")}
+                      {format(new Date(zonedDate), "E, MMM d, yyyy")}
                     </Text>
-                    <Text>{format(new Date(eventData.time), "p")}</Text>
+                    <Text>{format(new Date(zonedTime), "p")}</Text>
                   </View>
                 </View>
 
@@ -199,7 +204,9 @@ const EventDetailsScreen = ({ navigation }) => {
                     style={styles.listIcon}
                   />
                   <View style={styles.listContent}>
-                    <Text style={styles.boldText}>{eventData.ward}</Text>
+                    <Text style={styles.boldText}>
+                      {eventData.ward || "Other"}
+                    </Text>
                     <Text>View map</Text>
                   </View>
                 </View>
