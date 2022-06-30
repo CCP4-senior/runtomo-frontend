@@ -37,9 +37,7 @@ const SettingScreen = ({ navigation }) => {
   };
 
   const openProfileScreen = (eventData) => {
-
     RootNavigation.navigate("Profile");
-
   };
 
   return (
