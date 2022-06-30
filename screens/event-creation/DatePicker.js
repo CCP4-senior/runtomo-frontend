@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { IconButton, List } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
 import CustomInput from "../../components/CustomInput.js";
+import Color from "../../assets/themes/Color.js";
 
 const DatePicker = ({
   setDate,
@@ -32,7 +34,39 @@ const DatePicker = ({
 
   return (
     <View>
-      <CustomInput
+      <TouchableOpacity onPress={showDatePicker}>
+        <List.Item
+          style={styles.mockInput}
+          title={
+            category === "date"
+              ? date === ""
+                ? "Date"
+                : format(new Date(date), "yyyy/MM/d")
+              : time === ""
+              ? "Time"
+              : format(new Date(time), "p")
+          }
+          titleStyle={
+            category === "date"
+              ? date === ""
+                ? styles.titlePlaceholder
+                : styles.titleStyle
+              : time === ""
+              ? styles.titlePlaceholder
+              : styles.titleStyle
+          }
+          right={(props) => (
+            <List.Icon
+              {...props}
+              icon={category === "date" ? "calendar-month" : "clock-outline"}
+              color={Color.Text}
+            />
+          )}
+        />
+      </TouchableOpacity>
+
+      {/* Implementation with CustomInput. Left as a reference */}
+      {/* <CustomInput
         placeholder={category === "date" ? "Date" : "Time"}
         icon={category === "date" ? "calendar-month" : "clock-outline"}
         onFocus={showDatePicker}
@@ -47,7 +81,7 @@ const DatePicker = ({
         submitted={submitted}
         inputRef={inputRef}
         inRegisterForm={inRegisterForm}
-      />
+      /> */}
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode={category === "date" ? "date" : "time"}
@@ -59,3 +93,20 @@ const DatePicker = ({
 };
 
 export default DatePicker;
+
+const styles = StyleSheet.create({
+  mockInput: {
+    borderRadius: 25,
+    width: 165,
+    height: 53,
+    marginTop: 8,
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 10,
+    alignItems: "center",
+    overflow: "visible",
+  },
+  titlePlaceholder: {
+    color: Color.Text,
+  },
+});
