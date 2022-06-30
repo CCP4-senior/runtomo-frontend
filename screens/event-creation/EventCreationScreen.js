@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -20,6 +20,7 @@ import uploadImage from "../../helpers/uploadImage.js";
 import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
+import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
@@ -38,14 +39,16 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
+  const { setCurrentEvent } = useContext(DataContext);
+  const { user } = useContext(AuthContext);
 
   const hideModal = () => {
     setAreaModalVisible(false);
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
+    inputRef.current?.blur();
   };
 
-  // Currently, use the following button handler with static value to avoid sending backend data not accepted in the schema.
   const buttonHandler = async () => {
     try {
       let currentRef;
@@ -55,14 +58,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         setImageRef(currentRef);
       }
 
-      const requiredFields = [
-        title,
-        meetingPoint,
-        // ward,
-        date,
-        time,
-        runningDuration,
-      ];
+      const requiredFields = [title, meetingPoint, date, time, runningDuration];
 
       if (requiredFields.some((field) => field === "")) {
         setSubmitted(true);
@@ -72,18 +68,18 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       const event = {
         title: title,
         location: meetingPoint,
-        // ward: ward,
+        ward: ward?.ward_name || null,
         date: date,
         time: time,
         running_duration: runningDuration.num,
         description: eventDescription,
         image: currentRef,
+        lat: latitude,
+        long: longitude,
       };
 
-      console.log(event);
-
-      const response = await axiosInstance.post("/events/", event);
-      setNewEvent(event);
+      const response = await axiosInstance.post("/events/create_event", event);
+      setCurrentEvent({ ...event, creator: user });
       navigation.navigate("Event Created");
     } catch (e) {
       console.log(e);
@@ -154,12 +150,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               date={date}
               submitted={submitted}
               category="date"
+              inputRef={inputRef}
             />
             <DatePicker
               setTime={setTime}
               time={time}
               submitted={submitted}
               category="time"
+              inputRef={inputRef}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -215,8 +213,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               style={styles.input}
               placeholder="Event Description"
               value={eventDescription}
-              onChangeText={(text) => setEventDescription(text)}
-              // ref={descriptionRef}
+              onChangeText={(text) => {
+                setEventDescription(text);
+                if (text.length === 255) {
+                  alert("Description cannot be exceed 255 character length.");
+                }
+              }}
+              maxLength={255}
+              multiline={true}
             />
           </View>
           <LongButton
