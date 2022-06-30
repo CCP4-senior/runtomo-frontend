@@ -117,6 +117,38 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateUser = async ({ email, password }) => {
+    try {
+      const response = await axiosInstance.post("/auth/jwt/create/", {
+        email: email,
+        password: password,
+      });
+      if (response.status === 200) {
+        const data = response.data;
+        // TODO: user information will be updated dynamically when backend is ready => Done in setUserData in DataContext
+        const userId = jwt_decode(data.access)["user_id"];
+        setUser({ id: userId });
+
+        await SecureStore.setItemAsync(
+          "access_token",
+          JSON.stringify(data.access)
+        );
+        await SecureStore.setItemAsync(
+          "refresh_token",
+          JSON.stringify(data.refresh)
+        );
+      }
+    } catch (e) {
+      Alert.alert("Error", e.response.data.detail, [
+        {
+          text: "OK",
+          onPress: () => null,
+          style: "cancel",
+        },
+      ]);
+    }
+  };
+
  
 
   // DeleteAccount function: to be implemented once endpoint is ready
@@ -133,6 +165,7 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     createUserProfile,
     idForProfile,
+    updateUser
     /*deleteAccount,*/
   };
 
