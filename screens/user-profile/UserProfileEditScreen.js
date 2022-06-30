@@ -82,7 +82,7 @@ const UserProfileEditScreen = ({ navigation }) => {
           },
         },
       });
-
+      console.log('🍎 user Edit:', user);
       updateUser();
       navigation.navigate("Profile");
     }

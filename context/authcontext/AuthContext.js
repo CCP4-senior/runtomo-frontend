@@ -125,7 +125,8 @@ const AuthProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const data = response.data;
-        console.log("🔥 The user was updated correctly!")
+        console.log("🔥 The user was updated correctly!");
+        console.log('🍎 user AuthContext:', user);
         console.log('🍎 data:', data);
       }
     } catch (e) {
