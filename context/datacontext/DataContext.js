@@ -101,6 +101,7 @@ const DataProvider = ({ children }) => {
         dataWithImage.push(event);
       }
       setAllEvents(dataWithImage);
+      console.log(dataWithImage);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);

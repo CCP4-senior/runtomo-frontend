@@ -38,7 +38,7 @@ const EventDetailsScreen = ({ navigation }) => {
   }, []);
 
   const { user } = useContext(AuthContext);
-  const { currentEvent } = useContext(DataContext);
+  const { currentEvent, setCurrentEvent } = useContext(DataContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
@@ -56,8 +56,11 @@ const EventDetailsScreen = ({ navigation }) => {
 
   const getUser = async () => {
     try {
-      const response = await axiosInstance(`/users/${eventData.creator}/`);
-      setCreator(response.data);
+      // const response = await axiosInstance(`/users/${eventData.creator}/`);
+      // setCreator(response.data);
+
+      // Mockdata. To be removed
+      setCreator({ id: 3, username: "kumiko", email: "kumiko@example.com" });
     } catch (e) {
       console.log(e.config.url);
       console.log(e);
@@ -80,19 +83,33 @@ const EventDetailsScreen = ({ navigation }) => {
     // To avoid showing femal picture for Wade (current user). To be removed later
     if (creator.id === user.id) navigation.navigate("Profile");
   };
-  const joinEvent = () => {
-    const newData = data.map((event) => {
-      if (event.id === eventData.id) {
-        event.hasJoined = true;
-        event.participants.push(2); // For demo, use wade's id
+  const joinEvent = async () => {
+    try {
+      console.log(eventData.id, user.id);
+      const response = await axiosInstance.post(
+        `/event_users/${eventData.id}/`,
+        {
+          event: eventData.id,
+          user: user.email,
+        }
+      );
+      setCurrentEvent(response.data.event);
+      // const newData = data.map((event) => {
+      //   if (event.id === eventData.id) {
+      //     event.hasJoined = true;
+      //     event.participants.push(2); // For demo, use wade's id
 
-        () => setCurrEvent(event);
-      }
-      return event;
-    });
+      //     () => setCurrEvent(event);
+      //   }
+      //   return event;
+      // });
 
-    () => setData(newData);
-    navigation.navigate("Event Joined");
+      // () => setData(newData);
+      navigation.navigate("Event Joined");
+    } catch (e) {
+      console.log(e);
+      console.log(e.config);
+    }
   };
 
   const cancelAttendance = () => {
