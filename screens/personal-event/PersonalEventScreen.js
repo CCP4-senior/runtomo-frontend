@@ -10,9 +10,21 @@ import {
 import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
+import { AuthContext } from "../../context/authcontext/AuthContext.js";
+import axiosInstance from "../../helpers/axios.js";
 
 const PersonalEventScreen = ({ navigation }) => {
-  const { createdEvents, setCurrentEvent } = useContext(DataContext);
+  const {
+    createdEvents,
+    setCurrentEvent,
+    allEvents,
+    setCreatedEvents,
+    setJoinedEvents,
+    joinedEvents,
+    userEvents,
+    setUserEvents,
+  } = useContext(DataContext);
+  const { user } = useContext(AuthContext);
   const listTab = [
     {
       status: "All",
@@ -29,38 +41,83 @@ const PersonalEventScreen = ({ navigation }) => {
   const [currentUser, setCurrentUser] = useState({ id: 2 });
   const [status, setStatus] = useState("All");
 
+  const [allUserSessions, setAllUserSessions] = useState([]);
+  const [allUserCreatedSessions, setAllUserCreatedSessions] = useState([]);
+  const [allUserJoinedSessions, setAllUserJoinedSessions] = useState([]);
+
   useEffect(() => {
     if (currentUser) {
+      setSessions();
       handleFilter(status);
     }
   }, []);
 
-  const handleFilter = (status) => {
-    // setStatus(status);
-    if (status === "Created") setMySessions(createdEvents);
-    else setMySessions([]);
+  const setSessions = async () => {
+    const userCreatedSessions = [];
+    const idsForEventUsersRequest = [];
 
-    // Mock data logic. Leave it as a reference.
-    // const userSessions = data.filter((session) => {
-    //   switch (status) {
-    //     case "Created":
-    //       if (session.owner_id === 2) {
-    //         return session;
-    //       }
-    //       break;
-    //     case "Joined":
-    //       if (session.participants.includes(2)) {
-    //         return session;
-    //       }
-    //       break;
-    //     default:
-    //       if (session.owner_id === 2 || session.participants.includes(2)) {
-    //         return session;
-    //       }
-    //       break;
-    //   }
-    // });
-    // setMySessions(userSessions);
+    allEvents.forEach((event) => {
+      if (event.creator.id === user.id) {
+        userCreatedSessions.push(event);
+      }
+      idsForEventUsersRequest.push(event.id);
+      // Implement logic for participating events
+    });
+    // handle Joined sessions
+    const userJoinedSessions = await handleJoinedSessions(
+      idsForEventUsersRequest
+    );
+
+    const userAllSessions = [...userCreatedSessions, ...userJoinedSessions];
+
+    setAllUserSessions(userAllSessions);
+    setAllUserCreatedSessions(userCreatedSessions);
+    setAllUserJoinedSessions(userJoinedSessions);
+    /*Initial load*/
+    setMySessions(userAllSessions);
+  };
+
+  const handleJoinedSessions = async (idArray) => {
+    const idOfEventsJoined = [];
+    for (const id of idArray) {
+      try {
+        const response = await axiosInstance(`/event_users/${id}/`);
+        const data = response.data;
+        if (data.length > 0) {
+          for (const eventDetail of data) {
+            if (eventDetail.user === user.id) {
+              idOfEventsJoined.push(id);
+              break;
+            }
+          }
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    const result = allEvents.filter((event) => {
+      return idOfEventsJoined.includes(event.id);
+    });
+
+    return result;
+  };
+
+  const handleFilter = (status) => {
+    switch (status) {
+      case "Created":
+        setMySessions(allUserCreatedSessions);
+        setStatus(status);
+        break;
+      case "Joined":
+        setMySessions(allUserJoinedSessions);
+        setStatus(status);
+        break;
+      default:
+        setMySessions(allUserSessions);
+        setStatus(status);
+        break;
+    }
   };
 
   const selectEvent = (eventData) => {

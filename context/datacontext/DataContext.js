@@ -3,6 +3,7 @@ import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
 import { getStorage, ref } from "firebase/storage";
 import firebaseConfig from "../../firebase.js";
+import firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 
 const DataContext = createContext();
@@ -12,6 +13,7 @@ const DataProvider = ({ children }) => {
   const [allEvents, setAllEvents] = useState([]);
   const [createdEvents, setCreatedEvents] = useState([]);
   const [joinedEvents, setJoinedEvents] = useState([]);
+  const [userEvents, setUserEvents] = useState([]);
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(null);
@@ -21,7 +23,6 @@ const DataProvider = ({ children }) => {
   useEffect(() => {
     initializeApp(firebaseConfig);
     getWards();
-    getCreatedEventsData();
   }, []);
 
   const getWards = async () => {
@@ -64,7 +65,6 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
-      console.log(response.data);
 
       setUser({
         ...user,
@@ -80,9 +80,7 @@ const DataProvider = ({ children }) => {
 
   const downloadImage = async (imageRef) => {
     const storage = getStorage();
-
     const pathReference = ref(storage, imageRef);
-
     const url = await getDownloadURL(pathReference);
     return url;
   };
@@ -105,19 +103,6 @@ const DataProvider = ({ children }) => {
         dataWithImage.push(event);
       }
       setAllEvents(dataWithImage);
-    } catch (e) {
-      alert("Something went wrong. Please try again");
-      console.log(e);
-    }
-  };
-
-  const getCreatedEventsData = async () => {
-    try {
-      const userId = 2; // To be removed and replaced with actual user id
-      const response = await axiosInstance(`/events/user/${userId}/events/`);
-      const data = response.data;
-      const paddedData = data.map(paddData); // To be removed
-      setCreatedEvents(paddedData); // To be changed to just "data"
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
@@ -148,7 +133,6 @@ const DataProvider = ({ children }) => {
     eventId,
     setEventId,
     getAllEventsData,
-    getCreatedEventsData,
     getCurrentEventData,
     setFilteredEvents,
     filteredEvents,
@@ -156,6 +140,11 @@ const DataProvider = ({ children }) => {
     setIsDataFiltered,
     setUserData,
     tokyoWards,
+    userEvents,
+    setUserEvents,
+    setCreatedEvents,
+    joinedEvents,
+    setJoinedEvents,
   };
 
   return (
