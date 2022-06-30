@@ -11,7 +11,8 @@ const DatePicker = ({
   setTime,
   submitted,
   category,
-  inputRef,
+  inRegisterForm,
+  overWriteWidth,
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -41,9 +42,10 @@ const DatePicker = ({
               : format(new Date(time), "p")
             : ""
         }
-        width={160}
+        width={overWriteWidth ? overWriteWidth : 160}
         submitted={submitted}
         inputRef={inputRef}
+        inRegisterForm={inRegisterForm}
       />
       <DateTimePickerModal
         isVisible={isDatePickerVisible}

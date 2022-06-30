@@ -11,6 +11,7 @@ const CustomInput = ({
   changeHandler,
   submitted,
   inputRef,
+  inRegisterForm,
 }) => {
   return (
     <TextInput
@@ -33,7 +34,10 @@ const CustomInput = ({
             : Color.PrimaryMain,
         },
       }}
-      style={{ backgroundColor: "#fff", width: width || 335 }}
+      style={{
+        backgroundColor: inRegisterForm ? Color.GrayMedium : "#fff",
+        width: width || 335,
+      }}
       value={value}
       onChangeText={changeHandler}
       onFocus={onFocus}
