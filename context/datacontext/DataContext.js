@@ -83,7 +83,7 @@ const DataProvider = ({ children }) => {
         ...user,
         ...response.data,
         age: mockData.age, //To be updated to use backend data
-        runnerType: mockData.runnerType, //To be updated to use backend data
+        // runnerType: mockData.runnerType, //To be updated to use backend data
       });
     } catch (e) {
       alert("Something went wrong. Please try again!");
