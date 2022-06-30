@@ -117,17 +117,21 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateUser = async () => {
+  const updateUser = async (userUpdates) => {
     try {
+      console.log("🔥 ----------- update User START!");
+      // console.log('🍎 userUpdates in AuthContext:', userUpdates);
+
       const profileId = user["profile"]["id"];
       const response = await axiosInstance.patch(`/users/profile/${profileId}`, {
-        ...user["profile"]
+        ...userUpdates
       });
       if (response.status === 200) {
         const data = response.data;
-        console.log("🔥 The user was updated correctly!");
-        console.log('🍎 user AuthContext:', user);
-        console.log('🍎 data:', data);
+        
+        // console.log('🍎 user AuthContext:', user);
+        // console.log('🍎 data:', data);
+        console.log("🔥 ----------- update User END");
       }
     } catch (e) {
       console.log("updateUser() did not work correctly.")

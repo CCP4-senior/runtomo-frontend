@@ -66,24 +66,48 @@ const UserProfileEditScreen = ({ navigation }) => {
     if (inputError) {
       alert(alertMessage);
     } else {
-      setUser({
-        ...user,
-        ...{
-          username: username,
-          email: email,
-          profile: {
-            ...user.profile,
-            ...{
-              date_of_birth: dateOfBirth,
-              run_frequency: runFrequency,
-              estimated5k: estimated5k,
-              estimated10k: estimated10k,
-            },
+
+      const userUpdates = {
+        username: username,
+        email: email,
+        profile: {
+          ...user.profile,
+          ...{
+            date_of_birth: dateOfBirth,
+            run_frequency: runFrequency,
+            estimated5k: estimated5k,
+            estimated10k: estimated10k,
           },
         },
+      };
+
+      setUser({
+        ...user,
+        ...userUpdates
       });
-      console.log('🍎 user Edit:', user);
-      updateUser();
+
+      // Backup
+      // setUser({
+      //   ...user,
+      //   ...{
+      //     username: username,
+      //     email: email,
+      //     profile: {
+      //       ...user.profile,
+      //       ...{
+      //         date_of_birth: dateOfBirth,
+      //         run_frequency: runFrequency,
+      //         estimated5k: estimated5k,
+      //         estimated10k: estimated10k,
+      //       },
+      //     },
+      //   },
+      // });
+
+
+      // console.log('🍎 user Edit:', user);
+      console.log('🍎 userUpdates:', userUpdates);
+      updateUser(userUpdates);
       navigation.navigate("Profile");
     }
   };
