@@ -16,7 +16,6 @@ import { TouchableOpacity } from "react-native-web";
 
 const UserProfileScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
-  console.log("🍎 user:", user);
 
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);

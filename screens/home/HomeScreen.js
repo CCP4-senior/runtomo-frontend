@@ -30,7 +30,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
-      console.log('🍎 user:', user);
       setUserData(user.id);
     }
   }, []);
