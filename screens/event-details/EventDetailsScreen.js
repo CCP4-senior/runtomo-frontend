@@ -50,7 +50,6 @@ const EventDetailsScreen = ({ navigation }) => {
     latitude: 35.6828387,
     longitude: 139.7594549,
   });
-  const [creator, setCreator] = useState({});
   const [participants, setParticipants] = useState([]);
   const [hasJoined, setHasJoined] = useState(false);
 
@@ -60,9 +59,8 @@ const EventDetailsScreen = ({ navigation }) => {
     try {
       // const response = await axiosInstance(`/users/${eventData.creator}/`);
       // setCreator(response.data);
-
-      // Mockdata. To be removed
-      setCreator({ id: 2, username: "wadeRuns", email: "wade@example.com" });
+      // // Mockdata. To be removed
+      // setCreator({ id: 2, username: "wadeRuns", email: "wade@example.com" });
     } catch (e) {
       console.log(e.config.url);
       console.log(e);
@@ -94,7 +92,7 @@ const EventDetailsScreen = ({ navigation }) => {
           user: user,
         }
       );
-      setCurrentEvent({ ...eventData, user: creator }); // To be changed when user object is available with event
+      setCurrentEvent(eventData); // To be changed when user object is available with event
       navigation.navigate("Event Joined");
     } catch (e) {
       console.log(e);
@@ -172,17 +170,19 @@ const EventDetailsScreen = ({ navigation }) => {
                   onPress={openCreatorProfile}
                   style={[styles.listContainer]}
                 >
-                  {!creator?.image && (
+                  {!eventData.creator?.image && (
                     <Avatar.Icon
                       size={40}
                       icon="account"
                       style={styles.avatar}
                     />
                   )}
-                  {creator?.image && (
-                    <Avatar.Image size={40} source={creator.image} />
+                  {eventData.creator?.image && (
+                    <Avatar.Image size={40} source={eventData.creator.image} />
                   )}
-                  <Text style={styles.creatorName}>{creator.username}</Text>
+                  <Text style={styles.creatorName}>
+                    {eventData.creator.username}
+                  </Text>
                 </TouchableOpacity>
 
                 <StackedAvatars />
@@ -225,7 +225,7 @@ const EventDetailsScreen = ({ navigation }) => {
                     />
                     <View style={styles.listContent}>
                       <Text style={styles.boldText}>{eventData.ward}</Text>
-                      <Text>Location available upon joining</Text>
+                      <Text>Exact location available upon joining</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -273,7 +273,7 @@ const EventDetailsScreen = ({ navigation }) => {
               </Card.Content>
             </Card>
 
-            {creator.id === user.id && (
+            {eventData.creator.id === user.id && (
               <>
                 <LongButton
                   buttonHandler={() => {
@@ -291,7 +291,7 @@ const EventDetailsScreen = ({ navigation }) => {
               </>
             )}
 
-            {!hasJoined && (
+            {eventData.creator.id !== user.id && !hasJoined && (
               <LongButton
                 buttonHandler={joinEvent}
                 buttonColor={Color.PrimaryMain}
