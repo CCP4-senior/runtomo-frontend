@@ -14,6 +14,7 @@ import {
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import Color from "../../assets/themes/Color.js";
 import * as RootNavigation from "../../navigations/RootNavigator.js";
+import axiosInstance from "../../helpers/axios.js";
 
 const SettingScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
@@ -28,9 +29,14 @@ const SettingScreen = ({ navigation }) => {
   const removeAccount = () => {
     showDialog();
   };
-  const deleteAccount = () => {
-    setDialogType("deleted");
-    setTimeout(() => setUser(""), 5000);
+  const deleteAccount = async () => {
+    try {
+      setDialogType("deleted");
+      setTimeout(() => setUser(""), 3000);
+      await axiosInstance.delete(`/auth/delete`);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const signOut = () => {
     signOutUser();
