@@ -61,6 +61,10 @@ const UserProfileEditScreen = ({ navigation }) => {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
+    } if (isNaN(Date.parse(dateOfBirth))) {
+      alertMessage =
+        "The date must be in the YYYY-MM-DD format!";
+      inputError = true;
     }
 
     if (inputError) {
