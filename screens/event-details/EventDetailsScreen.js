@@ -51,6 +51,7 @@ const EventDetailsScreen = ({ navigation }) => {
   });
   const [creator, setCreator] = useState({});
   const [participants, setParticipants] = useState([]);
+  const [hasJoined, setHasJoined] = useState(false);
 
   const eventData = currentEvent;
 
@@ -60,7 +61,7 @@ const EventDetailsScreen = ({ navigation }) => {
       // setCreator(response.data);
 
       // Mockdata. To be removed
-      setCreator({ id: 3, username: "kumiko", email: "kumiko@example.com" });
+      setCreator({ id: 2, username: "wadeRuns", email: "wade@example.com" });
     } catch (e) {
       console.log(e.config.url);
       console.log(e);
@@ -70,14 +71,14 @@ const EventDetailsScreen = ({ navigation }) => {
   const getAllParticipants = async () => {
     try {
       const response = await axiosInstance(`/event_users/${eventData.id}/`);
-      console.log(response.data);
       setParticipants(response.data);
+      if (response.data.find((el) => el.user === user.id)) setHasJoined(true);
     } catch (e) {
-      console.log(e.config);
       console.log(e);
     }
   };
 
+  // To be modified
   const openCreatorProfile = () => {
     if (creator.id !== user.id) navigation.navigate("Creator Profile");
     // To avoid showing femal picture for Wade (current user). To be removed later
@@ -85,7 +86,6 @@ const EventDetailsScreen = ({ navigation }) => {
   };
   const joinEvent = async () => {
     try {
-      console.log(eventData.id, user.id);
       const response = await axiosInstance.post(
         `/event_users/${eventData.id}/`,
         {
@@ -93,24 +93,15 @@ const EventDetailsScreen = ({ navigation }) => {
           user: user,
         }
       );
-      console.log(response.data);
       setCurrentEvent({ ...eventData, user: creator }); // To be changed when user object is available with event
       navigation.navigate("Event Joined");
     } catch (e) {
       console.log(e);
-      console.log(e.config);
     }
   };
 
-  const cancelAttendance = () => {
-    // make API call
-    const newData = data.map((event) => {
-      if (event.id === eventData.id) event.hasJoined = false;
-      event.participants.filter((id) => id !== 2); // For demo, use wade's id
-      () => setCurrEvent(event);
-      return event;
-    });
-    () => setData(newData);
+  const cancelAttendance = async () => {
+    await axiosInstance.delete(`/event_users/${eventData.id}/`);
     setIsAttendanceCancellation(true);
     showDialog();
     setTimeout(() => {
@@ -118,7 +109,6 @@ const EventDetailsScreen = ({ navigation }) => {
     }, 2000);
   };
 
-  // Temporary implemenet for demo (need to be cancelled from the last)
   const cancelEvent = async (id) => {
     await axiosInstance.delete(`/events/${id}/`);
 
@@ -286,7 +276,7 @@ const EventDetailsScreen = ({ navigation }) => {
               </>
             )}
 
-            {!eventData.hasJoined && creator.id !== user.id && (
+            {!hasJoined && (
               <LongButton
                 buttonHandler={joinEvent}
                 buttonColor={Color.PrimaryMain}
@@ -294,7 +284,7 @@ const EventDetailsScreen = ({ navigation }) => {
               />
             )}
 
-            {eventData.hasJoined && creator.id !== user.id && (
+            {hasJoined && (
               <>
                 <Text>You've already joined the event!</Text>
                 <LongButton
