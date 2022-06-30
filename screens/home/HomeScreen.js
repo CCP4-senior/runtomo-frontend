@@ -42,8 +42,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     }, [])
   );
 
-  const [url, setUrl] = useState("");
-
   const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
   /* modal */

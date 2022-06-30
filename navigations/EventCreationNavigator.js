@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import EventCreationScreen from "../screens/event-creation/EventCreationScreen";
 import ConfirmationScreen from "../screens/confirmation/ConfirmationScreen";
@@ -9,6 +9,7 @@ import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen
 import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
 import HomeScreen from "../screens/home/HomeScreen";
+import { DataContext } from "../context/datacontext/DataContext";
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,7 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
     runningDuration: "",
     eventDescription: "",
   });
-  const [newEvent, setNewEvent] = useState(initialEvent);
+  // const [newEvent, setNewEvent] = useState(initialEvent);
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -32,7 +33,6 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
         {(props) => (
           <EventCreationScreen
             {...props}
-            newEvent={newEvent}
             setNewEvent={setNewEvent}
             setData={setData}
             data={data}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Text,
   View,
@@ -9,19 +9,20 @@ import {
   useWindowDimensions,
 } from "react-native";
 
-import { Button } from "react-native-paper";
+import { Avatar, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color";
+import axiosInstance from "../../helpers/axios";
+import { DataContext } from "../../context/datacontext/DataContext";
 
-
-const PublicProfileScreen = ({ navigation, user }) => {
-
-
+const PublicProfileScreen = ({ navigation /*user*/ /*userId*/ }) => {
+  const { getUser, currentUser } = useContext(DataContext);
   const { height } = useWindowDimensions();
   const [imageUrl, setImageUrl] = useState("wade.png");
 
   const userData = {
-    username: user.username,
-    age: user.age,
+    ...currentUser,
+    // username: currentUser.username,
+    // age: currentUser.age,
     runnerType: ["avid", "social"],
   };
 
@@ -35,11 +36,20 @@ const PublicProfileScreen = ({ navigation, user }) => {
           source={require("../../assets/images/backgroundProfile2.jpg")}
           resizeMode="cover"
         >
-          <Image
-            style={[styles.profilePicture, { height: height * 0.3 }]}
-            source={user.image}
-            resizeMode="contain"
-          />
+          {userData.image && (
+            <Image
+              style={[styles.profilePicture, { height: height * 0.3 }]}
+              source={require("../../assets/images/demo/wade.png")}
+              resizeMode="contain"
+            />
+          )}
+          {!userData.image && (
+            <Avatar.Icon
+              style={[styles.profilePicture, { height: height * 0.3 }]}
+              icon="account"
+              size={250}
+            />
+          )}
         </ImageBackground>
       </View>
       <View style={styles.userInfoContainer}>
@@ -64,7 +74,7 @@ const PublicProfileScreen = ({ navigation, user }) => {
           })}
         </View>
         <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Age: {userData.age}</Text>
+          <Text style={styles.userDataFont}>Age: {userData.profile.age}</Text>
         </View>
       </View>
     </SafeAreaView>
