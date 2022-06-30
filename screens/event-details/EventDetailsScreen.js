@@ -30,6 +30,7 @@ import MapView, {
   PROVIDER_DEFAULT,
 } from "react-native-maps";
 import axiosInstance from "../../helpers/axios.js";
+import StackedAvatars from "./StackedAvatars.js";
 
 const EventDetailsScreen = ({ navigation }) => {
   useEffect(() => {
@@ -183,6 +184,9 @@ const EventDetailsScreen = ({ navigation }) => {
                   )}
                   <Text style={styles.creatorName}>{creator.username}</Text>
                 </TouchableOpacity>
+
+                <StackedAvatars />
+
                 <Title style={styles.eventTitle}>{eventData.title}</Title>
 
                 <View style={styles.listLine}></View>
@@ -211,18 +215,20 @@ const EventDetailsScreen = ({ navigation }) => {
                   </View>
                 </View>
 
-                <View style={styles.listContainer}>
-                  <Avatar.Icon
-                    color={Color.White}
-                    size={40}
-                    icon="map-marker"
-                    style={styles.listIcon}
-                  />
-                  <View style={styles.listContent}>
-                    <Text style={styles.boldText}>{eventData.ward}</Text>
-                    <Text>View map</Text>
+                <TouchableOpacity onPress={() => console.log("pressed")}>
+                  <View style={styles.listContainer}>
+                    <Avatar.Icon
+                      color={Color.White}
+                      size={40}
+                      icon="map-marker"
+                      style={styles.listIcon}
+                    />
+                    <View style={styles.listContent}>
+                      <Text style={styles.boldText}>{eventData.ward}</Text>
+                      <Text>Location available upon joining</Text>
+                    </View>
                   </View>
-                </View>
+                </TouchableOpacity>
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Description:</Text>
