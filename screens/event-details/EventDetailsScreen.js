@@ -39,7 +39,7 @@ const EventDetailsScreen = ({ navigation }) => {
   }, []);
 
   const { user } = useContext(AuthContext);
-  const { currentEvent, setCurrentEvent } = useContext(DataContext);
+  const { currentEvent, setCurrentEvent, getUser } = useContext(DataContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
@@ -62,18 +62,6 @@ const EventDetailsScreen = ({ navigation }) => {
   const zonedDate = (date, addHours(date, 9));
   const zonedTime = (time, addHours(date, 9));
 
-  const getUser = async () => {
-    try {
-      // const response = await axiosInstance(`/users/${eventData.creator}/`);
-      // setCreator(response.data);
-      // // Mockdata. To be removed
-      // setCreator({ id: 2, username: "wadeRuns", email: "wade@example.com" });
-    } catch (e) {
-      console.log(e.config.url);
-      console.log(e);
-    }
-  };
-
   const getAllParticipants = async () => {
     try {
       const response = await axiosInstance(`/event_users/${eventData.id}/`);
@@ -85,9 +73,9 @@ const EventDetailsScreen = ({ navigation }) => {
   };
 
   // To be modified
-  const openCreatorProfile = () => {
+  const openCreatorProfile = async () => {
+    await getUser(eventData.creator.id);
     if (creator.id !== user.id) navigation.navigate("Creator Profile");
-    // To avoid showing femal picture for Wade (current user). To be removed later
     if (creator.id === user.id) navigation.navigate("Profile");
   };
   const joinEvent = async () => {
@@ -99,7 +87,7 @@ const EventDetailsScreen = ({ navigation }) => {
           user: user,
         }
       );
-      setCurrentEvent(eventData); // To be changed when user object is available with event
+      setCurrentEvent({ ...eventData, user: user }); // To be changed when user object is available with event
       navigation.navigate("Event Joined");
     } catch (e) {
       console.log(e);
@@ -196,7 +184,14 @@ const EventDetailsScreen = ({ navigation }) => {
                     </Text>
                   </TouchableOpacity>
                   <View style={styles.stackedAvatarContainer}>
-                    <StackedAvatars color={"#007AFF"} />
+                    <StackedAvatars
+                      color={"#007AFF"}
+                      eventId={eventData.id}
+                      // participantsArray={participants}
+                    />
+                    <Text style={{ color: "#007AFF", ...styles.joinText }}>
+                      Joined
+                    </Text>
                   </View>
                 </View>
 
@@ -443,7 +438,11 @@ const styles = StyleSheet.create({
   stackedAvatarContainer: {
     height: 50,
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "center",
     paddingTop: 20,
+  },
+  joinText: {
+    fontSize: 13,
   },
 });

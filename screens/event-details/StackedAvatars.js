@@ -3,22 +3,25 @@ import { Text, View, StyleSheet } from "react-native";
 import { Avatar } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 
-const StackedAvatars = ({ /*participants,*/ color, size }) => {
-  const participants = [
-    { id: 1, image: require("../../assets/images/demo/wade.png") },
-    { id: 2, image: null },
-    { id: 3, image: require("../../assets/images/demo/kumiko.png") },
-    { id: 4, image: null },
-    { id: 6, image: null },
-    { id: 8, image: null },
-  ];
+const StackedAvatars = ({ participantsArray, color, size, eventId }) => {
+  let participants = participantsArray;
+  if (!participantsArray) {
+    participants = [
+      { id: 1, image: require("../../assets/images/demo/wade.png") },
+      { id: 2, image: null },
+      { id: 3, image: require("../../assets/images/demo/kumiko.png") },
+      { id: 4, image: null },
+      { id: 6, image: null },
+      { id: 8, image: null },
+    ];
+  }
   const displayedCount = participants.slice(0, 5).length;
   const remainingCount = participants.length - 4;
 
   return (
     <View
       style={{
-        width: size === "small" ? 22 * displayedCount : 26 * displayedCount,
+        width: size === "small" ? 22 * displayedCount : 27 * displayedCount,
         ...styles.avatarContainer,
       }}
     >
@@ -31,9 +34,9 @@ const StackedAvatars = ({ /*participants,*/ color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
+              key={`${person.id}:${eventId}`}
             >
               <View
-                key={person.id}
                 style={
                   size === "small"
                     ? {
@@ -58,6 +61,7 @@ const StackedAvatars = ({ /*participants,*/ color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
+              key={`${person.id}:${eventId}`}
             >
               <Avatar.Image
                 size={size === "small" ? 28 : 33}
@@ -72,6 +76,7 @@ const StackedAvatars = ({ /*participants,*/ color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
+              key={`${person.id}:${eventId}`}
             >
               <Avatar.Icon
                 key={person.id}
@@ -93,6 +98,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     // width: "100%",
+    // backgroundColor: "red",
   },
   outerCircle: {
     borderRadius: 50,

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import StackedAvatars from "../screens/event-details/StackedAvatars";
-import React, { useContext } from "react";
 import { addHours, format } from "date-fns";
 import { DataContext } from "../context/datacontext/DataContext";
 
@@ -48,7 +47,11 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
             </Text>
           </View>
           <View style={styles.rightContent}>
-            <StackedAvatars color={"#11C9BD"} size={"small"} />
+            <StackedAvatars
+              color={"#11C9BD"}
+              size={"small"}
+              eventId={event.id}
+            />
             <Text style={{ color: "#11C9BD", ...styles.joinText }}>Joined</Text>
           </View>
         </Card.Content>
