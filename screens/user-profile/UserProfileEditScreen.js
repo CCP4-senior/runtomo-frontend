@@ -20,7 +20,7 @@ import CustomInput from "../../components/CustomInput";
 import LongButton from "../../components/LongButton";
 
 const UserProfileEditScreen = ({ navigation }) => {
-  const { user, setUser, updateUser } = useContext(AuthContext);
+  const { user, setUser, updateDBUserProfile } = useContext(AuthContext);
   const { height } = useWindowDimensions();
 
   // Todo - Ravi: replace mockData with db data when Users is available
@@ -107,7 +107,7 @@ const UserProfileEditScreen = ({ navigation }) => {
 
       // console.log('🍎 user Edit:', user);
       console.log('🍎 userUpdates:', userUpdates);
-      updateUser(userUpdates);
+      updateDBUserProfile(userUpdates);
       navigation.navigate("Profile");
     }
   };
