@@ -42,7 +42,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     }, [])
   );
 
-  // const data = allEvents; // Remove this line when testing with mock data
   const [url, setUrl] = useState("");
 
   const data = allEvents;
@@ -239,14 +238,12 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    // justifyContent: "center",
     height: 41,
     padding: 0,
   },
   topElement: {
     paddingTop: 0,
     marginTop: 6,
-    // margin: 8,
     width: 165,
     height: 35,
     backgroundColor: Color.GrayDark,

@@ -27,7 +27,6 @@ const DataProvider = ({ children }) => {
   const getWards = async () => {
     const response = await axiosInstance("/wards");
     const tokyo23wardsData = response.data;
-    console.log(tokyo23wardsData);
     setTokyoWards(tokyo23wardsData);
   };
 
@@ -100,10 +99,8 @@ const DataProvider = ({ children }) => {
         }
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
-        console.log(data[i].creator);
       }
       setAllEvents(dataWithImage);
-      console.log(dataWithImage);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
