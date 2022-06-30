@@ -45,9 +45,8 @@ const GoogleSearchModal = ({
         }
       }
     }
-    return tokyo23wards.find(
-      (el) => el.ward_name === wardName || el.ward_name === "Other"
-    );
+    const ward = tokyo23wards.find((el) => el.ward_name === wardName);
+    return ward ? ward : { id: 24, ward_name: "Other" };
   };
 
   const containerStyle = {

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -19,7 +19,8 @@ import axiosInstance from "../../helpers/axios.js";
 import uploadImage from "../../helpers/uploadImage.js";
 import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
-import { zonedTimeToUtc } from "date-fns-tz";
+import { DataContext } from "../../context/datacontext/DataContext.js";
+import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
@@ -38,6 +39,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
+  const { setCurrentEvent } = useContext(DataContext);
+  const { user } = useContext(AuthContext);
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -66,9 +69,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         title: title,
         location: meetingPoint,
         ward: ward?.ward_name || null,
-        // date: zonedTimeToUtc(date, "Asia/Tokyo"),
         date: date,
-        // time: zonedTimeToUtc(time, "Asia/Tokyo"),
         time: time,
         running_duration: runningDuration.num,
         description: eventDescription,
@@ -80,7 +81,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       console.log(event);
 
       const response = await axiosInstance.post("/events/create_event", event);
-      setNewEvent(event);
+      setCurrentEvent({ ...event, creator: user });
       navigation.navigate("Event Created");
     } catch (e) {
       console.log(e.config);

@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
 import { addHours, format } from "date-fns";
+import { DataContext } from "../context/datacontext/DataContext";
 
 const EventCard = ({ event, isHomePageCard, handlePress }) => {
-  // const zonedDate = new Date(event.date);
-  // const zonedTime = new Date(event.time);
+  const { currentEvent } = useContext(DataContext);
+  if (!isHomePageCard) event = currentEvent;
   const date = new Date(event.date);
   const time = new Date(event.time);
   const zonedDate = (date, addHours(date, 9));
   const zonedTime = (time, addHours(date, 9));
-  // console.log(date, time, zonedDate, zonedTime);
   return (
     <Card
       style={[isHomePageCard ? styles.homePageCard : styles.card]}
