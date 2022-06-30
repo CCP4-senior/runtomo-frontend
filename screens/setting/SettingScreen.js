@@ -30,9 +30,9 @@ const SettingScreen = ({ navigation }) => {
     showDialog();
   };
   const deleteAccount = async () => {
-    await axiosInstance.delete(`/users/${user.id}/`);
     setDialogType("deleted");
     setTimeout(() => setUser(""), 3000);
+    await axiosInstance.delete(`/auth/delete`);
   };
   const signOut = () => {
     signOutUser();

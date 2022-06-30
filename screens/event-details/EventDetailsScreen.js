@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: 20,
+    paddingTop: 15,
   },
   joinText: {
     fontSize: 13,
