@@ -17,7 +17,7 @@ import {
   Portal,
   Paragraph,
 } from "react-native-paper";
-import { format } from "date-fns";
+import { format, addMinutes } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
@@ -198,7 +198,16 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.boldText}>
                       {format(new Date(eventData.date), "E, MMM d, yyyy")}
                     </Text>
-                    <Text>{format(new Date(eventData.time), "p")}</Text>
+                    <Text>
+                      {format(new Date(eventData.time), "p")} to{" "}
+                      {format(
+                        addMinutes(
+                          new Date(eventData.time),
+                          Number(eventData.running_duration)
+                        ),
+                        "p"
+                      )}
+                    </Text>
                   </View>
                 </View>
 
