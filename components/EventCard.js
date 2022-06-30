@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
-import { Card, Paragraph, Title } from "react-native-paper";
+import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import { Card } from "react-native-paper";
 import { format } from "date-fns";
+import StackedAvatars from "../screens/event-details/StackedAvatars";
 
 const EventCard = ({ event, isHomePageCard, handlePress }) => {
   return (
@@ -30,13 +31,19 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
             }}
           />
         )}
-        <Card.Content>
-          <Text style={styles.title}>{event.title}</Text>
-          <Text style={styles.ward}>{event.ward}</Text>
-          <Text style={styles.date}>
-            {format(new Date(event.date), "MMM d, yyyy")} at{" "}
-            {format(new Date(event.time), "p")}
-          </Text>
+        <Card.Content style={styles.contentContainer}>
+          <View style={styles.leftContent}>
+            <Text style={styles.title}>{event.title}</Text>
+            <Text style={styles.ward}>{event.ward}</Text>
+            <Text style={styles.date}>
+              {format(new Date(event.date), "MMM d, yyyy")} at{" "}
+              {format(new Date(event.time), "p")}
+            </Text>
+          </View>
+          <View style={styles.rightContent}>
+            <StackedAvatars color={"#11C9BD"} size={"small"} />
+            <Text style={{ color: "#11C9BD", ...styles.joinText }}>Joined</Text>
+          </View>
         </Card.Content>
       </TouchableOpacity>
     </Card>
@@ -75,5 +82,23 @@ const styles = StyleSheet.create({
     paddingLeft: 2,
     fontSize: 12,
     color: "#FA4048",
+  },
+  contentContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  leftContent: {
+    width: "60%",
+  },
+  rightContent: {
+    height: 60,
+    display: "flex",
+    justifyContent: "flex-end",
+    // backgroundColor: "red",
+  },
+  joinText: {
+    fontSize: 13,
+    textAlign: "center",
   },
 });

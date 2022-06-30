@@ -166,26 +166,32 @@ const EventDetailsScreen = ({ navigation }) => {
                 </Text>
               </View>
               <Card.Content style={styles.creatorCard}>
-                <TouchableOpacity
-                  onPress={openCreatorProfile}
-                  style={[styles.listContainer]}
-                >
-                  {!eventData.creator?.image && (
-                    <Avatar.Icon
-                      size={40}
-                      icon="account"
-                      style={styles.avatar}
-                    />
-                  )}
-                  {eventData.creator?.image && (
-                    <Avatar.Image size={40} source={eventData.creator.image} />
-                  )}
-                  <Text style={styles.creatorName}>
-                    {eventData.creator.username}
-                  </Text>
-                </TouchableOpacity>
-
-                <StackedAvatars />
+                <View style={styles.avatarsContainer}>
+                  <TouchableOpacity
+                    onPress={openCreatorProfile}
+                    style={[styles.listContainer]}
+                  >
+                    {!eventData.creator?.image && (
+                      <Avatar.Icon
+                        size={40}
+                        icon="account"
+                        style={styles.avatar}
+                      />
+                    )}
+                    {eventData.creator?.image && (
+                      <Avatar.Image
+                        size={40}
+                        source={eventData.creator.image}
+                      />
+                    )}
+                    <Text style={styles.creatorName}>
+                      {eventData.creator.username}
+                    </Text>
+                  </TouchableOpacity>
+                  <View style={styles.stackedAvatarContainer}>
+                    <StackedAvatars color={"#007AFF"} />
+                  </View>
+                </View>
 
                 <Title style={styles.eventTitle}>{eventData.title}</Title>
 
@@ -215,24 +221,22 @@ const EventDetailsScreen = ({ navigation }) => {
                   </View>
                 </View>
 
-                <TouchableOpacity onPress={() => console.log("pressed")}>
-                  <View style={styles.listContainer}>
-                    <Avatar.Icon
-                      color={Color.White}
-                      size={40}
-                      icon="map-marker"
-                      style={styles.listIcon}
-                    />
-                    <View style={styles.listContent}>
-                      <Text style={styles.boldText}>{eventData.ward}</Text>
-                      <Text>Exact location available upon joining</Text>
-                    </View>
+                <View style={styles.listContainer}>
+                  <Avatar.Icon
+                    color={Color.White}
+                    size={40}
+                    icon="map-marker"
+                    style={styles.listIcon}
+                  />
+                  <View style={styles.listContent}>
+                    <Text style={styles.boldText}>{eventData.ward}</Text>
+                    <Text>Exact location available upon joining</Text>
                   </View>
-                </TouchableOpacity>
+                </View>
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text>{eventData.description}</Text>
+                  <Text>{eventData.description || "Not provided"}</Text>
                 </View>
 
                 <View style={styles.section}>
@@ -420,5 +424,17 @@ const styles = StyleSheet.create({
     width: "100%",
     alignSelf: "center",
     marginTop: 12,
+  },
+  avatarsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    height: 50,
+    justifyContent: "space-between",
+  },
+  stackedAvatarContainer: {
+    height: 50,
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: 20,
   },
 });
