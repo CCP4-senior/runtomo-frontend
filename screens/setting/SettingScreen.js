@@ -37,7 +37,7 @@ const SettingScreen = ({ navigation }) => {
   };
 
   const openProfileScreen = (eventData) => {
-    RootNavigation.navigate("Edit Profile");
+    RootNavigation.navigate("Profile");
   };
 
   return (

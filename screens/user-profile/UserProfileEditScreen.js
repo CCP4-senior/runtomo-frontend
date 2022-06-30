@@ -9,6 +9,8 @@ import {
   useWindowDimensions,
   Button,
   TextInput,
+  FlatList,
+  ScrollView,
 } from "react-native";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import Validation from "../../utils/Validation";
@@ -25,14 +27,25 @@ const UserProfileEditScreen = ({ navigation }) => {
   const mockData = {
     username: user.username,
     email: user.email,
-    age: user.age || 35, // Added to avoid error
-    runnerType: user.runnerType || ["Avid"], // Added to avoid error
+    age: "34",
   };
 
-  const [username, setUsername] = useState(mockData.username);
-  const [email, setEmail] = useState(mockData.email);
-  const [age, setAge] = useState(mockData.age);
-  const [runnerType, setRunnerType] = useState(mockData.runnerType);
+
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [dateOfBirth, setDateOfBirth] = useState(
+    user["profile"]["date_of_birth"]
+  );
+  const [runFrequency, setRunFrequency] = useState(
+    user["profile"]["run_frequency"]
+  );
+  const [estimated5k, setEstimated5k] = useState(
+    user["profile"]["estimated5k"]
+  );
+  const [estimated10k, setEstimated10k] = useState(
+    user["profile"]["estimated10k"]
+  );
+  // const [age, setAge] = useState(mockData.age);
 
   const doneButtonHandler = () => {
     let inputError = false;
@@ -48,24 +61,25 @@ const UserProfileEditScreen = ({ navigation }) => {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
-    } else if (isNaN(age)) {
-      alertMessage = "Did you input age correctly?";
-      inputError = true;
-    } else if (age < 18 || age > 130) {
-      alertMessage = "Your age must be between 18 and 130!";
-      inputError = true;
     }
 
     if (inputError) {
       alert(alertMessage);
     } else {
       setUser({
-        ...mockData,
+        ...user,
         ...{
           username: username,
           email: email,
-          age: age,
-          runnerType: runnerType,
+          profile: {
+            ...user.profile,
+            ...{
+              date_of_birth: dateOfBirth,
+              run_frequency: runFrequency,
+              estimated5k: estimated5k,
+              estimated10k: estimated10k,
+            },
+          },
         },
       });
       navigation.navigate("Profile");
@@ -78,7 +92,7 @@ const UserProfileEditScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         {/* Username */}
 
         <View style={styles.field}>
@@ -99,33 +113,57 @@ const UserProfileEditScreen = ({ navigation }) => {
           <Text style={styles.text}>Email</Text>
 
           <CustomInput
-            placeholder="please input a username"
+            placeholder="ex: cheetah@example.com"
             value={email}
             changeHandler={(value) => setEmail(value)}
             width={"100%"}
           />
         </View>
 
-        {/* Age */}
-        <View style={styles.field}>
-          <Text style={styles.text}>Age</Text>
+        {/* Date of Birth */}
 
+        <View style={styles.field}>
+          <Text style={styles.text}>Date of Birth</Text>
           <CustomInput
-            placeholder="your age"
-            value={age}
-            changeHandler={(value) => setAge(value)}
+            placeholder="ex: 1990-09-25"
+            value={dateOfBirth}
+            changeHandler={(value) => setDateOfBirth(value)}
             width={"100%"}
           />
         </View>
 
-        {/* Runner type */}
-        <View style={styles.field}>
-          <Text style={styles.text}>Runner Type</Text>
+        {/* Run Frequency */}
 
+        <View style={styles.field}>
+          <Text style={styles.text}>Run Frequency / week</Text>
           <CustomInput
-            placeholder="your type of running"
-            value={runnerType.join(", ")}
-            changeHandler={(value) => setRunnerType(value.split(", "))}
+            placeholder="ex: 2-3"
+            value={runFrequency}
+            changeHandler={(value) => setRunFrequency(value)}
+            width={"100%"}
+          />
+        </View>
+
+        {/* Estimate 5k */}
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Estimated 5k</Text>
+          <CustomInput
+            placeholder="ex: 25-30 mins"
+            value={estimated5k}
+            changeHandler={(value) => setEstimated5k(value)}
+            width={"100%"}
+          />
+        </View>
+
+        {/* Estimate 10k */}
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Estimated 10k</Text>
+          <CustomInput
+            placeholder="ex: 55-60 mins"
+            value={estimated10k}
+            changeHandler={(value) => setEstimated10k(value)}
             width={"100%"}
           />
         </View>
@@ -144,7 +182,7 @@ const UserProfileEditScreen = ({ navigation }) => {
             buttonText="Cancel"
           />
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -156,7 +194,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    flex: 1,
     backgroundColor: Color.Fill,
     padding: 30,
     justifyContent: "flex-start",
