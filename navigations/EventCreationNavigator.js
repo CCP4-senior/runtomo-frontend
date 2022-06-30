@@ -23,7 +23,7 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
     runningDuration: "",
     eventDescription: "",
   });
-  // const [newEvent, setNewEvent] = useState(initialEvent);
+  const [newEvent, setNewEvent] = useState(initialEvent);
   const openSetting = () => {
     navigation.navigate("Setting");
   };
