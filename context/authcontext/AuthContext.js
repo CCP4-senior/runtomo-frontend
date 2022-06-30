@@ -117,14 +117,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
- 
-
-  // DeleteAccount function: to be implemented once endpoint is ready
-  // const deleteAccount = async () => {
-  //   await axiosInstance.delete("/api/delete_account", {
-  //   });
-  // };
-
   const contextData = {
     createUser,
     user,
@@ -133,7 +125,6 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     createUserProfile,
     idForProfile,
-    /*deleteAccount,*/
   };
 
   return (
