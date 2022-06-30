@@ -1,9 +1,16 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { Card, Paragraph, Title } from "react-native-paper";
-import { format } from "date-fns";
+import { addHours, format } from "date-fns";
 
 const EventCard = ({ event, isHomePageCard, handlePress }) => {
+  // const zonedDate = new Date(event.date);
+  // const zonedTime = new Date(event.time);
+  const date = new Date(event.date);
+  const time = new Date(event.time);
+  const zonedDate = (date, addHours(date, 9));
+  const zonedTime = (time, addHours(date, 9));
+  // console.log(date, time, zonedDate, zonedTime);
   return (
     <Card
       style={[isHomePageCard ? styles.homePageCard : styles.card]}
@@ -34,8 +41,7 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
           <Text style={styles.title}>{event.title}</Text>
           <Text style={styles.ward}>{event.ward || "Non 23 ward"}</Text>
           <Text style={styles.date}>
-            {format(new Date(event.date), "MMM d, yyyy")} at{" "}
-            {format(new Date(event.time), "p")}
+            {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
           </Text>
         </Card.Content>
       </TouchableOpacity>

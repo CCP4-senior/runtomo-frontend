@@ -19,6 +19,7 @@ import axiosInstance from "../../helpers/axios.js";
 import uploadImage from "../../helpers/uploadImage.js";
 import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
@@ -65,7 +66,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         title: title,
         location: meetingPoint,
         ward: ward?.ward_name || null,
+        // date: zonedTimeToUtc(date, "Asia/Tokyo"),
         date: date,
+        // time: zonedTimeToUtc(time, "Asia/Tokyo"),
         time: time,
         running_duration: runningDuration.num,
         description: eventDescription,
@@ -212,7 +215,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               placeholder="Event Description"
               value={eventDescription}
               onChangeText={(text) => setEventDescription(text)}
-              // ref={descriptionRef}
             />
           </View>
           <LongButton

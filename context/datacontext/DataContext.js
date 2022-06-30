@@ -100,8 +100,10 @@ const DataProvider = ({ children }) => {
         }
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
+        console.log(data[i].creator);
       }
       setAllEvents(dataWithImage);
+      console.log(dataWithImage);
     } catch (e) {
       alert("Something went wrong. Please try again");
       console.log(e);
