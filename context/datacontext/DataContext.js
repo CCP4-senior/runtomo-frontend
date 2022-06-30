@@ -95,7 +95,11 @@ const DataProvider = ({ children }) => {
       for (let i = 0; i < data.length; i++) {
         let imageUrl;
         if (data[i].image) {
-          imageUrl = await downloadImage(data[i].image);
+          // Leave as a reference just in case for now
+          // imageUrl = await downloadImage(data[i].image);
+          imageUrl = `https://firebasestorage.googleapis.com/v0/b/senior-project-8ca2b.appspot.com/o/${encodeURIComponent(
+            data[i].image
+          )}?alt=media`;
         }
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
