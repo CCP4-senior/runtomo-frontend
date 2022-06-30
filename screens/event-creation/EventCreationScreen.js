@@ -214,7 +214,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               style={styles.input}
               placeholder="Event Description"
               value={eventDescription}
-              onChangeText={(text) => setEventDescription(text)}
+              onChangeText={(text) => {
+                setEventDescription(text);
+                if (text.length === 255) {
+                  alert("Description cannot be exceed 255 character length.");
+                }
+              }}
+              maxLength={255}
+              multiline={true}
             />
           </View>
           <LongButton

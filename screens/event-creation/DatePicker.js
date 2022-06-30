@@ -13,6 +13,7 @@ const DatePicker = ({
   category,
   inRegisterForm,
   overWriteWidth,
+  inputRef,
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
