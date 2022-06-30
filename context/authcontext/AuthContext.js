@@ -9,17 +9,68 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
+  const [idForProfile, setIdForProfile] = useState("");
 
   const createUser = async ({ username, email, password }) => {
     try {
-      const response = await axiosInstance.post("/auth/signup/", {
+      await axiosInstance.post("/auth/signup/", {
         username: username.trim(),
         email: email.trim(),
         password: password.trim(),
       });
-      await signInUser({ email, password });
+
+      const response = await axiosInstance.post("/auth/jwt/create/", {
+        email: email,
+        password: password,
+      });
+      if (response.status === 200) {
+        const data = response.data;
+        const userId = jwt_decode(data.access)["user_id"];
+        setIdForProfile(userId);
+        await SecureStore.setItemAsync(
+          "access_token",
+          JSON.stringify(data.access)
+        );
+        await SecureStore.setItemAsync(
+          "refresh_token",
+          JSON.stringify(data.refresh)
+        );
+      }
     } catch (e) {
       alert("Something went wrong. Please try again!");
+    }
+  };
+
+  const createUserProfile = async ({
+    date_of_birth,
+    run_frequency,
+    estimated5k,
+    estimated10k,
+    userId,
+    email,
+    password,
+  }) => {
+    try {
+      const body = {
+        date_of_birth,
+        run_frequency,
+        estimated5k,
+        estimated10k,
+        userId,
+      };
+      const userProfileResponse = await axiosInstance.post(
+        "/users/profile",
+        body
+      );
+      await signInUser({ email, password });
+    } catch (e) {
+      Alert.alert("Error", e.response.data, [
+        {
+          text: "OK",
+          onPress: () => null,
+          style: "cancel",
+        },
+      ]);
     }
   };
 
@@ -31,7 +82,6 @@ const AuthProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const data = response.data;
-
         // TODO: user information will be updated dynamically when backend is ready => Done in setUserData in DataContext
         const userId = jwt_decode(data.access)["user_id"];
         setUser({ id: userId });
@@ -79,6 +129,8 @@ const AuthProvider = ({ children }) => {
     setUser,
     signInUser,
     signOutUser,
+    createUserProfile,
+    idForProfile,
     /*deleteAccount,*/
   };
 
