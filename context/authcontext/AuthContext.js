@@ -117,21 +117,21 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-    const updateDBUserProfile = async (userUpdates) => {
+  const updateDBUserProfile = async (userUpdates) => {
     try {
-
-
       const profileId = user["profile"]["id"];
-      const response = await axiosInstance.patch(`/users/profile/${profileId}`, {
-        ...userUpdates["profile"]
-      });
+      const response = await axiosInstance.patch(
+        `/users/profile/${profileId}`,
+        {
+          ...userUpdates["profile"],
+        }
+      );
       if (response.status === 200) {
         const data = response.data;
-
       }
     } catch (e) {
-      console.log("🍎 updateUser() did not work correctly.")
-      console.log('🍎 erorr for updateUser():', e);
+      console.log("🍎 updateUser() did not work correctly.");
+      console.log("🍎 erorr for updateUser():", e);
       Alert.alert("Error", e.response.data.detail, [
         {
           text: "OK",
@@ -141,8 +141,6 @@ const AuthProvider = ({ children }) => {
       ]);
     }
   };
-
- 
 
   // DeleteAccount function: to be implemented once endpoint is ready
   // const deleteAccount = async () => {
