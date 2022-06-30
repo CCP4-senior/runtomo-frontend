@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import { Modal, Portal } from "react-native-paper";
 /* google config */
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_PLACES_API } from "@env";
+import { DataContext } from "../../context/datacontext/DataContext";
 
 const GoogleSearchModal = ({
   modalVisible,
@@ -19,31 +20,9 @@ const GoogleSearchModal = ({
     longitude: 139.7594549,
   });
 
-  const tokyo23wards = [
-    "Chiyoda",
-    "Bunkyo",
-    "Shinjuku",
-    "Shibuya",
-    "Minato",
-    "Chuo",
-    "Taito",
-    "Toshima",
-    "Nakano",
-    "Suginami",
-    "Setagaya",
-    "Meguro",
-    "Shinagawa",
-    "Ota",
-    "Koto",
-    "Edogawa",
-    "Sumida",
-    "Arakawa",
-    "Katsushika",
-    "Nerima",
-    "Itabashi",
-    "Adachi",
-    "Kita",
-  ];
+  const { tokyoWards } = useContext(DataContext);
+
+  const tokyo23wards = tokyoWards;
 
   const getWard = (address_components, formatted_address) => {
     const filteredData = address_components.filter((component) => {
@@ -55,14 +34,19 @@ const GoogleSearchModal = ({
       wardName = wardName.replace(/\s/g, "");
     } else {
       const splitAddress = formatted_address.replace(/,/g, "").split(" ");
+      if (splitAddress.some((el) => el === "River")) {
+        alert("Location is too broad. Please choose more specific address");
+        throw new Error();
+      }
       for (const item of splitAddress) {
-        if (tokyo23wards.includes(item)) {
+        if (tokyo23wards.some((el) => el.ward_name === item)) {
           wardName = item;
           break;
         }
       }
     }
-    return wardName;
+    const ward = tokyo23wards.find((el) => el.ward_name === wardName);
+    return ward ? ward : { id: 24, ward_name: "Other" };
   };
 
   const containerStyle = {
@@ -87,15 +71,19 @@ const GoogleSearchModal = ({
               rankby: "distance",
             }}
             onPress={(data, details = null) => {
-              const ward = getWard(
-                details.address_components,
-                details.formatted_address
-              );
-              setMeetingPoint(details.formatted_address);
-              setLatitude(details.geometry.location.lat);
-              setLongitude(details.geometry.location.lng);
-              setWard(ward);
-              hideModal();
+              try {
+                const ward = getWard(
+                  details.address_components,
+                  details.formatted_address
+                );
+                setMeetingPoint(details.formatted_address);
+                setLatitude(details.geometry.location.lat);
+                setLongitude(details.geometry.location.lng);
+                setWard(ward);
+                hideModal();
+              } catch (e) {
+                console.log(e);
+              }
             }}
             query={{
               key: `${GOOGLE_PLACES_API}`,
