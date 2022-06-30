@@ -5,8 +5,9 @@ import {
   Text,
   Linking,
   Alert,
+  TouchableOpacity,
 } from "react-native";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { Button, TextInput, Chip } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import Color from "../../assets/themes/Color.js";
@@ -119,7 +120,7 @@ const RegisterExtraInfo = ({ route }) => {
             date={date}
             submitted={submitted}
             category="date"
-            inRegisterForm={true}
+            isInRegisterForm={true}
             overWriteWidth={350}
           />
         </View>

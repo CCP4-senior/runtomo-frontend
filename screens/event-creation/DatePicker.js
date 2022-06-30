@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
 import { IconButton, List } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
@@ -13,7 +13,7 @@ const DatePicker = ({
   setTime,
   submitted,
   category,
-  inRegisterForm,
+  isInRegisterForm,
   overWriteWidth,
   inputRef,
 }) => {
@@ -21,6 +21,7 @@ const DatePicker = ({
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
+    Keyboard.dismiss();
   };
 
   const hideDatePicker = () => {
@@ -33,62 +34,77 @@ const DatePicker = ({
   };
 
   return (
-    <View>
-      <TouchableOpacity onPress={showDatePicker}>
-        <List.Item
-          style={styles.mockInput}
-          title={
-            category === "date"
-              ? date === ""
-                ? "Date"
-                : format(new Date(date), "yyyy/MM/d")
-              : time === ""
-              ? "Time"
-              : format(new Date(time), "p")
-          }
-          titleStyle={
-            category === "date"
-              ? date === ""
-                ? styles.titlePlaceholder
-                : styles.titleStyle
-              : time === ""
-              ? styles.titlePlaceholder
-              : styles.titleStyle
-          }
-          right={(props) => (
-            <List.Icon
-              {...props}
-              icon={category === "date" ? "calendar-month" : "clock-outline"}
-              color={Color.Text}
+    <>
+      {isInRegisterForm === true ? (
+        <View>
+          <CustomInput
+            placeholder={category === "date" ? "Date" : "Time"}
+            icon={category === "date" ? "calendar-month" : "clock-outline"}
+            onFocus={showDatePicker}
+            value={
+              date || time
+                ? category === "date"
+                  ? format(new Date(date), "MMM d, yyyy")
+                  : format(new Date(time), "p")
+                : ""
+            }
+            width={overWriteWidth ? overWriteWidth : 160}
+            submitted={submitted}
+            inputRef={inputRef}
+            inRegisterForm={isInRegisterForm}
+          />
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode={category === "date" ? "date" : "time"}
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+        </View>
+      ) : (
+        <View>
+          <TouchableOpacity onPress={showDatePicker}>
+            <List.Item
+              style={styles.mockInput}
+              title={
+                category === "date"
+                  ? date === ""
+                    ? "Date"
+                    : format(new Date(date), "yyyy/MM/d")
+                  : time === ""
+                  ? "Time"
+                  : format(new Date(time), "p")
+              }
+              titleStyle={
+                category === "date"
+                  ? date === ""
+                    ? styles.titlePlaceholder
+                    : styles.titleStyle
+                  : time === ""
+                  ? styles.titlePlaceholder
+                  : styles.titleStyle
+              }
+              right={(props) => (
+                <List.Icon
+                  {...props}
+                  icon={
+                    category === "date" ? "calendar-month" : "clock-outline"
+                  }
+                  color={Color.Text}
+                />
+              )}
             />
-          )}
-        />
-      </TouchableOpacity>
+          </TouchableOpacity>
 
-      {/* Implementation with CustomInput. Left as a reference */}
-      {/* <CustomInput
-        placeholder={category === "date" ? "Date" : "Time"}
-        icon={category === "date" ? "calendar-month" : "clock-outline"}
-        onFocus={showDatePicker}
-        value={
-          date || time
-            ? category === "date"
-              ? format(new Date(date), "MMM d, yyyy")
-              : format(new Date(time), "p")
-            : ""
-        }
-        width={overWriteWidth ? overWriteWidth : 160}
-        submitted={submitted}
-        inputRef={inputRef}
-        inRegisterForm={inRegisterForm}
-      /> */}
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode={category === "date" ? "date" : "time"}
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-      />
-    </View>
+          {/* Implementation with CustomInput. Left as a reference */}
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode={category === "date" ? "date" : "time"}
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+        </View>
+      )}
+    </>
   );
 };
 
