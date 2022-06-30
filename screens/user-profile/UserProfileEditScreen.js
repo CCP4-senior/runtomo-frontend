@@ -23,13 +23,12 @@ const UserProfileEditScreen = ({ navigation }) => {
   const { user, setUser, updateDBUserProfile } = useContext(AuthContext);
   const { height } = useWindowDimensions();
 
-  // Todo - Ravi: replace mockData with db data when Users is available
+  // leave mockData as a backup option
   const mockData = {
     username: user.username,
     email: user.email,
     age: "34",
   };
-
 
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
@@ -45,7 +44,7 @@ const UserProfileEditScreen = ({ navigation }) => {
   const [estimated10k, setEstimated10k] = useState(
     user["profile"]["estimated10k"]
   );
-  // const [age, setAge] = useState(mockData.age);
+
 
   const doneButtonHandler = () => {
     let inputError = false;
@@ -61,16 +60,15 @@ const UserProfileEditScreen = ({ navigation }) => {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
-    } if (isNaN(Date.parse(dateOfBirth))) {
-      alertMessage =
-        "The date must be in the YYYY-MM-DD format!";
+    }
+    if (isNaN(Date.parse(dateOfBirth))) {
+      alertMessage = "The date must be in the YYYY-MM-DD format!";
       inputError = true;
     }
 
     if (inputError) {
       alert(alertMessage);
     } else {
-
       const userUpdates = {
         username: username,
         email: email,
@@ -87,31 +85,11 @@ const UserProfileEditScreen = ({ navigation }) => {
 
       setUser({
         ...user,
-        ...userUpdates
+        ...userUpdates,
       });
 
-      // Backup
-      // setUser({
-      //   ...user,
-      //   ...{
-      //     username: username,
-      //     email: email,
-      //     profile: {
-      //       ...user.profile,
-      //       ...{
-      //         date_of_birth: dateOfBirth,
-      //         run_frequency: runFrequency,
-      //         estimated5k: estimated5k,
-      //         estimated10k: estimated10k,
-      //       },
-      //     },
-      //   },
-      // });
-
-
-      // console.log('🍎 user Edit:', user);
-      console.log('🍎 userUpdates:', userUpdates);
       updateDBUserProfile(userUpdates);
+
       navigation.navigate("Profile");
     }
   };

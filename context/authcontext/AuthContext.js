@@ -119,8 +119,7 @@ const AuthProvider = ({ children }) => {
 
     const updateDBUserProfile = async (userUpdates) => {
     try {
-      // console.log("🔥 ----------- update User START!");
-      // console.log('🍎 userUpdates in AuthContext:', userUpdates);
+
 
       const profileId = user["profile"]["id"];
       const response = await axiosInstance.patch(`/users/profile/${profileId}`, {
@@ -128,14 +127,11 @@ const AuthProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const data = response.data;
-        
-        // console.log('🍎 user AuthContext:', user);
-        // console.log('🍎 data:', data);
-        // console.log("🔥 ----------- update User END");
+
       }
     } catch (e) {
-      // console.log("updateUser() did not work correctly.")
-      // console.log('🍎 erorr for updateUser():', e);
+      console.log("🍎 updateUser() did not work correctly.")
+      console.log('🍎 erorr for updateUser():', e);
       Alert.alert("Error", e.response.data.detail, [
         {
           text: "OK",
