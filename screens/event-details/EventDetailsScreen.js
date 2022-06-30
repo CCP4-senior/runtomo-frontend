@@ -90,21 +90,11 @@ const EventDetailsScreen = ({ navigation }) => {
         `/event_users/${eventData.id}/`,
         {
           event: eventData.id,
-          user: user.email,
+          user: user,
         }
       );
-      setCurrentEvent(response.data.event);
-      // const newData = data.map((event) => {
-      //   if (event.id === eventData.id) {
-      //     event.hasJoined = true;
-      //     event.participants.push(2); // For demo, use wade's id
-
-      //     () => setCurrEvent(event);
-      //   }
-      //   return event;
-      // });
-
-      // () => setData(newData);
+      console.log(response.data);
+      setCurrentEvent({ ...eventData, user: creator }); // To be changed when user object is available with event
       navigation.navigate("Event Joined");
     } catch (e) {
       console.log(e);

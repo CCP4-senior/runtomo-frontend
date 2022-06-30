@@ -38,6 +38,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
+  const { setCurrentEvent } = useContex(DataContext);
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -83,7 +84,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       console.log(event);
 
       const response = await axiosInstance.post("/events/", event);
-      setNewEvent(event);
+      // setNewEvent(event);
+      setCurrentEvent(event);
       navigation.navigate("Event Created");
     } catch (e) {
       console.log(e);
