@@ -22,7 +22,7 @@ import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
-const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
+const EventEditScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -236,7 +236,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   );
 };
 
-export default EventCreationScreen;
+export default EventEditScreen;
 
 const styles = StyleSheet.create({
   container: {
