@@ -47,11 +47,7 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
             </Text>
           </View>
           <View style={styles.rightContent}>
-            <StackedAvatars
-              color={"#11C9BD"}
-              size={"small"}
-              eventId={event.id}
-            />
+            <StackedAvatars color={"#11C9BD"} size={"small"} />
             <Text style={{ color: "#11C9BD", ...styles.joinText }}>Joined</Text>
           </View>
         </Card.Content>
