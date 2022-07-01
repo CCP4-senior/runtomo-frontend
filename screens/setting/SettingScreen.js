@@ -34,7 +34,7 @@ const SettingScreen = ({ navigation }) => {
       setDialogType("deleted");
       setTimeout(() => {
         setUser("");
-        axiosInstance.delete("/auth/delete");
+        axiosInstance.delete("/auth/delete/");
       }, 4000);
     } catch (e) {
       console.log(e);
