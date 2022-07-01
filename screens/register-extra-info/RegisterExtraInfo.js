@@ -29,74 +29,79 @@ const RegisterExtraInfo = ({ route }) => {
   const [timesPerWeek, setTimesPerWeek] = useState("");
 
   const handlePress = () => {
-    // age validation
-    if (!date) {
-      return alert("Please enter date of birth");
-    }
-    const isAgeValid = validateAge(date);
-
-    if (!isAgeValid) {
-      return alert("You must be at least 18 years old to register.");
-    }
-
-    if (!timesPerWeek) {
-      return alert("Please select running frequency per week");
-    }
-
-    if (!estimated5k) {
-      return alert("Please select estimated 5k time");
-    }
-
-    if (!estimated10k) {
-      return alert("Please select estimated 10k time");
-    }
-    const formattedDate = `${date.getFullYear()}-${
-      date.getMonth() + 1
-    }-${date.getDate()}`;
-    const userProfileData = {
-      date_of_birth: formattedDate,
-      run_frequency: timesPerWeek,
-      estimated5k: estimated5k,
-      estimated10k: estimated10k,
-      userId: idForProfile,
-      email: email,
-      password: password,
-    };
-
-    createUserProfile(userProfileData);
+    navigation.navigate("ProfilePhoto");
   };
 
-  const handleTPWBtnClick = (buttonValue) => {
-    setTimesPerWeek(buttonValue);
-  };
+  // const handlePress = () => {
+  //   // age validation
+  //   if (!date) {
+  //     return alert("Please enter date of birth");
+  //   }
+  //   const isAgeValid = validateAge(date);
 
-  const handle5kBtnClick = (buttonValue) => {
-    setEstimated5k(buttonValue);
-  };
+  //   if (!isAgeValid) {
+  //     return alert("You must be at least 18 years old to register.");
+  //   }
 
-  const handle10BtnClick = (buttonValue) => {
-    setEstimated10k(buttonValue);
-  };
+  //   if (!timesPerWeek) {
+  //     return alert("Please select running frequency per week");
+  //   }
 
-  const validateAge = (userAge) => {
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth() + 1;
-    const userBirthYear = new Date(userAge).getFullYear();
-    const userBirthMonth = new Date(userAge).getMonth() + 1;
+  //   if (!estimated5k) {
+  //     return alert("Please select estimated 5k time");
+  //   }
 
-    // Not accounting for days
+  //   if (!estimated10k) {
+  //     return alert("Please select estimated 10k time");
+  //   }
+  //   const formattedDate = `${date.getFullYear()}-${
+  //     date.getMonth() + 1
+  //   }-${date.getDate()}`;
+  //   const userProfileData = {
+  //     date_of_birth: formattedDate,
+  //     run_frequency: timesPerWeek,
+  //     estimated5k: estimated5k,
+  //     estimated10k: estimated10k,
+  //     userId: idForProfile,
+  //     email: email,
+  //     password: password,
+  //   };
 
-    if (currentYear - userBirthYear < 18) {
-      return false;
-    } else if (currentYear - userBirthYear === 18) {
-      if (currentMonth - userBirthMonth < 0) {
-        return false;
-      }
-      return true;
-    } else {
-      return true;
-    }
-  };
+  //   // createUserProfile(userProfileData);
+  //   navigation.navigate("ProfilePhoto");
+  // };
+
+  // const handleTPWBtnClick = (buttonValue) => {
+  //   setTimesPerWeek(buttonValue);
+  // };
+
+  // const handle5kBtnClick = (buttonValue) => {
+  //   setEstimated5k(buttonValue);
+  // };
+
+  // const handle10BtnClick = (buttonValue) => {
+  //   setEstimated10k(buttonValue);
+  // };
+
+  // const validateAge = (userAge) => {
+  //   const currentYear = new Date().getFullYear();
+  //   const currentMonth = new Date().getMonth() + 1;
+  //   const userBirthYear = new Date(userAge).getFullYear();
+  //   const userBirthMonth = new Date(userAge).getMonth() + 1;
+
+  //   // Not accounting for days
+
+  //   if (currentYear - userBirthYear < 18) {
+  //     return false;
+  //   } else if (currentYear - userBirthYear === 18) {
+  //     if (currentMonth - userBirthMonth < 0) {
+  //       return false;
+  //     }
+  //     return true;
+  //   } else {
+  //     return true;
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.root}>
@@ -367,7 +372,8 @@ const RegisterExtraInfo = ({ route }) => {
       {/* Continue Button */}
 
       <View style={styles.button}>
-        <Button
+        {/* Original implementation for reference */}
+        {/* <Button
           mode="contained"
           uppercase={false}
           color={Color.PrimaryMain}
@@ -382,6 +388,23 @@ const RegisterExtraInfo = ({ route }) => {
           onPress={() => handlePress()}
         >
           Add Info
+        </Button> */}
+
+        <Button
+          mode="contained"
+          uppercase={false}
+          color={Color.PrimaryMain}
+          style={{ borderRadius: 10 }}
+          labelStyle={{
+            fontWeight: "bold",
+            fontSize: 18,
+          }}
+          contentStyle={{
+            padding: 5,
+          }}
+          onPress={() => handlePress()}
+        >
+          Next
         </Button>
       </View>
     </SafeAreaView>

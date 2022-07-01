@@ -74,6 +74,10 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const addProfilePhoto = async () => {
+    console.log("Profile photo added!");
+  };
+
   const signInUser = async ({ email, password }) => {
     try {
       const response = await axiosInstance.post("/auth/jwt/create/", {
@@ -125,6 +129,7 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     createUserProfile,
     idForProfile,
+    addProfilePhoto,
   };
 
   return (
