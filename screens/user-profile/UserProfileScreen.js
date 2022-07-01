@@ -16,12 +16,10 @@ import Color from "../../assets/themes/Color";
 import { TouchableOpacity } from "react-native-web";
 import ProfilePhotoModal from "./ProfilePhotoModal";
 
-
 function getAge(dateString) {
   var ageInMilliseconds = new Date() - new Date(dateString);
-  return Math.floor(ageInMilliseconds/1000/60/60/24/365);
+  return Math.floor(ageInMilliseconds / 1000 / 60 / 60 / 24 / 365);
 }
-
 
 const UserProfileScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
@@ -102,7 +100,6 @@ const UserProfileScreen = ({ navigation }) => {
 
                 {/* Edit Profile button */}
 
-<<<<<<< HEAD
                 {/* <Button
                 onPress={() => navigation.navigate("Edit Profile")}
                 icon="account-edit"
@@ -129,15 +126,13 @@ const UserProfileScreen = ({ navigation }) => {
                   style={{ width: 30 }}
                 />
               </View>
-=======
 
-          {/* Age */}
-          <View style={styles.userDataWrapper}>
-            <Text style={styles.userDataFont}>
-              Age: {getAge(user["profile"]["date_of_birth"])}
-            </Text>
-          </View>
->>>>>>> main
+              {/* Age */}
+              <View style={styles.userDataWrapper}>
+                <Text style={styles.userDataFont}>
+                  Age: {getAge(user["profile"]["date_of_birth"])}
+                </Text>
+              </View>
 
               {/* Date of Birth */}
               <View style={styles.userDataWrapper}>
