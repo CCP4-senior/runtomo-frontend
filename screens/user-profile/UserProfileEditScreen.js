@@ -20,7 +20,8 @@ import CustomInput from "../../components/CustomInput";
 import LongButton from "../../components/LongButton";
 
 const UserProfileEditScreen = ({ navigation }) => {
-  const { user, setUser, updateDBUserProfile } = useContext(AuthContext);
+  const { user, setUser, updateDBUserInfo, updateDBUserProfile } =
+    useContext(AuthContext);
   const { height } = useWindowDimensions();
 
   // leave mockData as a backup option
@@ -44,7 +45,6 @@ const UserProfileEditScreen = ({ navigation }) => {
   const [estimated10k, setEstimated10k] = useState(
     user["profile"]["estimated10k"]
   );
-
 
   const doneButtonHandler = () => {
     let inputError = false;
@@ -88,6 +88,7 @@ const UserProfileEditScreen = ({ navigation }) => {
         ...userUpdates,
       });
 
+      updateDBUserInfo(userUpdates);
       updateDBUserProfile(userUpdates);
 
       navigation.navigate("Profile");

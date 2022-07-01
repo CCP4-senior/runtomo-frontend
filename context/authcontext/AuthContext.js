@@ -117,6 +117,31 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateDBUserInfo = async (userUpdates) => {
+    try {
+      const response = await axiosInstance.patch(
+        "/auth/update/",
+        {
+          email: userUpdates.email,
+          username: userUpdates.username
+        }
+      );
+      if (response.status === 200) {
+        const data = response.data;
+      }
+    } catch (e) {
+      console.log("🍎 updateDBUserInfo() did not work correctly.");
+      console.log("🍎 erorr for updateDBUserInfo():", e);
+      Alert.alert("Error", e.response.data.detail, [
+        {
+          text: "OK",
+          onPress: () => null,
+          style: "cancel",
+        },
+      ]);
+    }
+  };
+
   const updateDBUserProfile = async (userUpdates) => {
     try {
       const profileId = user["profile"]["id"];
@@ -130,8 +155,8 @@ const AuthProvider = ({ children }) => {
         const data = response.data;
       }
     } catch (e) {
-      console.log("🍎 updateUser() did not work correctly.");
-      console.log("🍎 erorr for updateUser():", e);
+      console.log("🍎 updateDBUserProfile() did not work correctly.");
+      console.log("🍎 erorr for updateDBUserProfile():", e);
       Alert.alert("Error", e.response.data.detail, [
         {
           text: "OK",
@@ -156,6 +181,7 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     createUserProfile,
     idForProfile,
+    updateDBUserInfo,
     updateDBUserProfile,
     /*deleteAccount,*/
   };
