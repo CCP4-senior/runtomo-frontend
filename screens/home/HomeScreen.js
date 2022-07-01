@@ -81,7 +81,9 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
         />
       </View> */}
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
+        {/* Sort By  Button */}
+
+        <TouchableOpacity onPress={() => alert("Sort By button pressed!")}>
           <List.Item
             style={styles.topElement}
             title="SORT BY"
@@ -92,6 +94,9 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
             onPress={() => alert("Sort by button pressed!")}
           />
         </TouchableOpacity>
+
+        {/* Filter  Button */}
+
         <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
           <List.Item
             style={styles.topElement}
@@ -103,6 +108,9 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           />
         </TouchableOpacity>
       </View>
+
+      {/* List of Run Events */}
+
       <View style={styles.container}>
         <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
         <ScrollView
