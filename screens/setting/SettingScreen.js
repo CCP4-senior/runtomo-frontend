@@ -92,7 +92,8 @@ const SettingScreen = ({ navigation }) => {
               <View style={styles.avatar}>
                 <Avatar.Image
                   size={60}
-                  source={require("../../assets/images/demo/wade.png")}
+                  // source={require("../../assets/images/demo/wade.png")}
+                  source={{ uri: user.imageUrl }}
                 />
               </View>
               <View style={styles.accountDetails}>

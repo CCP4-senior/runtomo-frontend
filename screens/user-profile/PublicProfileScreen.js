@@ -15,7 +15,7 @@ import axiosInstance from "../../helpers/axios";
 import { DataContext } from "../../context/datacontext/DataContext";
 
 const PublicProfileScreen = ({ navigation /*user*/ /*userId*/ }) => {
-  const { getUser, currentUser } = useContext(DataContext);
+  const { getUser, currentUser, generateImageUrl } = useContext(DataContext);
   const { height } = useWindowDimensions();
   const [imageUrl, setImageUrl] = useState("wade.png");
 
@@ -36,14 +36,14 @@ const PublicProfileScreen = ({ navigation /*user*/ /*userId*/ }) => {
           source={require("../../assets/images/backgroundProfile2.jpg")}
           resizeMode="cover"
         >
-          {userData.image && (
-            <Image
-              style={[styles.profilePicture, { height: height * 0.3 }]}
-              source={require("../../assets/images/demo/wade.png")}
-              resizeMode="contain"
+          {userData.profile.image && (
+            <Avatar.Image
+              style={[styles.profilePicture]}
+              source={{ uri: generateImageUrl(userData.profile.image) }}
+              size={250}
             />
           )}
-          {!userData.image && (
+          {!userData.profile.image && (
             <Avatar.Icon
               style={[styles.profilePicture, { height: height * 0.3 }]}
               icon="account"
