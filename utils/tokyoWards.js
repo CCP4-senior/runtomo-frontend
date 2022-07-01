@@ -22,6 +22,7 @@ const tokyoWards = [
   { isChecked: false, name: "Sumida" },
   { isChecked: false, name: "Taito" },
   { isChecked: false, name: "Toshima" },
+  { isChecked: false, name: "Other" },
 ];
 
 export default tokyoWards;
