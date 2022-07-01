@@ -109,7 +109,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
         </TouchableOpacity>
       </View>
 
-      {/* List of Run Events */}
+      {/* Wrapper for Run Events */}
 
       <View style={styles.container}>
         <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
@@ -125,6 +125,8 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 };
 
 export default HomeScreen;
+
+// Component for listing Run Events
 
 const EventsDataPage = ({ selectEvent }) => {
   const {
