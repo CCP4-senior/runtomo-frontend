@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
-import DatePicker from "./DatePicker.js";
-import AreaModal from "./AreaModal.js";
-import DurationModal from "./DurationModal.js";
-import GoogleSearchModal from "./GoogleSearchModal.js";
+import DatePicker from "../event-creation/DatePicker.js";
+import AreaModal from "../event-creation/AreaModal.js";
+import DurationModal from "../event-creation/DurationModal.js";
+import GoogleSearchModal from "../event-creation/GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../helpers/axios.js";
@@ -42,7 +42,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const { setCurrentEvent } = useContext(DataContext);
   const { user } = useContext(AuthContext);
 
-  const [ isUser, setIsUser ] = useState(true);
+  const [isUser, setIsUser] = useState(true);
 
   const hideModal = () => {
     setAreaModalVisible(false);
