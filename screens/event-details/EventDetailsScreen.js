@@ -306,7 +306,7 @@ const EventDetailsScreen = ({ navigation }) => {
               <>
                 <LongButton
                   buttonHandler={() => {
-                    alert("edit event page");
+                    navigation.navigate("Create Event");
                   }}
                   buttonColor={Color.GrayDark}
                   buttonText="Edit Event"
