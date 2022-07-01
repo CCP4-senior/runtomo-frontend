@@ -16,7 +16,8 @@ import DatePicker from "../event-creation/DatePicker.js";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
-  const { user, createUserProfile, idForProfile } = useContext(AuthContext);
+  const { /*user, createUserProfile,*/ idForProfile, setUserToBeRegistered } =
+    useContext(AuthContext);
 
   const { username, email, password } = route.params;
 
@@ -29,79 +30,76 @@ const RegisterExtraInfo = ({ route }) => {
   const [timesPerWeek, setTimesPerWeek] = useState("");
 
   const handlePress = () => {
-    navigation.navigate("ProfilePhoto");
+    // age validation
+    if (!date) {
+      return alert("Please enter date of birth");
+    }
+    const isAgeValid = validateAge(date);
+
+    if (!isAgeValid) {
+      return alert("You must be at least 18 years old to register.");
+    }
+
+    if (!timesPerWeek) {
+      return alert("Please select running frequency per week");
+    }
+
+    if (!estimated5k) {
+      return alert("Please select estimated 5k time");
+    }
+
+    if (!estimated10k) {
+      return alert("Please select estimated 10k time");
+    }
+    const formattedDate = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()}`;
+
+    const userProfileData = {
+      date_of_birth: formattedDate,
+      run_frequency: timesPerWeek,
+      estimated5k: estimated5k,
+      estimated10k: estimated10k,
+      userId: idForProfile,
+      email: email,
+      password: password,
+    };
+
+    setUserToBeRegistered(userProfileData);
+    navigation.navigate("ProfilePhoto", { username, email, password });
   };
 
-  // const handlePress = () => {
-  //   // age validation
-  //   if (!date) {
-  //     return alert("Please enter date of birth");
-  //   }
-  //   const isAgeValid = validateAge(date);
+  const handleTPWBtnClick = (buttonValue) => {
+    setTimesPerWeek(buttonValue);
+  };
 
-  //   if (!isAgeValid) {
-  //     return alert("You must be at least 18 years old to register.");
-  //   }
+  const handle5kBtnClick = (buttonValue) => {
+    setEstimated5k(buttonValue);
+  };
 
-  //   if (!timesPerWeek) {
-  //     return alert("Please select running frequency per week");
-  //   }
+  const handle10BtnClick = (buttonValue) => {
+    setEstimated10k(buttonValue);
+  };
 
-  //   if (!estimated5k) {
-  //     return alert("Please select estimated 5k time");
-  //   }
+  const validateAge = (userAge) => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    const userBirthYear = new Date(userAge).getFullYear();
+    const userBirthMonth = new Date(userAge).getMonth() + 1;
 
-  //   if (!estimated10k) {
-  //     return alert("Please select estimated 10k time");
-  //   }
-  //   const formattedDate = `${date.getFullYear()}-${
-  //     date.getMonth() + 1
-  //   }-${date.getDate()}`;
-  //   const userProfileData = {
-  //     date_of_birth: formattedDate,
-  //     run_frequency: timesPerWeek,
-  //     estimated5k: estimated5k,
-  //     estimated10k: estimated10k,
-  //     userId: idForProfile,
-  //     email: email,
-  //     password: password,
-  //   };
+    // Not accounting for days
 
-  //   // createUserProfile(userProfileData);
-  //   navigation.navigate("ProfilePhoto");
-  // };
-
-  // const handleTPWBtnClick = (buttonValue) => {
-  //   setTimesPerWeek(buttonValue);
-  // };
-
-  // const handle5kBtnClick = (buttonValue) => {
-  //   setEstimated5k(buttonValue);
-  // };
-
-  // const handle10BtnClick = (buttonValue) => {
-  //   setEstimated10k(buttonValue);
-  // };
-
-  // const validateAge = (userAge) => {
-  //   const currentYear = new Date().getFullYear();
-  //   const currentMonth = new Date().getMonth() + 1;
-  //   const userBirthYear = new Date(userAge).getFullYear();
-  //   const userBirthMonth = new Date(userAge).getMonth() + 1;
-
-  //   // Not accounting for days
-
-  //   if (currentYear - userBirthYear < 18) {
-  //     return false;
-  //   } else if (currentYear - userBirthYear === 18) {
-  //     if (currentMonth - userBirthMonth < 0) {
-  //       return false;
-  //     }
-  //     return true;
-  //   } else {
-  //     return true;
-  //   }
-  // };
+    if (currentYear - userBirthYear < 18) {
+      return false;
+    } else if (currentYear - userBirthYear === 18) {
+      if (currentMonth - userBirthMonth < 0) {
+        return false;
+      }
+      return true;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <SafeAreaView style={styles.root}>

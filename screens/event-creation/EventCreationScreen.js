@@ -49,7 +49,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     inputRef.current?.blur();
   };
 
-  const buttonHandler = async () => {
+  const createEvent = async () => {
     try {
       let currentRef;
       if (imageUri !== "") {
@@ -224,7 +224,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
             />
           </View>
           <LongButton
-            buttonHandler={buttonHandler}
+            buttonHandler={createEvent}
             buttonColor={Color.PrimaryMain}
             buttonText="Create Event"
           />

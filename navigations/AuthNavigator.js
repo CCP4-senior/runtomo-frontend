@@ -46,6 +46,7 @@ const AuthNavigator = () => {
         name="RegisterExtraInfo"
         component={RegisterExtraInfo}
         options={{
+          title: "",
           headerShown: false,
         }}
       />
@@ -53,9 +54,10 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="ProfilePhoto"
         component={ProfilePhoto}
-        // options={{
-        //   headerShown: false,
-        // }}
+        options={{
+          title: "",
+          // headerShown: false,
+        }}
       />
 
       <Stack.Screen name="SignOut" component={SignOutScreen} />
