@@ -42,6 +42,8 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const { setCurrentEvent } = useContext(DataContext);
   const { user } = useContext(AuthContext);
 
+  const [ isUser, setIsUser ] = useState(true);
+
   const hideModal = () => {
     setAreaModalVisible(false);
     setDurationModalVisible(false);
