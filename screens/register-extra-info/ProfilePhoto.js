@@ -20,6 +20,7 @@ import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
 import Color from "../../assets/themes/Color";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
+import { ref } from "firebase/storage";
 
 const ProfilePhoto = ({ route }) => {
   const { username, email, password } = route.params;
@@ -27,7 +28,6 @@ const ProfilePhoto = ({ route }) => {
     useContext(AuthContext);
   const [imageUri, setImageUri] = useState("");
   const [visible, setVisible] = useState(false);
-  const [imageRef, setImageRef] = useState(null);
   const deleteImage = () => {
     setImageUri("");
   };
@@ -41,14 +41,12 @@ const ProfilePhoto = ({ route }) => {
       showDialog();
     } else {
       const newUri = await resizeImage(imageUri);
-      const currentRef = await uploadImage("events", newUri);
-      setImageRef(currentRef);
-
-      createUserAndProfile();
+      const imageRef = await uploadImage("profiles", newUri);
+      createUserAndProfile(imageRef);
     }
   };
 
-  const createUserAndProfile = async () => {
+  const createUserAndProfile = async (imageRef) => {
     try {
       await createUser({ username, email, password });
       await createUserProfile({ ...userToBeRegistered, image: imageRef });

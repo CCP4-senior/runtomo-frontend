@@ -75,6 +75,7 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
+      console.log(response.data);
 
       setUser({
         ...user,
