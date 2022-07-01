@@ -16,6 +16,7 @@ import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import FilterModal from "./FilterModal.js";
+import SortByModal from "./SortByModal.js";
 
 const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -44,23 +45,15 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
   const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
+  const [sortByModalVisible, setSortByModalVisible] = useState(false);
   /* modal */
   const hideModal = () => {
     setfilterModalVisible(false);
   };
 
-  // Leave as a reference. Case where api call is made
-  // const selectEvent = async (event) => {
-  //   const eventId = event.id;
-  //   try {
-  //     const event = await getCurrentEventData(eventId);
-  //     navigation.navigate("Event Details");
-  //   } catch (e) {
-  //     console.log(e);
-  //     console.log(e.config.url);
-  //     alert("Something went wrong. Please try again!");
-  //   }
-  // };
+  const hideSortByModal = () => {
+    setSortByModalVisible(false);
+  };
 
   const selectEvent = (event) => {
     setCurrentEvent(event);
@@ -69,19 +62,8 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.searchContainer}>
-        <TextInput
-          mode="outlined"
-          outlineColor="#F4F6F6"
-          activeOutlineColor={Color.GrayDark}
-          placeholder="Search"
-          style={styles.searchbar}
-          left={<TextInput.Icon name="magnify" style={{ marginTop: 15 }} />}
-          theme={{ roundness: 8 }}
-        />
-      </View> */}
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
+        <TouchableOpacity onPress={() => setSortByModalVisible(true)}>
           <List.Item
             style={styles.topElement}
             title="SORT BY"
@@ -89,7 +71,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
               <List.Icon {...props} icon="text" style={styles.topIcon} />
             )}
             titleStyle={{ fontSize: 12, fontWeight: "700" }}
-            onPress={() => alert("Sort by button pressed!")}
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
@@ -105,6 +86,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
       </View>
       <View style={styles.container}>
         <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
+        <SortByModal
+          modalVisible={sortByModalVisible}
+          hideModal={hideSortByModal}
+        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
