@@ -111,13 +111,35 @@ const EventsDataPage = ({ selectEvent }) => {
     setIsDataFiltered,
     getCurrentEventData,
     setCurrentEvent,
+    sortingCondition,
   } = useContext(DataContext);
+
   const data = allEvents;
 
+  const handleSortingEvents = (events, sortingCondition) => {
+    if (sortingCondition === "ascending") {
+      const sortedEvents = events.sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+      );
+      return sortedEvents;
+    } else if (sortingCondition === "descending") {
+      const sortedEvents = events.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      return sortedEvents;
+    } else {
+      const sortedEvents = events.sort(
+        (a, b) => new Date(b.id) - new Date(a.id)
+      );
+      return sortedEvents;
+    }
+  };
+
   if (isDataFiltered && filteredEvents.length >= 1) {
+    const sortedEvents = handleSortingEvents(filteredEvents, sortingCondition);
     return (
       <View style={styles.eventCardWrapper}>
-        {filteredEvents.map((session) => {
+        {sortedEvents.map((session) => {
           return (
             <EventCard
               isHomePageCard={true}
@@ -138,9 +160,10 @@ const EventsDataPage = ({ selectEvent }) => {
       </View>
     );
   } else {
+    const sortedEvents = handleSortingEvents(data, sortingCondition);
     return (
       <View style={styles.eventCardWrapper}>
-        {data.map((session) => {
+        {sortedEvents.map((session) => {
           return (
             <EventCard
               isHomePageCard={true}
