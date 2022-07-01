@@ -21,7 +21,7 @@ const DataProvider = ({ children }) => {
   const [tokyoWards, setTokyoWards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
-  const generateImageURl = (ref) => {
+  const generateImageUrl = (ref) => {
     return `https://firebasestorage.googleapis.com/v0/b/senior-project-8ca2b.appspot.com/o/${encodeURIComponent(
       ref
     )}?alt=media`;
@@ -85,7 +85,9 @@ const DataProvider = ({ children }) => {
 
       setUser({
         ...response.data,
-        imageUrl: generateImageURl(response.data.profile.image),
+        imageUrl: response.data.profile.image
+          ? generateImageUrl(response.data.profile.image)
+          : null,
       });
     } catch (e) {
       alert("Something went wrong. Please try again!");
@@ -108,7 +110,7 @@ const DataProvider = ({ children }) => {
       for (let i = 0; i < data.length; i++) {
         let imageUrl;
         if (data[i].image) {
-          imageUrl = generateImageURl(data[i].image);
+          imageUrl = generateImageUrl(data[i].image);
         }
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
@@ -153,7 +155,7 @@ const DataProvider = ({ children }) => {
     tokyoWards,
     getUser,
     currentUser,
-    generateImageURl,
+    generateImageUrl,
   };
 
   return (

@@ -101,20 +101,16 @@ const styles = StyleSheet.create({
   avatarContainer: {
     display: "flex",
     flexDirection: "row",
-    // width: "100%",
-    // backgroundColor: "red",
   },
   outerCircle: {
     borderRadius: 50,
     backgroundColor: Color.White,
-    // backgroundColor: "red",
     height: 40,
     width: 40,
   },
   smallOuterCircle: {
     borderRadius: 50,
     backgroundColor: Color.White,
-    // backgroundColor: "red",
     height: 36,
     width: 36,
   },
@@ -127,8 +123,6 @@ const styles = StyleSheet.create({
   },
   smallLastCircle: {
     borderRadius: 50,
-    // height: 30,
-    // width: 30,
     height: 32,
     width: 32,
     top: 2,

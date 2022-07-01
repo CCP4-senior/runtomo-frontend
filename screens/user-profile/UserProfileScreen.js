@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -11,15 +11,27 @@ import {
   ScrollView,
 } from "react-native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
-import { Avatar, Button } from "react-native-paper";
+import { Avatar, Button, IconButton, Provider } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import { TouchableOpacity } from "react-native-web";
+import ProfilePhotoModal from "./ProfilePhotoModal";
 
 const UserProfileScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
 
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [imageUri, setImageUri] = useState("");
+  const [wantsToDelete, setWantsToDelete] = useState(false);
+
+  const hideModal = () => {
+    setModalVisible(false);
+    setImageUri("");
+  };
+  const showModal = () => {
+    setModalVisible(true);
+  };
 
   const mockData = {
     username: "wadeMock",
@@ -28,47 +40,62 @@ const UserProfileScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.root}>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.imageContainer}>
-            {/* placeholder image, to be updated */}
-            <ImageBackground
-              style={styles.backgroundImage}
-              imageStyle={{ opacity: 0.75 }}
-              source={require("../../assets/images/backgroundProfile.png")}
-              resizeMode="cover"
-            >
-              {/* <Image
+    <Provider>
+      <ProfilePhotoModal
+        modalVisible={modalVisible}
+        hideModal={hideModal}
+        setImageUri={setImageUri}
+        imageUri={imageUri}
+        wantsToDelete={wantsToDelete}
+        setWantsToDelete={setWantsToDelete}
+      />
+
+      <SafeAreaView style={styles.root}>
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.imageContainer}>
+              {/* placeholder image, to be updated */}
+              <ImageBackground
+                style={styles.backgroundImage}
+                imageStyle={{ opacity: 0.75 }}
+                source={require("../../assets/images/backgroundProfile.png")}
+                resizeMode="cover"
+              >
+                {/* <Image
                 style={[styles.profilePicture, { height: height * 0.3 }]}
                 // source={require("../../assets/images/demo/wade.png")}
                 resizeMode="contain"
               /> */}
-              {user.imageUrl && (
-                <Avatar.Image
-                  style={[styles.profilePicture]}
-                  source={{ uri: user.imageUrl }}
-                  size={200}
-                />
-              )}
-              {!user.imageUrl && (
-                <Avatar.Icon
-                  style={[styles.profilePicture, { height: height * 0.3 }]}
-                  icon="account"
-                  size={250}
-                />
-              )}
-            </ImageBackground>
-          </View>
-          <View style={styles.userInfoContainer}>
-            {/* Username */}
+                {user.imageUrl && (
+                  <Avatar.Image
+                    style={[styles.profilePicture]}
+                    source={{ uri: user.imageUrl }}
+                    size={200}
+                  />
+                )}
+                {!user.imageUrl && (
+                  <Avatar.Icon
+                    style={[
+                      styles.profilePicture,
+                      {
+                        backgroundColor: Color.GrayDark,
+                      },
+                    ]}
+                    icon="account"
+                    size={250}
+                  />
+                )}
+              </ImageBackground>
+            </View>
+            <View style={styles.userInfoContainer}>
+              {/* Username */}
 
-            <View style={styles.userInfoHeader}>
-              <Text style={styles.userFullName}>{user.username}</Text>
+              <View style={styles.userInfoHeader}>
+                <Text style={styles.userFullName}>{user.username}</Text>
 
-              {/* Edit Profile button */}
+                {/* Edit Profile button */}
 
-              <Button
+                {/* <Button
                 onPress={() => navigation.navigate("Edit Profile")}
                 icon="account-edit"
                 color={Color.PrimaryMain}
@@ -78,38 +105,53 @@ const UserProfileScreen = ({ navigation }) => {
                   alignItems: "center",
                   alignSelf: "center",
                 }}
-              />
-            </View>
+              /> */}
+                <IconButton
+                  onPress={() => navigation.navigate("Edit Profile")}
+                  icon="account-edit"
+                  size={29}
+                  color={Color.PrimaryMain}
+                  style={{ width: 30 }}
+                />
+                <IconButton
+                  onPress={showModal}
+                  icon="camera-flip-outline"
+                  size={29}
+                  color={Color.PrimaryMain}
+                  style={{ width: 30 }}
+                />
+              </View>
 
-            {/* Date of Birth */}
-            <View style={styles.userDataWrapper}>
-              <Text style={styles.userDataFont}>
-                Date of Birth: {user["profile"]["date_of_birth"]}
-              </Text>
-            </View>
+              {/* Date of Birth */}
+              <View style={styles.userDataWrapper}>
+                <Text style={styles.userDataFont}>
+                  Date of Birth: {user["profile"]["date_of_birth"]}
+                </Text>
+              </View>
 
-            {/* Run Frequency */}
-            <View style={styles.userDataWrapper}>
-              <Text style={styles.userDataFont}>
-                Run Frequency: {user["profile"]["run_frequency"]} / week
-              </Text>
-            </View>
+              {/* Run Frequency */}
+              <View style={styles.userDataWrapper}>
+                <Text style={styles.userDataFont}>
+                  Run Frequency: {user["profile"]["run_frequency"]} / week
+                </Text>
+              </View>
 
-            <View style={styles.userDataWrapper}>
-              <Text style={styles.userDataFont}>
-                Estimated 5k: {user["profile"]["estimated5k"]}
-              </Text>
-            </View>
+              <View style={styles.userDataWrapper}>
+                <Text style={styles.userDataFont}>
+                  Estimated 5k: {user["profile"]["estimated5k"]}
+                </Text>
+              </View>
 
-            <View style={styles.userDataWrapper}>
-              <Text style={styles.userDataFont}>
-                Estimated 10k: {user["profile"]["estimated10k"]}
-              </Text>
+              <View style={styles.userDataWrapper}>
+                <Text style={styles.userDataFont}>
+                  Estimated 10k: {user["profile"]["estimated10k"]}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+    </Provider>
   );
 };
 

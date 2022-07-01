@@ -90,11 +90,20 @@ const SettingScreen = ({ navigation }) => {
           <Card.Content>
             <View style={styles.cardContent}>
               <View style={styles.avatar}>
-                <Avatar.Image
-                  size={60}
-                  // source={require("../../assets/images/demo/wade.png")}
-                  source={{ uri: user.imageUrl }}
-                />
+                {user.imageUrl && (
+                  <Avatar.Image
+                    size={60}
+                    // source={require("../../assets/images/demo/wade.png")}
+                    source={{ uri: user.imageUrl }}
+                  />
+                )}
+                {!user.imageUrl && (
+                  <Avatar.Icon
+                    icon="account"
+                    size={60}
+                    style={{ backgroundColor: Color.GrayDark }}
+                  />
+                )}
               </View>
               <View style={styles.accountDetails}>
                 <Title style={styles.cardTopTitle}>{user.username}</Title>

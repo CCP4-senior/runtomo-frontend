@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     height: 60,
     display: "flex",
     justifyContent: "flex-end",
-    // backgroundColor: "red",
   },
   joinText: {
     fontSize: 13,

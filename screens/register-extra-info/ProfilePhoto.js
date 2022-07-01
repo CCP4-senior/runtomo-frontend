@@ -40,7 +40,7 @@ const ProfilePhoto = ({ route }) => {
     if (imageUri === "") {
       showDialog();
     } else {
-      const newUri = await resizeImage(imageUri);
+      const newUri = await resizeImage(imageUri, 300);
       const imageRef = await uploadImage("profiles", newUri);
       createUserAndProfile(imageRef);
     }
@@ -116,12 +116,9 @@ const ProfilePhoto = ({ route }) => {
               <Text style={{ fontWeight: "bold", textAlign: "center" }}>
                 Profile Photo
               </Text>
-              {imageUri !== "" && (
-                <Image
-                  source={{ uri: imageUri }}
-                  style={styles.selectedPhoto}
-                />
-              )}
+
+              <Image source={{ uri: imageUri }} style={styles.selectedPhoto} />
+
               <View style={styles.imageOverlay}></View>
               <Button color={Color.PrimaryMain} onPress={deleteImage}>
                 Delete
