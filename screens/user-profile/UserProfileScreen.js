@@ -14,6 +14,13 @@ import { Button } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import { TouchableOpacity } from "react-native-web";
 
+
+function getAge(dateString) {
+  var ageInMilliseconds = new Date() - new Date(dateString);
+  return Math.floor(ageInMilliseconds/1000/60/60/24/365);
+}
+
+
 const UserProfileScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
 
@@ -65,10 +72,11 @@ const UserProfileScreen = ({ navigation }) => {
             />
           </View>
 
-          {/* Date of Birth */}
+
+          {/* Age */}
           <View style={styles.userDataWrapper}>
             <Text style={styles.userDataFont}>
-              Date of Birth: {user["profile"]["date_of_birth"]}
+              Age: {getAge(user["profile"]["date_of_birth"])}
             </Text>
           </View>
 
