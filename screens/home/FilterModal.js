@@ -116,6 +116,7 @@ const FilterModal = ({ modalVisible, hideModal }) => {
                     { isChecked: false, name: "Sumida" },
                     { isChecked: false, name: "Taito" },
                     { isChecked: false, name: "Toshima" },
+                    { isChecked: false, name: "Other" },
                   ];
                   setTokyo23wards(reseted23Wards);
                   handleFilter("reset");
