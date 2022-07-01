@@ -33,10 +33,11 @@ import axiosInstance from "../../helpers/axios.js";
 import StackedAvatars from "./StackedAvatars.js";
 
 const EventDetailsScreen = ({ navigation }) => {
-  useEffect(() => {
-    getAllParticipants();
-    // getUser(); // Leave as a reference. Case where api call is made to get creator info
-  }, []);
+  // Google Maps logic
+  const [region, setRegion] = useState({
+    latitude: 35.6828387,
+    longitude: 139.7594549,
+  });
 
   const { user } = useContext(AuthContext);
   const { currentEvent, setCurrentEvent, getUser } = useContext(DataContext);
@@ -45,15 +46,12 @@ const EventDetailsScreen = ({ navigation }) => {
   const hideDialog = () => setVisible(false);
   const [isAttendanceCancellation, setIsAttendanceCancellation] =
     useState(true);
-  // Google Maps logic
-  const [region, setRegion] = useState({
-    latitude: 35.6828387,
-    longitude: 139.7594549,
-  });
+
+  const eventData = currentEvent;
+
   const [participants, setParticipants] = useState([]);
   const [hasJoined, setHasJoined] = useState(false);
 
-  const eventData = currentEvent;
   // Leave as a reference. Case where api call is made to get creator info
   // const [creator, setCreator] = useState({});
   const [creator, setCreator] = useState(eventData.creator);
@@ -61,6 +59,28 @@ const EventDetailsScreen = ({ navigation }) => {
   const time = new Date(eventData.time);
   const zonedDate = (date, addHours(date, 9));
   const zonedTime = (time, addHours(date, 9));
+
+  useEffect(() => {
+    getAllParticipants();
+    setLatitudeAndLongitude();
+    // getUser(); // Leave as a reference. Case where api call is made to get creator info
+  }, []);
+
+  const setLatitudeAndLongitude = () => {
+    if (!eventData.lat || !eventData.long) {
+      const eventLocation = {
+        latitude: 35.6828387,
+        longitude: 139.7594549,
+      };
+      setRegion(eventLocation);
+    } else {
+      const eventLocation = {
+        latitude: Number(eventData.lat),
+        longitude: Number(eventData.long),
+      };
+      setRegion(eventLocation);
+    }
+  };
 
   const getAllParticipants = async () => {
     try {
@@ -249,6 +269,7 @@ const EventDetailsScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.mapContainer}>
                   <MapView
+                    key={`${eventData.id}${Date.now()}`}
                     style={styles.map}
                     initialRegion={{
                       latitude: region.latitude,
