@@ -70,7 +70,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     height: 36,
                     width: 36,
                     borderRadius: 36 / 2,
-                    borderColor: "black",
+                    borderColor: Color.Black,
                     borderWidth: 2,
                     marginRight: 20,
                   }}
@@ -98,7 +98,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     height: 36,
                     width: 36,
                     borderRadius: 36 / 2,
-                    borderColor: "black",
+                    borderColor: Color.Black,
                     borderWidth: 2,
                     marginRight: 20,
                   }}
@@ -130,7 +130,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     height: 36,
                     width: 36,
                     borderRadius: 36 / 2,
-                    borderColor: "black",
+                    borderColor: Color.Black,
                     borderWidth: 2,
                     marginRight: 20,
                     alignContent: "center",
