@@ -119,6 +119,53 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateDBUserInfo = async (userUpdates) => {
+    try {
+      const response = await axiosInstance.patch("/auth/update/", {
+        email: userUpdates.email,
+        username: userUpdates.username,
+      });
+      if (response.status === 200) {
+        const data = response.data;
+      }
+    } catch (e) {
+      console.log("🍎 updateDBUserInfo() did not work correctly.");
+      console.log("🍎 erorr for updateDBUserInfo():", e);
+      Alert.alert("Error", e.response.data.detail, [
+        {
+          text: "OK",
+          onPress: () => null,
+          style: "cancel",
+        },
+      ]);
+    }
+  };
+
+  const updateDBUserProfile = async (userUpdates) => {
+    try {
+      const profileId = user["profile"]["id"];
+      const response = await axiosInstance.patch(
+        `/users/profile/${profileId}`,
+        {
+          ...userUpdates["profile"],
+        }
+      );
+      if (response.status === 200) {
+        const data = response.data;
+      }
+    } catch (e) {
+      console.log("🍎 updateDBUserProfile() did not work correctly.");
+      console.log("🍎 erorr for updateDBUserProfile():", e);
+      Alert.alert("Error", e.response.data.detail, [
+        {
+          text: "OK",
+          onPress: () => null,
+          style: "cancel",
+        },
+      ]);
+    }
+  };
+
   const contextData = {
     createUser,
     user,
@@ -129,6 +176,8 @@ const AuthProvider = ({ children }) => {
     idForProfile,
     userToBeRegistered,
     setUserToBeRegistered,
+    updateDBUserInfo,
+    updateDBUserProfile,
   };
 
   return (
