@@ -22,7 +22,11 @@ import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
-const EventEditScreen = ({ navigation, setNewEvent, setData, data }) => {
+const EventEditScreen = ({ navigation, route }) => {
+
+  const eventId = route.params.id;
+  console.log('🍎 eventId:', eventId);
+
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");

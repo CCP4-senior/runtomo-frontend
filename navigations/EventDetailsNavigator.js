@@ -14,9 +14,11 @@ const EventDetailsNavigator = () => {
       <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
         {(props) => <EventDetailsScreen {...props} />}
       </Stack.Screen>
+
       <Stack.Screen name="Creator Profile" options={{ ...HeaderStyle }}>
         {(props) => <PublicProfileScreen {...props} />}
       </Stack.Screen>
+
       <Stack.Screen name="Event Joined" options={{ headerShown: false }}>
         {(props) => <ConfirmationScreen {...props} actionType="join" />}
       </Stack.Screen>

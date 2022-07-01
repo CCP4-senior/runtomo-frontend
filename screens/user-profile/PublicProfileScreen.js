@@ -73,9 +73,7 @@ const PublicProfileScreen = ({ navigation /*user*/ /*userId*/ }) => {
             );
           })}
         </View>
-        <View style={styles.userDataWrapper}>
-          <Text style={styles.userDataFont}>Age: {userData.profile.age}</Text>
-        </View>
+
       </View>
     </SafeAreaView>
   );
