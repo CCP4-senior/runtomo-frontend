@@ -86,7 +86,7 @@ const DataProvider = ({ children }) => {
 
       setUser({
         ...response.data,
-        imageUrl: response.data.profile.image
+        imageUrl: response.data.profile?.image
           ? generateImageUrl(response.data.profile.image)
           : null,
       });
