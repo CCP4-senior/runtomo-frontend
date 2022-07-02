@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 3,
     alignItems: "center",
     padding: 10,
-    marginTop: 30,
+    // marginTop: 30,
   },
   buttonsWrapper: {
     flex: 1,

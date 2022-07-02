@@ -16,7 +16,8 @@ import DatePicker from "../event-creation/DatePicker.js";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
-  const { user, createUserProfile, idForProfile } = useContext(AuthContext);
+  const { /*user, createUserProfile,*/ idForProfile, setUserToBeRegistered } =
+    useContext(AuthContext);
 
   const { username, email, password } = route.params;
 
@@ -53,6 +54,7 @@ const RegisterExtraInfo = ({ route }) => {
     const formattedDate = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}`;
+
     const userProfileData = {
       date_of_birth: formattedDate,
       run_frequency: timesPerWeek,
@@ -63,7 +65,8 @@ const RegisterExtraInfo = ({ route }) => {
       password: password,
     };
 
-    createUserProfile(userProfileData);
+    setUserToBeRegistered(userProfileData);
+    navigation.navigate("ProfilePhoto", { username, email, password });
   };
 
   const handleTPWBtnClick = (buttonValue) => {
@@ -367,7 +370,8 @@ const RegisterExtraInfo = ({ route }) => {
       {/* Continue Button */}
 
       <View style={styles.button}>
-        <Button
+        {/* Original implementation for reference */}
+        {/* <Button
           mode="contained"
           uppercase={false}
           color={Color.PrimaryMain}
@@ -382,6 +386,23 @@ const RegisterExtraInfo = ({ route }) => {
           onPress={() => handlePress()}
         >
           Add Info
+        </Button> */}
+
+        <Button
+          mode="contained"
+          uppercase={false}
+          color={Color.PrimaryMain}
+          style={{ borderRadius: 10 }}
+          labelStyle={{
+            fontWeight: "bold",
+            fontSize: 18,
+          }}
+          contentStyle={{
+            padding: 5,
+          }}
+          onPress={() => handlePress()}
+        >
+          Next
         </Button>
       </View>
     </SafeAreaView>
