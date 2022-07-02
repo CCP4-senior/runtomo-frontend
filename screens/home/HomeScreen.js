@@ -50,6 +50,9 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
   const [sortByModalVisible, setSortByModalVisible] = useState(false);
+  const [resetFilterInHomeScreen, setResetFilterInHomeScreen] = useState(false);
+  const [resetSortingInHomeScreen, setResetSortingInHomeScreen] =
+    useState(false);
 
   /* modal */
   const hideModal = () => {
@@ -63,6 +66,12 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const selectEvent = (event) => {
     setCurrentEvent(event);
     navigation.navigate("Event Details");
+  };
+
+  const handleHomeFilterReset = () => {
+    setFilteredEvents(null);
+    setIsDataFiltered(false);
+    setResetFilterInHomeScreen(true);
   };
 
   return (
@@ -138,19 +147,19 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
               alignItems: "center",
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                setFilteredEvents(null);
-                setIsDataFiltered(false);
-              }}
-            >
+            <TouchableOpacity onPress={handleHomeFilterReset}>
               <Text>X Reset Filter</Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
       <View style={styles.container}>
-        <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
+        <FilterModal
+          modalVisible={filterModalVisible}
+          hideModal={hideModal}
+          resetFilterInHomeScreen={resetFilterInHomeScreen}
+          setResetFilterInHomeScreen={setResetFilterInHomeScreen}
+        />
         <SortByModal
           modalVisible={sortByModalVisible}
           hideModal={hideSortByModal}

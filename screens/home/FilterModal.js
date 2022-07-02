@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   ScrollView,
   Text,
@@ -19,7 +19,39 @@ import Color from "../../assets/themes/Color";
 import tokyoWards from "../../utils/tokyoWards";
 import { DataContext } from "../../context/datacontext/DataContext";
 
-const FilterModal = ({ modalVisible, hideModal }) => {
+const reseted23Wards = [
+  { isChecked: false, name: "Adachi" },
+  { isChecked: false, name: "Arakawa" },
+  { isChecked: false, name: "Bunkyo" },
+  { isChecked: false, name: "Chiyoda" },
+  { isChecked: false, name: "Chuo" },
+  { isChecked: false, name: "Edogawa" },
+  { isChecked: false, name: "Itabashi" },
+  { isChecked: false, name: "Katsushika" },
+  { isChecked: false, name: "Kita" },
+  { isChecked: false, name: "Koto" },
+  { isChecked: false, name: "Meguro" },
+  { isChecked: false, name: "Minato" },
+  { isChecked: false, name: "Nakano" },
+  { isChecked: false, name: "Nerima" },
+  { isChecked: false, name: "Ota" },
+  { isChecked: false, name: "Setagaya" },
+  { isChecked: false, name: "Shibuya" },
+  { isChecked: false, name: "Shinagawa" },
+  { isChecked: false, name: "Shinjuku" },
+  { isChecked: false, name: "Suginami" },
+  { isChecked: false, name: "Sumida" },
+  { isChecked: false, name: "Taito" },
+  { isChecked: false, name: "Toshima" },
+  { isChecked: false, name: "Other" },
+];
+
+const FilterModal = ({
+  modalVisible,
+  hideModal,
+  resetFilterInHomeScreen,
+  setResetFilterInHomeScreen,
+}) => {
   const containerStyle = {
     backgroundColor: "#fff",
     height: "80%",
@@ -29,6 +61,15 @@ const FilterModal = ({ modalVisible, hideModal }) => {
   const [tokyo23wards, setTokyo23wards] = useState(tokyoWards);
   const { allEvents, setFilteredEvents, setIsDataFiltered } =
     useContext(DataContext);
+
+  useEffect(() => {
+    if (resetFilterInHomeScreen === true) {
+      setTokyo23wards(reseted23Wards);
+      handleFilter("reset");
+      setIsDataFiltered(false);
+      setResetFilterInHomeScreen(false);
+    }
+  }, [resetFilterInHomeScreen]);
 
   const handleFilter = (action) => {
     if (action === "reset") {
