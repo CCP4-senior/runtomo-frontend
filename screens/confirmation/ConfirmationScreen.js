@@ -27,6 +27,9 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
           {actionType === "join" && (
             <Title style={styles.cardTopTitle}>Joined Successfully!</Title>
           )}
+          {actionType === "update" && (
+            <Title style={styles.cardTopTitle}>Updated Successfully!</Title>
+          )}
           {actionType === "create" && (
             <>
               <Paragraph style={styles.paragraph}>
@@ -47,6 +50,16 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
               </Paragraph>
             </>
           )}
+          {actionType === "join" && (
+            <>
+              <Paragraph style={styles.paragraph}>
+                Event is successfully updated!
+              </Paragraph>
+              <Paragraph style={styles.paragraph}>
+                Don't forget to share with everyone. Thank you!
+              </Paragraph>
+            </>
+          )}
         </Card.Content>
       </View>
 
@@ -58,7 +71,7 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
       {actionType === "create" && (
         <LongButton
           buttonHandler={() => {
-            alert("Some edit page");
+            navigation.navigate("Edit Event");
           }}
           buttonColor={Color.GrayDark}
           buttonText="Edit Event"

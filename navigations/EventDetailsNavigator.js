@@ -23,6 +23,10 @@ const EventDetailsNavigator = () => {
         {(props) => <ConfirmationScreen {...props} actionType="join" />}
       </Stack.Screen>
 
+      <Stack.Screen name="Event Updated" options={{ headerShown: false }}>
+        {(props) => <ConfirmationScreen {...props} actionType="update" />}
+      </Stack.Screen>
+
       <Stack.Screen name="Edit Event" options={{ ...HeaderStyle }}>
         {(props) => <EventEditScreen {...props} />}
       </Stack.Screen>

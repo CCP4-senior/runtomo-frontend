@@ -42,7 +42,14 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const { setCurrentEvent } = useContext(DataContext);
   const { user } = useContext(AuthContext);
 
-  const [ isUser, setIsUser ] = useState(true);
+  const [isUser, setIsUser] = useState(true);
+
+  const runningDurationArray = [
+    { id: 1, name: "15 mins", num: 15 },
+    { id: 2, name: "30 mins", num: 30 },
+    { id: 3, name: "1 hr", num: 60 },
+    { id: 4, name: "More", num: null },
+  ];
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -105,6 +112,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
         modalVisible={durationModalVisible}
         setRunningDuration={setRunningDuration}
         hideModal={hideModal}
+        runningDuration={runningDurationArray}
       />
       <GoogleSearchModal
         modalVisible={googleModalVisible}

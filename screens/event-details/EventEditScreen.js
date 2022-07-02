@@ -23,28 +23,48 @@ import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
 const EventEditScreen = ({ navigation, route }) => {
+  useEffect(() => {
+    console.log(currentEvent);
+    console.log(currentEvent.id);
+    console.log(new Date().toISOString());
+  }, []);
 
-  const eventId = route.params.id;
-  console.log('🍎 eventId:', eventId);
+  const runningDurationArray = [
+    { id: 1, name: "15 mins", num: 15 },
+    { id: 2, name: "30 mins", num: 30 },
+    { id: 3, name: "1 hr", num: 60 },
+    { id: 4, name: "More", num: null },
+  ];
 
-  const [title, setTitle] = useState("");
-  const [meetingPoint, setMeetingPoint] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [ward, setWard] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [runningDuration, setRunningDuration] = useState("");
+  const { setCurrentEvent, currentEvent } = useContext(DataContext);
+  const { user } = useContext(AuthContext);
+
+  const [title, setTitle] = useState(currentEvent?.title || "");
+  const [meetingPoint, setMeetingPoint] = useState(
+    currentEvent?.location || ""
+  );
+  const [latitude, setLatitude] = useState(currentEvent?.lat || "");
+  const [longitude, setLongitude] = useState(currentEvent?.long || "");
+  const [ward, setWard] = useState(currentEvent?.ward || "");
+  const [date, setDate] = useState(currentEvent?.date || "");
+  const [time, setTime] = useState(currentEvent?.time || "");
+  const [runningDuration, setRunningDuration] = useState(
+    currentEvent?.running_duration
+      ? runningDurationArray.find(
+          (el) => el.num === currentEvent.running_duration
+        )
+      : ""
+  );
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
-  const [eventDescription, setEventDescription] = useState(null);
-  const [imageUri, setImageUri] = useState("");
-  const [imageRef, setImageRef] = useState("");
+  const [eventDescription, setEventDescription] = useState(
+    currentEvent?.description || ""
+  );
+  const [imageUri, setImageUri] = useState(currentEvent?.imageUrl || "");
+  const [imageRef, setImageRef] = useState(currentEvent?.image || "");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
-  const { setCurrentEvent } = useContext(DataContext);
-  const { user } = useContext(AuthContext);
 
   const [isUser, setIsUser] = useState(true);
 
@@ -72,6 +92,7 @@ const EventEditScreen = ({ navigation, route }) => {
       }
 
       const event = {
+        created_at: new Date().toISOString(),
         title: title,
         location: meetingPoint,
         ward: ward?.ward_name || null,
@@ -82,11 +103,17 @@ const EventEditScreen = ({ navigation, route }) => {
         image: currentRef,
         lat: latitude,
         long: longitude,
+        creator: {
+          ...currentEvent.creator,
+        },
       };
 
-      const response = await axiosInstance.post("/events/create_event", event);
+      const response = await axiosInstance.put(
+        `/events/${currentEvent.id}/`,
+        event
+      );
       setCurrentEvent({ ...event, creator: user });
-      navigation.navigate("Event Created");
+      navigation.navigate("Event Updated");
     } catch (e) {
       console.log(e);
       alert("Something went wrong. Please try again!");
@@ -109,6 +136,7 @@ const EventEditScreen = ({ navigation, route }) => {
         modalVisible={durationModalVisible}
         setRunningDuration={setRunningDuration}
         hideModal={hideModal}
+        runningDuration={runningDurationArray}
       />
       <GoogleSearchModal
         modalVisible={googleModalVisible}
@@ -203,9 +231,20 @@ const EventEditScreen = ({ navigation, route }) => {
               {imageUri !== "" && (
                 <Image source={{ uri: imageUri }} style={{ height: 175 }} />
               )}
-              <Button color={Color.PrimaryMain} onPress={deleteImage}>
-                Delete
-              </Button>
+              <View style={styles.imageButtonsContainer}>
+                <Button
+                  color={Color.PrimaryMain}
+                  onPress={async () => {
+                    inputRef.current?.blur();
+                    await selectImage(setImageUri);
+                  }}
+                >
+                  Change
+                </Button>
+                <Button color={Color.PrimaryMain} onPress={deleteImage}>
+                  Delete
+                </Button>
+              </View>
             </View>
           )}
 
@@ -232,7 +271,7 @@ const EventEditScreen = ({ navigation, route }) => {
           <LongButton
             buttonHandler={buttonHandler}
             buttonColor={Color.PrimaryMain}
-            buttonText="Create Event"
+            buttonText="Update event"
           />
         </View>
       </ScrollView>
@@ -305,4 +344,10 @@ const styles = StyleSheet.create({
     },
   },
   input: { backgroundColor: "#fff", width: 335, height: 98 },
+  imageButtonsContainer: {
+    flexDirection: "row",
+    width: "70%",
+    justifyContent: "space-between",
+    alignSelf: "center",
+  },
 });
