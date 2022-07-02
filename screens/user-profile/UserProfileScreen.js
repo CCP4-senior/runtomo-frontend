@@ -130,33 +130,35 @@ const UserProfileScreen = ({ navigation }) => {
               {/* Age */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Age: {getAge(user["profile"]["date_of_birth"])}
+                  Age:{" "}
+                  {getAge(user.profile?.["date_of_birth"]) || "Not provided"}
                 </Text>
               </View>
 
               {/* Date of Birth */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Date of Birth: {user["profile"]["date_of_birth"]}
+                  Date of Birth:{" "}
+                  {user.profile?.["date_of_birth"] || "Not provided"}
                 </Text>
               </View>
 
               {/* Run Frequency */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Run Frequency: {user["profile"]["run_frequency"]} / week
+                  Run Frequency: {user.profile?.["run_frequency"]} / week
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 5k: {user["profile"]["estimated5k"]}
+                  Estimated 5k: {user.profile?.["estimated5k"]}
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 10k: {user["profile"]["estimated10k"]}
+                  Estimated 10k: {user.profile?.["estimated10k"]}
                 </Text>
               </View>
             </View>
