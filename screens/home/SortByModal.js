@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   ScrollView,
   Text,
@@ -26,10 +26,22 @@ const SortByModal = ({ modalVisible, hideModal }) => {
     margin: 20,
     justifyContent: "center",
   };
-  const { allEvents, setFilteredEvents, setSortingCondition } =
-    useContext(DataContext);
+  const {
+    allEvents,
+    setFilteredEvents,
+    setSortingCondition,
+    resetSortingInHomeScreen,
+    setResetSortingInHomeScreen,
+  } = useContext(DataContext);
 
   const [sortValue, setSortValue] = useState("standard");
+
+  useEffect(() => {
+    if (resetSortingInHomeScreen === true) {
+      handleSorting("reset");
+      setResetSortingInHomeScreen(false);
+    }
+  }, [resetSortingInHomeScreen]);
 
   const handleSorting = (action) => {
     if (action === "reset") {

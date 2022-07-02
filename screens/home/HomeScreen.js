@@ -68,6 +68,11 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     navigation.navigate("Event Details");
   };
 
+  const handleHomeSortingReset = () => {
+    setSortingCondition("standard");
+    setResetSortingInHomeScreen(true);
+  };
+
   const handleHomeFilterReset = () => {
     setFilteredEvents(null);
     setIsDataFiltered(false);
@@ -76,17 +81,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.searchContainer}>
-        <TextInput
-          mode="outlined"
-          outlineColor="#F4F6F6"
-          activeOutlineColor={Color.GrayDark}
-          placeholder="Search"
-          style={styles.searchbar}
-          left={<TextInput.Icon name="magnify" style={{ marginTop: 15 }} />}
-          theme={{ roundness: 8 }}
-        />
-      </View> */}
       <View style={styles.topContainer}>
         <TouchableOpacity onPress={() => setSortByModalVisible(true)}>
           <List.Item
@@ -129,7 +123,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
               marginRight: 5,
             }}
           >
-            <TouchableOpacity onPress={() => setSortingCondition("standard")}>
+            <TouchableOpacity onPress={handleHomeSortingReset}>
               <Text>X Reset Sorting</Text>
             </TouchableOpacity>
           </View>
@@ -163,6 +157,8 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
         <SortByModal
           modalVisible={sortByModalVisible}
           hideModal={hideSortByModal}
+          resetSortingInHomeScreen={resetSortingInHomeScreen}
+          setResetSortingInHomeScreen={setResetSortingInHomeScreen}
         />
         <ScrollView
           showsHorizontalScrollIndicator={false}
