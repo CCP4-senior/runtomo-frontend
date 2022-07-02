@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -51,7 +51,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
     inputRef.current?.blur();
   };
 
-  const buttonHandler = async () => {
+  const createEvent = async () => {
     try {
       let currentRef;
       if (imageUri !== "") {
@@ -226,7 +226,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
             />
           </View>
           <LongButton
-            buttonHandler={buttonHandler}
+            buttonHandler={createEvent}
             buttonColor={Color.PrimaryMain}
             buttonText="Create Event"
           />

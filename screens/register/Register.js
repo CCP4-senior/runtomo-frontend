@@ -61,12 +61,7 @@ const Register = () => {
         { text: "OK" },
       ]);
     } else {
-      // Mockdata logic. Leave as a reference until backend endpoints are fully ready
-      // setUser({ id: 2, username: "WayneWadeRuns" });
-      // navigation.navigate("SignIn", { screen: "Home" });
       try {
-        const user = { username, email, password };
-        createUser(user);
         navigation.navigate("RegisterExtraInfo", { username, email, password });
       } catch (error) {
         Alert.alert("Error", e.response.data.detail, [
@@ -91,129 +86,132 @@ const Register = () => {
     }
   };
 
-  const validatePassword = (text) => {
-    let result = true;
-  };
+  // const validatePassword = (text) => {
+  //   let result = true;
+  // };
 
   return (
     <SafeAreaView style={styles.root}>
-      {/*  Title */}
+      <View style={styles.mainContainer}>
+        {/*  Title */}
+        <View>
+          <Text style={styles.title}>Create a New Account</Text>
+        </View>
 
-      <Text style={styles.title}>Create a New Account</Text>
+        {/* Email */}
 
-      {/* Email */}
-
-      <View style={styles.emailFieldWrapper}>
-        <TextInput
-          label="Email"
-          value={email}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          autoCapitalize="none"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          returnKeyType="next"
-          style={{ height: 50, backgroundColor: Color.GrayLight }}
-          error={false}
-          errorText={"TESTING"}
-          onChangeText={(text) => {
-            if (emailError.isTriggered === false) {
-              const updatedEmailError = {
-                isTriggered: true,
-                message: "Please enter a valid email.",
-              };
-              setEmailError(updatedEmailError);
-            }
-            validateEmail(text);
-            return setEmail(text);
-          }}
-        />
-        <Text style={styles.emailErrorMessage}>
-          {emailError.isTriggered && emailError.message}
-        </Text>
-      </View>
-
-      {/* Username */}
-
-      <View style={styles.usernameFieldWrapper}>
-        <TextInput
-          label="Username"
-          value={username}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          autoCapitalize="none"
-          keyboardType="default"
-          returnKeyType="next"
-          style={{ height: 50, backgroundColor: Color.GrayLight }}
-          onChangeText={handleUsername}
-        />
-      </View>
-
-      {/*  Password */}
-
-      <View style={styles.passwordFieldWrapper}>
-        <TextInput
-          label="Password"
-          value={password}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          textContentType="password"
-          secureTextEntry={true}
-          style={{ height: 50, backgroundColor: Color.GrayLight }}
-          onChangeText={(text) => setPassword(text)}
-        />
-      </View>
-
-      {/*  Second Password */}
-
-      <View style={styles.secondPasswordFieldWrapper}>
-        <TextInput
-          label="Password (retype)"
-          value={secondPassword}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          textContentType="password"
-          secureTextEntry={true}
-          style={{ height: 50, backgroundColor: Color.GrayLight }}
-          onChangeText={(text) => setSecondPassword(text)}
-        />
-      </View>
-
-      {/* Register Button */}
-
-      <View style={styles.registerBottomWrapper}>
-        <Button
-          mode="contained"
-          uppercase={false}
-          color={Color.PrimaryMain}
-          style={{ borderRadius: 10 }}
-          labelStyle={{
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-          contentStyle={{
-            padding: 5,
-          }}
-          onPress={() => handleRegister()}
-        >
-          Register
-        </Button>
-
-        {/*  Already have an account? */}
-
-        <Text style={styles.registerText}>
-          Already have an account?{" "}
-          <Text
-            style={styles.registerLink}
-            onPress={() => navigation.navigate("SignIn")}
-          >
-            Sign In
+        <View style={styles.emailFieldWrapper}>
+          <TextInput
+            label="Email"
+            value={email}
+            mode="outlined"
+            outlineColor={Color.Black}
+            activeOutlineColor={Color.Black}
+            autoCapitalize="none"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            returnKeyType="next"
+            style={{ height: 50, backgroundColor: Color.GrayLight }}
+            error={false}
+            errorText={"TESTING"}
+            onChangeText={(text) => {
+              if (emailError.isTriggered === false) {
+                const updatedEmailError = {
+                  isTriggered: true,
+                  message: "Please enter a valid email.",
+                };
+                setEmailError(updatedEmailError);
+              }
+              validateEmail(text);
+              return setEmail(text);
+            }}
+          />
+          <Text style={styles.emailErrorMessage}>
+            {emailError.isTriggered && emailError.message}
           </Text>
-        </Text>
+        </View>
+
+        {/* Username */}
+
+        <View style={styles.usernameFieldWrapper}>
+          <TextInput
+            label="Username"
+            value={username}
+            mode="outlined"
+            outlineColor={Color.Black}
+            activeOutlineColor={Color.Black}
+            autoCapitalize="none"
+            keyboardType="default"
+            returnKeyType="next"
+            style={{ height: 50, backgroundColor: Color.GrayLight }}
+            onChangeText={handleUsername}
+          />
+        </View>
+
+        {/*  Password */}
+
+        <View style={styles.passwordFieldWrapper}>
+          <TextInput
+            label="Password"
+            value={password}
+            mode="outlined"
+            outlineColor={Color.Black}
+            activeOutlineColor={Color.Black}
+            textContentType="password"
+            secureTextEntry={true}
+            style={{ height: 50, backgroundColor: Color.GrayLight }}
+            onChangeText={(text) => setPassword(text)}
+          />
+        </View>
+
+        {/*  Second Password */}
+
+        <View style={styles.secondPasswordFieldWrapper}>
+          <TextInput
+            label="Password (retype)"
+            value={secondPassword}
+            mode="outlined"
+            outlineColor={Color.Black}
+            activeOutlineColor={Color.Black}
+            textContentType="password"
+            secureTextEntry={true}
+            style={{ height: 50, backgroundColor: Color.GrayLight }}
+            onChangeText={(text) => setSecondPassword(text)}
+          />
+        </View>
+
+        {/* Register Button */}
+
+        <View style={styles.registerBottomWrapper}>
+          <Button
+            mode="contained"
+            uppercase={false}
+            color={Color.PrimaryMain}
+            style={{ borderRadius: 10 }}
+            labelStyle={{
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+            contentStyle={{
+              padding: 5,
+            }}
+            onPress={() => handleRegister()}
+          >
+            Next
+          </Button>
+
+          {/*  Already have an account? */}
+
+          <Text style={styles.registerText}>
+            Already have an account?{" "}
+            <Text
+              style={styles.registerLink}
+              onPress={() => navigation.navigate("SignIn")}
+            >
+              Sign In
+            </Text>
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -226,11 +224,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.White,
   },
+  mainContainer: {
+    height: "95%",
+    position: "relative",
+    paddingTop: "15%",
+    display: "flex",
+    justifyContent: "space-around",
+  },
   title: {
-    position: "absolute",
+    // position: "absolute",
     width: 305,
     height: 34,
-    top: 125,
+    // top: 125,
     fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
@@ -242,10 +247,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   emailFieldWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 74,
-    top: 304,
+    // top: 304,
     alignSelf: "center",
   },
   emailErrorMessage: {
@@ -253,31 +258,31 @@ const styles = StyleSheet.create({
     color: Color.PrimaryMain,
   },
   usernameFieldWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 74,
-    top: 200,
+    // top: 200,
     alignSelf: "center",
   },
   passwordFieldWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 70,
-    top: 400,
+    // top: 400,
     alignSelf: "center",
   },
   secondPasswordFieldWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 70,
-    top: 500,
+    // top: 500,
     alignSelf: "center",
   },
   registerBottomWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 101,
-    top: 600,
+    // top: 600,
     borderRadius: 10,
     marginHorizontal: 20,
     justifyContent: "space-between",

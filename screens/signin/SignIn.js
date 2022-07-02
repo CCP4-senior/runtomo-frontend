@@ -81,81 +81,86 @@ const SignIn = () => {
 
   return (
     <SafeAreaView style={styles.root}>
-      <Text style={styles.title}>Welcome Back!</Text>
-      <View style={styles.emailFieldWrapper}>
-        <TextInput
-          label="Email"
-          value={email}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          autoCapitalize="none"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          returnKeyType="next"
-          style={{ height: 50, backgroundColor: Color.GrayLight }}
-          error={false}
-          onChangeText={(text) => {
-            validateEmail(text);
-            return setEmail(text);
-          }}
-        />
-        <Text style={styles.emailErrorMessage}>
-          {emailError.isTriggered && emailError.message}
-        </Text>
-      </View>
-      <View style={styles.passwordFieldWrapper}>
-        <TextInput
-          label="Password"
-          value={password}
-          mode="outlined"
-          outlineColor={Color.Black}
-          activeOutlineColor={Color.Black}
-          textContentType="password"
-          secureTextEntry={true}
-          style={{ height: 50, backgroundColor: Color.GrayLight }}
-          onChangeText={(text) => {
-            validatePassword(text);
-            return setPassword(text);
-          }}
-        />
-        <Text style={styles.passwordErrorMessage}>
-          {passwordError.isTriggered && passwordError.message}
-        </Text>
-      </View>
-      <Text
-        style={styles.forgotPasswordLink}
-        onPress={() => alert("Forgot Password!")}
-      >
-        Forgot password?
-      </Text>
-      <View style={styles.signInBottomWrapper}>
-        <Button
-          mode="contained"
-          uppercase={false}
-          color={Color.PrimaryMain}
-          style={{ borderRadius: 10 }}
-          labelStyle={{
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-          contentStyle={{
-            padding: 5,
-          }}
-          disabled={!isFormValidated}
-          onPress={() => handleSignIn()}
-        >
-          Sign In
-        </Button>
-        <Text style={styles.signUpText}>
-          Don't have an account?{" "}
-          <Text
-            style={styles.signUpLink}
-            onPress={() => navigation.navigate("Register")}
-          >
-            Sign up
+      <View style={styles.mainContainer}>
+        <View>
+          <Text style={styles.title}>Welcome Back!</Text>
+        </View>
+
+        <View style={styles.emailFieldWrapper}>
+          <TextInput
+            label="Email"
+            value={email}
+            mode="outlined"
+            outlineColor={Color.Black}
+            activeOutlineColor={Color.Black}
+            autoCapitalize="none"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            returnKeyType="next"
+            style={{ height: 50, backgroundColor: Color.GrayLight }}
+            error={false}
+            onChangeText={(text) => {
+              validateEmail(text);
+              return setEmail(text);
+            }}
+          />
+          <Text style={styles.emailErrorMessage}>
+            {emailError.isTriggered && emailError.message}
           </Text>
+        </View>
+        <View style={styles.passwordFieldWrapper}>
+          <TextInput
+            label="Password"
+            value={password}
+            mode="outlined"
+            outlineColor={Color.Black}
+            activeOutlineColor={Color.Black}
+            textContentType="password"
+            secureTextEntry={true}
+            style={{ height: 50, backgroundColor: Color.GrayLight }}
+            onChangeText={(text) => {
+              validatePassword(text);
+              return setPassword(text);
+            }}
+          />
+          <Text style={styles.passwordErrorMessage}>
+            {passwordError.isTriggered && passwordError.message}
+          </Text>
+        </View>
+        <Text
+          style={styles.forgotPasswordLink}
+          onPress={() => alert("Forgot Password!")}
+        >
+          Forgot password?
         </Text>
+        <View style={styles.signInBottomWrapper}>
+          <Button
+            mode="contained"
+            uppercase={false}
+            color={Color.PrimaryMain}
+            style={{ borderRadius: 10 }}
+            labelStyle={{
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+            contentStyle={{
+              padding: 5,
+            }}
+            disabled={!isFormValidated}
+            onPress={() => handleSignIn()}
+          >
+            Sign In
+          </Button>
+          <Text style={styles.signUpText}>
+            Don't have an account?{" "}
+            <Text
+              style={styles.signUpLink}
+              onPress={() => navigation.navigate("Register")}
+            >
+              Sign up
+            </Text>
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -168,26 +173,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Color.White,
   },
+  mainContainer: {
+    // alignSelf: "center"
+    height: "55%",
+    position: "relative",
+    marginTop: "40%",
+    display: "flex",
+    justifyContent: "space-between",
+  },
   title: {
-    position: "absolute",
+    // position: "absolute",
     width: 305,
     height: 34,
-    top: 213,
+    // top: 213,
     fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
     marginHorizontal: 20,
     letterSpacing: 0.36,
     alignSelf: "center",
+    marginBottom: 10,
   },
   emailFieldHeader: {
     marginBottom: 10,
   },
   emailFieldWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 74,
-    top: 304,
+    // top: 304,
     alignSelf: "center",
   },
   emailErrorMessage: {
@@ -199,25 +213,25 @@ const styles = StyleSheet.create({
     color: "#c7254e",
   },
   passwordFieldWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 70,
-    top: 398,
+    // top: 398,
     alignSelf: "center",
   },
   forgotPasswordLink: {
-    position: "absolute",
+    // position: "absolute",
     color: Color.PrimaryMain,
-    top: 485,
+    // top: 485,
     fontSize: 15,
     left: 225,
     fontWeight: "500",
   },
   signInBottomWrapper: {
-    position: "absolute",
+    // position: "absolute",
     width: 315,
     height: 101,
-    top: 525,
+    // top: 525,
     borderRadius: 10,
     marginHorizontal: 20,
     fontWeight: "500",

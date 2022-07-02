@@ -16,6 +16,7 @@ import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import FilterModal from "./FilterModal.js";
+import SortByModal from "./SortByModal.js";
 
 const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -27,6 +28,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     getCurrentEventData,
     filteredEvents,
     setUserData,
+    setFilteredEvents,
+    setIsDataFiltered,
+    setSortingCondition,
+    sortingCondition,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
@@ -44,46 +49,40 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
   const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
+  const [sortByModalVisible, setSortByModalVisible] = useState(false);
+  const [resetFilterInHomeScreen, setResetFilterInHomeScreen] = useState(false);
+  const [resetSortingInHomeScreen, setResetSortingInHomeScreen] =
+    useState(false);
+
   /* modal */
   const hideModal = () => {
     setfilterModalVisible(false);
   };
 
-  // Leave as a reference. Case where api call is made
-  // const selectEvent = async (event) => {
-  //   const eventId = event.id;
-  //   try {
-  //     const event = await getCurrentEventData(eventId);
-  //     navigation.navigate("Event Details");
-  //   } catch (e) {
-  //     console.log(e);
-  //     console.log(e.config.url);
-  //     alert("Something went wrong. Please try again!");
-  //   }
-  // };
+  const hideSortByModal = () => {
+    setSortByModalVisible(false);
+  };
 
   const selectEvent = (event) => {
     setCurrentEvent(event);
     navigation.navigate("Event Details");
   };
 
+  const handleHomeSortingReset = () => {
+    setSortingCondition("standard");
+    setResetSortingInHomeScreen(true);
+  };
+
+  const handleHomeFilterReset = () => {
+    setFilteredEvents(null);
+    setIsDataFiltered(false);
+    setResetFilterInHomeScreen(true);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* <View style={styles.searchContainer}>
-        <TextInput
-          mode="outlined"
-          outlineColor="#F4F6F6"
-          activeOutlineColor={Color.GrayDark}
-          placeholder="Search"
-          style={styles.searchbar}
-          left={<TextInput.Icon name="magnify" style={{ marginTop: 15 }} />}
-          theme={{ roundness: 8 }}
-        />
-      </View> */}
       <View style={styles.topContainer}>
-        {/* Sort By  Button */}
-
-        <TouchableOpacity onPress={() => alert("Sort By button pressed!")}>
+        <TouchableOpacity onPress={() => setSortByModalVisible(true)}>
           <List.Item
             style={styles.topElement}
             title="SORT BY"
@@ -91,7 +90,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
               <List.Icon {...props} icon="text" style={styles.topIcon} />
             )}
             titleStyle={{ fontSize: 12, fontWeight: "700" }}
-            onPress={() => alert("Sort by button pressed!")}
           />
         </TouchableOpacity>
 
@@ -108,11 +106,63 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           />
         </TouchableOpacity>
       </View>
+      <View
+        style={[
+          sortingCondition !== "standard" || filteredEvents
+            ? styles.resetFilterSortingContainer
+            : null,
+        ]}
+      >
+        {sortingCondition !== "standard" && (
+          <View
+            style={{
+              backgroundColor: Color.GrayDark,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: Color.GrayDark,
+              width: 120,
+              alignContent: "center",
+              alignItems: "center",
+              marginRight: 5,
+            }}
+          >
+            <TouchableOpacity onPress={handleHomeSortingReset}>
+              <Text>X Reset Sorting</Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
-      {/* Wrapper for Run Events */}
-
+        {filteredEvents && (
+          <View
+            style={{
+              backgroundColor: Color.GrayDark,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: Color.GrayDark,
+              width: 110,
+              alignContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity onPress={handleHomeFilterReset}>
+              <Text>X Reset Filter</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
       <View style={styles.container}>
-        <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
+        <FilterModal
+          modalVisible={filterModalVisible}
+          hideModal={hideModal}
+          resetFilterInHomeScreen={resetFilterInHomeScreen}
+          setResetFilterInHomeScreen={setResetFilterInHomeScreen}
+        />
+        <SortByModal
+          modalVisible={sortByModalVisible}
+          hideModal={hideSortByModal}
+          resetSortingInHomeScreen={resetSortingInHomeScreen}
+          setResetSortingInHomeScreen={setResetSortingInHomeScreen}
+        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -136,13 +186,34 @@ const EventsDataPage = ({ selectEvent }) => {
     setIsDataFiltered,
     getCurrentEventData,
     setCurrentEvent,
+    sortingCondition,
   } = useContext(DataContext);
   const data = allEvents;
 
+  const handleSortingEvents = (events, sortingCondition) => {
+    if (sortingCondition === "ascending") {
+      const sortedEvents = events.sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+      );
+      return sortedEvents;
+    } else if (sortingCondition === "descending") {
+      const sortedEvents = events.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      return sortedEvents;
+    } else {
+      const sortedEvents = events.sort(
+        (a, b) => new Date(b.id) - new Date(a.id)
+      );
+      return sortedEvents;
+    }
+  };
+
   if (isDataFiltered && filteredEvents.length >= 1) {
+    const sortedEvents = handleSortingEvents(filteredEvents, sortingCondition);
     return (
       <View style={styles.eventCardWrapper}>
-        {filteredEvents.map((session) => {
+        {sortedEvents.map((session) => {
           return (
             <EventCard
               isHomePageCard={true}
@@ -163,9 +234,10 @@ const EventsDataPage = ({ selectEvent }) => {
       </View>
     );
   } else {
+    const sortedEvents = handleSortingEvents(data, sortingCondition);
     return (
       <View style={styles.eventCardWrapper}>
-        {data.map((session) => {
+        {sortedEvents.map((session) => {
           return (
             <EventCard
               isHomePageCard={true}
@@ -248,6 +320,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     height: 41,
     padding: 0,
+  },
+  resetFilterSortingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    height: 20,
+    padding: 0,
+    paddingHorizontal: 20,
+    marginTop: 10,
+    marginRight: 50,
   },
   topElement: {
     paddingTop: 0,
