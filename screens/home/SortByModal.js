@@ -22,7 +22,7 @@ import { DataContext } from "../../context/datacontext/DataContext";
 const SortByModal = ({ modalVisible, hideModal }) => {
   const containerStyle = {
     backgroundColor: "#fff",
-    height: "36%",
+    height: "30%",
     margin: 20,
     justifyContent: "center",
   };
@@ -75,34 +75,6 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     marginRight: 20,
                   }}
                 >
-                  <RadioButton
-                    value="standard"
-                    status={sortValue === "standard" ? "checked" : "unchecked"}
-                  />
-                </View>
-                <Text>Recently Added</Text>
-              </View>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingHorizontal: 30,
-                  marginBottom: 10,
-                  paddingTop: 2,
-                  paddingBottom: 2,
-                }}
-              >
-                <View
-                  style={{
-                    height: 36,
-                    width: 36,
-                    borderRadius: 36 / 2,
-                    borderColor: Color.Black,
-                    borderWidth: 2,
-                    marginRight: 20,
-                  }}
-                >
                   <View>
                     <RadioButton
                       value="ascending"
@@ -112,7 +84,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     />
                   </View>
                 </View>
-                <Text>Closest Date</Text>
+                <Text>Newest Event Date</Text>
               </View>
               <View
                 style={{
@@ -146,7 +118,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     }
                   />
                 </View>
-                <Text>Farthest Date</Text>
+                <Text>Oldest Event Date</Text>
               </View>
             </RadioButton.Group>
             <View style={styles.applyResetBtnsWrapper}>
@@ -180,11 +152,13 @@ const styles = StyleSheet.create({
   modalTitle: {
     textAlign: "center",
     padding: 10,
+    marginBottom: 10,
   },
   applyResetBtnsWrapper: {
     flexDirection: "row",
     justifyContent: "space-evenly",
     padding: 2,
+    marginTop: 5,
   },
   resetBtnText: {
     color: Color.PrimaryMain,

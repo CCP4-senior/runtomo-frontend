@@ -28,6 +28,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     getCurrentEventData,
     filteredEvents,
     setUserData,
+    setFilteredEvents,
+    setIsDataFiltered,
+    setSortingCondition,
+    sortingCondition,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
@@ -83,6 +87,55 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
             titleStyle={{ fontSize: 12, fontWeight: "700" }}
           />
         </TouchableOpacity>
+      </View>
+      <View
+        style={[
+          sortingCondition !== "standard" || filteredEvents
+            ? styles.resetFilterSortingContainer
+            : null,
+        ]}
+      >
+        {sortingCondition !== "standard" && (
+          <View
+            style={{
+              backgroundColor: Color.GrayDark,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: Color.GrayDark,
+              width: 120,
+              alignContent: "center",
+              alignItems: "center",
+              marginRight: 5,
+            }}
+          >
+            <TouchableOpacity onPress={() => setSortingCondition("standard")}>
+              <Text>X Reset Sorting</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {filteredEvents && (
+          <View
+            style={{
+              backgroundColor: Color.GrayDark,
+              borderRadius: 10,
+              borderWidth: 2,
+              borderColor: Color.GrayDark,
+              width: 110,
+              alignContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                setFilteredEvents(null);
+                setIsDataFiltered(false);
+              }}
+            >
+              <Text>X Reset Filter</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
       <View style={styles.container}>
         <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
@@ -246,6 +299,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     height: 41,
     padding: 0,
+  },
+  resetFilterSortingContainer: {
+    display: "flex",
+    flexDirection: "row",
+    height: 20,
+    padding: 0,
+    paddingHorizontal: 20,
+    marginTop: 10,
+    marginRight: 50,
   },
   topElement: {
     paddingTop: 0,
