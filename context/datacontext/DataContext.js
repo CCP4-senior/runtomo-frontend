@@ -20,7 +20,6 @@ const DataProvider = ({ children }) => {
   const [isDataFiltered, setIsDataFiltered] = useState(false);
   const [tokyoWards, setTokyoWards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  const [sortingCondition, setSortingCondition] = useState("standard");
 
   useEffect(() => {
     initializeApp(firebaseConfig);
@@ -153,8 +152,6 @@ const DataProvider = ({ children }) => {
     tokyoWards,
     getUser,
     currentUser,
-    sortingCondition,
-    setSortingCondition,
   };
 
   return (
