@@ -93,8 +93,9 @@ const EventDetailsScreen = ({ navigation }) => {
   // To be modified
   const openCreatorProfile = async () => {
     await getUser(eventData.creator.id);
-    if (creator.id !== user.id) navigation.navigate("Creator Profile");
-    if (creator.id === user.id) navigation.navigate("Profile");
+    // if (creator.id !== user.id) navigation.navigate("Creator Profile");
+    if (creator.id === user.id) navigation.navigate("Profile", {creator});
+    if (creator.id !== user.id) navigation.navigate("Profile", {creator});
   };
   const joinEvent = async () => {
     try {

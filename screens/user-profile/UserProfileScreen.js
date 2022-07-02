@@ -21,9 +21,16 @@ function getAge(dateString) {
   return Math.floor(ageInMilliseconds / 1000 / 60 / 60 / 24 / 365);
 }
 
-const UserProfileScreen = ({ navigation }) => {
+const UserProfileScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
 
+  const userToView = route.params.creator;
+  const isLoginUser = userToView.id === user.id;
+  console.log('🍎 userToView:', userToView.id);
+  console.log('🍎 user.id:', user.id);
+  console.log('🍎 isUser:', isLoginUser);
+
+  
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
