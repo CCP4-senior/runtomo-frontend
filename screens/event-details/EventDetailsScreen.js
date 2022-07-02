@@ -40,7 +40,8 @@ const EventDetailsScreen = ({ navigation }) => {
   });
 
   const { user } = useContext(AuthContext);
-  const { currentEvent, setCurrentEvent, getUser } = useContext(DataContext);
+  const { currentEvent, setCurrentEvent, getUser, generateImageUrl } =
+    useContext(DataContext);
   const [visible, setVisible] = useState(false);
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
@@ -52,8 +53,6 @@ const EventDetailsScreen = ({ navigation }) => {
   const [participants, setParticipants] = useState([]);
   const [hasJoined, setHasJoined] = useState(false);
 
-  // Leave as a reference. Case where api call is made to get creator info
-  // const [creator, setCreator] = useState({});
   const [creator, setCreator] = useState(eventData.creator);
   const date = new Date(eventData.date);
   const time = new Date(eventData.time);
@@ -63,7 +62,6 @@ const EventDetailsScreen = ({ navigation }) => {
   useEffect(() => {
     getAllParticipants();
     setLatitudeAndLongitude();
-    // getUser(); // Leave as a reference. Case where api call is made to get creator info
   }, []);
 
   const setLatitudeAndLongitude = () => {
@@ -196,7 +194,9 @@ const EventDetailsScreen = ({ navigation }) => {
                     {eventData.creator?.image && (
                       <Avatar.Image
                         size={40}
-                        source={eventData.creator.image}
+                        source={{
+                          uri: generateImageUrl(eventData.creaor.image),
+                        }}
                       />
                     )}
                     <Text style={styles.creatorName}>
@@ -206,7 +206,6 @@ const EventDetailsScreen = ({ navigation }) => {
                   <View style={styles.stackedAvatarContainer}>
                     <StackedAvatars
                       color={"#007AFF"}
-                      eventId={eventData.id}
                       // participantsArray={participants}
                     />
                     <Text style={{ color: "#007AFF", ...styles.joinText }}>
@@ -230,7 +229,7 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.boldText}>
                       {format(new Date(zonedDate), "E, MMM d, yyyy")}
                     </Text>
-                    <Text>
+                    <Text style={styles.thinText}>
                       {format(new Date(zonedTime), "p")} to{" "}
                       {format(
                         addMinutes(
@@ -254,18 +253,22 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.boldText}>
                       {eventData.ward || "Other"}
                     </Text>
-                    <Text>Exact location available upon joining</Text>
+                    <Text style={styles.thinText}>
+                      Exact location available upon joining
+                    </Text>
                   </View>
                 </View>
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text>{eventData.description || "Not provided"}</Text>
+                  <Text style={styles.thinText}>
+                    {eventData.description || "Not provided"}
+                  </Text>
                 </View>
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Location:</Text>
-                  <Text>{eventData.location}</Text>
+                  <Text style={styles.thinText}>{eventData.location}</Text>
                 </View>
                 <View style={styles.mapContainer}>
                   <MapView
@@ -383,9 +386,12 @@ const styles = StyleSheet.create({
   boldText: {
     fontWeight: "600",
   },
+  thinText: {
+    color: Color.Text,
+  },
   listLine: {
     position: "absolute",
-    top: 152,
+    top: 158,
     left: 35,
     width: 1,
     height: 50,
@@ -430,7 +436,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: Color.White,
   },
-  creatorCard: { padding: 13 },
+  creatorCard: { padding: 13, paddingTop: 6 },
   avatar: { backgroundColor: Color.GrayDark },
   creatorName: {
     fontSize: 18,
@@ -442,7 +448,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "700",
     color: Color.PrimaryMain,
-    paddingTop: 15,
+    paddingTop: 25,
   },
   map: {
     height: 300,

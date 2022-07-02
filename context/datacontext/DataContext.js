@@ -20,7 +20,12 @@ const DataProvider = ({ children }) => {
   const [isDataFiltered, setIsDataFiltered] = useState(false);
   const [tokyoWards, setTokyoWards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
-  const [sortingCondition, setSortingCondition] = useState("standard");
+
+  const generateImageUrl = (ref) => {
+    return `https://firebasestorage.googleapis.com/v0/b/senior-project-8ca2b.appspot.com/o/${encodeURIComponent(
+      ref
+    )}?alt=media`;
+  };
 
   useEffect(() => {
     initializeApp(firebaseConfig);
@@ -76,12 +81,13 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
+      console.log(response.data);
 
       setUser({
-        ...user,
         ...response.data,
-        age: mockData.age, //To be updated to use backend data
-        // runnerType: mockData.runnerType, //To be updated to use backend data
+        imageUrl: response.data.profile.image
+          ? generateImageUrl(response.data.profile.image)
+          : null,
       });
     } catch (e) {
       alert("Something went wrong. Please try again!");
@@ -104,11 +110,7 @@ const DataProvider = ({ children }) => {
       for (let i = 0; i < data.length; i++) {
         let imageUrl;
         if (data[i].image) {
-          // Leave as a reference just in case for now
-          // imageUrl = await downloadImage(data[i].image);
-          imageUrl = `https://firebasestorage.googleapis.com/v0/b/senior-project-8ca2b.appspot.com/o/${encodeURIComponent(
-            data[i].image
-          )}?alt=media`;
+          imageUrl = generateImageUrl(data[i].image);
         }
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
@@ -153,8 +155,7 @@ const DataProvider = ({ children }) => {
     tokyoWards,
     getUser,
     currentUser,
-    sortingCondition,
-    setSortingCondition,
+    generateImageUrl,
   };
 
   return (

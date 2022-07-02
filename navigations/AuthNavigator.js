@@ -5,6 +5,7 @@ import Register from "../screens/register/Register";
 import RegisterExtraInfo from "../screens/register-extra-info/RegisterExtraInfo";
 import AuthSelection from "../screens/auth-selection/AuthSelection";
 import SignOutScreen from "../screens/signout/SignOutScreen";
+import ProfilePhoto from "../screens/register-extra-info/ProfilePhoto";
 
 const Stack = createStackNavigator();
 
@@ -45,10 +46,20 @@ const AuthNavigator = () => {
         name="RegisterExtraInfo"
         component={RegisterExtraInfo}
         options={{
+          title: "",
           headerShown: false,
         }}
       />
-      
+
+      <Stack.Screen
+        name="ProfilePhoto"
+        component={ProfilePhoto}
+        options={{
+          title: "",
+          // headerShown: false,
+        }}
+      />
+
       <Stack.Screen name="SignOut" component={SignOutScreen} />
     </Stack.Navigator>
   );

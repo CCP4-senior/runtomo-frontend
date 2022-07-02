@@ -10,6 +10,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [idForProfile, setIdForProfile] = useState("");
+  const [userToBeRegistered, setUserToBeRegistered] = useState({});
 
   const createUser = async ({ username, email, password }) => {
     try {
@@ -49,6 +50,7 @@ const AuthProvider = ({ children }) => {
     userId,
     email,
     password,
+    image,
   }) => {
     try {
       const body = {
@@ -57,6 +59,7 @@ const AuthProvider = ({ children }) => {
         estimated5k,
         estimated10k,
         userId,
+        image,
       };
       const userProfileResponse = await axiosInstance.post(
         "/users/profile",
@@ -82,7 +85,6 @@ const AuthProvider = ({ children }) => {
       });
       if (response.status === 200) {
         const data = response.data;
-        // TODO: user information will be updated dynamically when backend is ready => Done in setUserData in DataContext
         const userId = jwt_decode(data.access)["user_id"];
         setUser({ id: userId });
 
@@ -119,13 +121,10 @@ const AuthProvider = ({ children }) => {
 
   const updateDBUserInfo = async (userUpdates) => {
     try {
-      const response = await axiosInstance.patch(
-        "/auth/update/",
-        {
-          email: userUpdates.email,
-          username: userUpdates.username
-        }
-      );
+      const response = await axiosInstance.patch("/auth/update/", {
+        email: userUpdates.email,
+        username: userUpdates.username,
+      });
       if (response.status === 200) {
         const data = response.data;
       }
@@ -167,12 +166,6 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // DeleteAccount function: to be implemented once endpoint is ready
-  // const deleteAccount = async () => {
-  //   await axiosInstance.delete("/api/delete_account", {
-  //   });
-  // };
-
   const contextData = {
     createUser,
     user,
@@ -181,9 +174,10 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     createUserProfile,
     idForProfile,
+    userToBeRegistered,
+    setUserToBeRegistered,
     updateDBUserInfo,
     updateDBUserProfile,
-    /*deleteAccount,*/
   };
 
   return (

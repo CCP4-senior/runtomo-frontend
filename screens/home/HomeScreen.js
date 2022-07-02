@@ -16,7 +16,6 @@ import EventCard from "../../components/EventCard.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import FilterModal from "./FilterModal.js";
-import SortByModal from "./SortByModal.js";
 
 const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -49,15 +48,23 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
   const data = allEvents;
   const [filterModalVisible, setfilterModalVisible] = useState(false);
-  const [sortByModalVisible, setSortByModalVisible] = useState(false);
   /* modal */
   const hideModal = () => {
     setfilterModalVisible(false);
   };
 
-  const hideSortByModal = () => {
-    setSortByModalVisible(false);
-  };
+  // Leave as a reference. Case where api call is made
+  // const selectEvent = async (event) => {
+  //   const eventId = event.id;
+  //   try {
+  //     const event = await getCurrentEventData(eventId);
+  //     navigation.navigate("Event Details");
+  //   } catch (e) {
+  //     console.log(e);
+  //     console.log(e.config.url);
+  //     alert("Something went wrong. Please try again!");
+  //   }
+  // };
 
   const selectEvent = (event) => {
     setCurrentEvent(event);
@@ -66,8 +73,19 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* <View style={styles.searchContainer}>
+        <TextInput
+          mode="outlined"
+          outlineColor="#F4F6F6"
+          activeOutlineColor={Color.GrayDark}
+          placeholder="Search"
+          style={styles.searchbar}
+          left={<TextInput.Icon name="magnify" style={{ marginTop: 15 }} />}
+          theme={{ roundness: 8 }}
+        />
+      </View> */}
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={() => setSortByModalVisible(true)}>
+        <TouchableOpacity onPress={() => alert("Filters button pressed!")}>
           <List.Item
             style={styles.topElement}
             title="SORT BY"
@@ -75,6 +93,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
               <List.Icon {...props} icon="text" style={styles.topIcon} />
             )}
             titleStyle={{ fontSize: 12, fontWeight: "700" }}
+            onPress={() => alert("Sort by button pressed!")}
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
@@ -139,10 +158,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
       </View>
       <View style={styles.container}>
         <FilterModal modalVisible={filterModalVisible} hideModal={hideModal} />
-        <SortByModal
-          modalVisible={sortByModalVisible}
-          hideModal={hideSortByModal}
-        />
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
@@ -164,35 +179,13 @@ const EventsDataPage = ({ selectEvent }) => {
     setIsDataFiltered,
     getCurrentEventData,
     setCurrentEvent,
-    sortingCondition,
   } = useContext(DataContext);
-
   const data = allEvents;
 
-  const handleSortingEvents = (events, sortingCondition) => {
-    if (sortingCondition === "ascending") {
-      const sortedEvents = events.sort(
-        (a, b) => new Date(a.date) - new Date(b.date)
-      );
-      return sortedEvents;
-    } else if (sortingCondition === "descending") {
-      const sortedEvents = events.sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      );
-      return sortedEvents;
-    } else {
-      const sortedEvents = events.sort(
-        (a, b) => new Date(b.id) - new Date(a.id)
-      );
-      return sortedEvents;
-    }
-  };
-
   if (isDataFiltered && filteredEvents.length >= 1) {
-    const sortedEvents = handleSortingEvents(filteredEvents, sortingCondition);
     return (
       <View style={styles.eventCardWrapper}>
-        {sortedEvents.map((session) => {
+        {filteredEvents.map((session) => {
           return (
             <EventCard
               isHomePageCard={true}
@@ -213,10 +206,9 @@ const EventsDataPage = ({ selectEvent }) => {
       </View>
     );
   } else {
-    const sortedEvents = handleSortingEvents(data, sortingCondition);
     return (
       <View style={styles.eventCardWrapper}>
-        {sortedEvents.map((session) => {
+        {data.map((session) => {
           return (
             <EventCard
               isHomePageCard={true}
