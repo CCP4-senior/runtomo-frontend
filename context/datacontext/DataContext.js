@@ -20,6 +20,7 @@ const DataProvider = ({ children }) => {
   const [isDataFiltered, setIsDataFiltered] = useState(false);
   const [tokyoWards, setTokyoWards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const [sortingCondition, setSortingCondition] = useState("standard");
 
   const generateImageUrl = (ref) => {
     return `https://firebasestorage.googleapis.com/v0/b/senior-project-8ca2b.appspot.com/o/${encodeURIComponent(
@@ -156,6 +157,8 @@ const DataProvider = ({ children }) => {
     getUser,
     currentUser,
     generateImageUrl,
+    sortingCondition,
+    setSortingCondition,
   };
 
   return (
