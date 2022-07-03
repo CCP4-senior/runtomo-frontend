@@ -11,14 +11,6 @@ const createOptions = (settingPressHandler, messagePressaHandler) => {
         style={[styles.iconContainer, styles.menu]}
         onPress={settingPressHandler}
       >
-        {/* <View
-          style={{
-            width: 35,
-            height: 35,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        > */}
         <IconButton icon="menu" color="grey" size={25} />
         {/* </View> */}
       </TouchableOpacity>
