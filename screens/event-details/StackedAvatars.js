@@ -17,8 +17,8 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
     ];
   }
   const { generateImageUrl } = useContext(DataContext);
-  const displayedCirlceCount = 5;
-  const remainingCount = participants.length - 4;
+  const displayedParticipants = participants.slice(0, 4).concat({});
+  const displayedCirlceCount = displayedParticipants.length;
 
   return (
     <View
@@ -30,8 +30,8 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
         ...styles.avatarContainer,
       }}
     >
-      {participants.slice(0, 5).map((person, i) => {
-        if (i === 4) {
+      {displayedParticipants.map((person, i) => {
+        if (i === displayedParticipants.length - 1) {
           return (
             <View
               style={
@@ -54,7 +54,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                       }
                 }
               >
-                <Text style={styles.lastCircleText}>{remainingCount}+</Text>
+                <Text style={styles.lastCircleText}>{participants.length}</Text>
               </View>
             </View>
           );
