@@ -6,14 +6,6 @@ import HeaderStyle from "../../assets/themes/HeaderStyle";
 const createOptions = (settingPressHandler, messagePressaHandler) => {
   const options = {
     ...HeaderStyle,
-    headerRight: () => (
-      <TouchableOpacity
-        style={[styles.iconContainer, styles.menu]}
-        onPress={() => alert("message icon is pressed!")}
-      >
-        <IconButton icon="forum-outline" size={25} color="grey" />
-      </TouchableOpacity>
-    ),
     headerLeft: () => (
       <TouchableOpacity
         style={[styles.iconContainer, styles.menu]}
