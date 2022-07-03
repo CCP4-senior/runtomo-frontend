@@ -205,7 +205,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
 
           <View style={styles.inputContainer}>
             <TextInput
-              mutiline={true}
               mode="outlined"
               outlineColor="#fff"
               activeOutlineColor={Color.GrayDark}
@@ -216,7 +215,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
               onChangeText={(text) => {
                 setEventDescription(text);
                 if (text.length === 255) {
-                  alert("Description cannot be exceed 255 character length.");
+                  alert("Description cannot exceed 255 character length.");
                 }
               }}
               maxLength={255}
