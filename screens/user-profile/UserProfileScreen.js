@@ -151,33 +151,33 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Age:{" "}
-                  {userData && getAge(userData["profile"]["date_of_birth"])}
+                  {userData?.profile && getAge(userData["profile"]["date_of_birth"])}
                 </Text>
               </View>
 
               {/* Date of Birth */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Date of Birth: {userData && userData["profile"]["date_of_birth"]}
+                  Date of Birth: {userData?.profile && userData["profile"]["date_of_birth"]}
                 </Text>
               </View>
 
               {/* Run Frequency */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Run Frequency: {userData && userData["profile"]["run_frequency"]} / week
+                  Run Frequency: {userData?.profile && userData["profile"]["run_frequency"]} / week
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 5k: {userData && userData["profile"]["estimated5k"]}
+                  Estimated 5k: {userData?.profile && userData["profile"]["estimated5k"]}
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 10k: {userData && userData["profile"]["estimated10k"]}
+                  Estimated 10k: {userData?.profile && userData["profile"]["estimated10k"]}
                 </Text>
               </View>
             </View>
