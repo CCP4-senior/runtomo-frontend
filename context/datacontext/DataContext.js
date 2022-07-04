@@ -163,6 +163,7 @@ const DataProvider = ({ children }) => {
     setUserData,
     tokyoWards,
     getUser,
+    getUserData,
     currentUser,
     generateImageUrl,
   };
