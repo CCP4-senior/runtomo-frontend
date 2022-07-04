@@ -19,16 +19,11 @@ import axiosInstance from "../../helpers/axios.js";
 import uploadImage from "../../helpers/uploadImage.js";
 import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
+import deleteStoredImage from "../../helpers/deleteStoredImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
-const EventEditScreen = ({ navigation, route }) => {
-  useEffect(() => {
-    console.log(currentEvent);
-    console.log(currentEvent.id);
-    console.log(new Date().toISOString());
-  }, []);
-
+const EventEditScreen = ({ navigation }) => {
   const runningDurationArray = [
     { id: 1, name: "15 mins", num: 15 },
     { id: 2, name: "30 mins", num: 30 },
@@ -36,7 +31,8 @@ const EventEditScreen = ({ navigation, route }) => {
     { id: 4, name: "More", num: null },
   ];
 
-  const { setCurrentEvent, currentEvent } = useContext(DataContext);
+  const { setCurrentEvent, currentEvent, generateImageUrl } =
+    useContext(DataContext);
   const { user } = useContext(AuthContext);
 
   const [title, setTitle] = useState(currentEvent?.title || "");
@@ -62,11 +58,10 @@ const EventEditScreen = ({ navigation, route }) => {
     currentEvent?.description || ""
   );
   const [imageUri, setImageUri] = useState(currentEvent?.imageUrl || "");
-  const [imageRef, setImageRef] = useState(currentEvent?.image || "");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
-
-  const [isUser, setIsUser] = useState(true);
+  const hasPhoto = currentEvent.imageUrl;
+  const [photoHasChanged, setPhotoHasChanged] = useState(false);
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -77,13 +72,6 @@ const EventEditScreen = ({ navigation, route }) => {
 
   const buttonHandler = async () => {
     try {
-      let currentRef;
-      if (imageUri !== "") {
-        const newUri = await resizeImage(imageUri, 300);
-        currentRef = await uploadImage("events", newUri);
-        setImageRef(currentRef);
-      }
-
       const requiredFields = [title, meetingPoint, date, time, runningDuration];
 
       if (requiredFields.some((field) => field === "")) {
@@ -91,8 +79,16 @@ const EventEditScreen = ({ navigation, route }) => {
         return;
       }
 
+      let currentRef = currentEvent.image;
+      if (imageUri !== "" && photoHasChanged) {
+        currentRef = await storeNewImage();
+      }
+      if (imageUri === "" && hasPhoto) {
+        const prevImageUrl = currentEvent.imageUrl;
+        await deleteStoredImage(prevImageUrl);
+      }
+
       const event = {
-        created_at: new Date().toISOString(),
         title: title,
         location: meetingPoint,
         ward: ward?.ward_name || null,
@@ -112,7 +108,11 @@ const EventEditScreen = ({ navigation, route }) => {
         `/events/${currentEvent.id}/`,
         event
       );
-      setCurrentEvent({ ...event, creator: user });
+      setCurrentEvent({
+        ...event,
+        creator: user,
+        imageUrl: generateImageUrl(currentRef),
+      });
       navigation.navigate("Event Updated");
     } catch (e) {
       console.log(e);
@@ -123,6 +123,47 @@ const EventEditScreen = ({ navigation, route }) => {
   const deleteImage = () => {
     setImageUri("");
   };
+
+  const storeNewImage = async () => {
+    const newUri = await resizeImage(imageUri, 300);
+    const imageRef = await uploadImage("events", newUri);
+
+    // await axiosInstance.patch(`/users/profile/${user.profile.id}/`, {
+    //   image: imageRef,
+    // });
+
+    // setUser({
+    //   ...user,
+    //   profile: { ...user.profile, image: imageRef },
+    //   imageUrl: generateImageUrl(imageRef),
+    // });
+
+    if (hasPhoto) {
+      const prevImageUrl = currentEvent.imageUrl;
+      await deleteStoredImage(prevImageUrl);
+    }
+    return imageRef;
+    // hideModal();
+  };
+
+  // const deleteEventPhoto = async () => {
+  //   deleteImage();
+  //   // if (hasPhoto) {
+  //   //   const prevImageUrl = currentEvent.imageUrl;
+  //   //   // await axiosInstance.patch(`/users/profile/${user.profile.id}/`, {
+  //   //   //   image: null,
+  //   //   // });
+
+  //   //   // setUser({
+  //   //   //   ...user,
+  //   //   //   profile: { ...user.profile, image: null },
+  //   //   //   imageUrl: null,
+  //   //   // });
+
+  //   //   await deleteStoredImage(prevImageUrl);
+  //   //   // hideModal();
+  //   // }
+  // };
 
   return (
     <Provider>
@@ -228,15 +269,13 @@ const EventEditScreen = ({ navigation, route }) => {
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
-              {imageUri !== "" && (
-                <Image source={{ uri: imageUri }} style={{ height: 175 }} />
-              )}
+              <Image source={{ uri: imageUri }} style={{ height: 175 }} />
               <View style={styles.imageButtonsContainer}>
                 <Button
                   color={Color.PrimaryMain}
                   onPress={async () => {
                     inputRef.current?.blur();
-                    await selectImage(setImageUri);
+                    await selectImage(setImageUri, setPhotoHasChanged);
                   }}
                 >
                   Change

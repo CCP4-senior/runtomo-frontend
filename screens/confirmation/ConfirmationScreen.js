@@ -50,7 +50,7 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
               </Paragraph>
             </>
           )}
-          {actionType === "join" && (
+          {actionType === "update" && (
             <>
               <Paragraph style={styles.paragraph}>
                 Event is successfully updated!
@@ -65,7 +65,7 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
 
       <EventCard
         event={event}
-        handlePress={() => navigation.navigate("Event Details")}
+        handlePress={() => navigation.navigate("Running Event")}
       />
 
       {actionType === "create" && (

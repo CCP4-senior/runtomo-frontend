@@ -39,7 +39,7 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
-  const { setCurrentEvent } = useContext(DataContext);
+  const { setCurrentEvent, generateImageUrl } = useContext(DataContext);
   const { user } = useContext(AuthContext);
 
   const [isUser, setIsUser] = useState(true);
@@ -88,7 +88,11 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       };
 
       const response = await axiosInstance.post("/events/create_event", event);
-      setCurrentEvent({ ...event, creator: user });
+      setCurrentEvent({
+        ...event,
+        creator: user,
+        imageUrl: generateImageUrl(currentRef),
+      });
       navigation.navigate("Event Created");
     } catch (e) {
       console.log(e);
@@ -204,11 +208,9 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
-              {imageUri !== "" && (
-                <Image source={{ uri: imageUri }} style={{ height: 175 }} />
-              )}
+              <Image source={{ uri: imageUri }} style={{ height: 175 }} />
               <Button color={Color.PrimaryMain} onPress={deleteImage}>
-                Delete
+                Undo Selection
               </Button>
             </View>
           )}

@@ -1,6 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 
-const selectImage = async (setImageUri) => {
+const selectImage = async (setImageUri, setPhotoHasChanged) => {
   try {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -10,6 +10,9 @@ const selectImage = async (setImageUri) => {
 
     if (!result.cancelled) {
       setImageUri(result.uri);
+      if (setPhotoHasChanged) {
+        setPhotoHasChanged(true);
+      }
     }
   } catch (e) {
     alert("Something went wrong. Please try again!");
