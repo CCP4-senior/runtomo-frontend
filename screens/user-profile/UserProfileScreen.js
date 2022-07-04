@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Text,
   View,
@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from "react-native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
+import { DataContext } from "../../context/datacontext/DataContext";
 import { Avatar, Button, IconButton, Provider } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import { TouchableOpacity } from "react-native-web";
@@ -23,6 +24,7 @@ function getAge(dateString) {
 
 const UserProfileScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
+  const { getUserData } = useContext(DataContext);
 
   const userToView = route.params.creator;
   const isLoginUser = userToView.id === user.id;
@@ -36,6 +38,12 @@ const UserProfileScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [wantsToDelete, setWantsToDelete] = useState(false);
+
+
+  useEffect( () => {
+    getUserData(userToView.id);
+  })
+
 
   const hideModal = () => {
     setModalVisible(false);
