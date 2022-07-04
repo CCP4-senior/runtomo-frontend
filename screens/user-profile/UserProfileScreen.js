@@ -16,7 +16,8 @@ import { Avatar, Button, IconButton, Provider } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import { TouchableOpacity } from "react-native-web";
 import ProfilePhotoModal from "./ProfilePhotoModal";
-import { enableExpoCliLogging } from "expo/build/logs/Logs";
+import axiosInstance from "../../helpers/axios.js";
+
 
 function getAge(dateString) {
   var ageInMilliseconds = new Date() - new Date(dateString);
@@ -25,7 +26,6 @@ function getAge(dateString) {
 
 const UserProfileScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
-  const { getUserData } = useContext(DataContext);
 
   const userToView = route.params.creator;
   const isLoginUser = userToView.id === user.id;
@@ -37,17 +37,15 @@ const UserProfileScreen = ({ navigation, route }) => {
   const [wantsToDelete, setWantsToDelete] = useState(false);
   const [userData, setUserData] = useState({});
 
-  useEffect(() => {
-    
-      const userToViewData = getUserData(userToView.id);
-      console.log("🍎 userToView:", userToView);
-      console.log("🍎 userToViewData:", userToViewData);
-      setUserData(userToViewData);
-      // console.log("🍎 userData:", userData);
-
-
-
-  });
+  const getUserData = async (id) => {
+    try {
+      const response = await axiosInstance(`/users/${id}/`);
+      setUserData(response.data);
+      console.log('🍎 userData Gogo!:', userData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const hideModal = () => {
     setModalVisible(false);
@@ -62,6 +60,10 @@ const UserProfileScreen = ({ navigation, route }) => {
     email: "wadeMock@app.com",
     age: "34",
   };
+
+  useEffect(() => {
+    getUserData(userToView.id);
+  }, []);
 
   return (
     <Provider>
@@ -115,7 +117,7 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Username */}
 
               <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>{user.username}</Text>
+                <Text style={styles.userFullName}>{userData.username}</Text>
 
                 {/* Edit Profile button */}
 
@@ -149,33 +151,33 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Age */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Age: {getAge(user["profile"]["date_of_birth"])}
+                  Age: {getAge(userData["profile"]["date_of_birth"])}
                 </Text>
               </View>
 
               {/* Date of Birth */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Date of Birth: {user["profile"]["date_of_birth"]}
+                  Date of Birth: {userData["profile"]["date_of_birth"]}
                 </Text>
               </View>
 
               {/* Run Frequency */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Run Frequency: {user["profile"]["run_frequency"]} / week
+                  Run Frequency: {userData["profile"]["run_frequency"]} / week
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 5k: {user["profile"]["estimated5k"]}
+                  Estimated 5k: {userData["profile"]["estimated5k"]}
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 10k: {user["profile"]["estimated10k"]}
+                  Estimated 10k: {userData["profile"]["estimated10k"]}
                 </Text>
               </View>
             </View>
