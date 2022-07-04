@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -10,7 +10,7 @@ import {
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "../event-creation/DatePicker.js";
-import AreaModal from "../event-creation/AreaModal.js";
+// import AreaModal from "../event-creation/AreaModal.js";
 import DurationModal from "../event-creation/DurationModal.js";
 import GoogleSearchModal from "../event-creation/GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
@@ -128,42 +128,12 @@ const EventEditScreen = ({ navigation }) => {
     const newUri = await resizeImage(imageUri, 300);
     const imageRef = await uploadImage("events", newUri);
 
-    // await axiosInstance.patch(`/users/profile/${user.profile.id}/`, {
-    //   image: imageRef,
-    // });
-
-    // setUser({
-    //   ...user,
-    //   profile: { ...user.profile, image: imageRef },
-    //   imageUrl: generateImageUrl(imageRef),
-    // });
-
     if (hasPhoto) {
       const prevImageUrl = currentEvent.imageUrl;
       await deleteStoredImage(prevImageUrl);
     }
     return imageRef;
-    // hideModal();
   };
-
-  // const deleteEventPhoto = async () => {
-  //   deleteImage();
-  //   // if (hasPhoto) {
-  //   //   const prevImageUrl = currentEvent.imageUrl;
-  //   //   // await axiosInstance.patch(`/users/profile/${user.profile.id}/`, {
-  //   //   //   image: null,
-  //   //   // });
-
-  //   //   // setUser({
-  //   //   //   ...user,
-  //   //   //   profile: { ...user.profile, image: null },
-  //   //   //   imageUrl: null,
-  //   //   // });
-
-  //   //   await deleteStoredImage(prevImageUrl);
-  //   //   // hideModal();
-  //   // }
-  // };
 
   return (
     <Provider>
@@ -324,29 +294,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.Fill,
-    padding: 10,
     alignItems: "center",
     overflow: "visible",
   },
   inputContainer: {
     margin: 5,
-  },
-  description: {
-    height: 98,
-    borderRadius: 10,
+    width: "100%",
+    alignItems: "center",
   },
   pickerContainer: {
-    width: 335,
+    width: "90%",
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   imagePlaceholderContainer: {
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
-    alignSelf: "flex-start",
-    marginLeft: 20,
-    marginTop: 10,
+    marginTop: 8,
+    width: "90%",
+    paddingLeft: 8,
   },
   imagePlaceholderBackground: {
     width: 98,
@@ -382,7 +349,7 @@ const styles = StyleSheet.create({
       placeholder: Color.Text,
     },
   },
-  input: { backgroundColor: "#fff", width: 335, height: 98 },
+  input: { backgroundColor: "#fff", width: "90%", height: 98 },
   imageButtonsContainer: {
     flexDirection: "row",
     width: "70%",

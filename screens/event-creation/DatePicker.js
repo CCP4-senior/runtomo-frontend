@@ -61,7 +61,7 @@ const DatePicker = ({
           />
         </View>
       ) : (
-        <View>
+        <View style={styles.datePickerContainer}>
           <TouchableOpacity onPress={showDatePicker}>
             <List.Item
               style={styles.mockInput}
@@ -69,7 +69,7 @@ const DatePicker = ({
                 category === "date"
                   ? date === ""
                     ? "Date"
-                    : format(new Date(date), "yyyy/MM/d")
+                    : format(new Date(date), "MMM d, yyy")
                   : time === ""
                   ? "Time"
                   : format(new Date(time), "p")
@@ -111,9 +111,12 @@ const DatePicker = ({
 export default DatePicker;
 
 const styles = StyleSheet.create({
+  datePickerContainer: {
+    width: "48%",
+  },
   mockInput: {
     borderRadius: 25,
-    width: 165,
+    width: "100%",
     height: 53,
     marginTop: 8,
     flex: 1,

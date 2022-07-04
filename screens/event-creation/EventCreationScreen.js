@@ -10,7 +10,7 @@ import {
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
-import AreaModal from "./AreaModal.js";
+// import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
 import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
@@ -22,7 +22,14 @@ import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
-const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
+const EventCreationScreen = ({ navigation }) => {
+  const runningDurationArray = [
+    { id: 1, name: "15 mins", num: 15 },
+    { id: 2, name: "30 mins", num: 30 },
+    { id: 3, name: "1 hr", num: 60 },
+    { id: 4, name: "More", num: null },
+  ];
+
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -36,20 +43,12 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
   const [eventDescription, setEventDescription] = useState(null);
   const [imageUri, setImageUri] = useState("");
-  const [imageRef, setImageRef] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
   const { setCurrentEvent, generateImageUrl } = useContext(DataContext);
   const { user } = useContext(AuthContext);
 
   const [isUser, setIsUser] = useState(true);
-
-  const runningDurationArray = [
-    { id: 1, name: "15 mins", num: 15 },
-    { id: 2, name: "30 mins", num: 30 },
-    { id: 3, name: "1 hr", num: 60 },
-    { id: 4, name: "More", num: null },
-  ];
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -64,7 +63,6 @@ const EventCreationScreen = ({ navigation, setNewEvent, setData, data }) => {
       if (imageUri !== "") {
         const newUri = await resizeImage(imageUri, 300);
         currentRef = await uploadImage("events", newUri);
-        setImageRef(currentRef);
       }
 
       const requiredFields = [title, meetingPoint, date, time, runningDuration];
@@ -252,29 +250,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.Fill,
-    padding: 10,
     alignItems: "center",
     overflow: "visible",
   },
   inputContainer: {
     margin: 5,
-  },
-  description: {
-    height: 98,
-    borderRadius: 10,
+    width: "100%",
+    alignItems: "center",
   },
   pickerContainer: {
-    width: 335,
+    width: "90%",
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   imagePlaceholderContainer: {
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
-    alignSelf: "flex-start",
-    marginLeft: 20,
-    marginTop: 10,
+    marginTop: 8,
+    width: "90%",
+    paddingLeft: 8,
   },
   imagePlaceholderBackground: {
     width: 98,
@@ -310,5 +305,5 @@ const styles = StyleSheet.create({
       placeholder: Color.Text,
     },
   },
-  input: { backgroundColor: "#fff", width: 335, height: 98 },
+  input: { backgroundColor: "#fff", width: "90%", height: 98 },
 });
