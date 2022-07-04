@@ -7,9 +7,10 @@ import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
-  let isConfirmationCard;
+  let isConfirmationCard, isUTCdata;
   if (route.params) {
     isConfirmationCard = route.params.isConfirmationCard;
+    isUTCdata = route.params.isUTCdata;
   }
   const { currentEvent } = useContext(DataContext);
   const event = currentEvent;
@@ -71,9 +72,10 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
         event={event}
         handlePress={() => navigation.navigate("Running Event")}
         isConfirmationCard={isConfirmationCard}
+        isUTCdata={isUTCdata}
       />
 
-      {actionType === "create" && (
+      {/* {actionType === "create" && (
         <LongButton
           buttonHandler={() => {
             navigation.navigate("Edit Event");
@@ -82,7 +84,7 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
           buttonText="Edit Event"
           buttonTextColor="#555555"
         />
-      )}
+      )} */}
       <LongButton
         buttonHandler={() => {
           navigation.navigate("Home");

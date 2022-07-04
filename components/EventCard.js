@@ -10,17 +10,26 @@ const EventCard = ({
   isHomePageCard,
   handlePress,
   isConfirmationCard,
+  isUTCdata,
 }) => {
   const { currentEvent } = useContext(DataContext);
   if (!isHomePageCard) event = currentEvent;
+  // useEffect(() => {
+  //   console.log(event);
+  // }, []);
   const date = new Date(event.date);
   const time = new Date(event.time);
   const zonedDate = isConfirmationCard
-    ? new Date(date)
-    : addHours(new Date(date), 9);
+    ? isUTCdata
+      ? addHours(date, 9)
+      : date
+    : addHours(date, 9);
   const zonedTime = isConfirmationCard
-    ? new Date(time)
-    : addHours(new Date(time), 9);
+    ? isUTCdata
+      ? addHours(time, 9)
+      : time
+    : addHours(time, 9);
+
   return (
     <Card
       style={[isHomePageCard ? styles.homePageCard : styles.card]}
@@ -37,7 +46,7 @@ const EventCard = ({
             }}
           />
         )}
-        {event.imageUrl === undefined && (
+        {!event.imageUrl && (
           <Card.Cover
             source={require("../assets/images/demo/defaultEvent.jpeg")}
             style={{

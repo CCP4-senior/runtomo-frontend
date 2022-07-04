@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
 import { IconButton, List } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -19,6 +19,9 @@ const DatePicker = ({
   isUTCdata,
   setIsUTCdata,
 }) => {
+  useEffect(() => {
+    console.log(isUTCdata, date);
+  }, []);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     category === "date"
@@ -46,12 +49,9 @@ const DatePicker = ({
   const handleConfirm = (data) => {
     category === "date" ? setDate(data) : setTime(data);
     hideDatePicker();
-    const displayedDate = isUTCdata
-      ? addHours(new Date(data), 9)
-      : new Date(data);
-    console.log(displayedDate);
-    setSelectedDate(displayedDate);
-    if (setIsUTCdata) {
+
+    setSelectedDate(data);
+    if (isUTCdata === true) {
       setIsUTCdata(false);
     }
   };
@@ -87,7 +87,27 @@ const DatePicker = ({
       ) : (
         <View style={styles.datePickerContainer}>
           <TouchableOpacity onPress={showDatePicker}>
-            <List.Item
+            <CustomInput
+              placeholder={category === "date" ? "Date" : "Time"}
+              icon={category === "date" ? "calendar-month" : "clock-outline"}
+              onFocus={showDatePicker}
+              value={
+                date || time
+                  ? category === "date"
+                    ? isUTCdata
+                      ? format(addHours(new Date(date), 9), "MMM d, yyyy")
+                      : format(new Date(date), "MMM d, yyyy")
+                    : isUTCdata
+                    ? format(addHours(new Date(time), 9), "p")
+                    : format(new Date(time), "p")
+                  : ""
+              }
+              width={overWriteWidth ? overWriteWidth : "100%"}
+              submitted={submitted}
+              inputRef={inputRef}
+              // inRegisterForm={isInRegisterForm}
+            />
+            {/* <List.Item
               style={styles.mockInput}
               title={
                 category === "date"
@@ -120,7 +140,7 @@ const DatePicker = ({
                   color={Color.Text}
                 />
               )}
-            />
+            /> */}
           </TouchableOpacity>
 
           <DateTimePickerModal
@@ -140,18 +160,7 @@ export default DatePicker;
 
 const styles = StyleSheet.create({
   datePickerContainer: {
-    width: "48%",
-  },
-  mockInput: {
-    borderRadius: 25,
-    width: "100%",
-    height: 53,
-    marginTop: 8,
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 10,
-    alignItems: "center",
-    overflow: "visible",
+    width: "49%",
   },
   titlePlaceholder: {
     color: Color.Text,

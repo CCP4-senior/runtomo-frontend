@@ -195,7 +195,7 @@ const EventDetailsScreen = ({ navigation }) => {
                       <Avatar.Image
                         size={40}
                         source={{
-                          uri: generateImageUrl(eventData.creaor.image),
+                          uri: generateImageUrl(eventData.creator.image),
                         }}
                       />
                     )}
@@ -261,9 +261,7 @@ const EventDetailsScreen = ({ navigation }) => {
 
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text style={styles.thinText}>
-                    {eventData.description || "Not provided"}
-                  </Text>
+                  <Text style={styles.thinText}>{eventData.description}</Text>
                 </View>
 
                 <View style={styles.section}>

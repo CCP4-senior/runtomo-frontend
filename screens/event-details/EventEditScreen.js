@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
+import { addHours } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "../event-creation/DatePicker.js";
 // import AreaModal from "../event-creation/AreaModal.js";
@@ -42,8 +43,27 @@ const EventEditScreen = ({ navigation }) => {
   const [latitude, setLatitude] = useState(currentEvent?.lat || "");
   const [longitude, setLongitude] = useState(currentEvent?.long || "");
   const [ward, setWard] = useState(currentEvent?.ward || "");
+  // const [date, setDate] = useState(
+  //   addHours(new Date(currentEvent?.date), 9) || ""
+  // );
+  // const [time, setTime] = useState(
+  //   addHours(new Date(currentEvent?.time), 9) || ""
+  // );
   const [date, setDate] = useState(currentEvent?.date || "");
   const [time, setTime] = useState(currentEvent?.time || "");
+
+  // category === "date"
+  //                   ? date === ""
+  //                     ? "Date"
+  //                     : isUTCdata
+  //                     ? format(addHours(new Date(date), 9), "MMM d, yyy")
+  //                     : format(new Date(date), "MMM d, yyy")
+  //                   : time === ""
+  //                   ? "Time"
+  //                   : isUTCdata
+  //                   ? format(addHours(new Date(time), 9), "p")
+  //                   : format(new Date(time), "p")
+
   const [runningDuration, setRunningDuration] = useState(
     currentEvent?.running_duration
       ? runningDurationArray.find(
@@ -55,7 +75,7 @@ const EventEditScreen = ({ navigation }) => {
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
   const [eventDescription, setEventDescription] = useState(
-    currentEvent?.description || ""
+    currentEvent?.description || null
   );
   const [imageUri, setImageUri] = useState(currentEvent?.imageUrl || "");
   const [submitted, setSubmitted] = useState(false);
@@ -92,9 +112,9 @@ const EventEditScreen = ({ navigation }) => {
       const event = {
         title: title,
         location: meetingPoint,
-        ward: ward?.ward_name || null,
-        date: date,
-        time: time,
+        ward: ward && typeof ward === "string" ? ward : ward.ward_name || null,
+        date: new Date(date),
+        time: new Date(time),
         running_duration: runningDuration.num,
         description: eventDescription,
         image: currentRef,
@@ -114,12 +134,15 @@ const EventEditScreen = ({ navigation }) => {
       setCurrentEvent({
         ...event,
         id: currentEvent.id,
-        creator: user,
-        imageUrl: generateImageUrl(currentRef),
+        // creator: user,
+        imageUrl: currentRef !== null ? generateImageUrl(currentRef) : null,
       });
-      navigation.navigate("Event Updated", { isConfirmationCard: true });
+      navigation.navigate("Event Updated", {
+        isConfirmationCard: true,
+        isUTCdata: isUTCdata,
+      });
     } catch (e) {
-      console.log(e);
+      console.log(e.config.url);
       alert("Something went wrong. Please try again!");
     }
   };

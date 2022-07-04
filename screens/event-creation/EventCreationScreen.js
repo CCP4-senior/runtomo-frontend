@@ -1,4 +1,10 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import {
   ScrollView,
   View,
@@ -7,6 +13,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
@@ -41,18 +48,18 @@ const EventCreationScreen = ({ navigation }) => {
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
-  const [eventDescription, setEventDescription] = useState(null);
+  const [eventDescription, setEventDescription] = useState("");
   const [imageUri, setImageUri] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
   const { setCurrentEvent, generateImageUrl } = useContext(DataContext);
   const { user } = useContext(AuthContext);
 
-  const [isUser, setIsUser] = useState(true);
+  // const [isUser, setIsUser] = useState(true);
 
-  useEffect(() => {
-    setCurrentEvent("");
-  });
+  // useEffect(() => {
+  //   setCurrentEvent("");
+  // });
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -61,15 +68,41 @@ const EventCreationScreen = ({ navigation }) => {
     inputRef.current?.blur();
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      resetInput();
+    }, [])
+  );
+
+  const resetInput = () => {
+    setTitle("");
+    setMeetingPoint("");
+    setLatitude("");
+    setLongitude("");
+    setWard("");
+    setDate("");
+    setTime("");
+    setRunningDuration("");
+    setEventDescription("");
+    setImageUri("");
+  };
+
   const createEvent = async () => {
     try {
-      let currentRef;
+      let currentRef = null;
       if (imageUri !== "") {
         const newUri = await resizeImage(imageUri, 300);
         currentRef = await uploadImage("events", newUri);
       }
 
-      const requiredFields = [title, meetingPoint, date, time, runningDuration];
+      const requiredFields = [
+        title,
+        meetingPoint,
+        date,
+        time,
+        runningDuration,
+        eventDescription,
+      ];
 
       if (requiredFields.some((field) => field === "")) {
         setSubmitted(true);
@@ -92,10 +125,10 @@ const EventCreationScreen = ({ navigation }) => {
       const response = await axiosInstance.post("/events/create_event", event);
       setCurrentEvent({
         ...event,
-        id: currentEvent.id,
         creator: user,
-        imageUrl: generateImageUrl(currentRef),
+        imageUrl: currentRef !== null ? generateImageUrl(currentRef) : null,
       });
+
       navigation.navigate("Event Created", { isConfirmationCard: true });
     } catch (e) {
       console.log(e);
@@ -222,11 +255,40 @@ const EventCreationScreen = ({ navigation }) => {
             <TextInput
               mutiline={true}
               mode="outlined"
-              outlineColor="#fff"
-              activeOutlineColor={Color.GrayDark}
-              theme={styles.inputTheme}
+              // outlineColor="#fff"
+              // activeOutlineColor={Color.GrayDark}
+              theme={{
+                ...styles.inputTheme,
+                colors: {
+                  placeholder: !submitted
+                    ? Color.Text
+                    : eventDescription
+                    ? Color.Text
+                    : Color.PrimaryMain,
+                },
+              }}
               style={styles.input}
-              placeholder="Event Description"
+              outlineColor={
+                !submitted
+                  ? "#fff"
+                  : eventDescription
+                  ? "#fff"
+                  : Color.PrimaryMain
+              }
+              activeOutlineColor={
+                !submitted
+                  ? Color.GrayDark
+                  : eventDescription
+                  ? Color.GrayLight
+                  : Color.PrimaryMain
+              }
+              placeholder={
+                !submitted
+                  ? "Event Description"
+                  : eventDescription
+                  ? "Event Description"
+                  : `Event Description Required`
+              }
               value={eventDescription}
               onChangeText={(text) => {
                 setEventDescription(text);
