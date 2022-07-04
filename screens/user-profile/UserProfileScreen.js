@@ -18,7 +18,6 @@ import { TouchableOpacity } from "react-native-web";
 import ProfilePhotoModal from "./ProfilePhotoModal";
 import axiosInstance from "../../helpers/axios.js";
 
-
 function getAge(dateString) {
   var ageInMilliseconds = new Date() - new Date(dateString);
   return Math.floor(ageInMilliseconds / 1000 / 60 / 60 / 24 / 365);
@@ -35,13 +34,13 @@ const UserProfileScreen = ({ navigation, route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [wantsToDelete, setWantsToDelete] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState(null);
 
   const getUserData = async (id) => {
     try {
       const response = await axiosInstance(`/users/${id}/`);
       setUserData(response.data);
-      console.log('🍎 userData Gogo!:', userData);
+      console.log("🍎 userData Gogo!:", userData);
     } catch (e) {
       console.log(e);
     }
@@ -117,7 +116,7 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Username */}
 
               <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>{userData.username}</Text>
+                <Text style={styles.userFullName}>{userData && userData.username}</Text>
 
                 {/* Edit Profile button */}
 
@@ -151,33 +150,34 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Age */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Age: {getAge(userData["profile"]["date_of_birth"])}
+                  Age:{" "}
+                  {userData && getAge(userData["profile"]["date_of_birth"])}
                 </Text>
               </View>
 
               {/* Date of Birth */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Date of Birth: {userData["profile"]["date_of_birth"]}
+                  Date of Birth: {userData && userData["profile"]["date_of_birth"]}
                 </Text>
               </View>
 
               {/* Run Frequency */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Run Frequency: {userData["profile"]["run_frequency"]} / week
+                  Run Frequency: {userData && userData["profile"]["run_frequency"]} / week
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 5k: {userData["profile"]["estimated5k"]}
+                  Estimated 5k: {userData && userData["profile"]["estimated5k"]}
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 10k: {userData["profile"]["estimated10k"]}
+                  Estimated 10k: {userData && userData["profile"]["estimated10k"]}
                 </Text>
               </View>
             </View>
