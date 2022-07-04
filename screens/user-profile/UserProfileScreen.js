@@ -28,7 +28,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   const isLoginUser = userToView.id === user.id;
   console.log('🍎 userToView:', userToView.id);
   console.log('🍎 user.id:', user.id);
-  console.log('🍎 isUser:', isLoginUser);
+  console.log('🍎 isLoginUser:', isLoginUser);
 
   
   const { height } = useWindowDimensions();

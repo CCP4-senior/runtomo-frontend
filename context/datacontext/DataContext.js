@@ -47,6 +47,15 @@ const DataProvider = ({ children }) => {
     }
   };
 
+  const getUserData = async (id) => {
+    try {
+      const response = await axiosInstance(`/users/${id}/`);
+      console.log('🍎 response.data:', response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
     const randomWard = Math.floor(Math.random() * 2);
