@@ -16,6 +16,7 @@ import { Avatar, Button, IconButton, Provider } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import { TouchableOpacity } from "react-native-web";
 import ProfilePhotoModal from "./ProfilePhotoModal";
+import { enableExpoCliLogging } from "expo/build/logs/Logs";
 
 function getAge(dateString) {
   var ageInMilliseconds = new Date() - new Date(dateString);
@@ -28,22 +29,25 @@ const UserProfileScreen = ({ navigation, route }) => {
 
   const userToView = route.params.creator;
   const isLoginUser = userToView.id === user.id;
-  console.log('🍎 userToView:', userToView.id);
-  console.log('🍎 user.id:', user.id);
-  console.log('🍎 isLoginUser:', isLoginUser);
 
-  
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [wantsToDelete, setWantsToDelete] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    
+      const userToViewData = getUserData(userToView.id);
+      console.log("🍎 userToView:", userToView);
+      console.log("🍎 userToViewData:", userToViewData);
+      setUserData(userToViewData);
+      // console.log("🍎 userData:", userData);
 
 
-  useEffect( () => {
-    getUserData(userToView.id);
-  })
 
+  });
 
   const hideModal = () => {
     setModalVisible(false);
