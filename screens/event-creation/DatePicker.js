@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
 import { IconButton, List } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { format } from "date-fns";
+import { format, addHours } from "date-fns";
 import CustomInput from "../../components/CustomInput.js";
 import Color from "../../assets/themes/Color.js";
 
@@ -16,8 +16,16 @@ const DatePicker = ({
   isInRegisterForm,
   overWriteWidth,
   inputRef,
+  isUTCdata,
+  setIsUTCdata,
 }) => {
+  useEffect(() => {
+    console.log("date", date);
+    console.log("time", time);
+  }, []);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [isUTCdata, setIsUTCdata] = useState(false);
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -31,6 +39,12 @@ const DatePicker = ({
   const handleConfirm = (data) => {
     category === "date" ? setDate(data) : setTime(data);
     hideDatePicker();
+    const displayedDate = isUTCdata
+      ? addHours(new Date(data), 9)
+      : new Date(data);
+    console.log(displayedDate);
+    setSelectedDate(displayedDate);
+    setIsUTCdata(false);
   };
 
   return (
@@ -58,8 +72,7 @@ const DatePicker = ({
             mode={category === "date" ? "date" : "time"}
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
-            date={date || time || new Date()}
-            // date={category === "date" ? date : time}
+            // date={selectedDate}
           />
         </View>
       ) : (
@@ -71,9 +84,13 @@ const DatePicker = ({
                 category === "date"
                   ? date === ""
                     ? "Date"
+                    : isUTCdata
+                    ? format(addHours(new Date(date), 9), "MMM d, yyy")
                     : format(new Date(date), "MMM d, yyy")
                   : time === ""
                   ? "Time"
+                  : isUTCdata
+                  ? format(addHours(new Date(time), 9), "p")
                   : format(new Date(time), "p")
               }
               titleStyle={
@@ -97,13 +114,12 @@ const DatePicker = ({
             />
           </TouchableOpacity>
 
-          {/* Implementation with CustomInput. Left as a reference */}
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
             mode={category === "date" ? "date" : "time"}
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
-            date={date || time || new Date()}
+            date={selectedDate}
           />
         </View>
       )}

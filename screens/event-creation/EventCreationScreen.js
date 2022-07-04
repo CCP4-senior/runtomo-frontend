@@ -88,6 +88,7 @@ const EventCreationScreen = ({ navigation }) => {
       const response = await axiosInstance.post("/events/create_event", event);
       setCurrentEvent({
         ...event,
+        id: currentEvent.id,
         creator: user,
         imageUrl: generateImageUrl(currentRef),
       });

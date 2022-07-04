@@ -62,6 +62,7 @@ const EventEditScreen = ({ navigation }) => {
   const inputRef = useRef();
   const hasPhoto = currentEvent.imageUrl;
   const [photoHasChanged, setPhotoHasChanged] = useState(false);
+  const [isUTCdata, setIsUTCdata] = useState(true);
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -104,12 +105,15 @@ const EventEditScreen = ({ navigation }) => {
         },
       };
 
+      console.log(event);
+
       const response = await axiosInstance.put(
         `/events/${currentEvent.id}/`,
         event
       );
       setCurrentEvent({
         ...event,
+        id: currentEvent.id,
         creator: user,
         imageUrl: generateImageUrl(currentRef),
       });
@@ -196,6 +200,8 @@ const EventEditScreen = ({ navigation }) => {
               submitted={submitted}
               category="date"
               inputRef={inputRef}
+              isUTCdata={isUTCdata}
+              setIsUTCdata={setIsUTCdata}
             />
             <DatePicker
               setTime={setTime}
@@ -203,6 +209,8 @@ const EventEditScreen = ({ navigation }) => {
               submitted={submitted}
               category="time"
               inputRef={inputRef}
+              isUTCdata={isUTCdata}
+              setIsUTCdata={setIsUTCdata}
             />
           </View>
           <View style={styles.inputContainer}>
