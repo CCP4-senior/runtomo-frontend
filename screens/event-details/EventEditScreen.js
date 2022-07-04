@@ -117,7 +117,7 @@ const EventEditScreen = ({ navigation }) => {
         creator: user,
         imageUrl: generateImageUrl(currentRef),
       });
-      navigation.navigate("Event Updated");
+      navigation.navigate("Event Updated", { isConfirmationCard: true });
     } catch (e) {
       console.log(e);
       alert("Something went wrong. Please try again!");

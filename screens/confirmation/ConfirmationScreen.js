@@ -6,7 +6,11 @@ import LongButton from "../../components/LongButton.js";
 import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
+const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
+  let isConfirmationCard;
+  if (route.params) {
+    isConfirmationCard = route.params.isConfirmationCard;
+  }
   const { currentEvent } = useContext(DataContext);
   const event = currentEvent;
   return (
@@ -43,7 +47,7 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
           {actionType === "join" && (
             <>
               <Paragraph style={styles.paragraph}>
-                You joined {event.user.username}'s event!
+                You joined {event.creator.username}'s event!
               </Paragraph>
               <Paragraph style={styles.paragraph}>
                 Don't forget to share with everyone. Thank you!
@@ -66,6 +70,7 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
       <EventCard
         event={event}
         handlePress={() => navigation.navigate("Running Event")}
+        isConfirmationCard={isConfirmationCard}
       />
 
       {actionType === "create" && (

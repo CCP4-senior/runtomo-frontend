@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import {
   ScrollView,
   View,
@@ -50,6 +50,10 @@ const EventCreationScreen = ({ navigation }) => {
 
   const [isUser, setIsUser] = useState(true);
 
+  useEffect(() => {
+    setCurrentEvent("");
+  });
+
   const hideModal = () => {
     setAreaModalVisible(false);
     setDurationModalVisible(false);
@@ -92,7 +96,7 @@ const EventCreationScreen = ({ navigation }) => {
         creator: user,
         imageUrl: generateImageUrl(currentRef),
       });
-      navigation.navigate("Event Created");
+      navigation.navigate("Event Created", { isConfirmationCard: true });
     } catch (e) {
       console.log(e);
       alert("Something went wrong. Please try again!");

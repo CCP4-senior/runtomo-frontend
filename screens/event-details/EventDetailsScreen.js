@@ -56,8 +56,8 @@ const EventDetailsScreen = ({ navigation }) => {
   const [creator, setCreator] = useState(eventData.creator);
   const date = new Date(eventData.date);
   const time = new Date(eventData.time);
-  const zonedDate = (date, addHours(date, 9));
-  const zonedTime = (time, addHours(date, 9));
+  const zonedDate = addHours(date, 9);
+  const zonedTime = addHours(time, 9);
 
   useEffect(() => {
     getAllParticipants();

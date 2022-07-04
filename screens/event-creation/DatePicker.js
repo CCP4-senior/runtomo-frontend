@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
 import { IconButton, List } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -19,13 +19,20 @@ const DatePicker = ({
   isUTCdata,
   setIsUTCdata,
 }) => {
-  useEffect(() => {
-    console.log("date", date);
-    console.log("time", time);
-  }, []);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  // const [isUTCdata, setIsUTCdata] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(
+    category === "date"
+      ? date
+        ? isUTCdata
+          ? addHours(new Date(date), 9)
+          : new Date(date)
+        : new Date()
+      : time
+      ? isUTCdata
+        ? addHours(new Date(time), 9)
+        : new Date(time)
+      : new Date()
+  );
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -44,7 +51,9 @@ const DatePicker = ({
       : new Date(data);
     console.log(displayedDate);
     setSelectedDate(displayedDate);
-    setIsUTCdata(false);
+    if (setIsUTCdata) {
+      setIsUTCdata(false);
+    }
   };
 
   return (
@@ -72,7 +81,7 @@ const DatePicker = ({
             mode={category === "date" ? "date" : "time"}
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
-            // date={selectedDate}
+            date={selectedDate}
           />
         </View>
       ) : (
