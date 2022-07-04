@@ -58,6 +58,7 @@ const DatePicker = ({
             mode={category === "date" ? "date" : "time"}
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
+            date={category === "date" ? "date" : "time"}
           />
         </View>
       ) : (
