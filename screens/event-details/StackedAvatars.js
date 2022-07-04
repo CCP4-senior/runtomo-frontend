@@ -39,7 +39,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
-              key={person.id}
+              key={i}
             >
               <View
                 style={
@@ -66,7 +66,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
-              key={person.id}
+              key={i}
             >
               <Avatar.Image
                 size={size === "small" ? 28 : 33}
@@ -81,7 +81,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
-              key={person.id}
+              key={i}
             >
               <Avatar.Icon
                 size={size === "small" ? 28 : 33}
