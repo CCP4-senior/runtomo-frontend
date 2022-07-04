@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import StackedAvatars from "../screens/event-details/StackedAvatars";
@@ -14,9 +14,7 @@ const EventCard = ({
 }) => {
   const { currentEvent } = useContext(DataContext);
   if (!isHomePageCard) event = currentEvent;
-  // useEffect(() => {
-  //   console.log(event);
-  // }, []);
+
   const date = new Date(event.date);
   const time = new Date(event.time);
   const zonedDate = isConfirmationCard

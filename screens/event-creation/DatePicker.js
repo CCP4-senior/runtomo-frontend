@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
-import { IconButton, List } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format, addHours } from "date-fns";
 import CustomInput from "../../components/CustomInput.js";
@@ -105,42 +104,7 @@ const DatePicker = ({
               width={overWriteWidth ? overWriteWidth : "100%"}
               submitted={submitted}
               inputRef={inputRef}
-              // inRegisterForm={isInRegisterForm}
             />
-            {/* <List.Item
-              style={styles.mockInput}
-              title={
-                category === "date"
-                  ? date === ""
-                    ? "Date"
-                    : isUTCdata
-                    ? format(addHours(new Date(date), 9), "MMM d, yyy")
-                    : format(new Date(date), "MMM d, yyy")
-                  : time === ""
-                  ? "Time"
-                  : isUTCdata
-                  ? format(addHours(new Date(time), 9), "p")
-                  : format(new Date(time), "p")
-              }
-              titleStyle={
-                category === "date"
-                  ? date === ""
-                    ? styles.titlePlaceholder
-                    : styles.titleStyle
-                  : time === ""
-                  ? styles.titlePlaceholder
-                  : styles.titleStyle
-              }
-              right={(props) => (
-                <List.Icon
-                  {...props}
-                  icon={
-                    category === "date" ? "calendar-month" : "clock-outline"
-                  }
-                  color={Color.Text}
-                />
-              )}
-            /> */}
           </TouchableOpacity>
 
           <DateTimePickerModal

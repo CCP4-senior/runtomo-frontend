@@ -43,26 +43,8 @@ const EventEditScreen = ({ navigation }) => {
   const [latitude, setLatitude] = useState(currentEvent?.lat || "");
   const [longitude, setLongitude] = useState(currentEvent?.long || "");
   const [ward, setWard] = useState(currentEvent?.ward || "");
-  // const [date, setDate] = useState(
-  //   addHours(new Date(currentEvent?.date), 9) || ""
-  // );
-  // const [time, setTime] = useState(
-  //   addHours(new Date(currentEvent?.time), 9) || ""
-  // );
   const [date, setDate] = useState(currentEvent?.date || "");
   const [time, setTime] = useState(currentEvent?.time || "");
-
-  // category === "date"
-  //                   ? date === ""
-  //                     ? "Date"
-  //                     : isUTCdata
-  //                     ? format(addHours(new Date(date), 9), "MMM d, yyy")
-  //                     : format(new Date(date), "MMM d, yyy")
-  //                   : time === ""
-  //                   ? "Time"
-  //                   : isUTCdata
-  //                   ? format(addHours(new Date(time), 9), "p")
-  //                   : format(new Date(time), "p")
 
   const [runningDuration, setRunningDuration] = useState(
     currentEvent?.running_duration
