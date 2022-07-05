@@ -38,6 +38,7 @@ const AuthProvider = ({ children }) => {
         );
       }
     } catch (e) {
+      console.log(e);
       alert("Something went wrong. Please try again!");
     }
   };

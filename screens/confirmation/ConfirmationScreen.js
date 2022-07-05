@@ -6,7 +6,13 @@ import LongButton from "../../components/LongButton.js";
 import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
+const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
+  let isConfirmationCard, isDateUTC, isTimeUTC;
+  if (route.params) {
+    isConfirmationCard = route.params.isConfirmationCard;
+    isDateUTC = route.params.isDateUTC;
+    isTimeUTC = route.params.isTimeUTC;
+  }
   const { currentEvent } = useContext(DataContext);
   const event = currentEvent;
   return (
@@ -27,6 +33,9 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
           {actionType === "join" && (
             <Title style={styles.cardTopTitle}>Joined Successfully!</Title>
           )}
+          {actionType === "update" && (
+            <Title style={styles.cardTopTitle}>Updated Successfully!</Title>
+          )}
           {actionType === "create" && (
             <>
               <Paragraph style={styles.paragraph}>
@@ -40,7 +49,17 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
           {actionType === "join" && (
             <>
               <Paragraph style={styles.paragraph}>
-                You joined {event.user.username}'s event!
+                You joined {event.creator.username}'s event!
+              </Paragraph>
+              <Paragraph style={styles.paragraph}>
+                Don't forget to share with everyone. Thank you!
+              </Paragraph>
+            </>
+          )}
+          {actionType === "update" && (
+            <>
+              <Paragraph style={styles.paragraph}>
+                Event is successfully updated!
               </Paragraph>
               <Paragraph style={styles.paragraph}>
                 Don't forget to share with everyone. Thank you!
@@ -52,19 +71,12 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType }) => {
 
       <EventCard
         event={event}
-        handlePress={() => navigation.navigate("Event Details")}
+        handlePress={() => navigation.navigate("Home")}
+        isConfirmationCard={isConfirmationCard}
+        isDateUTC={isDateUTC}
+        isTimeUTC={isTimeUTC}
       />
 
-      {actionType === "create" && (
-        <LongButton
-          buttonHandler={() => {
-            alert("Some edit page");
-          }}
-          buttonColor={Color.GrayDark}
-          buttonText="Edit Event"
-          buttonTextColor="#555555"
-        />
-      )}
       <LongButton
         buttonHandler={() => {
           navigation.navigate("Home");

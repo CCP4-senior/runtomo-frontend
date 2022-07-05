@@ -36,7 +36,7 @@ const CustomInput = ({
       }}
       style={{
         backgroundColor: inRegisterForm ? Color.GrayMedium : "#fff",
-        width: width || 335,
+        width: width || "90%",
       }}
       value={value}
       onChangeText={changeHandler}

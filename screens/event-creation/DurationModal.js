@@ -2,19 +2,19 @@ import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { Modal, Portal, Card, Title, Paragraph } from "react-native-paper";
 
-const DurationModal = ({ modalVisible, hideModal, setRunningDuration }) => {
+const DurationModal = ({
+  modalVisible,
+  hideModal,
+  setRunningDuration,
+  runningDuration,
+}) => {
   const containerStyle = {
     backgroundColor: "#fff",
     height: "80%",
     margin: 20,
     justifyContent: "center",
   };
-  const runningDuration = [
-    { id: 1, name: "15 mins", num: 15 },
-    { id: 2, name: "30 mins", num: 30 },
-    { id: 3, name: "1 hr", num: 60 },
-    { id: 4, name: "More", num: null },
-  ];
+
   return (
     <View>
       <Portal>

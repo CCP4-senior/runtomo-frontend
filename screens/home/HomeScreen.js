@@ -92,6 +92,9 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
             titleStyle={{ fontSize: 12, fontWeight: "700" }}
           />
         </TouchableOpacity>
+
+        {/* Filter  Button */}
+
         <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
           <List.Item
             style={styles.topElement}
@@ -172,6 +175,8 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 };
 
 export default HomeScreen;
+
+// Component for listing Run Events
 
 const EventsDataPage = ({ selectEvent }) => {
   const {
