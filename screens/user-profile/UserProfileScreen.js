@@ -26,7 +26,7 @@ function getAge(dateString) {
 const UserProfileScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
 
-  const userToView = route.params.creator;
+  const userToView = route.params.userToView;
   const isLoginUser = userToView.id === user.id;
 
   const { height } = useWindowDimensions();
@@ -61,7 +61,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    getUserData(userToView.id);
+    isLoginUser ? setUserData(user) : getUserData(userToView.id);
   }, []);
 
   return (
