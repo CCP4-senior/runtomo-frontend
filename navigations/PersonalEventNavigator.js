@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import PersonalEventScreen from "../screens/personal-event/PersonalEventScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
@@ -8,10 +8,13 @@ import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
 import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen";
 import HomeScreen from "../screens/home/HomeScreen";
+import { AuthContext } from "../context/authcontext/AuthContext";
 
 const Stack = createStackNavigator();
 
 const PersonalEventNavigator = ({ navigation }) => {
+  const { user } = useContext(AuthContext);
+
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -38,6 +41,7 @@ const PersonalEventNavigator = ({ navigation }) => {
         name="Profile"
         component={UserProfileScreen}
         options={{ ...HeaderStyle }}
+        initialParams={{ userToView: user }}
       />
 
       <Stack.Screen name="Home" options={createOptions(openSetting)}>

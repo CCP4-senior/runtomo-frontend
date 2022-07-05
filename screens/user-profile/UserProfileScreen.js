@@ -61,7 +61,11 @@ const UserProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    isLoginUser ? setUserData(user) : getUserData(userToView.id);
+    if (isLoginUser) {
+      setUserData(user);
+    } else {
+      getUserData(userToView.id);
+    }
   }, []);
 
   return (
@@ -116,7 +120,9 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Username */}
 
               <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>{userData && userData.username}</Text>
+                <Text style={styles.userFullName}>
+                  {userData && userData.username}
+                </Text>
 
                 {/* Edit Profile button */}
 
@@ -151,33 +157,39 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Age:{" "}
-                  {userData?.profile && getAge(userData["profile"]["date_of_birth"])}
+                  {userData?.profile &&
+                    getAge(userData["profile"]["date_of_birth"])}
                 </Text>
               </View>
 
               {/* Date of Birth */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Date of Birth: {userData?.profile && userData["profile"]["date_of_birth"]}
+                  Date of Birth:{" "}
+                  {userData?.profile && userData["profile"]["date_of_birth"]}
                 </Text>
               </View>
 
               {/* Run Frequency */}
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Run Frequency: {userData?.profile && userData["profile"]["run_frequency"]} / week
+                  Run Frequency:{" "}
+                  {userData?.profile && userData["profile"]["run_frequency"]} /
+                  week
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 5k: {userData?.profile && userData["profile"]["estimated5k"]}
+                  Estimated 5k:{" "}
+                  {userData?.profile && userData["profile"]["estimated5k"]}
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 10k: {userData?.profile && userData["profile"]["estimated10k"]}
+                  Estimated 10k:{" "}
+                  {userData?.profile && userData["profile"]["estimated10k"]}
                 </Text>
               </View>
             </View>
