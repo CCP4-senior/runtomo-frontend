@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
-import { IconButton, List } from "react-native-paper";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { format } from "date-fns";
+import { format, addHours } from "date-fns";
 import CustomInput from "../../components/CustomInput.js";
 import Color from "../../assets/themes/Color.js";
 
@@ -16,8 +15,25 @@ const DatePicker = ({
   isInRegisterForm,
   overWriteWidth,
   inputRef,
+  isDateUTC,
+  setIsDateUTC,
+  isTimeUTC,
+  setIsTimeUTC,
 }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(
+    category === "date"
+      ? date
+        ? isDateUTC
+          ? addHours(new Date(date), 9)
+          : new Date(date)
+        : new Date()
+      : time
+      ? isTimeUTC
+        ? addHours(new Date(time), 9)
+        : new Date(time)
+      : new Date()
+  );
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -31,6 +47,14 @@ const DatePicker = ({
   const handleConfirm = (data) => {
     category === "date" ? setDate(data) : setTime(data);
     hideDatePicker();
+
+    setSelectedDate(data);
+    if (category === "date" && isDateUTC === true) {
+      setIsDateUTC(false);
+    }
+    if (category === "time" && isTimeUTC === true) {
+      setIsTimeUTC(false);
+    }
   };
 
   return (
@@ -58,49 +82,39 @@ const DatePicker = ({
             mode={category === "date" ? "date" : "time"}
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
+            date={selectedDate}
           />
         </View>
       ) : (
-        <View>
+        <View style={styles.datePickerContainer}>
           <TouchableOpacity onPress={showDatePicker}>
-            <List.Item
-              style={styles.mockInput}
-              title={
-                category === "date"
-                  ? date === ""
-                    ? "Date"
-                    : format(new Date(date), "yyyy/MM/d")
-                  : time === ""
-                  ? "Time"
-                  : format(new Date(time), "p")
+            <CustomInput
+              placeholder={category === "date" ? "Date" : "Time"}
+              icon={category === "date" ? "calendar-month" : "clock-outline"}
+              onFocus={showDatePicker}
+              value={
+                date || time
+                  ? category === "date"
+                    ? isDateUTC
+                      ? format(addHours(new Date(date), 9), "MMM d, yyyy")
+                      : format(new Date(date), "MMM d, yyyy")
+                    : isTimeUTC
+                    ? format(addHours(new Date(time), 9), "p")
+                    : format(new Date(time), "p")
+                  : ""
               }
-              titleStyle={
-                category === "date"
-                  ? date === ""
-                    ? styles.titlePlaceholder
-                    : styles.titleStyle
-                  : time === ""
-                  ? styles.titlePlaceholder
-                  : styles.titleStyle
-              }
-              right={(props) => (
-                <List.Icon
-                  {...props}
-                  icon={
-                    category === "date" ? "calendar-month" : "clock-outline"
-                  }
-                  color={Color.Text}
-                />
-              )}
+              width={overWriteWidth ? overWriteWidth : "100%"}
+              submitted={submitted}
+              inputRef={inputRef}
             />
           </TouchableOpacity>
 
-          {/* Implementation with CustomInput. Left as a reference */}
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
             mode={category === "date" ? "date" : "time"}
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
+            date={selectedDate}
           />
         </View>
       )}
@@ -111,16 +125,8 @@ const DatePicker = ({
 export default DatePicker;
 
 const styles = StyleSheet.create({
-  mockInput: {
-    borderRadius: 25,
-    width: 165,
-    height: 53,
-    marginTop: 8,
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 10,
-    alignItems: "center",
-    overflow: "visible",
+  datePickerContainer: {
+    width: "49%",
   },
   titlePlaceholder: {
     color: Color.Text,

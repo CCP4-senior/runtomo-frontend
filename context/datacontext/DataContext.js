@@ -3,7 +3,7 @@ import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
 import { getStorage, ref } from "firebase/storage";
 import firebaseConfig from "../../firebase.js";
-import firebase from "firebase/app";
+// import firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 
 const DataContext = createContext();
@@ -20,6 +20,7 @@ const DataProvider = ({ children }) => {
   const [isDataFiltered, setIsDataFiltered] = useState(false);
   const [tokyoWards, setTokyoWards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const [sortingCondition, setSortingCondition] = useState("standard");
 
   const generateImageUrl = (ref) => {
     return `https://firebasestorage.googleapis.com/v0/b/senior-project-8ca2b.appspot.com/o/${encodeURIComponent(
@@ -84,7 +85,7 @@ const DataProvider = ({ children }) => {
 
       setUser({
         ...response.data,
-        imageUrl: response.data.profile.image
+        imageUrl: response.data.profile?.image
           ? generateImageUrl(response.data.profile.image)
           : null,
       });
@@ -131,6 +132,7 @@ const DataProvider = ({ children }) => {
       }
       const currentEvent = { ...data, imageUrl };
       setCurrentEvent(currentEvent);
+      console.log("🍎 currentEvent:", currentEvent);
     } catch (e) {
       alert("Something went wrong with getCurrentEventData. Please try again");
       console.log(e);
@@ -155,6 +157,8 @@ const DataProvider = ({ children }) => {
     getUser,
     currentUser,
     generateImageUrl,
+    sortingCondition,
+    setSortingCondition,
   };
 
   return (

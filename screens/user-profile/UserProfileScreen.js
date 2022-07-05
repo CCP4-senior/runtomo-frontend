@@ -68,6 +68,10 @@ const UserProfileScreen = ({ navigation, route }) => {
   useFocusEffect(
     React.useCallback(() => {
       console.log("useFocusEffect ----------");
+      console.log(
+        '\n 🍎 userData.profile?.["date_of_birth"]:',
+        userData.profile["date_of_birth"]
+      );
       isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
 
       return () => {
@@ -132,13 +136,7 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Username */}
 
               <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>
-                  {/* { isLoginUser ? user.username : userData && userData.username} */}
-                  {/* {isLoginUser && useData
-                    ? userData.username
-                    : userData && userData.username} */}
-                  {userData?.username}
-                </Text>
+                <Text style={styles.userFullName}>{userData?.username}</Text>
 
                 {/* Edit Profile button */}
 
@@ -170,8 +168,11 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Age:{" "}
-                  {userData?.profile &&
-                    getAge(userData["profile"]["date_of_birth"])}
+                  {/* {userData?.profile &&
+                    getAge(userData["profile"]["date_of_birth"])} */}
+                  //{" "}
+                  {getAge(userData.profile?.["date_of_birth"]) ||
+                    "Not provided"}
                 </Text>
               </View>
 
@@ -180,7 +181,8 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Date of Birth:{" "}
-                  {userData?.profile && userData["profile"]["date_of_birth"]}
+                  {/* {userData?.profile && userData["profile"]["date_of_birth"]} */}
+                  {userData.profile?.["date_of_birth"] || "Not provided"}
                 </Text>
               </View>
 
@@ -190,6 +192,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                   Run Frequency:{" "}
                   {userData?.profile && userData["profile"]["run_frequency"]}{" "}
                   times / week
+                  {/* Run Frequency: {user.profile?.["run_frequency"]} / week */}
                 </Text>
               </View>
 
@@ -197,6 +200,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 <Text style={styles.userDataFont}>
                   Estimated 5k:{" "}
                   {userData?.profile && userData["profile"]["estimated5k"]}
+                  {/* Estimated 5k: {user.profile?.["estimated5k"]} */}
                 </Text>
               </View>
 
@@ -204,6 +208,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 <Text style={styles.userDataFont}>
                   Estimated 10k:{" "}
                   {userData?.profile && userData["profile"]["estimated10k"]}
+                  {/* Estimated 10k: {user.profile?.["estimated10k"]} */}
                 </Text>
               </View>
             </View>
