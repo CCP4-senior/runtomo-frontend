@@ -65,17 +65,11 @@ const UserProfileScreen = ({ navigation, route }) => {
     setModalVisible(true);
   };
 
-  useEffect(() => {
-    isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
   useFocusEffect(
     React.useCallback(() => {
-      isLoginUser && setUserData(user);
+      console.log("useFocusEffect ----------");
+      isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
+
       return () => {
         controller.abort();
       };

@@ -47,7 +47,6 @@ const DataProvider = ({ children }) => {
     }
   };
 
-
   //   Following paddData function is added for data consistency. Will be deleted once backend data is set
   const paddData = (el) => {
     const randomWard = Math.floor(Math.random() * 2);
@@ -82,7 +81,6 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
-      console.log(response.data);
 
       setUser({
         ...response.data,
@@ -91,7 +89,7 @@ const DataProvider = ({ children }) => {
           : null,
       });
     } catch (e) {
-      alert("Something went wrong. Please try again!");
+      alert("Something went wrong with setUserData. Please try again!");
       console.log(e);
     }
   };
@@ -118,7 +116,7 @@ const DataProvider = ({ children }) => {
       }
       setAllEvents(dataWithImage);
     } catch (e) {
-      alert("Something went wrong. Please try again");
+      alert("Something went wrong with getAllEventsData. Please try again");
       console.log(e);
     }
   };
@@ -134,7 +132,7 @@ const DataProvider = ({ children }) => {
       const currentEvent = { ...data, imageUrl };
       setCurrentEvent(currentEvent);
     } catch (e) {
-      alert("Something went wrong. Please try again");
+      alert("Something went wrong with getCurrentEventData. Please try again");
       console.log(e);
     }
   };
