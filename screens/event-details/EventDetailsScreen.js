@@ -92,7 +92,7 @@ const EventDetailsScreen = ({ navigation }) => {
 
   const deepCopy = (item) => {
     return JSON.parse(JSON.stringify(item));
-  }
+  };
 
   // To be modified
   const openCreatorProfile = async () => {
@@ -102,8 +102,6 @@ const EventDetailsScreen = ({ navigation }) => {
 
     if (creator.id === user.id) userToView = deepCopy(user);
     if (creator.id !== user.id) userToView = deepCopy(creator);
-
-    console.log('\n 🍎 userToView in Event Details:', userToView);
 
     navigation.navigate("Profile", { userToView });
   };

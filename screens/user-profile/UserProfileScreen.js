@@ -45,7 +45,7 @@ const UserProfileScreen = ({ navigation, route }) => {
       const response = await axiosInstance(`/users/${id}/`, {
         signal: controller.signal,
       });
-      // setUserData(response.data);
+
       setUserData({
         ...response.data,
         imageUrl: response.data.profile.image
@@ -66,11 +66,9 @@ const UserProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    // console.log("💜 Rendering Profile --------------");
     isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
 
     return () => {
-      console.log("❤️‍🔥 Cleanup! ----------------");
       controller.abort();
     };
   }, []);
@@ -118,6 +116,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 )}
 
                 {/* Profile picture (default) */}
+
                 {!user.imageUrl && (
                   <Avatar.Icon
                     style={[
@@ -144,7 +143,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                   {/* {isLoginUser && useData
                     ? userData.username
                     : userData && userData.username} */}
-                    {userData?.username}
+                  {userData?.username}
                 </Text>
 
                 {/* Edit Profile button */}
@@ -164,7 +163,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 {isLoginUser && (
                   <IconButton
                     onPress={showModal}
-                    icon="camera-flip-outline"
+                    icon="camera-flip"
                     size={29}
                     color={Color.PrimaryMain}
                     style={{ width: 30 }}
@@ -173,18 +172,17 @@ const UserProfileScreen = ({ navigation, route }) => {
               </View>
 
               {/* Age */}
+
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Age:{" "}
-                  {isLoginUser
-                    ? user["profile"]["date_of_birth"]
-                    : userData && userData.username}
                   {userData?.profile &&
                     getAge(userData["profile"]["date_of_birth"])}
                 </Text>
               </View>
 
               {/* Date of Birth */}
+
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Date of Birth:{" "}
@@ -196,8 +194,8 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Run Frequency:{" "}
-                  {userData?.profile && userData["profile"]["run_frequency"]} /
-                  week
+                  {userData?.profile && userData["profile"]["run_frequency"]}{" "}
+                  times / week
                 </Text>
               </View>
 
