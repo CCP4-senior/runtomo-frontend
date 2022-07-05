@@ -76,7 +76,14 @@ const EventEditScreen = ({ navigation }) => {
 
   const buttonHandler = async () => {
     try {
-      const requiredFields = [title, meetingPoint, date, time, runningDuration];
+      const requiredFields = [
+        title,
+        meetingPoint,
+        date,
+        time,
+        runningDuration,
+        eventDescription,
+      ];
 
       if (requiredFields.some((field) => field === "")) {
         setSubmitted(true);
@@ -278,11 +285,40 @@ const EventEditScreen = ({ navigation }) => {
             <TextInput
               mutiline={true}
               mode="outlined"
-              outlineColor="#fff"
-              activeOutlineColor={Color.GrayDark}
-              theme={styles.inputTheme}
+              // outlineColor="#fff"
+              // activeOutlineColor={Color.GrayDark}
+              theme={{
+                ...styles.inputTheme,
+                colors: {
+                  placeholder: !submitted
+                    ? Color.Text
+                    : eventDescription
+                    ? Color.Text
+                    : Color.PrimaryMain,
+                },
+              }}
               style={styles.input}
-              placeholder="Event Description"
+              outlineColor={
+                !submitted
+                  ? "#fff"
+                  : eventDescription
+                  ? "#fff"
+                  : Color.PrimaryMain
+              }
+              activeOutlineColor={
+                !submitted
+                  ? Color.GrayDark
+                  : eventDescription
+                  ? Color.GrayLight
+                  : Color.PrimaryMain
+              }
+              placeholder={
+                !submitted
+                  ? "Event Description"
+                  : eventDescription
+                  ? "Event Description"
+                  : `Event Description Required`
+              }
               value={eventDescription}
               onChangeText={(text) => {
                 setEventDescription(text);
