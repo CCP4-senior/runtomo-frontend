@@ -15,22 +15,24 @@ const DatePicker = ({
   isInRegisterForm,
   overWriteWidth,
   inputRef,
-  isUTCdata,
-  setIsUTCdata,
+  isDateUTC,
+  setIsDateUTC,
+  isTimeUTC,
+  setIsTimeUTC,
 }) => {
-  useEffect(() => {
-    console.log(isUTCdata, date);
-  }, []);
+  // useEffect(() => {
+  //   console.log(isUTCdata, date);
+  // }, []);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     category === "date"
       ? date
-        ? isUTCdata
+        ? isDateUTC
           ? addHours(new Date(date), 9)
           : new Date(date)
         : new Date()
       : time
-      ? isUTCdata
+      ? isTimeUTC
         ? addHours(new Date(time), 9)
         : new Date(time)
       : new Date()
@@ -50,8 +52,11 @@ const DatePicker = ({
     hideDatePicker();
 
     setSelectedDate(data);
-    if (isUTCdata === true) {
-      setIsUTCdata(false);
+    if (category === "date") {
+      setIsDateUTC(false);
+    }
+    if (category === "time") {
+      setIsTimeUTC(false);
     }
   };
 
@@ -93,10 +98,10 @@ const DatePicker = ({
               value={
                 date || time
                   ? category === "date"
-                    ? isUTCdata
+                    ? isDateUTC
                       ? format(addHours(new Date(date), 9), "MMM d, yyyy")
                       : format(new Date(date), "MMM d, yyyy")
-                    : isUTCdata
+                    : isTimeUTC
                     ? format(addHours(new Date(time), 9), "p")
                     : format(new Date(time), "p")
                   : ""

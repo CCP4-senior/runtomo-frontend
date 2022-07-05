@@ -7,10 +7,11 @@ import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
 const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
-  let isConfirmationCard, isUTCdata;
+  let isConfirmationCard, isDateUTC, isTimeUTC;
   if (route.params) {
     isConfirmationCard = route.params.isConfirmationCard;
-    isUTCdata = route.params.isUTCdata;
+    isDateUTC = route.params.isDateUTC;
+    isTimeUTC = route.params.isTimeUTC;
   }
   const { currentEvent } = useContext(DataContext);
   const event = currentEvent;
@@ -72,7 +73,8 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
         event={event}
         handlePress={() => navigation.navigate("Running Event")}
         isConfirmationCard={isConfirmationCard}
-        isUTCdata={isUTCdata}
+        isDateUTC={isDateUTC}
+        isTimeUTC={isTimeUTC}
       />
 
       {/* {actionType === "create" && (

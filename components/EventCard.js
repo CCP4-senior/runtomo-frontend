@@ -10,7 +10,8 @@ const EventCard = ({
   isHomePageCard,
   handlePress,
   isConfirmationCard,
-  isUTCdata,
+  isDateUTC,
+  isTimeUTC,
 }) => {
   const { currentEvent } = useContext(DataContext);
   if (!isHomePageCard) event = currentEvent;
@@ -18,12 +19,12 @@ const EventCard = ({
   const date = new Date(event.date);
   const time = new Date(event.time);
   const zonedDate = isConfirmationCard
-    ? isUTCdata
+    ? isDateUTC
       ? addHours(date, 9)
       : date
     : addHours(date, 9);
   const zonedTime = isConfirmationCard
-    ? isUTCdata
+    ? isTimeUTC
       ? addHours(time, 9)
       : time
     : addHours(time, 9);

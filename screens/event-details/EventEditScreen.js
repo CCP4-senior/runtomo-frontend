@@ -64,7 +64,8 @@ const EventEditScreen = ({ navigation }) => {
   const inputRef = useRef();
   const hasPhoto = currentEvent.imageUrl;
   const [photoHasChanged, setPhotoHasChanged] = useState(false);
-  const [isUTCdata, setIsUTCdata] = useState(true);
+  const [isDateUTC, setIsDateUTC] = useState(true);
+  const [isTimeUTC, setIsTimeUTC] = useState(true);
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -121,7 +122,8 @@ const EventEditScreen = ({ navigation }) => {
       });
       navigation.navigate("Event Updated", {
         isConfirmationCard: true,
-        isUTCdata: isUTCdata,
+        isDateUTC: isDateUTC,
+        isTimeUTC: isTimeUTC,
       });
     } catch (e) {
       console.log(e.config.url);
@@ -205,8 +207,8 @@ const EventEditScreen = ({ navigation }) => {
               submitted={submitted}
               category="date"
               inputRef={inputRef}
-              isUTCdata={isUTCdata}
-              setIsUTCdata={setIsUTCdata}
+              isDateUTC={isDateUTC}
+              setIsDateUTC={setIsDateUTC}
             />
             <DatePicker
               setTime={setTime}
@@ -214,8 +216,8 @@ const EventEditScreen = ({ navigation }) => {
               submitted={submitted}
               category="time"
               inputRef={inputRef}
-              isUTCdata={isUTCdata}
-              setIsUTCdata={setIsUTCdata}
+              isTimeUTC={isTimeUTC}
+              setIsTimeUTC={setIsTimeUTC}
             />
           </View>
           <View style={styles.inputContainer}>
