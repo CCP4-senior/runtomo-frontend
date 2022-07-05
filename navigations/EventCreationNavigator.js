@@ -10,10 +10,13 @@ import UserProfileScreen from "../screens/user-profile/UserProfileScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
 import HomeScreen from "../screens/home/HomeScreen";
 import { DataContext } from "../context/datacontext/DataContext";
+import { AuthContext } from "../context/authcontext/AuthContext";
 
 const Stack = createStackNavigator();
 
 const EventCreationNavigator = ({ navigation, setData, data }) => {
+  const { user } = useContext(AuthContext);
+
   const initialEvent = Object.freeze({
     title: "",
     meetingPoint: "",
@@ -65,6 +68,7 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
         name="Profile"
         component={UserProfileScreen}
         options={{ ...HeaderStyle }}
+        initialParams={{ userToView: user }}
       />
       <Stack.Screen
         name="Edit Profile"

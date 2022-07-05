@@ -90,11 +90,20 @@ const EventDetailsScreen = ({ navigation }) => {
     }
   };
 
+  const deepCopy = (item) => {
+    return JSON.parse(JSON.stringify(item));
+  };
+
   // To be modified
   const openCreatorProfile = async () => {
     await getUser(eventData.creator.id);
-    if (creator.id !== user.id) navigation.navigate("Creator Profile");
-    if (creator.id === user.id) navigation.navigate("Profile");
+
+    let userToView = null;
+
+    if (creator.id === user.id) userToView = deepCopy(user);
+    if (creator.id !== user.id) userToView = deepCopy(creator);
+
+    navigation.navigate("Profile", { userToView });
   };
   const joinEvent = async () => {
     try {

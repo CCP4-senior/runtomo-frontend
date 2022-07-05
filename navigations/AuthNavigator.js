@@ -10,6 +10,8 @@ import ProfilePhoto from "../screens/register-extra-info/ProfilePhoto";
 const Stack = createStackNavigator();
 
 const AuthNavigator = () => {
+
+
   return (
     <Stack.Navigator>
       <Stack.Screen
