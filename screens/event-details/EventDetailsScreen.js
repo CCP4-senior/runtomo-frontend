@@ -5,7 +5,6 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
-  Image,
   SafeAreaView,
 } from "react-native";
 import {
@@ -32,6 +31,7 @@ import MapView, {
 } from "react-native-maps";
 import axiosInstance from "../../helpers/axios.js";
 import StackedAvatars from "./StackedAvatars.js";
+import deleteStoredImage from "../../helpers/deleteStoredImage.js";
 
 const EventDetailsScreen = ({ navigation }) => {
   // Google Maps logic
@@ -57,8 +57,8 @@ const EventDetailsScreen = ({ navigation }) => {
   const [creator, setCreator] = useState(eventData.creator);
   const date = new Date(eventData.date);
   const time = new Date(eventData.time);
-  const zonedDate = (date, addHours(date, 9));
-  const zonedTime = (time, addHours(date, 9));
+  const zonedDate = addHours(date, 9);
+  const zonedTime = addHours(time, 9);
 
   useEffect(() => {
     getAllParticipants();
@@ -91,11 +91,20 @@ const EventDetailsScreen = ({ navigation }) => {
     }
   };
 
+  const deepCopy = (item) => {
+    return JSON.parse(JSON.stringify(item));
+  };
+
   // To be modified
   const openCreatorProfile = async () => {
     await getUser(eventData.creator.id);
-    if (creator.id !== user.id) navigation.navigate("Creator Profile");
-    if (creator.id === user.id) navigation.navigate("Profile");
+
+    let userToView = null;
+
+    if (creator.id === user.id) userToView = deepCopy(user);
+    if (creator.id !== user.id) userToView = deepCopy(creator);
+
+    navigation.navigate("Profile", { userToView });
   };
   const joinEvent = async () => {
     try {
@@ -122,8 +131,12 @@ const EventDetailsScreen = ({ navigation }) => {
     }, 2000);
   };
 
-  const cancelEvent = async (id) => {
-    await axiosInstance.delete(`/events/${id}/`);
+  const cancelEvent = async (event) => {
+    await axiosInstance.delete(`/events/${event.id}/`);
+
+    if (event.imageUrl) {
+      deleteStoredImage(event.imageUrl);
+    }
 
     setIsAttendanceCancellation(false);
     showDialog();
@@ -198,7 +211,7 @@ const EventDetailsScreen = ({ navigation }) => {
                         <Avatar.Image
                           size={40}
                           source={{
-                            uri: generateImageUrl(eventData.creaor.image),
+                            uri: generateImageUrl(eventData.creator.image),
                           }}
                         />
                       )}
@@ -269,15 +282,29 @@ const EventDetailsScreen = ({ navigation }) => {
                     </Text>
                   </View>
 
-                  <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Location:</Text>
-                    <Text style={styles.thinText}>{eventData.location}</Text>
-                  </View>
-                  <View style={styles.mapContainer}>
-                    <MapView
-                      key={`${eventData.id}${Date.now()}`}
-                      style={styles.map}
-                      initialRegion={{
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Description:</Text>
+                  <Text style={styles.thinText}>{eventData.description}</Text>
+                </View>
+
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Location:</Text>
+                  <Text style={styles.thinText}>{eventData.location}</Text>
+                </View>
+                <View style={styles.mapContainer}>
+                  <MapView
+                    key={`${eventData.id}${Date.now()}`}
+                    style={styles.map}
+                    initialRegion={{
+                      latitude: region.latitude,
+                      longitude: region.longitude,
+                      latitudeDelta: 0.002,
+                      longitudeDelta: 0.0121,
+                    }}
+                    provider={PROVIDER_DEFAULT}
+                  >
+                    <Marker
+                      coordinate={{
                         latitude: region.latitude,
                         longitude: region.longitude,
                         latitudeDelta: 0.002,
@@ -312,14 +339,15 @@ const EventDetailsScreen = ({ navigation }) => {
                 <>
                   <LongButton
                     buttonHandler={() => {
-                      alert("edit event page");
+                      setCurrentEvent(eventData);
+                    navigation.navigate("Edit Event");
                     }}
                     buttonColor={Color.GrayDark}
                     buttonText="Edit Event"
                     buttonTextColor="#555555"
                   />
                   <LongButton
-                    buttonHandler={() => cancelEvent(eventData.id)}
+                    buttonHandler={() => cancelEvent(eventData)}
                     buttonColor={Color.PrimaryMain}
                     buttonText="Cancel Event"
                   />
@@ -364,7 +392,6 @@ const EventDetailsScreen = ({ navigation }) => {
               icon="forum"
               onPress={() => {
                 navigation.navigate("Messages");
-                // alert("Pressed");
               }}
             >
               Message

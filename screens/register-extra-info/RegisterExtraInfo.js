@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import Color from "../../assets/themes/Color.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import DatePicker from "../event-creation/DatePicker.js";
+import { es } from "date-fns/locale";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
@@ -115,7 +116,7 @@ const RegisterExtraInfo = ({ route }) => {
         {/* Age Date Picker */}
 
         <View style={styles.dobHeader}>
-          <Text>Date of birth</Text>
+          <Text style={styles.btnText}>Date of birth</Text>
         </View>
         <View style={styles.datePickerContainer}>
           <DatePicker
@@ -130,7 +131,9 @@ const RegisterExtraInfo = ({ route }) => {
 
         {/* Times per week buttons*/}
         <View style={styles.timesPerWeekBtnHeader}>
-          <Text>How many times a week do you usually run?</Text>
+          <Text style={styles.btnText}>
+            How many times a week do you usually run?
+          </Text>
         </View>
         <View style={styles.timesPerWeekBtnWrapper}>
           <Button
@@ -143,7 +146,7 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text>1-2</Text>
+            <Text style={styles.btnText}>1-2</Text>
           </Button>
           <Button
             onPress={() => handleTPWBtnClick("2-3")}
@@ -155,7 +158,7 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text>2-3</Text>
+            <Text style={styles.btnText}>2-3</Text>
           </Button>
           <Button
             onPress={() => handleTPWBtnClick("3-5")}
@@ -167,7 +170,7 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text>3-5</Text>
+            <Text style={styles.btnText}>3-5</Text>
           </Button>
           <Button
             onPress={() => handleTPWBtnClick("5+")}
@@ -179,14 +182,16 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text>5+</Text>
+            <Text style={styles.btnText}>5+</Text>
           </Button>
         </View>
 
         {/* Pace 5km */}
 
         <View style={styles.estimate5kHeader}>
-          <Text>How long does it take you to run a 5km? (estimate)</Text>
+          <Text style={styles.btnText}>
+            How long does it take you to run a 5km? (estimate)
+          </Text>
         </View>
         <View style={styles.estimatedKmBtnWrapper}>
           <Button
@@ -199,7 +204,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               15-20 mins
             </Text>
           </Button>
@@ -213,7 +223,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               20-25 mins
             </Text>
           </Button>
@@ -227,7 +242,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               25-30 mins
             </Text>
           </Button>
@@ -241,7 +261,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               30-35 mins
             </Text>
           </Button>
@@ -255,7 +280,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               35-40 mins
             </Text>
           </Button>
@@ -270,14 +300,19 @@ const RegisterExtraInfo = ({ route }) => {
             ]}
           >
             <Text
-              style={{ textTransform: "lowercase", fontSize: 12 }}
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
             >{`>40 mins`}</Text>
           </Button>
         </View>
         {/* Pace 10km */}
 
         <View style={styles.estimate10kHeader}>
-          <Text>How long does it take you to run a 10km? (estimate)</Text>
+          <Text style={styles.btnText}>
+            How long does it take you to run a 10km? (estimate)
+          </Text>
         </View>
         <View style={styles.estimatedKmBtnWrapper}>
           <Button
@@ -290,7 +325,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               40-45 mins
             </Text>
           </Button>
@@ -304,7 +344,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               45-50 mins
             </Text>
           </Button>
@@ -318,7 +363,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               50-55 mins
             </Text>
           </Button>
@@ -332,7 +382,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               55-60 mins
             </Text>
           </Button>
@@ -346,7 +401,12 @@ const RegisterExtraInfo = ({ route }) => {
                 : styles.btnNotSelected,
             ]}
           >
-            <Text style={{ textTransform: "lowercase", fontSize: 12 }}>
+            <Text
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
+            >
               60-65 mins
             </Text>
           </Button>
@@ -361,7 +421,10 @@ const RegisterExtraInfo = ({ route }) => {
             ]}
           >
             <Text
-              style={{ textTransform: "lowercase", fontSize: 12 }}
+              style={[
+                styles.btnText,
+                { textTransform: "lowercase", fontSize: 12 },
+              ]}
             >{`>65 mins`}</Text>
           </Button>
         </View>
@@ -489,8 +552,12 @@ const styles = StyleSheet.create({
   },
   btnSelected: {
     backgroundColor: Color.PrimaryMedium,
+    borderColor: Color.Black,
   },
   btnNotSelected: {
-    backgroundColor: "transparent",
+    borderColor: Color.Black,
+  },
+  btnText: {
+    color: Color.Black,
   },
 });

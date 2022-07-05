@@ -38,6 +38,7 @@ const AuthProvider = ({ children }) => {
         );
       }
     } catch (e) {
+      console.log(e);
       alert("Something went wrong. Please try again!");
     }
   };
@@ -130,7 +131,7 @@ const AuthProvider = ({ children }) => {
       }
     } catch (e) {
       console.log("🍎 updateDBUserInfo() did not work correctly.");
-      console.log("🍎 erorr for updateDBUserInfo():", e);
+      console.log("🍎 error for updateDBUserInfo():", e);
       Alert.alert("Error", e.response.data.detail, [
         {
           text: "OK",

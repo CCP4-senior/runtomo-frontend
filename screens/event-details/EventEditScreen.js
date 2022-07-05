@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useContext,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   ScrollView,
   View,
@@ -13,23 +7,24 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
+import { addHours } from "date-fns";
 import Color from "../../assets/themes/Color.js";
-import DatePicker from "./DatePicker.js";
-// import AreaModal from "./AreaModal.js";
-import DurationModal from "./DurationModal.js";
-import GoogleSearchModal from "./GoogleSearchModal.js";
+import DatePicker from "../event-creation/DatePicker.js";
+// import AreaModal from "../event-creation/AreaModal.js";
+import DurationModal from "../event-creation/DurationModal.js";
+import GoogleSearchModal from "../event-creation/GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
 import CustomInput from "../../components/CustomInput.js";
 import axiosInstance from "../../helpers/axios.js";
 import uploadImage from "../../helpers/uploadImage.js";
 import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
+import deleteStoredImage from "../../helpers/deleteStoredImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 
-const EventCreationScreen = ({ navigation }) => {
+const EventEditScreen = ({ navigation }) => {
   const runningDurationArray = [
     { id: 1, name: "15 mins", num: 15 },
     { id: 2, name: "30 mins", num: 30 },
@@ -37,29 +32,40 @@ const EventCreationScreen = ({ navigation }) => {
     { id: 4, name: "More", num: null },
   ];
 
-  const [title, setTitle] = useState("");
-  const [meetingPoint, setMeetingPoint] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [ward, setWard] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [runningDuration, setRunningDuration] = useState("");
+  const { setCurrentEvent, currentEvent, generateImageUrl } =
+    useContext(DataContext);
+  const { user } = useContext(AuthContext);
+
+  const [title, setTitle] = useState(currentEvent?.title || "");
+  const [meetingPoint, setMeetingPoint] = useState(
+    currentEvent?.location || ""
+  );
+  const [latitude, setLatitude] = useState(currentEvent?.lat || "");
+  const [longitude, setLongitude] = useState(currentEvent?.long || "");
+  const [ward, setWard] = useState(currentEvent?.ward || "");
+  const [date, setDate] = useState(currentEvent?.date || "");
+  const [time, setTime] = useState(currentEvent?.time || "");
+
+  const [runningDuration, setRunningDuration] = useState(
+    currentEvent?.running_duration
+      ? runningDurationArray.find(
+          (el) => el.num === currentEvent.running_duration
+        )
+      : ""
+  );
   const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
-  const [eventDescription, setEventDescription] = useState("");
-  const [imageUri, setImageUri] = useState("");
+  const [eventDescription, setEventDescription] = useState(
+    currentEvent?.description || null
+  );
+  const [imageUri, setImageUri] = useState(currentEvent?.imageUrl || "");
   const [submitted, setSubmitted] = useState(false);
   const inputRef = useRef();
-  const { setCurrentEvent, generateImageUrl } = useContext(DataContext);
-  const { user } = useContext(AuthContext);
-
-  // const [isUser, setIsUser] = useState(true);
-
-  // useEffect(() => {
-  //   setCurrentEvent("");
-  // });
+  const hasPhoto = currentEvent.imageUrl;
+  const [photoHasChanged, setPhotoHasChanged] = useState(false);
+  const [isDateUTC, setIsDateUTC] = useState(true);
+  const [isTimeUTC, setIsTimeUTC] = useState(true);
 
   const hideModal = () => {
     setAreaModalVisible(false);
@@ -68,33 +74,8 @@ const EventCreationScreen = ({ navigation }) => {
     inputRef.current?.blur();
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      resetInput();
-    }, [])
-  );
-
-  const resetInput = () => {
-    setTitle("");
-    setMeetingPoint("");
-    setLatitude("");
-    setLongitude("");
-    setWard("");
-    setDate("");
-    setTime("");
-    setRunningDuration("");
-    setEventDescription("");
-    setImageUri("");
-  };
-
-  const createEvent = async () => {
+  const buttonHandler = async () => {
     try {
-      let currentRef = null;
-      if (imageUri !== "") {
-        const newUri = await resizeImage(imageUri, 300);
-        currentRef = await uploadImage("events", newUri, user.id);
-      }
-
       const requiredFields = [
         title,
         meetingPoint,
@@ -109,27 +90,49 @@ const EventCreationScreen = ({ navigation }) => {
         return;
       }
 
+      let currentRef = currentEvent.image;
+      if (imageUri !== "" && photoHasChanged) {
+        currentRef = await storeNewImage();
+      }
+      if (imageUri === "" && hasPhoto) {
+        const prevImageUrl = currentEvent.imageUrl;
+        await deleteStoredImage(prevImageUrl);
+        currentRef = null;
+      }
+
       const event = {
         title: title,
         location: meetingPoint,
-        ward: ward?.ward_name || null,
-        date: date,
-        time: time,
+        ward: ward && typeof ward === "string" ? ward : ward.ward_name || null,
+        date: new Date(date),
+        time: new Date(time),
         running_duration: runningDuration.num,
         description: eventDescription,
         image: currentRef,
         lat: latitude,
         long: longitude,
+        creator: {
+          ...currentEvent.creator,
+        },
       };
 
-      const response = await axiosInstance.post("/events/create_event", event);
+      console.log(event);
+
+      const response = await axiosInstance.put(
+        `/events/${currentEvent.id}/`,
+        event
+      );
       setCurrentEvent({
         ...event,
-        creator: user,
+        id: currentEvent.id,
+        // creator: user,
         imageUrl: currentRef !== null ? generateImageUrl(currentRef) : null,
       });
-
-      navigation.navigate("Event Created", { isConfirmationCard: true });
+      navigation.navigate("Event Updated", {
+        isConfirmationCard: true,
+        isDateUTC: isDateUTC,
+        isTimeUTC: isTimeUTC,
+      });
     } catch (e) {
       console.log(e);
       alert("Something went wrong. Please try again!");
@@ -138,6 +141,17 @@ const EventCreationScreen = ({ navigation }) => {
 
   const deleteImage = () => {
     setImageUri("");
+  };
+
+  const storeNewImage = async () => {
+    const newUri = await resizeImage(imageUri, 300);
+    const imageRef = await uploadImage("events", newUri, user.id);
+
+    if (hasPhoto) {
+      const prevImageUrl = currentEvent.imageUrl;
+      await deleteStoredImage(prevImageUrl);
+    }
+    return imageRef;
   };
 
   return (
@@ -201,6 +215,8 @@ const EventCreationScreen = ({ navigation }) => {
               submitted={submitted}
               category="date"
               inputRef={inputRef}
+              isDateUTC={isDateUTC}
+              setIsDateUTC={setIsDateUTC}
             />
             <DatePicker
               setTime={setTime}
@@ -208,6 +224,8 @@ const EventCreationScreen = ({ navigation }) => {
               submitted={submitted}
               category="time"
               inputRef={inputRef}
+              isTimeUTC={isTimeUTC}
+              setIsTimeUTC={setIsTimeUTC}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -226,6 +244,7 @@ const EventCreationScreen = ({ navigation }) => {
               onPress={async () => {
                 inputRef.current?.blur();
                 await selectImage(setImageUri);
+                setPhotoHasChanged(true);
               }}
             >
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
@@ -245,14 +264,26 @@ const EventCreationScreen = ({ navigation }) => {
             <View style={styles.imageBackground}>
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
               <Image source={{ uri: imageUri }} style={{ height: 175 }} />
-              <Button color={Color.PrimaryMain} onPress={deleteImage}>
-                Undo Selection
-              </Button>
+              <View style={styles.imageButtonsContainer}>
+                <Button
+                  color={Color.PrimaryMain}
+                  onPress={async () => {
+                    inputRef.current?.blur();
+                    await selectImage(setImageUri, setPhotoHasChanged);
+                  }}
+                >
+                  Change
+                </Button>
+                <Button color={Color.PrimaryMain} onPress={deleteImage}>
+                  Delete
+                </Button>
+              </View>
             </View>
           )}
 
           <View style={styles.inputContainer}>
             <TextInput
+              mutiline={true}
               mode="outlined"
               // outlineColor="#fff"
               // activeOutlineColor={Color.GrayDark}
@@ -292,7 +323,7 @@ const EventCreationScreen = ({ navigation }) => {
               onChangeText={(text) => {
                 setEventDescription(text);
                 if (text.length === 255) {
-                  alert("Description cannot exceed 255 character length.");
+                  alert("Description cannot be exceed 255 character length.");
                 }
               }}
               maxLength={255}
@@ -300,9 +331,9 @@ const EventCreationScreen = ({ navigation }) => {
             />
           </View>
           <LongButton
-            buttonHandler={createEvent}
+            buttonHandler={buttonHandler}
             buttonColor={Color.PrimaryMain}
-            buttonText="Create Event"
+            buttonText="Update event"
           />
         </View>
       </ScrollView>
@@ -310,7 +341,7 @@ const EventCreationScreen = ({ navigation }) => {
   );
 };
 
-export default EventCreationScreen;
+export default EventEditScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -372,4 +403,10 @@ const styles = StyleSheet.create({
     },
   },
   input: { backgroundColor: "#fff", width: "90%", height: 98 },
+  imageButtonsContainer: {
+    flexDirection: "row",
+    width: "70%",
+    justifyContent: "space-between",
+    alignSelf: "center",
+  },
 });

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -24,6 +24,7 @@ import { ref } from "firebase/storage";
 
 const ProfilePhoto = ({ route }) => {
   const { username, email, password } = route.params;
+
   const { createUser, createUserProfile, userToBeRegistered } =
     useContext(AuthContext);
   const [imageUri, setImageUri] = useState("");
@@ -42,13 +43,13 @@ const ProfilePhoto = ({ route }) => {
     } else {
       const newUri = await resizeImage(imageUri, 300);
       const imageRef = await uploadImage("profiles", newUri);
-      createUserAndProfile(imageRef);
+      await createUserAndProfile(imageRef);
     }
   };
 
   const createUserAndProfile = async (imageRef) => {
     try {
-      await createUser({ username, email, password });
+      await createUser({ username, password, email });
       await createUserProfile({ ...userToBeRegistered, image: imageRef });
     } catch (e) {
       alert("Something went wrong! Please try again");
@@ -71,7 +72,7 @@ const ProfilePhoto = ({ route }) => {
               <Button onPress={hideDialog} color={Color.PrimaryMain}>
                 Add now
               </Button>
-              <Button onPress={createUserAndProfile} color="grey">
+              <Button onPress={() => createUserAndProfile(null)} color="grey">
                 Later
               </Button>
             </Dialog.Actions>
@@ -140,7 +141,7 @@ const ProfilePhoto = ({ route }) => {
             contentStyle={{
               padding: 5,
             }}
-            onPress={() => handlePress()}
+            onPress={handlePress}
           >
             Register
           </Button>

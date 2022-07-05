@@ -11,10 +11,13 @@ import {
   Provider,
   Avatar,
 } from "react-native-paper";
+import * as SecureStore from "expo-secure-store";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import Color from "../../assets/themes/Color.js";
 import * as RootNavigation from "../../navigations/RootNavigator.js";
 import axiosInstance from "../../helpers/axios.js";
+import deleteStoredImage from "../../helpers/deleteStoredImage.js";
+import deleteImageDirectory from "../../helpers/deleteImageDirectory.js";
 
 const SettingScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
@@ -29,12 +32,21 @@ const SettingScreen = ({ navigation }) => {
   const removeAccount = () => {
     showDialog();
   };
-  const deleteAccount = () => {
+  const deleteAccount = async () => {
     try {
       setDialogType("deleted");
-      setTimeout(() => {
+
+      if (user.imageUrl) {
+        await deleteStoredImage(user.imageUrl);
+      }
+
+      await deleteImageDirectory(`images/${user.id}`);
+
+      setTimeout(async () => {
         setUser("");
-        axiosInstance.delete("/auth/delete/");
+        await axiosInstance.delete("/auth/delete/");
+        await SecureStore.deleteItemAsync("access_token");
+        await SecureStore.deleteItemAsync("refresh_token");
       }, 4000);
     } catch (e) {
       console.log(e);
@@ -45,7 +57,8 @@ const SettingScreen = ({ navigation }) => {
   };
 
   const openProfileScreen = (eventData) => {
-    RootNavigation.navigate("Profile");
+    const userToView = user;
+    RootNavigation.navigate("Profile", { userToView } );
   };
 
   return (

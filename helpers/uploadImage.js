@@ -1,7 +1,7 @@
 import uuid from "react-native-uuid";
 import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
-const uploadImage = async (type, imageUri) => {
+const uploadImage = async (type, imageUri, userId) => {
   const storage = getStorage();
   if (imageUri === "") return;
 
@@ -21,7 +21,9 @@ const uploadImage = async (type, imageUri) => {
   if (!blob) return;
 
   const id = uuid.v4();
-  const currentRef = `images/${type}/${id}`;
+  let currentRef;
+  if (type === "profiles") currentRef = `images/${type}/${id}`;
+  if (type === "events") currentRef = `images/${userId}/${type}/${id}`;
 
   const storageRef = ref(storage, currentRef);
 

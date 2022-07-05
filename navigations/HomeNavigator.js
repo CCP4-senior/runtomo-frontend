@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
@@ -7,10 +7,14 @@ import UserProfileEditScreen from "../screens/user-profile/UserProfileEditScreen
 import SettingScreen from "../screens/setting/SettingScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
+import { AuthContext } from "../context/authcontext/AuthContext";
+
 
 const Stack = createStackNavigator();
 
 const HomeNavigator = ({ navigation }) => {
+  const { user } = useContext(AuthContext);
+
   const openSetting = () => {
     navigation.navigate("Setting");
   };
@@ -32,6 +36,7 @@ const HomeNavigator = ({ navigation }) => {
         name="Profile"
         component={UserProfileScreen}
         options={{ ...HeaderStyle }}
+        initialParams={{ userToView: user }}
       />
       <Stack.Screen
         name="Edit Profile"

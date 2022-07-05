@@ -19,19 +19,11 @@ import Color from "../../assets/themes/Color";
 import CustomInput from "../../components/CustomInput";
 import LongButton from "../../components/LongButton";
 
+const UserProfileEditScreen = ({ navigation, route }) => {
 
-
-const UserProfileEditScreen = ({ navigation }) => {
   const { user, setUser, updateDBUserInfo, updateDBUserProfile } =
     useContext(AuthContext);
   const { height } = useWindowDimensions();
-
-  // leave mockData as a backup option
-  const mockData = {
-    username: user.username,
-    email: user.email,
-    age: "34",
-  };
 
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);

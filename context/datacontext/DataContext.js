@@ -3,7 +3,7 @@ import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
 import { getStorage, ref } from "firebase/storage";
 import firebaseConfig from "../../firebase.js";
-import firebase from "firebase/app";
+// import firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 
 const DataContext = createContext();
@@ -82,7 +82,6 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
-      console.log(response.data);
 
       setUser({
         ...response.data,
@@ -91,7 +90,7 @@ const DataProvider = ({ children }) => {
           : null,
       });
     } catch (e) {
-      alert("Something went wrong. Please try again!");
+      alert("Something went wrong with setUserData. Please try again!");
       console.log(e);
     }
   };
@@ -118,7 +117,7 @@ const DataProvider = ({ children }) => {
       }
       setAllEvents(dataWithImage);
     } catch (e) {
-      alert("Something went wrong. Please try again");
+      alert("Something went wrong with getAllEventsData. Please try again");
       console.log(e);
     }
   };
@@ -134,7 +133,7 @@ const DataProvider = ({ children }) => {
       const currentEvent = { ...data, imageUrl };
       setCurrentEvent(currentEvent);
     } catch (e) {
-      alert("Something went wrong. Please try again");
+      alert("Something went wrong with getCurrentEventData. Please try again");
       console.log(e);
     }
   };

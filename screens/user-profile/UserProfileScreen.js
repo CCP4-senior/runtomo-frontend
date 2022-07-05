@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Text,
   View,
@@ -10,25 +10,52 @@ import {
   Icon,
   ScrollView,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
+import { DataContext } from "../../context/datacontext/DataContext";
 import { Avatar, Button, IconButton, Provider } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import { TouchableOpacity } from "react-native-web";
 import ProfilePhotoModal from "./ProfilePhotoModal";
+import axiosInstance from "../../helpers/axios.js";
 
 function getAge(dateString) {
   var ageInMilliseconds = new Date() - new Date(dateString);
   return Math.floor(ageInMilliseconds / 1000 / 60 / 60 / 24 / 365);
 }
 
-const UserProfileScreen = ({ navigation }) => {
+const UserProfileScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
+  const { generateImageUrl } = useContext(DataContext);
+
+  const userToView = route.params.userToView;
+  const isLoginUser = userToView.id === user.id;
 
   const { height } = useWindowDimensions();
   const [isImageAvailable, setIsImageAvailable] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUri, setImageUri] = useState("");
   const [wantsToDelete, setWantsToDelete] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  const controller = new AbortController();
+
+  const getAndSetUserData = async (id) => {
+    try {
+      const response = await axiosInstance(`/users/${id}/`, {
+        signal: controller.signal,
+      });
+
+      setUserData({
+        ...response.data,
+        imageUrl: response.data.profile?.image
+          ? generateImageUrl(response.data.profile.image)
+          : null,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const hideModal = () => {
     setModalVisible(false);
@@ -38,11 +65,15 @@ const UserProfileScreen = ({ navigation }) => {
     setModalVisible(true);
   };
 
-  const mockData = {
-    username: "wadeMock",
-    email: "wadeMock@app.com",
-    age: "34",
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
+
+      return () => {
+        controller.abort();
+      };
+    }, [user])
+  );
 
   return (
     <Provider>
@@ -58,6 +89,8 @@ const UserProfileScreen = ({ navigation }) => {
       <SafeAreaView style={styles.root}>
         <ScrollView>
           <View style={styles.container}>
+            {/* Images */}
+
             <View style={styles.imageContainer}>
               {/* placeholder image, to be updated */}
               <ImageBackground
@@ -66,18 +99,17 @@ const UserProfileScreen = ({ navigation }) => {
                 source={require("../../assets/images/backgroundProfile.png")}
                 resizeMode="cover"
               >
-                {/* <Image
-                style={[styles.profilePicture, { height: height * 0.3 }]}
-                // source={require("../../assets/images/demo/wade.png")}
-                resizeMode="contain"
-              /> */}
+                {/* Profile picture */}
                 {user.imageUrl && (
                   <Avatar.Image
                     style={[styles.profilePicture]}
-                    source={{ uri: user.imageUrl }}
+                    source={{ uri: userData?.imageUrl }}
                     size={200}
                   />
                 )}
+
+                {/* Profile picture (default) */}
+
                 {!user.imageUrl && (
                   <Avatar.Icon
                     style={[
@@ -92,73 +124,89 @@ const UserProfileScreen = ({ navigation }) => {
                 )}
               </ImageBackground>
             </View>
+
+            {/* User information */}
+
             <View style={styles.userInfoContainer}>
               {/* Username */}
 
               <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>{user.username}</Text>
+                <Text style={styles.userFullName}>{userData?.username}</Text>
 
                 {/* Edit Profile button */}
 
-                {/* <Button
-                onPress={() => navigation.navigate("Edit Profile")}
-                icon="account-edit"
-                color={Color.PrimaryMain}
-                labelStyle={{
-                  fontSize: 30,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                }}
-              /> */}
-                <IconButton
-                  onPress={() => navigation.navigate("Edit Profile")}
-                  icon="account-edit"
-                  size={29}
-                  color={Color.PrimaryMain}
-                  style={{ width: 30 }}
-                />
-                <IconButton
-                  onPress={showModal}
-                  icon="camera-flip-outline"
-                  size={29}
-                  color={Color.PrimaryMain}
-                  style={{ width: 30 }}
-                />
+                {isLoginUser && (
+                  <IconButton
+                    onPress={() => navigation.navigate("Edit Profile")}
+                    icon="account-edit"
+                    size={29}
+                    color={Color.PrimaryMain}
+                    style={{ width: 30 }}
+                  />
+                )}
+
+                {/* Edit Profile Photo button */}
+
+                {isLoginUser && (
+                  <IconButton
+                    onPress={showModal}
+                    icon="camera-flip"
+                    size={29}
+                    color={Color.PrimaryMain}
+                    style={{ width: 30 }}
+                  />
+                )}
               </View>
 
               {/* Age */}
+
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Age:{" "}
-                  {getAge(user.profile?.["date_of_birth"]) || "Not provided"}
+                  {/* {userData?.profile &&
+                    getAge(userData["profile"]["date_of_birth"])} */}
+                  {getAge(userData?.profile?.["date_of_birth"]) ||
+                    "Not provided"}
                 </Text>
               </View>
 
               {/* Date of Birth */}
+
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Date of Birth:{" "}
-                  {user.profile?.["date_of_birth"] || "Not provided"}
+                  {userData?.profile?.["date_of_birth"] || "Not provided"}
                 </Text>
               </View>
 
               {/* Run Frequency */}
+
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Run Frequency: {user.profile?.["run_frequency"]} / week
+                  Run Frequency:{" "}
+                  {userData?.profile
+                    ? userData.profile?.["run_frequency"] + " times / week"
+                    : "Not provided"}
+                </Text>
+              </View>
+
+              {/* Estimate 5k */}
+
+              <View style={styles.userDataWrapper}>
+                <Text style={styles.userDataFont}>
+                  Estimated 5k:{" "}
+                  {userData?.profile
+                    ? userData.profile["estimated5k"]
+                    : "Not provided"}
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
-                  Estimated 5k: {user.profile?.["estimated5k"]}
-                </Text>
-              </View>
-
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Estimated 10k: {user.profile?.["estimated10k"]}
+                  Estimated 10k:{" "}
+                  {userData?.profile
+                    ? userData.profile["estimated10k"]
+                    : "Not provided"}
                 </Text>
               </View>
             </View>

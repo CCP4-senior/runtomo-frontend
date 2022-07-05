@@ -5,13 +5,30 @@ import StackedAvatars from "../screens/event-details/StackedAvatars";
 import { addHours, format } from "date-fns";
 import { DataContext } from "../context/datacontext/DataContext";
 
-const EventCard = ({ event, isHomePageCard, handlePress }) => {
+const EventCard = ({
+  event,
+  isHomePageCard,
+  handlePress,
+  isConfirmationCard,
+  isDateUTC,
+  isTimeUTC,
+}) => {
   const { currentEvent } = useContext(DataContext);
   if (!isHomePageCard) event = currentEvent;
+
   const date = new Date(event.date);
   const time = new Date(event.time);
-  const zonedDate = (date, addHours(date, 9));
-  const zonedTime = (time, addHours(date, 9));
+  const zonedDate = isConfirmationCard
+    ? isDateUTC
+      ? addHours(date, 9)
+      : date
+    : addHours(date, 9);
+  const zonedTime = isConfirmationCard
+    ? isTimeUTC
+      ? addHours(time, 9)
+      : time
+    : addHours(time, 9);
+
   return (
     <Card
       style={[isHomePageCard ? styles.homePageCard : styles.card]}
@@ -28,7 +45,7 @@ const EventCard = ({ event, isHomePageCard, handlePress }) => {
             }}
           />
         )}
-        {event.imageUrl === undefined && (
+        {!event.imageUrl && (
           <Card.Cover
             source={require("../assets/images/demo/defaultEvent.jpeg")}
             style={{

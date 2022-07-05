@@ -14,7 +14,7 @@ const LongButton = ({
       color={buttonColor}
       style={{
         borderRadius: 25,
-        width: 325,
+        width: "90%",
         height: 55,
         marginTop: 20,
       }}
