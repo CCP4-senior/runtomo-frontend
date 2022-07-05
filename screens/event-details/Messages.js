@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
   ScrollView,
   Text,
@@ -17,6 +17,7 @@ import { format, formatRelative } from "date-fns";
 import { DataContext } from "../../context/datacontext/DataContext";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color";
+import axiosInstance from "../../helpers/axios";
 import { navigationRef } from "../../navigations/RootNavigator";
 
 // let participants = participantsArray;
@@ -105,6 +106,7 @@ const mockData = [
 ];
 
 const DialogCard = ({ message }) => {
+  useEffect(() => {}, []);
   const { user } = useContext(AuthContext);
   const isSelf = message.user.id === user.id;
   return (
@@ -222,6 +224,20 @@ const Messages = () => {
   const [data, setData] = useState(mockData);
   const [visible, setVisible] = useState(true);
   const scrollViewRef = useRef(null);
+  useEffect(() => {
+    console.log(data);
+  }, []);
+
+  const getMessages = async () => {
+    try {
+      console.log(currentEvent.id);
+      const response = await axiosInstance(`/event_comments/69/comments/`);
+      setData(response.data.results);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -230,7 +246,7 @@ const Messages = () => {
           size={25}
           style={{ position: "absolute", left: 0 }}
           onPress={() => {
-            navigationRef.navigate("Running Event");
+            navigationRef.navigate("Running Event"); // TODO check
           }}
         />
         <View style={styles.titleContainer}>
@@ -241,9 +257,7 @@ const Messages = () => {
           icon={"refresh"}
           size={25}
           style={{ position: "absolute", right: 0 }}
-          onPress={() => {
-            // Make an api call to refresh page
-          }}
+          onPress={getMessages}
         />
       </View>
       <ScrollView
