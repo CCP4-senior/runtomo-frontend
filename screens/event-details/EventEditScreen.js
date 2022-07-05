@@ -236,6 +236,7 @@ const EventEditScreen = ({ navigation }) => {
               onPress={async () => {
                 inputRef.current?.blur();
                 await selectImage(setImageUri);
+                setPhotoHasChanged(true);
               }}
             >
               <Text style={{ fontWeight: "bold" }}>Event Image</Text>
