@@ -36,11 +36,12 @@ const UserProfileScreen = ({ navigation, route }) => {
   const [wantsToDelete, setWantsToDelete] = useState(false);
   const [userData, setUserData] = useState(null);
 
+  const controller = new AbortController();
+
   const getUserData = async (id) => {
     try {
       const response = await axiosInstance(`/users/${id}/`);
       setUserData(response.data);
-      console.log("🍎 userData Gogo!:", userData);
     } catch (e) {
       console.log(e);
     }
@@ -61,12 +62,14 @@ const UserProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    console.log("\n 🍎 userData in Profile:", userData);
     if (isLoginUser) {
       setUserData(user);
     } else {
       getUserData(userToView.id);
     }
+    return () => {
+      controller.abort();
+    };
   });
 
   return (
@@ -128,17 +131,6 @@ const UserProfileScreen = ({ navigation, route }) => {
 
                 {/* Edit Profile button */}
 
-                {/* <Button
-                onPress={() => navigation.navigate("Edit Profile")}
-                icon="account-edit"
-                color={Color.PrimaryMain}
-                labelStyle={{
-                  fontSize: 30,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                }}
-              /> */}
                 {isLoginUser && (
                   <IconButton
                     onPress={() => navigation.navigate("Edit Profile")}
@@ -148,13 +140,9 @@ const UserProfileScreen = ({ navigation, route }) => {
                     style={{ width: 30 }}
                   />
                 )}
-                {/* <IconButton
-                  onPress={() => navigation.navigate("Edit Profile")}
-                  icon="account-edit"
-                  size={29}
-                  color={Color.PrimaryMain}
-                  style={{ width: 30 }}
-                /> */}
+
+                {/* Edit Profile Photo button */}
+
                 {isLoginUser && (
                   <IconButton
                     onPress={showModal}
@@ -164,13 +152,6 @@ const UserProfileScreen = ({ navigation, route }) => {
                     style={{ width: 30 }}
                   />
                 )}
-                {/* <IconButton
-                  onPress={showModal}
-                  icon="camera-flip-outline"
-                  size={29}
-                  color={Color.PrimaryMain}
-                  style={{ width: 30 }}
-                /> */}
               </View>
 
               {/* Age */}
