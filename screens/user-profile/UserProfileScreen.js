@@ -10,6 +10,7 @@ import {
   Icon,
   ScrollView,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import { DataContext } from "../../context/datacontext/DataContext";
 import { Avatar, Button, IconButton, Provider } from "react-native-paper";
@@ -64,24 +65,24 @@ const UserProfileScreen = ({ navigation, route }) => {
     setModalVisible(true);
   };
 
-  const mockData = {
-    username: "wadeMock",
-    email: "wadeMock@app.com",
-    age: "34",
-  };
-
   useEffect(() => {
     // console.log("💜 Rendering Profile --------------");
-    if (isLoginUser) {
-      setUserData({ ...user });
-    } else {
-      getAndSetUserData(userToView.id);
-    }
+    isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
+
     return () => {
       console.log("❤️‍🔥 Cleanup! ----------------");
       controller.abort();
     };
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      isLoginUser && setUserData(user);
+      return () => {
+        controller.abort();
+      };
+    }, [user])
+  );
 
   return (
     <Provider>
@@ -139,14 +140,18 @@ const UserProfileScreen = ({ navigation, route }) => {
 
               <View style={styles.userInfoHeader}>
                 <Text style={styles.userFullName}>
-                  {userData && userData.username}
+                  {/* { isLoginUser ? user.username : userData && userData.username} */}
+                  {/* {isLoginUser && useData
+                    ? userData.username
+                    : userData && userData.username} */}
+                    {userData?.username}
                 </Text>
 
                 {/* Edit Profile button */}
 
                 {isLoginUser && (
                   <IconButton
-                    onPress={() => navigation.navigate("Edit Profile", setUserData)}
+                    onPress={() => navigation.navigate("Edit Profile")}
                     icon="account-edit"
                     size={29}
                     color={Color.PrimaryMain}
@@ -171,6 +176,9 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Age:{" "}
+                  {isLoginUser
+                    ? user["profile"]["date_of_birth"]
+                    : userData && userData.username}
                   {userData?.profile &&
                     getAge(userData["profile"]["date_of_birth"])}
                 </Text>
