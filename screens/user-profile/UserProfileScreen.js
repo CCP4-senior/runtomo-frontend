@@ -46,7 +46,6 @@ const UserProfileScreen = ({ navigation, route }) => {
         signal: controller.signal,
       });
 
-
       setUserData({
         ...response.data,
         imageUrl: response.data.profile?.image
@@ -169,7 +168,6 @@ const UserProfileScreen = ({ navigation, route }) => {
                   Age:{" "}
                   {/* {userData?.profile &&
                     getAge(userData["profile"]["date_of_birth"])} */}
-                  
                   {getAge(userData?.profile?.["date_of_birth"]) ||
                     "Not provided"}
                 </Text>
@@ -180,34 +178,38 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Date of Birth:{" "}
-                  {/* {userData?.profile && userData["profile"]["date_of_birth"]} */}
                   {userData?.profile?.["date_of_birth"] || "Not provided"}
                 </Text>
               </View>
 
               {/* Run Frequency */}
+
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Run Frequency:{" "}
-                  {userData?.profile && userData["profile"]["run_frequency"]}{" "}
-                  times / week
-                  {/* Run Frequency: {user.profile?.["run_frequency"]} / week */}
+                  {userData?.profile
+                    ? userData.profile?.["run_frequency"] + " times / week"
+                    : "Not provided"}
                 </Text>
               </View>
+
+              {/* Estimate 5k */}
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Estimated 5k:{" "}
-                  {userData?.profile && userData["profile"]["estimated5k"]}
-                  {/* Estimated 5k: {user.profile?.["estimated5k"]} */}
+                  {userData?.profile
+                    ? userData.profile["estimated5k"]
+                    : "Not provided"}
                 </Text>
               </View>
 
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Estimated 10k:{" "}
-                  {userData?.profile && userData["profile"]["estimated10k"]}
-                  {/* Estimated 10k: {user.profile?.["estimated10k"]} */}
+                  {userData?.profile
+                    ? userData.profile["estimated10k"]
+                    : "Not provided"}
                 </Text>
               </View>
             </View>
