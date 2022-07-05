@@ -61,7 +61,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-   console.log('\n 🍎 userData in Profile:', userData);
+    console.log("\n 🍎 userData in Profile:", userData);
     if (isLoginUser) {
       setUserData(user);
     } else {
@@ -96,6 +96,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 // source={require("../../assets/images/demo/wade.png")}
                 resizeMode="contain"
               /> */}
+
                 {user.imageUrl && (
                   <Avatar.Image
                     style={[styles.profilePicture]}
@@ -138,20 +139,38 @@ const UserProfileScreen = ({ navigation, route }) => {
                   alignSelf: "center",
                 }}
               /> */}
-                <IconButton
+                {isLoginUser && (
+                  <IconButton
+                    onPress={() => navigation.navigate("Edit Profile")}
+                    icon="account-edit"
+                    size={29}
+                    color={Color.PrimaryMain}
+                    style={{ width: 30 }}
+                  />
+                )}
+                {/* <IconButton
                   onPress={() => navigation.navigate("Edit Profile")}
                   icon="account-edit"
                   size={29}
                   color={Color.PrimaryMain}
                   style={{ width: 30 }}
-                />
-                <IconButton
+                /> */}
+                {isLoginUser && (
+                  <IconButton
+                    onPress={showModal}
+                    icon="camera-flip-outline"
+                    size={29}
+                    color={Color.PrimaryMain}
+                    style={{ width: 30 }}
+                  />
+                )}
+                {/* <IconButton
                   onPress={showModal}
                   icon="camera-flip-outline"
                   size={29}
                   color={Color.PrimaryMain}
                   style={{ width: 30 }}
-                />
+                /> */}
               </View>
 
               {/* Age */}
