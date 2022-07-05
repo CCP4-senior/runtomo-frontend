@@ -46,9 +46,10 @@ const UserProfileScreen = ({ navigation, route }) => {
         signal: controller.signal,
       });
 
+
       setUserData({
         ...response.data,
-        imageUrl: response.data.profile.image
+        imageUrl: response.data.profile?.image
           ? generateImageUrl(response.data.profile.image)
           : null,
       });
@@ -68,10 +69,8 @@ const UserProfileScreen = ({ navigation, route }) => {
   useFocusEffect(
     React.useCallback(() => {
       console.log("useFocusEffect ----------");
-      console.log(
-        '\n 🍎 userData.profile?.["date_of_birth"]:',
-        userData.profile["date_of_birth"]
-      );
+      console.log("❤️‍🔥 Hi");
+
       isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
 
       return () => {
@@ -170,8 +169,8 @@ const UserProfileScreen = ({ navigation, route }) => {
                   Age:{" "}
                   {/* {userData?.profile &&
                     getAge(userData["profile"]["date_of_birth"])} */}
-                  //{" "}
-                  {getAge(userData.profile?.["date_of_birth"]) ||
+                  
+                  {getAge(userData?.profile?.["date_of_birth"]) ||
                     "Not provided"}
                 </Text>
               </View>
@@ -182,7 +181,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 <Text style={styles.userDataFont}>
                   Date of Birth:{" "}
                   {/* {userData?.profile && userData["profile"]["date_of_birth"]} */}
-                  {userData.profile?.["date_of_birth"] || "Not provided"}
+                  {userData?.profile?.["date_of_birth"] || "Not provided"}
                 </Text>
               </View>
 
