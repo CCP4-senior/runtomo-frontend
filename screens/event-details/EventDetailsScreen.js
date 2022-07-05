@@ -30,6 +30,7 @@ import MapView, {
 } from "react-native-maps";
 import axiosInstance from "../../helpers/axios.js";
 import StackedAvatars from "./StackedAvatars.js";
+import deleteStoredImage from "../../helpers/deleteStoredImage.js";
 
 const EventDetailsScreen = ({ navigation }) => {
   // Google Maps logic
@@ -120,8 +121,13 @@ const EventDetailsScreen = ({ navigation }) => {
     }, 2000);
   };
 
-  const cancelEvent = async (id) => {
-    await axiosInstance.delete(`/events/${id}/`);
+  const cancelEvent = async (event) => {
+    await axiosInstance.delete(`/events/${event.id}/`);
+
+    if (event.imageUrl) {
+      console.log("Delete Stored Image Ran from cancelEvent!");
+      deleteStoredImage(event.imageUrl);
+    }
 
     setIsAttendanceCancellation(false);
     showDialog();
@@ -315,7 +321,7 @@ const EventDetailsScreen = ({ navigation }) => {
                   buttonTextColor="#555555"
                 />
                 <LongButton
-                  buttonHandler={() => cancelEvent(eventData.id)}
+                  buttonHandler={() => cancelEvent(eventData)}
                   buttonColor={Color.PrimaryMain}
                   buttonText="Cancel Event"
                 />
