@@ -20,9 +20,6 @@ const DatePicker = ({
   isTimeUTC,
   setIsTimeUTC,
 }) => {
-  // useEffect(() => {
-  //   console.log(isUTCdata, date);
-  // }, []);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
     category === "date"
@@ -52,10 +49,10 @@ const DatePicker = ({
     hideDatePicker();
 
     setSelectedDate(data);
-    if (category === "date") {
+    if (category === "date" && isDateUTC === true) {
       setIsDateUTC(false);
     }
-    if (category === "time") {
+    if (category === "time" && isTimeUTC === true) {
       setIsTimeUTC(false);
     }
   };

@@ -162,7 +162,8 @@ const EventDetailsScreen = ({ navigation }) => {
                   style={styles.eventImage}
                 />
               )}
-              {eventData.imageUrl === undefined && (
+              {(eventData.imageUrl === undefined ||
+                eventData.imageUrl === null) && (
                 <Card.Cover
                   source={require("../../assets/images/demo/defaultEvent.jpeg")}
                   style={styles.eventImage}

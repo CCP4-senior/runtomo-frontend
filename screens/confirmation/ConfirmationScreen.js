@@ -71,22 +71,12 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
 
       <EventCard
         event={event}
-        handlePress={() => navigation.navigate("Running Event")}
+        handlePress={() => navigation.navigate("Home")}
         isConfirmationCard={isConfirmationCard}
         isDateUTC={isDateUTC}
         isTimeUTC={isTimeUTC}
       />
 
-      {/* {actionType === "create" && (
-        <LongButton
-          buttonHandler={() => {
-            navigation.navigate("Edit Event");
-          }}
-          buttonColor={Color.GrayDark}
-          buttonText="Edit Event"
-          buttonTextColor="#555555"
-        />
-      )} */}
       <LongButton
         buttonHandler={() => {
           navigation.navigate("Home");
