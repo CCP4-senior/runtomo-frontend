@@ -61,12 +61,13 @@ const UserProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+   console.log('\n 🍎 userData in Profile:', userData);
     if (isLoginUser) {
       setUserData(user);
     } else {
       getUserData(userToView.id);
     }
-  }, []);
+  });
 
   return (
     <Provider>
