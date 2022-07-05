@@ -347,27 +347,29 @@ const EventDetailsScreen = ({ navigation }) => {
             </View>
           </ScrollView>
 
-          <Button
-            style={styles.messageButton}
-            mode="contained"
-            color={"#007AFF"}
-            uppercase={false}
-            labelStyle={{
-              lineHeight: 20,
-              letterSpacing: 0.1,
-              fontWeight: "800",
-              fontSize: 14,
-              color: "#fff",
-              marginLeft: 10,
-            }}
-            icon="forum"
-            onPress={() => {
-              navigation.navigate("Messages");
-              // alert("Pressed");
-            }}
-          >
-            Message
-          </Button>
+          {hasJoined && (
+            <Button
+              style={styles.messageButton}
+              mode="contained"
+              color={"#007AFF"}
+              uppercase={false}
+              labelStyle={{
+                lineHeight: 20,
+                letterSpacing: 0.1,
+                fontWeight: "800",
+                fontSize: 14,
+                color: "#fff",
+                marginLeft: 10,
+              }}
+              icon="forum"
+              onPress={() => {
+                navigation.navigate("Messages");
+                // alert("Pressed");
+              }}
+            >
+              Message
+            </Button>
+          )}
         </View>
       </SafeAreaView>
     </Provider>
