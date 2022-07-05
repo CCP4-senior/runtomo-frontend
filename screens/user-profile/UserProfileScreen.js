@@ -67,9 +67,6 @@ const UserProfileScreen = ({ navigation, route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log("useFocusEffect ----------");
-      console.log("❤️‍🔥 Hi");
-
       isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
 
       return () => {

@@ -132,7 +132,6 @@ const DataProvider = ({ children }) => {
       }
       const currentEvent = { ...data, imageUrl };
       setCurrentEvent(currentEvent);
-      console.log("🍎 currentEvent:", currentEvent);
     } catch (e) {
       alert("Something went wrong with getCurrentEventData. Please try again");
       console.log(e);
