@@ -90,6 +90,7 @@ const EventEditScreen = ({ navigation }) => {
       if (imageUri === "" && hasPhoto) {
         const prevImageUrl = currentEvent.imageUrl;
         await deleteStoredImage(prevImageUrl);
+        currentRef = null;
       }
 
       const event = {
