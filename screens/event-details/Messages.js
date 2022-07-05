@@ -34,70 +34,70 @@ let participants = [
 
 const mockData = [
   {
-    id: 1,
+    id: 1001,
     text: "Hey there. Thank you for organizing the event!",
-    time: new Date(),
-    user: {
+    created: new Date(),
+    comment_user: {
       id: 1,
       username: "wadeRun",
       image: require("../../assets/images/demo/wade.png"),
     },
   },
   {
-    id: 2,
+    id: 1002,
     text: "Where are we meeting up? I'm new to Tokyo, so might get lost. Also, how can I find you?",
-    time: new Date(),
-    user: {
+    created: new Date(),
+    comment_user: {
       id: 2,
       username: "Kate",
       image: require("../../assets/images/demo/kumiko.png"),
     },
   },
   {
-    id: 3,
+    id: 1003,
     text: "Thank you for joining the event!",
-    time: new Date(),
-    user: {
+    created: new Date(),
+    comment_user: {
       id: 141,
       username: "Kumiko7",
       image: require("../../assets/images/demo/kumiko.png"),
     },
   },
   {
-    id: 4,
+    id: 1004,
     text: "Don't worry Kate. I'm going to send you all address and map link later. Wait for a moment please 🙏. I'll be near the police station right out of the west gate.",
-    time: new Date(),
-    user: {
+    created: new Date(),
+    comment_user: {
       id: 141,
       username: "Kumiko7",
       image: require("../../assets/images/demo/kumiko.png"),
     },
   },
   {
-    id: 5,
+    id: 1005,
     text: "Thanks a lot! Looking forward to the run!",
-    time: new Date(),
-    user: {
+    created: new Date(),
+    comment_user: {
       id: 2,
       username: "Kate",
       image: require("../../assets/images/demo/kumiko.png"),
     },
   },
   {
-    id: 6,
+    id: 1006,
     text: "Do you know a good place to eat after the run?",
-    time: new Date(),
-    user: {
+    created: new Date(),
+    comment_user: {
       id: 1,
       username: "wadeRun",
       image: require("../../assets/images/demo/wade.png"),
     },
   },
   {
-    id: 7,
+    id: 1007,
     text: "I know a couple of places! Let's see what we feel like having after the run!",
-    time: new Date(),
-    user: {
+    created: new Date(),
+    comment_user: {
       id: 141,
       username: "Kumiko7",
       image: require("../../assets/images/demo/kumiko.png"),
@@ -108,15 +108,15 @@ const mockData = [
 const DialogCard = ({ message }) => {
   useEffect(() => {}, []);
   const { user } = useContext(AuthContext);
-  const isSelf = message.user.id === user.id;
+  const isSelf = message.comment_user.id === user.id;
   return (
     <View style={isSelf ? styles.selfCardContainer : styles.cardContainer}>
       {!isSelf && (
         <View style={styles.avatarContainer}>
-          {message.user.image ? (
+          {message.comment_user.image ? (
             <Avatar.Image
               size={33}
-              source={message.user.image}
+              source={message.comment_user.image}
               style={styles.avatar}
             />
           ) : (
@@ -126,14 +126,14 @@ const DialogCard = ({ message }) => {
       )}
       <View style={styles.contentContainer}>
         {!isSelf && (
-          <Text style={styles.username}>{message.user.username}</Text>
+          <Text style={styles.username}>{message.comment_user.username}</Text>
         )}
         <View style={isSelf ? styles.selfTextContainer : styles.textContainer}>
           <Text style={styles.text}>{message.text}</Text>
         </View>
         <View>
           <Text style={isSelf ? styles.selfTime : styles.time}>
-            {formatRelative(message.time, new Date())}{" "}
+            {formatRelative(new Date(message.created), new Date())}{" "}
           </Text>
         </View>
       </View>
@@ -141,25 +141,26 @@ const DialogCard = ({ message }) => {
   );
 };
 
-const InputBox = ({ data, setData }) => {
+const InputBox = ({ data, setData, currentEvent }) => {
   const { user } = useContext(AuthContext);
   const [height, setHeight] = useState(45);
   const [message, setMessage] = useState("");
-  const sendMessage = () => {
-    // Replace with API call
-
-    const newMessage = {
-      id: data.length + 1,
-      user: { id: user.id, image: null, username: user.username },
-      text: message,
-      time: new Date(),
-    };
-    setData([...data, newMessage]);
-    setMessage("");
+  const postMessage = async () => {
+    try {
+      const post = {
+        text: message,
+      };
+      const response = await axiosInstance.post(
+        `/event_comments/${currentEvent.id}/create_comment/`,
+        post
+      );
+      setData([...data, response.data]);
+      setMessage("");
+    } catch (e) {
+      console.log(e);
+    }
   };
-  //   const onKeyboardDidHide = () => {
-  //     setMessage("");
-  //   };
+
   return (
     <View style={styles.inputBar}>
       {/* <Button
@@ -191,7 +192,6 @@ const InputBox = ({ data, setData }) => {
             setHeight(event.nativeEvent.contentSize.height * 1.6);
           }}
           onChangeText={(text) => {
-            Keyboard.addListener("keyboardDidHide", onKeyboardDidHide);
             setMessage(text);
             if (text.length === 255) {
               alert(
@@ -210,7 +210,7 @@ const InputBox = ({ data, setData }) => {
         color={message === "" ? Color.GrayDark : Color.PrimaryMain}
         size={25}
         onPress={() => {
-          sendMessage();
+          postMessage();
           Keyboard.dismiss();
         }}
       />
@@ -224,14 +224,12 @@ const Messages = () => {
   const [data, setData] = useState(mockData);
   const [visible, setVisible] = useState(true);
   const scrollViewRef = useRef(null);
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   const getMessages = async () => {
     try {
-      console.log(currentEvent.id);
-      const response = await axiosInstance(`/event_comments/69/comments/`);
+      const response = await axiosInstance(
+        `/event_comments/${currentEvent.id}/comments/`
+      );
       setData(response.data.results);
     } catch (e) {
       console.log(e);
@@ -276,7 +274,7 @@ const Messages = () => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        <InputBox data={data} setData={setData} />
+        <InputBox data={data} setData={setData} currentEvent={currentEvent} />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
