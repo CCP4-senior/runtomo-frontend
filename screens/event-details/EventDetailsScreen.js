@@ -282,29 +282,20 @@ const EventDetailsScreen = ({ navigation }) => {
                     </Text>
                   </View>
 
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text style={styles.thinText}>{eventData.description}</Text>
-                </View>
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Description:</Text>
+                    <Text style={styles.thinText}>{eventData.description}</Text>
+                  </View>
 
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Location:</Text>
-                  <Text style={styles.thinText}>{eventData.location}</Text>
-                </View>
-                <View style={styles.mapContainer}>
-                  <MapView
-                    key={`${eventData.id}${Date.now()}`}
-                    style={styles.map}
-                    initialRegion={{
-                      latitude: region.latitude,
-                      longitude: region.longitude,
-                      latitudeDelta: 0.002,
-                      longitudeDelta: 0.0121,
-                    }}
-                    provider={PROVIDER_DEFAULT}
-                  >
-                    <Marker
-                      coordinate={{
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Location:</Text>
+                    <Text style={styles.thinText}>{eventData.location}</Text>
+                  </View>
+                  <View style={styles.mapContainer}>
+                    <MapView
+                      key={`${eventData.id}${Date.now()}`}
+                      style={styles.map}
+                      initialRegion={{
                         latitude: region.latitude,
                         longitude: region.longitude,
                         latitudeDelta: 0.002,
@@ -340,7 +331,7 @@ const EventDetailsScreen = ({ navigation }) => {
                   <LongButton
                     buttonHandler={() => {
                       setCurrentEvent(eventData);
-                    navigation.navigate("Edit Event");
+                      navigation.navigate("Edit Event");
                     }}
                     buttonColor={Color.GrayDark}
                     buttonText="Edit Event"
