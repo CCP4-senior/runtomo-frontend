@@ -92,7 +92,7 @@ const EventCreationScreen = ({ navigation }) => {
       let currentRef = null;
       if (imageUri !== "") {
         const newUri = await resizeImage(imageUri, 300);
-        currentRef = await uploadImage("events", newUri);
+        currentRef = await uploadImage("events", newUri, user.id);
       }
 
       const requiredFields = [

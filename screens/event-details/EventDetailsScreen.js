@@ -125,7 +125,6 @@ const EventDetailsScreen = ({ navigation }) => {
     await axiosInstance.delete(`/events/${event.id}/`);
 
     if (event.imageUrl) {
-      console.log("Delete Stored Image Ran from cancelEvent!");
       deleteStoredImage(event.imageUrl);
     }
 

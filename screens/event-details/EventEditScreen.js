@@ -127,7 +127,7 @@ const EventEditScreen = ({ navigation }) => {
         isTimeUTC: isTimeUTC,
       });
     } catch (e) {
-      console.log(e.config.url);
+      console.log(e);
       alert("Something went wrong. Please try again!");
     }
   };
@@ -138,7 +138,7 @@ const EventEditScreen = ({ navigation }) => {
 
   const storeNewImage = async () => {
     const newUri = await resizeImage(imageUri, 300);
-    const imageRef = await uploadImage("events", newUri);
+    const imageRef = await uploadImage("events", newUri, user.id);
 
     if (hasPhoto) {
       const prevImageUrl = currentEvent.imageUrl;
