@@ -4,106 +4,92 @@ import {
   Text,
   TextInput,
   View,
-  TouchableOpacity,
   StyleSheet,
-  Image,
   SafeAreaView,
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
-import { Button, Avatar, IconButton } from "react-native-paper";
+import { Avatar, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { format, formatRelative } from "date-fns";
+import { formatRelative, addHours } from "date-fns";
 import { DataContext } from "../../context/datacontext/DataContext";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color";
 import axiosInstance from "../../helpers/axios";
 import { navigationRef } from "../../navigations/RootNavigator";
 
-// let participants = participantsArray;
-// if (!participantsArray) {
-let participants = [
-  { id: 1, image: require("../../assets/images/demo/wade.png") },
-  { id: 2, image: null },
-  { id: 3, image: require("../../assets/images/demo/kumiko.png") },
-  { id: 4, image: null },
-  { id: 6, image: null },
-  { id: 8, image: null },
-];
-// }
-
-const mockData = [
-  {
-    id: 1001,
-    text: "Hey there. Thank you for organizing the event!",
-    created: new Date(),
-    comment_user: {
-      id: 1,
-      username: "wadeRun",
-      image: require("../../assets/images/demo/wade.png"),
-    },
-  },
-  {
-    id: 1002,
-    text: "Where are we meeting up? I'm new to Tokyo, so might get lost. Also, how can I find you?",
-    created: new Date(),
-    comment_user: {
-      id: 2,
-      username: "Kate",
-      image: require("../../assets/images/demo/kumiko.png"),
-    },
-  },
-  {
-    id: 1003,
-    text: "Thank you for joining the event!",
-    created: new Date(),
-    comment_user: {
-      id: 141,
-      username: "Kumiko7",
-      image: require("../../assets/images/demo/kumiko.png"),
-    },
-  },
-  {
-    id: 1004,
-    text: "Don't worry Kate. I'm going to send you all address and map link later. Wait for a moment please 🙏. I'll be near the police station right out of the west gate.",
-    created: new Date(),
-    comment_user: {
-      id: 141,
-      username: "Kumiko7",
-      image: require("../../assets/images/demo/kumiko.png"),
-    },
-  },
-  {
-    id: 1005,
-    text: "Thanks a lot! Looking forward to the run!",
-    created: new Date(),
-    comment_user: {
-      id: 2,
-      username: "Kate",
-      image: require("../../assets/images/demo/kumiko.png"),
-    },
-  },
-  {
-    id: 1006,
-    text: "Do you know a good place to eat after the run?",
-    created: new Date(),
-    comment_user: {
-      id: 1,
-      username: "wadeRun",
-      image: require("../../assets/images/demo/wade.png"),
-    },
-  },
-  {
-    id: 1007,
-    text: "I know a couple of places! Let's see what we feel like having after the run!",
-    created: new Date(),
-    comment_user: {
-      id: 141,
-      username: "Kumiko7",
-      image: require("../../assets/images/demo/kumiko.png"),
-    },
-  },
-];
+// const mockData = [
+//   {
+//     id: 1001,
+//     text: "Hey there. Thank you for organizing the event!",
+//     created: new Date(),
+//     comment_user: {
+//       id: 1,
+//       username: "wadeRun",
+//       image: require("../../assets/images/demo/wade.png"),
+//     },
+//   },
+//   {
+//     id: 1002,
+//     text: "Where are we meeting up? I'm new to Tokyo, so might get lost. Also, how can I find you?",
+//     created: new Date(),
+//     comment_user: {
+//       id: 2,
+//       username: "Kate",
+//       image: require("../../assets/images/demo/kumiko.png"),
+//     },
+//   },
+//   {
+//     id: 1003,
+//     text: "Thank you for joining the event!",
+//     created: new Date(),
+//     comment_user: {
+//       id: 141,
+//       username: "Kumiko7",
+//       image: require("../../assets/images/demo/kumiko.png"),
+//     },
+//   },
+//   {
+//     id: 1004,
+//     text: "Don't worry Kate. I'm going to send you all address and map link later. Wait for a moment please 🙏. I'll be near the police station right out of the west gate.",
+//     created: new Date(),
+//     comment_user: {
+//       id: 141,
+//       username: "Kumiko7",
+//       image: require("../../assets/images/demo/kumiko.png"),
+//     },
+//   },
+//   {
+//     id: 1005,
+//     text: "Thanks a lot! Looking forward to the run!",
+//     created: new Date(),
+//     comment_user: {
+//       id: 2,
+//       username: "Kate",
+//       image: require("../../assets/images/demo/kumiko.png"),
+//     },
+//   },
+//   {
+//     id: 1006,
+//     text: "Do you know a good place to eat after the run?",
+//     created: new Date(),
+//     comment_user: {
+//       id: 1,
+//       username: "wadeRun",
+//       image: require("../../assets/images/demo/wade.png"),
+//     },
+//   },
+//   {
+//     id: 1007,
+//     text: "I know a couple of places! Let's see what we feel like having after the run!",
+//     created: new Date(),
+//     comment_user: {
+//       id: 141,
+//       username: "Kumiko7",
+//       image: require("../../assets/images/demo/kumiko.png"),
+//     },
+//   },
+// ];
 
 const DialogCard = ({ message }) => {
   useEffect(() => {}, []);
@@ -133,7 +119,7 @@ const DialogCard = ({ message }) => {
         </View>
         <View>
           <Text style={isSelf ? styles.selfTime : styles.time}>
-            {formatRelative(new Date(message.created), new Date())}{" "}
+            {formatRelative(addHours(new Date(message.created), 9), new Date())}{" "}
           </Text>
         </View>
       </View>
@@ -221,9 +207,13 @@ const InputBox = ({ data, setData, currentEvent }) => {
 const Messages = () => {
   const navigation = useNavigation();
   const { currentEvent } = useContext(DataContext);
-  const [data, setData] = useState(mockData);
+  const [data, setData] = useState([]);
   const [visible, setVisible] = useState(true);
   const scrollViewRef = useRef(null);
+
+  useEffect(() => {
+    getMessages();
+  }, []);
 
   const getMessages = async () => {
     try {
