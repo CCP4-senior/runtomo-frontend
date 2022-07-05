@@ -21,7 +21,8 @@ import LongButton from "../../components/LongButton";
 
 
 
-const UserProfileEditScreen = ({ navigation }) => {
+const UserProfileEditScreen = ({ navigation, route }) => {
+  const { setUserData } = route.params.setUserData;
   const { user, setUser, updateDBUserInfo, updateDBUserProfile } =
     useContext(AuthContext);
   const { height } = useWindowDimensions();
@@ -86,6 +87,11 @@ const UserProfileEditScreen = ({ navigation }) => {
       };
 
       setUser({
+        ...user,
+        ...userUpdates,
+      });
+
+      setUserData({
         ...user,
         ...userUpdates,
       });

@@ -90,18 +90,22 @@ const EventDetailsScreen = ({ navigation }) => {
     }
   };
 
+  const deepCopy = (item) => {
+    return JSON.parse(JSON.stringify(item));
+  }
+
   // To be modified
   const openCreatorProfile = async () => {
     await getUser(eventData.creator.id);
 
     let userToView = null;
 
-    if (creator.id === user.id) userToView =  user;
-    if (creator.id !== user.id) userToView = creator;
+    if (creator.id === user.id) userToView = deepCopy(user);
+    if (creator.id !== user.id) userToView = deepCopy(creator);
 
-    console.log('🍎 \n userToView in EventDetailsScreen:', userToView);
+    console.log('\n 🍎 userToView in Event Details:', userToView);
 
-    navigation.navigate("Profile", { userToView })
+    navigation.navigate("Profile", { userToView });
   };
   const joinEvent = async () => {
     try {
@@ -202,7 +206,7 @@ const EventDetailsScreen = ({ navigation }) => {
                       <Avatar.Image
                         size={40}
                         source={{
-                          uri: generateImageUrl(eventData.creaor.image),
+                          uri: generateImageUrl(eventData.creator.image),
                         }}
                       />
                     )}

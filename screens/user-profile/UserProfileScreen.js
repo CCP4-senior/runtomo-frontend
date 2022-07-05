@@ -25,6 +25,7 @@ function getAge(dateString) {
 
 const UserProfileScreen = ({ navigation, route }) => {
   const { user } = useContext(AuthContext);
+  const { generateImageUrl } = useContext(DataContext);
 
   const userToView = route.params.userToView;
   const isLoginUser = userToView.id === user.id;
@@ -38,10 +39,18 @@ const UserProfileScreen = ({ navigation, route }) => {
 
   const controller = new AbortController();
 
-  const getUserData = async (id) => {
+  const getAndSetUserData = async (id) => {
     try {
-      const response = await axiosInstance(`/users/${id}/`);
-      setUserData(response.data);
+      const response = await axiosInstance(`/users/${id}/`, {
+        signal: controller.signal,
+      });
+      // setUserData(response.data);
+      setUserData({
+        ...response.data,
+        imageUrl: response.data.profile.image
+          ? generateImageUrl(response.data.profile.image)
+          : null,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -62,15 +71,17 @@ const UserProfileScreen = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    // console.log("💜 Rendering Profile --------------");
     if (isLoginUser) {
-      setUserData(user);
+      setUserData({ ...user });
     } else {
-      getUserData(userToView.id);
+      getAndSetUserData(userToView.id);
     }
     return () => {
+      console.log("❤️‍🔥 Cleanup! ----------------");
       controller.abort();
     };
-  });
+  }, []);
 
   return (
     <Provider>
@@ -86,6 +97,8 @@ const UserProfileScreen = ({ navigation, route }) => {
       <SafeAreaView style={styles.root}>
         <ScrollView>
           <View style={styles.container}>
+            {/* Images */}
+
             <View style={styles.imageContainer}>
               {/* placeholder image, to be updated */}
               <ImageBackground
@@ -94,19 +107,16 @@ const UserProfileScreen = ({ navigation, route }) => {
                 source={require("../../assets/images/backgroundProfile.png")}
                 resizeMode="cover"
               >
-                {/* <Image
-                style={[styles.profilePicture, { height: height * 0.3 }]}
-                // source={require("../../assets/images/demo/wade.png")}
-                resizeMode="contain"
-              /> */}
-
+                {/* Profile picture */}
                 {user.imageUrl && (
                   <Avatar.Image
                     style={[styles.profilePicture]}
-                    source={{ uri: user.imageUrl }}
+                    source={{ uri: userData?.imageUrl }}
                     size={200}
                   />
                 )}
+
+                {/* Profile picture (default) */}
                 {!user.imageUrl && (
                   <Avatar.Icon
                     style={[
@@ -121,6 +131,9 @@ const UserProfileScreen = ({ navigation, route }) => {
                 )}
               </ImageBackground>
             </View>
+
+            {/* User information */}
+
             <View style={styles.userInfoContainer}>
               {/* Username */}
 
@@ -133,7 +146,7 @@ const UserProfileScreen = ({ navigation, route }) => {
 
                 {isLoginUser && (
                   <IconButton
-                    onPress={() => navigation.navigate("Edit Profile")}
+                    onPress={() => navigation.navigate("Edit Profile", setUserData)}
                     icon="account-edit"
                     size={29}
                     color={Color.PrimaryMain}
