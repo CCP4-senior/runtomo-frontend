@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   inputs: {
-    width: "90%",
+    width: "85%",
   },
   button: {
     width: "75%",
@@ -542,12 +542,12 @@ const styles = StyleSheet.create({
   },
   timesPerWeekBtns: {
     borderRadius: 20,
-    width: 80,
+    width: "22%",
     marginVertical: 10,
   },
   estimatedKmBtns: {
     borderRadius: 20,
-    width: 112,
+    width: "32%",
     marginBottom: 10,
   },
   btnSelected: {
