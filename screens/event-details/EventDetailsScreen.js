@@ -366,28 +366,29 @@ const EventDetailsScreen = ({ navigation }) => {
             </View>
           </ScrollView>
 
-          {hasJoined && (
-            <Button
-              style={styles.messageButton}
-              mode="contained"
-              color={"#007AFF"}
-              uppercase={false}
-              labelStyle={{
-                lineHeight: 20,
-                letterSpacing: 0.1,
-                fontWeight: "800",
-                fontSize: 14,
-                color: "#fff",
-                marginLeft: 10,
-              }}
-              icon="forum"
-              onPress={() => {
-                navigation.navigate("Messages");
-              }}
-            >
-              Message
-            </Button>
-          )}
+          {hasJoined ||
+            (eventData.creator.id === user.id && (
+              <Button
+                style={styles.messageButton}
+                mode="contained"
+                color={"#007AFF"}
+                uppercase={false}
+                labelStyle={{
+                  lineHeight: 20,
+                  letterSpacing: 0.1,
+                  fontWeight: "800",
+                  fontSize: 14,
+                  color: "#fff",
+                  marginLeft: 10,
+                }}
+                icon="forum"
+                onPress={() => {
+                  navigation.navigate("Messages");
+                }}
+              >
+                Message
+              </Button>
+            ))}
         </View>
       </SafeAreaView>
     </Provider>

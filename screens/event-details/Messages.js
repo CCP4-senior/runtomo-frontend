@@ -18,79 +18,6 @@ import Color from "../../assets/themes/Color";
 import axiosInstance from "../../helpers/axios";
 import { navigationRef } from "../../navigations/RootNavigator";
 
-// const mockData = [
-//   {
-//     id: 1001,
-//     text: "Hey there. Thank you for organizing the event!",
-//     created: new Date(),
-//     comment_user: {
-//       id: 1,
-//       username: "wadeRun",
-//       image: require("../../assets/images/demo/wade.png"),
-//     },
-//   },
-//   {
-//     id: 1002,
-//     text: "Where are we meeting up? I'm new to Tokyo, so might get lost. Also, how can I find you?",
-//     created: new Date(),
-//     comment_user: {
-//       id: 2,
-//       username: "Kate",
-//       image: require("../../assets/images/demo/kumiko.png"),
-//     },
-//   },
-//   {
-//     id: 1003,
-//     text: "Thank you for joining the event!",
-//     created: new Date(),
-//     comment_user: {
-//       id: 141,
-//       username: "Kumiko7",
-//       image: require("../../assets/images/demo/kumiko.png"),
-//     },
-//   },
-//   {
-//     id: 1004,
-//     text: "Don't worry Kate. I'm going to send you all address and map link later. Wait for a moment please 🙏. I'll be near the police station right out of the west gate.",
-//     created: new Date(),
-//     comment_user: {
-//       id: 141,
-//       username: "Kumiko7",
-//       image: require("../../assets/images/demo/kumiko.png"),
-//     },
-//   },
-//   {
-//     id: 1005,
-//     text: "Thanks a lot! Looking forward to the run!",
-//     created: new Date(),
-//     comment_user: {
-//       id: 2,
-//       username: "Kate",
-//       image: require("../../assets/images/demo/kumiko.png"),
-//     },
-//   },
-//   {
-//     id: 1006,
-//     text: "Do you know a good place to eat after the run?",
-//     created: new Date(),
-//     comment_user: {
-//       id: 1,
-//       username: "wadeRun",
-//       image: require("../../assets/images/demo/wade.png"),
-//     },
-//   },
-//   {
-//     id: 1007,
-//     text: "I know a couple of places! Let's see what we feel like having after the run!",
-//     created: new Date(),
-//     comment_user: {
-//       id: 141,
-//       username: "Kumiko7",
-//       image: require("../../assets/images/demo/kumiko.png"),
-//     },
-//   },
-// ];
-
 const DialogCard = ({ message }) => {
   useEffect(() => {}, []);
   const { user } = useContext(AuthContext);
@@ -149,26 +76,6 @@ const InputBox = ({ data, setData, currentEvent }) => {
 
   return (
     <View style={styles.inputBar}>
-      {/* <Button
-        style={styles.refreshButton}
-        mode="contained"
-        color={"#007AFF"}
-        uppercase={false}
-        labelStyle={{
-          lineHeight: 20,
-          letterSpacing: 0.1,
-          fontWeight: "800",
-          fontSize: 14,
-          color: "#fff",
-          marginLeft: 10,
-        }}
-        icon="refresh"
-        onPress={() => {
-          alert("Pressed");
-        }}
-      >
-        Refresh
-      </Button> */}
       <View style={{ ...styles.inputContainer, height: height }}>
         <TextInput
           theme={styles.inputTheme}
@@ -278,8 +185,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     backgroundColor: Color.Fill,
-    // backgroundColor: Color.Fill,
-    // backgroundColor: "#fff",
     width: "100%",
     paddingBottom: 80,
   },
@@ -287,7 +192,6 @@ const styles = StyleSheet.create({
     height: 50,
   },
   titleContainer: {
-    // backgroundColor: "red",
     alignSelf: "center",
   },
   title: {
@@ -305,7 +209,6 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
     minHeight: 40,
-    // backgroundColor: "blue",
     flexDirection: "row",
     marginBottom: 2,
     justifyContent: "flex-end",
@@ -315,20 +218,14 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
     minHeight: 40,
-    // backgroundColor: "blue",
     flexDirection: "row",
     marginBottom: 2,
   },
   contentContainer: {
-    // backgroundColor: "yellow",
     width: "100%",
   },
-  avatarContainer: {
-    // flexDirection: "row",
-    // backgroundColor: "red",
-  },
+
   avatar: {
-    // position: "absolute",
     backgroundColor: Color.GrayDark,
   },
   username: {
@@ -338,12 +235,6 @@ const styles = StyleSheet.create({
   },
   selfTextContainer: {
     backgroundColor: "#66db30",
-    // backgroundColor: "#007AFF",
-    // backgroundColor: "#fff",
-    // backgroundColor: Color.Fill,
-    // left: "30%",
-    // justifyContent: "flex-end",
-    // alignSelf: "flex-end",
     right: 10,
     borderRadius: 10,
     minHeight: 50,
@@ -353,7 +244,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   textContainer: {
-    // backgroundColor: Color.Fill,
     backgroundColor: "#fff",
     borderRadius: 10,
     minHeight: 50,
@@ -395,13 +285,6 @@ const styles = StyleSheet.create({
 
     elevation: 5,
   },
-  //   refreshButton: {
-  //     position: "absolute",
-  //     bottom: 70,
-  //     width: "100%",
-  //     height: 40,
-  //     lineHeight: 40,
-  //   },
   inputBar: {
     backgroundColor: "#fff",
     minHeight: 70,
