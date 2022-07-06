@@ -211,6 +211,7 @@ export default UserProfileScreen;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: Color.Fill,
   },
   container: {
     flex: 1,
