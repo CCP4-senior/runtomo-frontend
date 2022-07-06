@@ -323,6 +323,7 @@ const styles = StyleSheet.create({
     margin: 5,
     width: "100%",
     alignItems: "center",
+    // backgroundColor: 'purple'
   },
   pickerContainer: {
     width: "90%",
@@ -336,6 +337,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     width: "90%",
     paddingLeft: 8,
+    
   },
   imagePlaceholderBackground: {
     width: 98,

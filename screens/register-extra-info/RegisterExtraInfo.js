@@ -478,7 +478,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: Color.White,
+    alignItems: 'center',
+    // backgroundColor: Color.White,
+    backgroundColor: "pink",
   },
   title: {
     justifyContent: "center",
@@ -486,7 +488,9 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   inputs: {
-    alignItems: "center",
+    // alignItems: "center",
+    // backgroundColor: "purple",
+    width: '90%'
   },
   button: {
     width: "75%",
@@ -504,50 +508,56 @@ const styles = StyleSheet.create({
     letterSpacing: 0.36,
   },
   datePickerContainer: {
-    marginBottom: 20,
+    // marginBottom: 20,
+    // marginVertical: 20,
+    backgroundColor: 'purple'
   },
-  dobHeader: { marginBottom: 10, alignSelf: "flex-start", marginLeft: 20 },
+  dobHeader: {
+    // marginBottom: 10,
+    alignSelf: "flex-start",
+    // marginLeft: 20,
+  },
   timesPerWeekBtnHeader: {
     marginBottom: 20,
     alignSelf: "flex-start",
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   estimate5kHeader: {
     marginBottom: 20,
     alignSelf: "flex-start",
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   estimate10kHeader: {
     marginBottom: 20,
     alignSelf: "flex-start",
-    marginLeft: 20,
+    // marginLeft: 20,
   },
   timesPerWeekBtnWrapper: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
     flexWrap: "wrap",
-    justifyContent: "center",
-    marginLeft: 10,
+    justifyContent: "space-between",
+    // marginLeft: 10,
   },
   estimatedKmBtnWrapper: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
     flexWrap: "wrap",
-    justifyContent: "center",
-    marginLeft: 10,
+    justifyContent: "space-between",
+    // marginLeft: 10,
   },
   timesPerWeekBtns: {
     borderRadius: 20,
     width: 80,
-    marginRight: 10,
+    // marginRight: 10,
     marginBottom: 10,
   },
   estimatedKmBtns: {
     borderRadius: 20,
     width: 112,
-    marginRight: 10,
+    // marginRight: 10,
     marginBottom: 10,
   },
   btnSelected: {
