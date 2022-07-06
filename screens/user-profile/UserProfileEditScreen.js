@@ -225,5 +225,7 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     alignSelf: "center",
+    width: '100%', 
+    backgroundColor: 'purple'
   },
 });

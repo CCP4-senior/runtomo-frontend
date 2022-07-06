@@ -163,19 +163,8 @@ const UserProfileScreen = ({ navigation, route }) => {
               <View style={styles.userDataWrapper}>
                 <Text style={styles.userDataFont}>
                   Age:{" "}
-                  {/* {userData?.profile &&
-                    getAge(userData["profile"]["date_of_birth"])} */}
                   {getAge(userData?.profile?.["date_of_birth"]) ||
                     "Not provided"}
-                </Text>
-              </View>
-
-              {/* Date of Birth */}
-
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Date of Birth:{" "}
-                  {userData?.profile?.["date_of_birth"] || "Not provided"}
                 </Text>
               </View>
 
