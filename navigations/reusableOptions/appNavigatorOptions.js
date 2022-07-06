@@ -2,16 +2,31 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { IconButton } from "react-native-paper";
 import HeaderStyle from "../../assets/themes/HeaderStyle";
+import MapView, {
+  Callout,
+  Marker,
+  Circle,
+  PROVIDER_GOOGLE,
+  PROVIDER_DEFAULT,
+} from "react-native-maps";
 
 const createOptions = (settingPressHandler, messagePressaHandler) => {
   const options = {
     ...HeaderStyle,
+    // headerRight: () => (
+    //   <TouchableOpacity
+    //     style={[styles.iconContainer, styles.menu]}
+    //     onPress={messagePressaHandler}
+    //   >
+    //     <IconButton icon="forum-outline" size={25} color="grey" />
+    //   </TouchableOpacity>
+    // ),
     headerRight: () => (
       <TouchableOpacity
         style={[styles.iconContainer, styles.menu]}
-        onPress={() => alert("message icon is pressed!")}
+        onPress={messagePressaHandler}
       >
-        <IconButton icon="forum-outline" size={25} color="grey" />
+        <IconButton icon="map" size={25} color="grey" />
       </TouchableOpacity>
     ),
     headerLeft: () => (

@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "../screens/home/HomeScreen";
 import EventDetailsNavigator from "./EventDetailsNavigator";
@@ -8,7 +8,7 @@ import SettingScreen from "../screens/setting/SettingScreen";
 import HeaderStyle from "../assets/themes/HeaderStyle";
 import createOptions from "./reusableOptions/appNavigatorOptions";
 import { AuthContext } from "../context/authcontext/AuthContext";
-
+import PointsOfInterestScreen from "../screens/points-of-interst/PointsOfInterestScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,9 +19,16 @@ const HomeNavigator = ({ navigation }) => {
     navigation.navigate("Setting");
   };
 
+  const openPointsOfInterest = () => {
+    navigation.navigate("PointsOfInterest");
+  };
+
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" options={createOptions(openSetting)}>
+      <Stack.Screen
+        name="Home"
+        options={createOptions(openSetting, openPointsOfInterest)}
+      >
         {(props) => <HomeScreen {...props} />}
       </Stack.Screen>
 
@@ -46,6 +53,11 @@ const HomeNavigator = ({ navigation }) => {
       <Stack.Screen
         name="Setting"
         component={SettingScreen}
+        options={{ ...HeaderStyle }}
+      />
+      <Stack.Screen
+        name="PointsOfInterest"
+        component={PointsOfInterestScreen}
         options={{ ...HeaderStyle }}
       />
     </Stack.Navigator>
