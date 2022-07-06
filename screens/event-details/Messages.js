@@ -19,7 +19,6 @@ import axiosInstance from "../../helpers/axios";
 import { navigationRef } from "../../navigations/RootNavigator";
 
 const DialogCard = ({ message }) => {
-  useEffect(() => {}, []);
   const { user } = useContext(AuthContext);
   const isSelf = message.comment_user.id === user.id;
   return (
@@ -117,6 +116,7 @@ const Messages = () => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(true);
   const scrollViewRef = useRef(null);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getMessages();
@@ -124,11 +124,20 @@ const Messages = () => {
 
   const getMessages = async () => {
     try {
-      const response = await axiosInstance(
-        `/event_comments/${currentEvent.id}/comments/`
+      let response = await axiosInstance(
+        `/event_comments/${currentEvent.id}/comments/?page=${page}`
       );
       setData(response.data.results);
+
+      // while (response.data.next !== null) {
+      //   setPage(page + 1);
+      //   response = await axiosInstance(
+      //     `/event_comments/${currentEvent.id}/comments/?page=${page}`
+      //   );
+      //   setData([...data, ...response.data.results]);
+      // }
     } catch (e) {
+      console.log(e.config);
       console.log(e);
     }
   };
