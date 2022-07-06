@@ -3,7 +3,6 @@ import axiosInstance from "../../helpers/axios";
 import { AuthContext } from "../authcontext/AuthContext";
 import { getStorage, ref } from "firebase/storage";
 import firebaseConfig from "../../firebase.js";
-// import firebase from "firebase/app";
 import { initializeApp } from "firebase/app";
 
 const DataContext = createContext();

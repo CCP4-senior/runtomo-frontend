@@ -22,39 +22,64 @@ const DialogCard = ({ message }) => {
   const { user } = useContext(AuthContext);
   const isSelf = message.comment_user.id === user.id;
   return (
-    <View style={isSelf ? styles.selfCardContainer : styles.cardContainer}>
-      {!isSelf && (
-        <View style={styles.avatarContainer}>
-          {message.comment_user.image ? (
-            <Avatar.Image
-              size={33}
-              source={message.comment_user.image}
-              style={styles.avatar}
-            />
-          ) : (
-            <Avatar.Icon size={33} icon="account" style={styles.avatar} />
-          )}
-        </View>
-      )}
-      <View style={styles.contentContainer}>
+    <View style={styles.contentContainer}>
+      <View style={isSelf ? styles.selfCardContainer : styles.cardContainer}>
         {!isSelf && (
-          <Text style={styles.username}>{message.comment_user.username}</Text>
+          <View style={styles.avatarContainer}>
+            {message.comment_user.image ? (
+              <Avatar.Image
+                size={33}
+                source={message.comment_user.image}
+                style={styles.avatar}
+              />
+            ) : (
+              <Avatar.Icon size={33} icon="account" style={styles.avatar} />
+            )}
+          </View>
         )}
-        <View style={isSelf ? styles.selfTextContainer : styles.textContainer}>
-          <Text style={styles.text}>{message.text}</Text>
-        </View>
-        <View>
-          <Text style={isSelf ? styles.selfTime : styles.time}>
-            {formatRelative(addHours(new Date(message.created), 9), new Date())}{" "}
-          </Text>
-        </View>
+        {/* <View style={styles.contentContainer}> */}
+        {!isSelf && (
+          <View style={styles.rightContainer}>
+            <Text style={styles.username}>{message.comment_user.username}</Text>
+            <View
+              style={isSelf ? styles.selfTextContainer : styles.textContainer}
+            >
+              <Text style={styles.text}>{message.text}</Text>
+            </View>
+            <View>
+              <Text style={isSelf ? styles.selfTime : styles.time}>
+                {formatRelative(
+                  addHours(new Date(message.created), 9),
+                  new Date()
+                )}{" "}
+              </Text>
+            </View>
+          </View>
+        )}
+        {isSelf && (
+          <>
+            <View
+              style={isSelf ? styles.selfTextContainer : styles.textContainer}
+            >
+              <Text style={styles.text}>{message.text}</Text>
+            </View>
+            <View>
+              <Text style={isSelf ? styles.selfTime : styles.time}>
+                {formatRelative(
+                  addHours(new Date(message.created), 9),
+                  new Date()
+                )}{" "}
+              </Text>
+            </View>
+          </>
+        )}
+        {/* </View> */}
       </View>
     </View>
   );
 };
 
 const InputBox = ({ data, setData, currentEvent }) => {
-  const { user } = useContext(AuthContext);
   const [height, setHeight] = useState(45);
   const [message, setMessage] = useState("");
   const postMessage = async () => {
@@ -119,23 +144,20 @@ const Messages = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getMessages();
+    getMessages(1);
   }, []);
 
-  const getMessages = async () => {
+  const getMessages = async (page, data = []) => {
     try {
       let response = await axiosInstance(
         `/event_comments/${currentEvent.id}/comments/?page=${page}`
       );
-      setData(response.data.results);
-
-      // while (response.data.next !== null) {
-      //   setPage(page + 1);
-      //   response = await axiosInstance(
-      //     `/event_comments/${currentEvent.id}/comments/?page=${page}`
-      //   );
-      //   setData([...data, ...response.data.results]);
-      // }
+      const newData = data.concat(response.data.results);
+      if (response.data.next !== null) {
+        await getMessages(page + 1, newData);
+      } else {
+        setData(data);
+      }
     } catch (e) {
       console.log(e.config);
       console.log(e);
@@ -161,7 +183,7 @@ const Messages = () => {
           icon={"refresh"}
           size={25}
           style={{ position: "absolute", right: 0 }}
-          onPress={getMessages}
+          onPress={() => getMessages(1)}
         />
       </View>
       <ScrollView
@@ -214,15 +236,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   selfCardContainer: {
+    // backgroundColor: "blue",
     marginTop: 8,
     position: "relative",
     width: "100%",
     minHeight: 40,
-    flexDirection: "row",
     marginBottom: 2,
     justifyContent: "flex-end",
   },
   cardContainer: {
+    // backgroundColor: "red",
     marginTop: 3,
     position: "relative",
     width: "100%",
@@ -231,7 +254,8 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   contentContainer: {
-    width: "100%",
+    // width: "100%",
+    // backgroundColor: "green",
   },
 
   avatar: {
@@ -241,6 +265,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginLeft: 5,
     fontWeight: "700",
+    // backgroundColor: "yellow",
   },
   selfTextContainer: {
     backgroundColor: "#66db30",
@@ -256,7 +281,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 10,
     minHeight: 50,
-    maxWidth: "80%",
+    maxWidth: "90%",
     padding: 10,
     justifyContent: "center",
   },
