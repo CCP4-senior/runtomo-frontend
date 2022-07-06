@@ -152,9 +152,10 @@ const Messages = () => {
       );
       const newData = data.concat(response.data.results);
       if (response.data.next !== null) {
+        console.log("next fetch ran with page", page + 1);
         await getMessages(page + 1, newData);
       } else {
-        setData(data);
+        setData(newData);
       }
     } catch (e) {
       console.log(e.config);
