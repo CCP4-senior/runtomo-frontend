@@ -122,7 +122,7 @@ const EventCreationScreen = ({ navigation }) => {
         long: longitude,
       };
 
-      const response = await axiosInstance.post("/events/create_event", event);
+      const response = await axiosInstance.post("/events/create_event/", event);
       setCurrentEvent({
         ...event,
         creator: user,
@@ -253,7 +253,6 @@ const EventCreationScreen = ({ navigation }) => {
 
           <View style={styles.inputContainer}>
             <TextInput
-              mutiline={true}
               mode="outlined"
               // outlineColor="#fff"
               // activeOutlineColor={Color.GrayDark}
@@ -293,7 +292,7 @@ const EventCreationScreen = ({ navigation }) => {
               onChangeText={(text) => {
                 setEventDescription(text);
                 if (text.length === 255) {
-                  alert("Description cannot be exceed 255 character length.");
+                  alert("Description cannot exceed 255 character length.");
                 }
               }}
               maxLength={255}

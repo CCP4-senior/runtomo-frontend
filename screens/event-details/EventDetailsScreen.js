@@ -8,6 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import {
+  Button,
   Avatar,
   Card,
   Title,
@@ -166,196 +167,228 @@ const EventDetailsScreen = ({ navigation }) => {
           </Dialog.Content>
         </Dialog>
       </Portal>
+
       <SafeAreaView>
-        <ScrollView>
-          <View style={styles.container}>
-            <Card style={styles.card} theme={{ roundness: 10 }}>
-              {eventData.imageUrl && (
-                <Card.Cover
-                  source={{ uri: eventData.imageUrl }}
-                  style={styles.eventImage}
-                />
-              )}
-              {(eventData.imageUrl === undefined ||
-                eventData.imageUrl === null) && (
-                <Card.Cover
-                  source={require("../../assets/images/demo/defaultEvent.jpeg")}
-                  style={styles.eventImage}
-                />
-              )}
-
-              <View style={styles.label}>
-                <Text style={styles.labelDate}>
-                  {format(new Date(zonedDate), "d")}
-                </Text>
-                <Text style={styles.labelMonth}>
-                  {format(new Date(zonedDate), "MMM")}
-                </Text>
-              </View>
-              <Card.Content style={styles.creatorCard}>
-                <View style={styles.avatarsContainer}>
-                  <TouchableOpacity
-                    onPress={openCreatorProfile}
-                    style={[styles.listContainer]}
-                  >
-                    {!eventData.creator?.image && (
-                      <Avatar.Icon
-                        size={40}
-                        icon="account"
-                        style={styles.avatar}
-                      />
-                    )}
-                    {eventData.creator?.image && (
-                      <Avatar.Image
-                        size={40}
-                        source={{
-                          uri: generateImageUrl(eventData.creator.image),
-                        }}
-                      />
-                    )}
-                    <Text style={styles.creatorName}>
-                      {eventData.creator.username}
-                    </Text>
-                  </TouchableOpacity>
-                  <View style={styles.stackedAvatarContainer}>
-                    <StackedAvatars
-                      color={"#007AFF"}
-                      // participantsArray={participants}
-                    />
-                    <Text style={{ color: "#007AFF", ...styles.joinText }}>
-                      Joined
-                    </Text>
-                  </View>
-                </View>
-
-                <Title style={styles.eventTitle}>{eventData.title}</Title>
-
-                <View style={styles.listLine}></View>
-
-                <View style={[styles.listContainer, styles.topListContainer]}>
-                  <Avatar.Icon
-                    color={Color.White}
-                    size={40}
-                    icon="calendar-month"
-                    style={styles.listIcon}
+        <View>
+          <ScrollView>
+            <View style={styles.container}>
+              <Card style={styles.card} theme={{ roundness: 10 }}>
+                {eventData.imageUrl && (
+                  <Card.Cover
+                    source={{ uri: eventData.imageUrl }}
+                    style={styles.eventImage}
                   />
-                  <View style={styles.listContent}>
-                    <Text style={styles.boldText}>
-                      {format(new Date(zonedDate), "E, MMM d, yyyy")}
-                    </Text>
-                    <Text style={styles.thinText}>
-                      {format(new Date(zonedTime), "p")} to{" "}
-                      {format(
-                        addMinutes(
-                          new Date(zonedTime),
-                          Number(eventData.running_duration)
-                        ),
-                        "p"
-                      )}
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={styles.listContainer}>
-                  <Avatar.Icon
-                    color={Color.White}
-                    size={40}
-                    icon="map-marker"
-                    style={styles.listIcon}
+                )}
+                {eventData.imageUrl === undefined && (
+                  <Card.Cover
+                    source={require("../../assets/images/demo/defaultEvent.jpeg")}
+                    style={styles.eventImage}
                   />
-                  <View style={styles.listContent}>
-                    <Text style={styles.boldText}>
-                      {eventData.ward || "Other"}
-                    </Text>
-                    <Text style={styles.thinText}>
-                      Exact location available upon joining
-                    </Text>
-                  </View>
-                </View>
+                )}
 
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Description:</Text>
-                  <Text style={styles.thinText}>{eventData.description}</Text>
+                <View style={styles.label}>
+                  <Text style={styles.labelDate}>
+                    {format(new Date(zonedDate), "d")}
+                  </Text>
+                  <Text style={styles.labelMonth}>
+                    {format(new Date(zonedDate), "MMM")}
+                  </Text>
                 </View>
-
-                <View style={styles.section}>
-                  <Text style={styles.sectionTitle}>Location:</Text>
-                  <Text style={styles.thinText}>{eventData.location}</Text>
-                </View>
-                <View style={styles.mapContainer}>
-                  <MapView
-                    key={`${eventData.id}${Date.now()}`}
-                    style={styles.map}
-                    initialRegion={{
-                      latitude: region.latitude,
-                      longitude: region.longitude,
-                      latitudeDelta: 0.002,
-                      longitudeDelta: 0.0121,
-                    }}
-                    provider={PROVIDER_DEFAULT}
-                  >
-                    <Marker
-                      coordinate={{
-                        latitude: region.latitude,
-                        longitude: region.longitude,
-                      }}
+                <Card.Content style={styles.creatorCard}>
+                  <View style={styles.avatarsContainer}>
+                    <TouchableOpacity
+                      onPress={openCreatorProfile}
+                      style={[styles.listContainer]}
                     >
-                      <Callout>
-                        <Text>Location placeholder</Text>
-                      </Callout>
-                    </Marker>
-                    <Circle
-                      center={{
+                      {!eventData.creator?.image && (
+                        <Avatar.Icon
+                          size={40}
+                          icon="account"
+                          style={styles.avatar}
+                        />
+                      )}
+                      {eventData.creator?.image && (
+                        <Avatar.Image
+                          size={40}
+                          source={{
+                            uri: generateImageUrl(eventData.creator.image),
+                          }}
+                        />
+                      )}
+                      <Text style={styles.creatorName}>
+                        {eventData.creator.username}
+                      </Text>
+                    </TouchableOpacity>
+                    <View style={styles.stackedAvatarContainer}>
+                      <StackedAvatars
+                        color={"#007AFF"}
+                        // participantsArray={participants}
+                      />
+                      <Text style={{ color: "#007AFF", ...styles.joinText }}>
+                        {participants.length} Joined
+                      </Text>
+                    </View>
+                  </View>
+
+                  <Title style={styles.eventTitle}>{eventData.title}</Title>
+
+                  <View style={styles.listLine}></View>
+
+                  <View style={[styles.listContainer, styles.topListContainer]}>
+                    <Avatar.Icon
+                      color={Color.White}
+                      size={40}
+                      icon="calendar-month"
+                      style={styles.listIcon}
+                    />
+                    <View style={styles.listContent}>
+                      <Text style={styles.boldText}>
+                        {format(new Date(zonedDate), "E, MMM d, yyyy")}
+                      </Text>
+                      <Text style={styles.thinText}>
+                        {format(new Date(zonedTime), "p")} to{" "}
+                        {format(
+                          addMinutes(
+                            new Date(zonedTime),
+                            Number(eventData.running_duration)
+                          ),
+                          "p"
+                        )}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.listContainer}>
+                    <Avatar.Icon
+                      color={Color.White}
+                      size={40}
+                      icon="map-marker"
+                      style={styles.listIcon}
+                    />
+                    <View style={styles.listContent}>
+                      <Text style={styles.boldText}>
+                        {eventData.ward || "Other"}
+                      </Text>
+                      <Text style={styles.thinText}>
+                        Exact location available upon joining
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Description:</Text>
+                    <Text style={styles.thinText}>
+                      {eventData.description || "Not provided"}
+                    </Text>
+                  </View>
+
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Description:</Text>
+                    <Text style={styles.thinText}>{eventData.description}</Text>
+                  </View>
+
+                  <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>Location:</Text>
+                    <Text style={styles.thinText}>{eventData.location}</Text>
+                  </View>
+                  <View style={styles.mapContainer}>
+                    <MapView
+                      key={`${eventData.id}${Date.now()}`}
+                      style={styles.map}
+                      initialRegion={{
                         latitude: region.latitude,
                         longitude: region.longitude,
+                        latitudeDelta: 0.002,
+                        longitudeDelta: 0.0121,
                       }}
-                      radius={200}
-                      strokeWidth={2}
-                    ></Circle>
-                  </MapView>
-                </View>
-              </Card.Content>
-            </Card>
+                      provider={PROVIDER_DEFAULT}
+                    >
+                      <Marker
+                        coordinate={{
+                          latitude: region.latitude,
+                          longitude: region.longitude,
+                        }}
+                      >
+                        <Callout>
+                          <Text>Location placeholder</Text>
+                        </Callout>
+                      </Marker>
+                      <Circle
+                        center={{
+                          latitude: region.latitude,
+                          longitude: region.longitude,
+                        }}
+                        radius={200}
+                        strokeWidth={2}
+                      ></Circle>
+                    </MapView>
+                  </View>
+                </Card.Content>
+              </Card>
 
-            {eventData.creator.id === user.id && (
-              <>
+              {eventData.creator.id === user.id && (
+                <>
+                  <LongButton
+                    buttonHandler={() => {
+                      setCurrentEvent(eventData);
+                      navigation.navigate("Edit Event");
+                    }}
+                    buttonColor={Color.GrayDark}
+                    buttonText="Edit Event"
+                    buttonTextColor="#555555"
+                  />
+                  <LongButton
+                    buttonHandler={() => cancelEvent(eventData)}
+                    buttonColor={Color.PrimaryMain}
+                    buttonText="Cancel Event"
+                  />
+                </>
+              )}
+
+              {eventData.creator.id !== user.id && !hasJoined && (
                 <LongButton
-                  buttonHandler={() => {
-                    setCurrentEvent(eventData);
-                    navigation.navigate("Edit Event");
-                  }}
-                  buttonColor={Color.GrayDark}
-                  buttonText="Edit Event"
-                  buttonTextColor="#555555"
-                />
-                <LongButton
-                  buttonHandler={() => cancelEvent(eventData)}
+                  buttonHandler={joinEvent}
                   buttonColor={Color.PrimaryMain}
-                  buttonText="Cancel Event"
+                  buttonText="Join Event"
                 />
-              </>
-            )}
+              )}
 
-            {eventData.creator.id !== user.id && !hasJoined && (
-              <LongButton
-                buttonHandler={joinEvent}
-                buttonColor={Color.PrimaryMain}
-                buttonText="Join Event"
-              />
-            )}
+              {hasJoined && (
+                <>
+                  <Text>You've already joined the event!</Text>
+                  <LongButton
+                    buttonHandler={cancelAttendance}
+                    buttonColor={Color.PrimaryMain}
+                    buttonText="Cancel Attendance"
+                  />
+                </>
+              )}
+            </View>
+          </ScrollView>
 
-            {hasJoined && (
-              <>
-                <Text>You've already joined the event!</Text>
-                <LongButton
-                  buttonHandler={cancelAttendance}
-                  buttonColor={Color.PrimaryMain}
-                  buttonText="Cancel Attendance"
-                />
-              </>
-            )}
-          </View>
-        </ScrollView>
+          {(hasJoined || eventData.creator.id === user.id) && (
+            <Button
+              style={styles.messageButton}
+              mode="contained"
+              color={"#007AFF"}
+              uppercase={false}
+              labelStyle={{
+                lineHeight: 20,
+                letterSpacing: 0.1,
+                fontWeight: "800",
+                fontSize: 14,
+                color: "#fff",
+                marginLeft: 10,
+              }}
+              icon="forum"
+              onPress={() => {
+                navigation.navigate("Messages");
+              }}
+            >
+              Message
+            </Button>
+          )}
+        </View>
       </SafeAreaView>
     </Provider>
   );
@@ -484,5 +517,22 @@ const styles = StyleSheet.create({
   },
   joinText: {
     fontSize: 13,
+  },
+  messageButton: {
+    position: "absolute",
+    top: 2,
+    left: 13,
+    borderRadius: 30,
+    width: 110,
+    height: 40,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4.84,
+
+    elevation: 5,
   },
 });
