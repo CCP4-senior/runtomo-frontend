@@ -122,7 +122,7 @@ const EventCreationScreen = ({ navigation }) => {
         long: longitude,
       };
 
-      const response = await axiosInstance.post("/events/create_event", event);
+      const response = await axiosInstance.post("/events/create_event/", event);
       setCurrentEvent({
         ...event,
         creator: user,
