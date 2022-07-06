@@ -478,9 +478,8 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     justifyContent: "center",
-    alignItems: 'center',
-    // backgroundColor: Color.White,
-    // backgroundColor: "pink",
+    alignItems: "center",
+    backgroundColor: Color.White,
   },
   title: {
     justifyContent: "center",
@@ -488,7 +487,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   inputs: {
-    width: '90%',
+    width: "90%",
   },
   button: {
     width: "75%",
@@ -511,19 +510,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   timesPerWeekBtnHeader: {
-    marginVertical: 10,
-    // marginBottom: 10,
     alignSelf: "flex-start",
+    marginVertical: 10,
   },
   estimate5kHeader: {
+    alignSelf: "flex-start",
     marginVertical: 10,
     marginBottom: 10,
-    alignSelf: "flex-start",
   },
   estimate10kHeader: {
+    alignSelf: "flex-start",
     marginVertical: 10,
     marginBottom: 10,
-    alignSelf: "flex-start",
   },
   timesPerWeekBtnWrapper: {
     display: "flex",
@@ -532,7 +530,6 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     marginBottom: 10,
-    // backgroundColor: 'purple',
   },
   estimatedKmBtnWrapper: {
     display: "flex",
