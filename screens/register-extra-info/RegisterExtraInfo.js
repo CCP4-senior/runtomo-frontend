@@ -504,7 +504,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.36,
   },
   datePickerContainer: {
-    marginVertical: 5,
+    marginVertical: 10,
+    marginBottom: 10
   },
   dobHeader: {
     alignSelf: "flex-start",
