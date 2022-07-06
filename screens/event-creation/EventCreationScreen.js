@@ -228,7 +228,7 @@ const EventCreationScreen = ({ navigation }) => {
                 await selectImage(setImageUri);
               }}
             >
-              <Text style={{ fontWeight: "bold" }}>Event Image</Text>
+              <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}>Event Image</Text>
               <View
                 backgroundColor="#fff"
                 style={styles.imagePlaceholderBackground}
@@ -243,7 +243,7 @@ const EventCreationScreen = ({ navigation }) => {
 
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
-              <Text style={{ fontWeight: "bold" }}>Event Image</Text>
+              <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}>Event Image</Text>
               <Image source={{ uri: imageUri }} style={{ height: 175 }} />
               <Button color={Color.PrimaryMain} onPress={deleteImage}>
                 Undo Selection
