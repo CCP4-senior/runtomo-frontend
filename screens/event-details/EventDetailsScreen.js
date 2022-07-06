@@ -225,7 +225,7 @@ const EventDetailsScreen = ({ navigation }) => {
                         // participantsArray={participants}
                       />
                       <Text style={{ color: "#007AFF", ...styles.joinText }}>
-                        Joined
+                        {participants.length} Joined
                       </Text>
                     </View>
                   </View>

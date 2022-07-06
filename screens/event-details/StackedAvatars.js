@@ -19,6 +19,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
   const { generateImageUrl } = useContext(DataContext);
   const displayedParticipants = participants.slice(0, 4).concat({});
   const displayedCirlceCount = displayedParticipants.length;
+  const remainingCount = participants.length - 4;
 
   return (
     <View
@@ -54,7 +55,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                       }
                 }
               >
-                <Text style={styles.lastCircleText}>{participants.length}</Text>
+                <Text style={styles.lastCircleText}>+{remainingCount}</Text>
               </View>
             </View>
           );
