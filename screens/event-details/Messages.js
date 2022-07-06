@@ -37,9 +37,8 @@ const DialogCard = ({ message }) => {
             )}
           </View>
         )}
-        {/* <View style={styles.contentContainer}> */}
         {!isSelf && (
-          <View style={styles.rightContainer}>
+          <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
             <Text style={styles.username}>{message.comment_user.username}</Text>
             <View
               style={isSelf ? styles.selfTextContainer : styles.textContainer}
@@ -73,7 +72,6 @@ const DialogCard = ({ message }) => {
             </View>
           </>
         )}
-        {/* </View> */}
       </View>
     </View>
   );
@@ -236,7 +234,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   selfCardContainer: {
-    // backgroundColor: "blue",
     marginTop: 8,
     position: "relative",
     width: "100%",
@@ -245,7 +242,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   cardContainer: {
-    // backgroundColor: "red",
     marginTop: 3,
     position: "relative",
     width: "100%",
@@ -254,8 +250,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   contentContainer: {
-    // width: "100%",
-    // backgroundColor: "green",
+    width: "100%",
   },
 
   avatar: {
@@ -265,7 +260,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginLeft: 5,
     fontWeight: "700",
-    // backgroundColor: "yellow",
   },
   selfTextContainer: {
     backgroundColor: "#66db30",
