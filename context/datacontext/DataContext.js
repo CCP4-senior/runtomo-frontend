@@ -75,20 +75,13 @@ const DataProvider = ({ children }) => {
     };
   };
   const setUserData = async (userId) => {
-    // The mockdata is to be removed
-    const mockData = {
-      username: "wadeRunner",
-      email: "wade@example.com",
-      age: "34",
-      runnerType: ["beginner", "social"],
-    };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
 
       setUser({
         ...response.data,
-        imageUrl: response.data.profile?.image
-          ? generateImageUrl(response.data.profile.image)
+        imageUrl: response.data.image
+          ? generateImageUrl(response.data.image)
           : null,
       });
     } catch (e) {
