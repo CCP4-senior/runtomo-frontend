@@ -104,7 +104,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     />
                   </View>
                 </View>
-                <Text>Newest Event Date</Text>
+                <Text>{`Date (soon to later)`}</Text>
               </View>
               <View
                 style={{
@@ -138,7 +138,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     }
                   />
                 </View>
-                <Text>Oldest Event Date</Text>
+                <Text>{`Date (later to soon)`}</Text>
               </View>
             </RadioButton.Group>
             <View style={styles.applyResetBtnsWrapper}>
