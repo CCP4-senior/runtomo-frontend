@@ -31,7 +31,8 @@ const SortByModal = ({ modalVisible, hideModal }) => {
     setFilteredEvents,
     setSortingCondition,
     resetSortingInHomeScreen,
-    setResetSortingInHomeScreen,
+    isSortingResetInHomePage,
+    setIsSortingResetInHomePage,
   } = useContext(DataContext);
 
   const [sortValue, setSortValue] = useState("standard");
@@ -39,9 +40,16 @@ const SortByModal = ({ modalVisible, hideModal }) => {
   useEffect(() => {
     if (resetSortingInHomeScreen === true) {
       handleSorting("reset");
-      setResetSortingInHomeScreen(false);
+      setIsSortingResetInHomePage(false);
     }
   }, [resetSortingInHomeScreen]);
+
+  useEffect(() => {
+    if (isSortingResetInHomePage === true) {
+      handleSorting("reset");
+      setIsSortingResetInHomePage(false);
+    }
+  }, [isSortingResetInHomePage]);
 
   const handleSorting = (action) => {
     if (action === "reset") {
