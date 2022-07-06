@@ -12,7 +12,6 @@ const createOptions = (settingPressHandler, messagePressaHandler) => {
         onPress={settingPressHandler}
       >
         <IconButton icon="menu" color="grey" size={25} />
-        {/* </View> */}
       </TouchableOpacity>
     ),
   };
