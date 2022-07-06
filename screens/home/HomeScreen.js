@@ -32,6 +32,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     setIsDataFiltered,
     setSortingCondition,
     sortingCondition,
+    setIsSortingResetInHomePage,
   } = useContext(DataContext);
   useEffect(() => {
     if (user) {
@@ -71,6 +72,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const handleHomeSortingReset = () => {
     setSortingCondition("standard");
     setResetSortingInHomeScreen(true);
+    setIsSortingResetInHomePage(true);
   };
 
   const handleHomeFilterReset = () => {

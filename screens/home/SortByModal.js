@@ -31,7 +31,8 @@ const SortByModal = ({ modalVisible, hideModal }) => {
     setFilteredEvents,
     setSortingCondition,
     resetSortingInHomeScreen,
-    setResetSortingInHomeScreen,
+    isSortingResetInHomePage,
+    setIsSortingResetInHomePage,
   } = useContext(DataContext);
 
   const [sortValue, setSortValue] = useState("standard");
@@ -39,9 +40,16 @@ const SortByModal = ({ modalVisible, hideModal }) => {
   useEffect(() => {
     if (resetSortingInHomeScreen === true) {
       handleSorting("reset");
-      setResetSortingInHomeScreen(false);
+      setIsSortingResetInHomePage(false);
     }
   }, [resetSortingInHomeScreen]);
+
+  useEffect(() => {
+    if (isSortingResetInHomePage === true) {
+      handleSorting("reset");
+      setIsSortingResetInHomePage(false);
+    }
+  }, [isSortingResetInHomePage]);
 
   const handleSorting = (action) => {
     if (action === "reset") {
@@ -96,7 +104,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     />
                   </View>
                 </View>
-                <Text>Newest Event Date</Text>
+                <Text>{`Date (soon to later)`}</Text>
               </View>
               <View
                 style={{
@@ -130,7 +138,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                     }
                   />
                 </View>
-                <Text>Oldest Event Date</Text>
+                <Text>{`Date (later to soon)`}</Text>
               </View>
             </RadioButton.Group>
             <View style={styles.applyResetBtnsWrapper}>
