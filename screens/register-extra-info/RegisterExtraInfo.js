@@ -480,7 +480,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: 'center',
     // backgroundColor: Color.White,
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
   },
   title: {
     justifyContent: "center",
@@ -488,9 +488,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   inputs: {
-    // alignItems: "center",
-    // backgroundColor: "purple",
-    width: '90%'
+    width: '90%',
   },
   button: {
     width: "75%",
@@ -500,7 +498,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "90%",
-    marginVertical: 20,
   },
   titleText: {
     fontSize: 28,
@@ -508,29 +505,25 @@ const styles = StyleSheet.create({
     letterSpacing: 0.36,
   },
   datePickerContainer: {
-    // marginBottom: 20,
-    // marginVertical: 20,
-    backgroundColor: 'purple'
+    marginVertical: 5,
   },
   dobHeader: {
-    // marginBottom: 10,
     alignSelf: "flex-start",
-    // marginLeft: 20,
   },
   timesPerWeekBtnHeader: {
-    marginBottom: 20,
+    marginVertical: 10,
+    // marginBottom: 10,
     alignSelf: "flex-start",
-    // marginLeft: 20,
   },
   estimate5kHeader: {
-    marginBottom: 20,
+    marginVertical: 10,
+    marginBottom: 10,
     alignSelf: "flex-start",
-    // marginLeft: 20,
   },
   estimate10kHeader: {
-    marginBottom: 20,
+    marginVertical: 10,
+    marginBottom: 10,
     alignSelf: "flex-start",
-    // marginLeft: 20,
   },
   timesPerWeekBtnWrapper: {
     display: "flex",
@@ -538,7 +531,8 @@ const styles = StyleSheet.create({
     width: "100%",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    // marginLeft: 10,
+    marginBottom: 10,
+    // backgroundColor: 'purple',
   },
   estimatedKmBtnWrapper: {
     display: "flex",
@@ -546,18 +540,17 @@ const styles = StyleSheet.create({
     width: "100%",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    // marginLeft: 10,
+    marginVertical: 10,
+    marginBottom: 20,
   },
   timesPerWeekBtns: {
     borderRadius: 20,
     width: 80,
-    // marginRight: 10,
-    marginBottom: 10,
+    marginVertical: 10,
   },
   estimatedKmBtns: {
     borderRadius: 20,
     width: 112,
-    // marginRight: 10,
     marginBottom: 10,
   },
   btnSelected: {
