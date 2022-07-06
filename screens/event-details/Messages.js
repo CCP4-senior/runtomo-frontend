@@ -170,7 +170,7 @@ const Messages = () => {
           size={25}
           style={{ position: "absolute", left: 0 }}
           onPress={() => {
-            navigationRef.navigate("Running Event"); // TODO check
+            navigationRef.navigate("Running Event");
           }}
         />
         <View style={styles.titleContainer}>
