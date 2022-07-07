@@ -94,7 +94,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
       </View>
     );
   }
-  console.log("🔥 DONE --------------");
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
