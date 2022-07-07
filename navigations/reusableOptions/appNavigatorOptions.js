@@ -13,14 +13,6 @@ import MapView, {
 const createOptions = (settingPressHandler, messagePressaHandler) => {
   const options = {
     ...HeaderStyle,
-    // headerRight: () => (
-    //   <TouchableOpacity
-    //     style={[styles.iconContainer, styles.menu]}
-    //     onPress={messagePressaHandler}
-    //   >
-    //     <IconButton icon="forum-outline" size={25} color="grey" />
-    //   </TouchableOpacity>
-    // ),
     headerRight: () => (
       <TouchableOpacity
         style={[styles.iconContainer, styles.menu]}
@@ -34,16 +26,7 @@ const createOptions = (settingPressHandler, messagePressaHandler) => {
         style={[styles.iconContainer, styles.menu]}
         onPress={settingPressHandler}
       >
-        {/* <View
-          style={{
-            width: 35,
-            height: 35,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        > */}
         <IconButton icon="menu" color="grey" size={25} />
-        {/* </View> */}
       </TouchableOpacity>
     ),
   };

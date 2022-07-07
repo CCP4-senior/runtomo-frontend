@@ -20,7 +20,7 @@ const BottomTabNavigator = () => {
             iconName = "ios-home";
           }
           if (route.name === "My Sessions Main Page") {
-            iconName = "calendar";
+            iconName = "walk";
           }
           if (route.name === "Event Creation") {
             iconName = "add-circle-outline";

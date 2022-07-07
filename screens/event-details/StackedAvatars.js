@@ -17,7 +17,8 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
     ];
   }
   const { generateImageUrl } = useContext(DataContext);
-  const displayedCirlceCount = 5;
+  const displayedParticipants = participants.slice(0, 4).concat({});
+  const displayedCirlceCount = displayedParticipants.length;
   const remainingCount = participants.length - 4;
 
   return (
@@ -30,8 +31,8 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
         ...styles.avatarContainer,
       }}
     >
-      {participants.slice(0, 5).map((person, i) => {
-        if (i === 4) {
+      {displayedParticipants.map((person, i) => {
+        if (i === displayedParticipants.length - 1) {
           return (
             <View
               style={
@@ -39,7 +40,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
-              key={person.id}
+              key={i}
             >
               <View
                 style={
@@ -54,7 +55,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                       }
                 }
               >
-                <Text style={styles.lastCircleText}>{remainingCount}+</Text>
+                <Text style={styles.lastCircleText}>+{remainingCount}</Text>
               </View>
             </View>
           );
@@ -66,7 +67,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
-              key={person.id}
+              key={i}
             >
               <Avatar.Image
                 size={size === "small" ? 28 : 33}
@@ -81,7 +82,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
                   ? { top: 0, left: -i * 17, ...styles.smallOuterCircle }
                   : { top: 0, left: -i * 16, ...styles.outerCircle }
               }
-              key={person.id}
+              key={i}
             >
               <Avatar.Icon
                 size={size === "small" ? 28 : 33}
