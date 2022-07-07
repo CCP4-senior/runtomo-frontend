@@ -320,7 +320,7 @@ const EventDetailsScreen = ({ navigation }) => {
                           latitude: region.latitude,
                           longitude: region.longitude,
                           latitudeDelta: 0.002,
-                          longitudeDelta: 0.0121,
+                          longitudeDelta: 0.002,
                         }}
                         provider={PROVIDER_DEFAULT}
                       >
@@ -339,7 +339,7 @@ const EventDetailsScreen = ({ navigation }) => {
                             latitude: region.latitude,
                             longitude: region.longitude,
                           }}
-                          radius={200}
+                          radius={50}
                           strokeWidth={2}
                         ></Circle>
                       </MapView>
