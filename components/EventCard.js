@@ -63,10 +63,14 @@ const EventCard = ({
               {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
             </Text>
           </View>
-          <View style={styles.rightContent}>
-            <StackedAvatars color={"#11C9BD"} size={"small"} />
-            <Text style={{ color: "#11C9BD", ...styles.joinText }}>Joined</Text>
-          </View>
+          {event.participants.length !== 0 && (
+            <View style={styles.rightContent}>
+              <StackedAvatars color={"#11C9BD"} size={"small"} />
+              <Text style={{ color: "#11C9BD", ...styles.joinText }}>
+                {event.participants.length} Joined
+              </Text>
+            </View>
+          )}
         </Card.Content>
       </TouchableOpacity>
     </Card>
