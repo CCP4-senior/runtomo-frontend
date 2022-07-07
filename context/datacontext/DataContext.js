@@ -83,7 +83,7 @@ const DataProvider = ({ children }) => {
     };
     try {
       const response = await axiosInstance(`/users/${userId}/`);
-
+      console.log(response.data);
       setUser({
         ...response.data,
         imageUrl: response.data.profile?.image
@@ -116,6 +116,7 @@ const DataProvider = ({ children }) => {
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
       }
+      // console.log(dataWithImage);
       setAllEvents(dataWithImage);
     } catch (e) {
       alert("Something went wrong with getAllEventsData. Please try again");

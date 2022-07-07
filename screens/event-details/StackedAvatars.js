@@ -17,22 +17,35 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
     ];
   }
   const { generateImageUrl } = useContext(DataContext);
-  const displayedParticipants = participants.slice(0, 4).concat({});
+  const displayedParticipants = participants.slice(0, 5);
   const displayedCirlceCount = displayedParticipants.length;
   const remainingCount = participants.length - 4;
+  const generateContainerWidth = (circleCount) => {
+    if (size === "small") {
+      if (circleCount === 1) return 33;
+      if (circleCount === 2) return 55;
+      if (circleCount > 2) return (circleCount - 1) * 16 + 33;
+    } else {
+      if (circleCount === 1) return 40;
+      if (circleCount === 2) return 65;
+      if (circleCount > 2) return (circleCount - 1) * 22 + 45;
+    }
+  };
+  const width = generateContainerWidth(displayedParticipants.length);
 
   return (
     <View
       style={{
-        width:
-          size === "small"
-            ? 22 * displayedCirlceCount
-            : 27 * displayedCirlceCount,
+        width: width,
+        // width:
+        //   size === "small"
+        //     ? 22 * displayedCirlceCount
+        //     : 27 * displayedCirlceCount,
         ...styles.avatarContainer,
       }}
     >
       {displayedParticipants.map((person, i) => {
-        if (i === displayedParticipants.length - 1) {
+        if (i > 3 && i === displayedParticipants.length - 1) {
           return (
             <View
               style={
@@ -71,7 +84,7 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
             >
               <Avatar.Image
                 size={size === "small" ? 28 : 33}
-                source={person.image}
+                source={{ uri: generateImageUrl(person.image) }}
                 style={size === "small" ? styles.smallAvatar : styles.avatar}
               />
             </View>
