@@ -63,7 +63,7 @@ const EventCard = ({
               {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
             </Text>
           </View>
-          {event.participants.length !== 0 && (
+          {event.participants?.length !== 0 && (
             <View style={styles.rightContent}>
               <View
                 style={{
@@ -77,7 +77,7 @@ const EventCard = ({
                 />
               </View>
               <Text style={{ color: "#11C9BD", ...styles.joinText }}>
-                {event.participants.length} Joined
+                {event.participants?.length} Joined
               </Text>
             </View>
           )}

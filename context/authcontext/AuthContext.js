@@ -12,12 +12,13 @@ const AuthProvider = ({ children }) => {
   const [idForProfile, setIdForProfile] = useState("");
   const [userToBeRegistered, setUserToBeRegistered] = useState({});
 
-  const createUser = async ({ username, email, password }) => {
+  const createUser = async ({ username, email, password, image }) => {
     try {
       await axiosInstance.post("/auth/signup/", {
         username: username.trim(),
         email: email.trim(),
         password: password.trim(),
+        image: image,
       });
 
       const response = await axiosInstance.post("/auth/jwt/create/", {
