@@ -42,7 +42,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const [resetFilterInHomeScreen, setResetFilterInHomeScreen] = useState(false);
   const [resetSortingInHomeScreen, setResetSortingInHomeScreen] =
     useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -53,8 +53,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   useFocusEffect(
     useCallback(() => {
       if (user) {
-        getAllEventsData();
+        getAllEventsData().then (() => setIsLoading(false));
+        
       }
+      
     }, [])
   );
 
@@ -84,6 +86,15 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     setResetFilterInHomeScreen(true);
   };
 
+  if (isLoading) {
+    console.log("🔥 LOADING --------------");
+    return (
+      <View style={styles.loadingContainer}>
+        <Text style={styles.loadingText}> Loading... </Text>
+      </View>
+    );
+  }
+  console.log("🔥 DONE --------------");
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
@@ -346,5 +357,14 @@ const styles = StyleSheet.create({
   topIcon: {
     paddingTop: 0,
     height: 18,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "purple",
+  },
+  loadingText: {
+    fontSize: 30,
   },
 });
