@@ -14,6 +14,7 @@ const Stack = createStackNavigator();
 
 const HomeNavigator = ({ navigation }) => {
   const { user } = useContext(AuthContext);
+  const showPointsOfInterest = true;
 
   const openSetting = () => {
     navigation.navigate("Setting");
@@ -27,12 +28,23 @@ const HomeNavigator = ({ navigation }) => {
     <Stack.Navigator>
       <Stack.Screen
         name="Home"
-        options={createOptions(openSetting, openPointsOfInterest)}
+        options={createOptions(
+          openSetting,
+          openPointsOfInterest,
+          showPointsOfInterest
+        )}
       >
         {(props) => <HomeScreen {...props} />}
       </Stack.Screen>
 
-      <Stack.Screen name="My Sessions" options={createOptions(openSetting)}>
+      <Stack.Screen
+        name="My Sessions"
+        options={createOptions(
+          openSetting,
+          openPointsOfInterest,
+          showPointsOfInterest
+        )}
+      >
         {(props) => <PersonalEventScreen {...props} />}
       </Stack.Screen>
 

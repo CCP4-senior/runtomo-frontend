@@ -73,7 +73,7 @@ const PointsOfInterestScreen = () => {
                               latitude: Number(station.lat),
                               longitude: Number(station.long),
                             }}
-                            radius={100}
+                            radius={50}
                             strokeWidth={2}
                           />
                         </View>

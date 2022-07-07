@@ -10,17 +10,23 @@ import MapView, {
   PROVIDER_DEFAULT,
 } from "react-native-maps";
 
-const createOptions = (settingPressHandler, messagePressaHandler) => {
+const createOptions = (
+  settingPressHandler,
+  messagePressaHandler,
+  showPointsOfInterest
+) => {
   const options = {
     ...HeaderStyle,
-    headerRight: () => (
+    headerRight: () => {
+      return showPointsOfInterest ? (
       <TouchableOpacity
         style={[styles.iconContainer, styles.menu]}
         onPress={messagePressaHandler}
       >
         <IconButton icon="map" size={25} color="grey" />
       </TouchableOpacity>
-    ),
+      ) : null
+    },
     headerLeft: () => (
       <TouchableOpacity
         style={[styles.iconContainer, styles.menu]}
