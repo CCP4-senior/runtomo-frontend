@@ -109,7 +109,6 @@ const EventDetailsScreen = ({ navigation }) => {
     navigation.navigate("Profile", { userToView });
   };
   const joinEvent = async () => {
-    console.log({ eventData });
     try {
       const joiningData = {
         title: eventData.title,
@@ -137,7 +136,6 @@ const EventDetailsScreen = ({ navigation }) => {
       const response = await axiosInstance.delete(
         `/events/participant/${eventData.id}/${user.id}/`
       );
-      console.log(response.data);
 
       setIsAttendanceCancellation(true);
       showDialog();
@@ -312,36 +310,40 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.thinText}>{eventData.location}</Text>
                   </View>
                   <View style={styles.mapContainer}>
-                    <MapView
-                      key={`${eventData.id}${Date.now()}`}
-                      style={styles.map}
-                      initialRegion={{
-                        latitude: region.latitude,
-                        longitude: region.longitude,
-                        latitudeDelta: 0.002,
-                        longitudeDelta: 0.0121,
-                      }}
-                      provider={PROVIDER_DEFAULT}
-                    >
-                      <Marker
-                        coordinate={{
+                    {eventData.participants.some(
+                      (participant) => participant.id === user.id
+                    ) || eventData.creator.id === user.id ? (
+                      <MapView
+                        key={`${eventData.id}${Date.now()}`}
+                        style={styles.map}
+                        initialRegion={{
                           latitude: region.latitude,
                           longitude: region.longitude,
+                          latitudeDelta: 0.002,
+                          longitudeDelta: 0.0121,
                         }}
+                        provider={PROVIDER_DEFAULT}
                       >
-                        <Callout>
-                          <Text>Location placeholder</Text>
-                        </Callout>
-                      </Marker>
-                      <Circle
-                        center={{
-                          latitude: region.latitude,
-                          longitude: region.longitude,
-                        }}
-                        radius={200}
-                        strokeWidth={2}
-                      ></Circle>
-                    </MapView>
+                        <Marker
+                          coordinate={{
+                            latitude: region.latitude,
+                            longitude: region.longitude,
+                          }}
+                        >
+                          <Callout>
+                            <Text>Location placeholder</Text>
+                          </Callout>
+                        </Marker>
+                        <Circle
+                          center={{
+                            latitude: region.latitude,
+                            longitude: region.longitude,
+                          }}
+                          radius={200}
+                          strokeWidth={2}
+                        ></Circle>
+                      </MapView>
+                    ) : null}
                   </View>
                 </Card.Content>
               </Card>
