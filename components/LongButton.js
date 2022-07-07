@@ -16,7 +16,8 @@ const LongButton = ({
         borderRadius: 25,
         width: "90%",
         height: 55,
-        marginTop: 20,
+        marginVertical: 5,
+        alignSelf:"center"
       }}
       labelStyle={{
         fontWeight: "700",
