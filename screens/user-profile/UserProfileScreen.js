@@ -45,7 +45,6 @@ const UserProfileScreen = ({ navigation, route }) => {
       const response = await axiosInstance(`/users/${id}/`, {
         signal: controller.signal,
       });
-      console.log(generateImageUrl(response.data.image));
 
       setUserData({
         ...response.data,

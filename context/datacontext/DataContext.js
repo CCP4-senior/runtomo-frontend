@@ -77,7 +77,6 @@ const DataProvider = ({ children }) => {
   const setUserData = async (userId) => {
     try {
       const response = await axiosInstance(`/users/${userId}/`);
-
       setUser({
         ...response.data,
         imageUrl: response.data.image
