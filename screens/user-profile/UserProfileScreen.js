@@ -45,11 +45,12 @@ const UserProfileScreen = ({ navigation, route }) => {
       const response = await axiosInstance(`/users/${id}/`, {
         signal: controller.signal,
       });
+      console.log(generateImageUrl(response.data.image));
 
       setUserData({
         ...response.data,
-        imageUrl: response.data.profile?.image
-          ? generateImageUrl(response.data.profile.image)
+        imageUrl: response.data.image
+          ? generateImageUrl(response.data.image)
           : null,
       });
     } catch (e) {
@@ -100,7 +101,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 resizeMode="cover"
               >
                 {/* Profile picture */}
-                {user.imageUrl && (
+                {userData?.imageUrl && (
                   <Avatar.Image
                     style={[styles.profilePicture]}
                     source={{ uri: userData?.imageUrl }}
@@ -110,7 +111,7 @@ const UserProfileScreen = ({ navigation, route }) => {
 
                 {/* Profile picture (default) */}
 
-                {!user.imageUrl && (
+                {!userData?.imageUrl && (
                   <Avatar.Icon
                     style={[
                       styles.profilePicture,
