@@ -277,13 +277,6 @@ const EventDetailsScreen = ({ navigation }) => {
 
                   <View style={styles.section}>
                     <Text style={styles.sectionTitle}>Description:</Text>
-                    <Text style={styles.thinText}>
-                      {eventData.description || "Not provided"}
-                    </Text>
-                  </View>
-
-                  <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Description:</Text>
                     <Text style={styles.thinText}>{eventData.description}</Text>
                   </View>
 
