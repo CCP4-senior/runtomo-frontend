@@ -39,7 +39,7 @@ const DialogCard = ({ message }) => {
           </View>
         )}
         {!isSelf && (
-          <View style={{ flexDirection: "column", alignItems: "flex-start" }}>
+          <View style={styles.rightContainer}>
             <Text style={styles.username}>{message.comment_user.username}</Text>
             <View
               style={isSelf ? styles.selfTextContainer : styles.textContainer}
@@ -249,6 +249,7 @@ const styles = StyleSheet.create({
     minHeight: 40,
     flexDirection: "row",
     marginBottom: 2,
+    justifyContent: "flex-start",
   },
   contentContainer: {
     width: "100%",
@@ -256,6 +257,10 @@ const styles = StyleSheet.create({
 
   avatar: {
     backgroundColor: Color.GrayDark,
+  },
+  rightContainer: {
+    flexDirection: "column",
+    width: "100%",
   },
   username: {
     lineHeight: 20,
@@ -279,6 +284,7 @@ const styles = StyleSheet.create({
     maxWidth: "90%",
     padding: 10,
     justifyContent: "center",
+    alignSelf: "flex-start",
   },
   text: {
     fontSize: 15,
