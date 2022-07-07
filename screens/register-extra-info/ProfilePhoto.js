@@ -20,7 +20,6 @@ import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
 import Color from "../../assets/themes/Color";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
-import { ref } from "firebase/storage";
 
 const ProfilePhoto = ({ route }) => {
   const { username, email, password } = route.params;
@@ -48,12 +47,18 @@ const ProfilePhoto = ({ route }) => {
   };
 
   const createUserAndProfile = async (imageRef) => {
+    console.log("creaate user and profile ran", {
+      username,
+      password,
+      email,
+      imageRef,
+    });
     try {
-      await createUser({ username, password, email });
-      await createUserProfile({ ...userToBeRegistered, image: imageRef });
+      await createUser({ username, password, email, image: imageRef });
+      await createUserProfile(userToBeRegistered);
     } catch (e) {
+      console.log(e.config.url);
       alert("Something went wrong! Please try again");
-      console.log(e);
     }
   };
 

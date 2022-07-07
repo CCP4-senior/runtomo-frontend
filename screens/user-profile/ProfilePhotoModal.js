@@ -35,13 +35,15 @@ const ProfilePhotoModal = ({
     const newUri = await resizeImage(imageUri, 300);
     const imageRef = await uploadImage("profiles", newUri);
 
-    await axiosInstance.patch(`/users/profile/${user.profile.id}/`, {
+    await axiosInstance.patch(`/auth/update/`, {
+      username: user.username,
+      email: user.email,
       image: imageRef,
     });
 
     setUser({
       ...user,
-      profile: { ...user.profile, image: imageRef },
+      image: imageRef,
       imageUrl: generateImageUrl(imageRef),
     });
 
@@ -53,13 +55,15 @@ const ProfilePhotoModal = ({
 
   const deleteProfilePhoto = async () => {
     const prevImageUrl = user.imageUrl;
-    await axiosInstance.patch(`/users/profile/${user.profile.id}/`, {
+    await axiosInstance.patch(`/auth/update/`, {
+      username: user.username,
+      email: user.email,
       image: null,
     });
 
     setUser({
       ...user,
-      profile: { ...user.profile, image: null },
+      image: null,
       imageUrl: null,
     });
 
