@@ -17,6 +17,7 @@ import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import FilterModal from "./FilterModal.js";
 import SortByModal from "./SortByModal.js";
+import LoadingSpinner from "../../components/LoadingSpinner.js";
 
 const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
@@ -53,10 +54,8 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   useFocusEffect(
     useCallback(() => {
       if (user) {
-        getAllEventsData().then (() => setIsLoading(false));
-        
+        getAllEventsData().then(() => setIsLoading(false));
       }
-      
     }, [])
   );
 
@@ -88,11 +87,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
 
   if (isLoading) {
     console.log("🔥 LOADING --------------");
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}> Loading... </Text>
-      </View>
-    );
+    return <LoadingSpinner />;
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -356,14 +351,5 @@ const styles = StyleSheet.create({
   topIcon: {
     paddingTop: 0,
     height: 18,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "purple",
-  },
-  loadingText: {
-    fontSize: 30,
   },
 });
