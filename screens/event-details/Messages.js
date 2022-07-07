@@ -20,6 +20,7 @@ import { navigationRef } from "../../navigations/RootNavigator";
 
 const DialogCard = ({ message }) => {
   const { user } = useContext(AuthContext);
+  const { generateImageUrl } = useContext(DataContext);
   const isSelf = message.comment_user.id === user.id;
   return (
     <View style={styles.contentContainer}>
@@ -29,7 +30,7 @@ const DialogCard = ({ message }) => {
             {message.comment_user.image ? (
               <Avatar.Image
                 size={33}
-                source={message.comment_user.image}
+                source={{ uri: generateImageUrl(message.comment_user.image) }}
                 style={styles.avatar}
               />
             ) : (
@@ -152,7 +153,6 @@ const Messages = () => {
       );
       const newData = data.concat(response.data.results);
       if (response.data.next !== null) {
-        console.log("next fetch ran with page", page + 1);
         await getMessages(page + 1, newData);
       } else {
         setData(newData);
