@@ -83,9 +83,11 @@ const EventDetailsScreen = ({ navigation }) => {
 
   const getAllParticipants = async () => {
     try {
-      const response = await axiosInstance(`/event_users/${eventData.id}/`);
-      setParticipants(response.data);
-      if (response.data.find((el) => el.user === user.id)) setHasJoined(true);
+      setParticipants(eventData.participants);
+      if (
+        eventData.participants.some((participant) => participant.id === user.id)
+      )
+        setHasJoined(true);
     } catch (e) {
       console.log(e);
     }
@@ -107,14 +109,22 @@ const EventDetailsScreen = ({ navigation }) => {
     navigation.navigate("Profile", { userToView });
   };
   const joinEvent = async () => {
+    console.log({ eventData });
     try {
+      const joiningData = {
+        title: eventData.title,
+        location: eventData.location,
+        ward: eventData.ward,
+        participants: [
+          ...eventData.participants,
+          { username: user.username, email: user.email },
+        ],
+      };
       const response = await axiosInstance.post(
-        `/event_users/${eventData.id}/`,
-        {
-          event: eventData.id,
-          user: user,
-        }
+        `/events/participant/${eventData.id}/${user.id}/`,
+        joiningData
       );
+
       setCurrentEvent({ ...eventData, user: user });
       navigation.navigate("Event Joined");
     } catch (e) {
@@ -123,12 +133,20 @@ const EventDetailsScreen = ({ navigation }) => {
   };
 
   const cancelAttendance = async () => {
-    await axiosInstance.delete(`/event_users/${eventData.id}/`);
-    setIsAttendanceCancellation(true);
-    showDialog();
-    setTimeout(() => {
-      navigation.navigate("Home");
-    }, 2000);
+    try {
+      const response = await axiosInstance.delete(
+        `/events/participant/${eventData.id}/${user.id}/`
+      );
+      console.log(response.data);
+
+      setIsAttendanceCancellation(true);
+      showDialog();
+      setTimeout(() => {
+        navigation.navigate("Home");
+      }, 2000);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const cancelEvent = async (event) => {
@@ -219,14 +237,23 @@ const EventDetailsScreen = ({ navigation }) => {
                         {eventData.creator.username}
                       </Text>
                     </TouchableOpacity>
+
                     <View style={styles.stackedAvatarContainer}>
-                      <StackedAvatars
-                        color={"#007AFF"}
-                        // participantsArray={participants}
-                      />
-                      <Text style={{ color: "#007AFF", ...styles.joinText }}>
-                        {participants.length} Joined
-                      </Text>
+                      <View
+                        style={{
+                          alignSelf: "center",
+                        }}
+                      >
+                        <StackedAvatars
+                          color={"#007AFF"}
+                          participantsArray={participants}
+                        />
+                      </View>
+                      {participants.length !== 0 && (
+                        <Text style={{ color: "#007AFF", ...styles.joinText }}>
+                          {participants.length} Joined
+                        </Text>
+                      )}
                     </View>
                   </View>
 
@@ -502,14 +529,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   stackedAvatarContainer: {
-    height: 50,
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    // height: 50,
+    // display: "flex",
+    // justifyContent: "flex-start",
+    // alignItems: "center",
+    // paddingTop: 15,
+    height: 70,
     paddingTop: 15,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    // backgroundColor: "blue",
   },
   joinText: {
     fontSize: 13,
+    textAlign: "center",
   },
   messageButton: {
     position: "absolute",

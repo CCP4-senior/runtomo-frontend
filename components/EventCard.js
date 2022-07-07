@@ -65,7 +65,17 @@ const EventCard = ({
           </View>
           {event.participants?.length !== 0 && (
             <View style={styles.rightContent}>
-              <StackedAvatars color={"#11C9BD"} size={"small"} />
+              <View
+                style={{
+                  alignSelf: "center",
+                }}
+              >
+                <StackedAvatars
+                  color={"#11C9BD"}
+                  size={"small"}
+                  participantsArray={event.participants}
+                />
+              </View>
               <Text style={{ color: "#11C9BD", ...styles.joinText }}>
                 {event.participants?.length} Joined
               </Text>
