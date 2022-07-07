@@ -478,6 +478,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     backgroundColor: Color.White,
   },
   title: {
@@ -486,7 +487,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   inputs: {
-    alignItems: "center",
+    width: "85%",
   },
   button: {
     width: "75%",
@@ -496,7 +497,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "90%",
-    marginVertical: 20,
   },
   titleText: {
     fontSize: 28,
@@ -504,50 +504,51 @@ const styles = StyleSheet.create({
     letterSpacing: 0.36,
   },
   datePickerContainer: {
-    marginBottom: 20,
+    marginVertical: 10,
+    marginBottom: 10
   },
-  dobHeader: { marginBottom: 10, alignSelf: "flex-start", marginLeft: 20 },
-  timesPerWeekBtnHeader: {
-    marginBottom: 20,
+  dobHeader: {
     alignSelf: "flex-start",
-    marginLeft: 20,
+  },
+  timesPerWeekBtnHeader: {
+    alignSelf: "flex-start",
+    marginVertical: 10,
   },
   estimate5kHeader: {
-    marginBottom: 20,
     alignSelf: "flex-start",
-    marginLeft: 20,
+    marginVertical: 10,
+    marginBottom: 10,
   },
   estimate10kHeader: {
-    marginBottom: 20,
     alignSelf: "flex-start",
-    marginLeft: 20,
+    marginVertical: 10,
+    marginBottom: 10,
   },
   timesPerWeekBtnWrapper: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
     flexWrap: "wrap",
-    justifyContent: "center",
-    marginLeft: 10,
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
   estimatedKmBtnWrapper: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
     flexWrap: "wrap",
-    justifyContent: "center",
-    marginLeft: 10,
+    justifyContent: "space-between",
+    marginVertical: 10,
+    marginBottom: 20,
   },
   timesPerWeekBtns: {
     borderRadius: 20,
-    width: 80,
-    marginRight: 10,
-    marginBottom: 10,
+    width: "22%",
+    marginVertical: 10,
   },
   estimatedKmBtns: {
     borderRadius: 20,
-    width: 112,
-    marginRight: 10,
+    width: "32%",
     marginBottom: 10,
   },
   btnSelected: {
