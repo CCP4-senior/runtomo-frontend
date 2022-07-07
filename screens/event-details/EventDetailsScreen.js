@@ -108,13 +108,29 @@ const EventDetailsScreen = ({ navigation }) => {
   };
   const joinEvent = async () => {
     try {
-      const response = await axiosInstance.post(
-        `/event_users/${eventData.id}/`,
-        {
-          event: eventData.id,
-          user: user,
-        }
+      console.log(eventData);
+      const joiningData = {
+        title: eventData.title,
+        location: eventData.location,
+        ward: eventData.ward,
+        participants: [
+          ...eventData.participants,
+          { username: user.username, email: user.email },
+        ],
+      };
+      console.log(joiningData);
+      const respone = await axiosInstance.post(
+        `/events/participant/${eventData.id}/`,
+        joiningData
       );
+      // const response = await axiosInstance.post(
+      //   `/event_users/${eventData.id}/`,
+      //   {
+      //     event: eventData.id,
+      //     user: user,
+      //   }
+      // );
+      console.log(response.data);
       setCurrentEvent({ ...eventData, user: user });
       navigation.navigate("Event Joined");
     } catch (e) {
