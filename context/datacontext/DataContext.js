@@ -108,6 +108,7 @@ const DataProvider = ({ children }) => {
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
       }
+      // console.log(dataWithImage);
       setAllEvents(dataWithImage);
     } catch (e) {
       alert("Something went wrong with getAllEventsData. Please try again");
