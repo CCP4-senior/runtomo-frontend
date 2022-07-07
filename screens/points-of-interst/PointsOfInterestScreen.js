@@ -15,8 +15,8 @@ import MapView, {
   PROVIDER_GOOGLE,
   PROVIDER_DEFAULT,
 } from "react-native-maps";
-import tokyoRunningStations from "../../utils/runningStations";
 import Color from "../../assets/themes/Color";
+import axiosInstance from "../../helpers/axios";
 
 const PointsOfInterestScreen = () => {
   const [region, setRegion] = useState({
@@ -26,8 +26,15 @@ const PointsOfInterestScreen = () => {
   const [runningStations, setRunningStations] = useState([]);
 
   useEffect(() => {
-    setRunningStations(tokyoRunningStations);
+    fetchPointsOfInterest();
   }, []);
+
+  const fetchPointsOfInterest = async () => {
+    const pointsOfInterestResponse = await axiosInstance.get(
+      `/pointsofinterest/`
+    );
+    setRunningStations(pointsOfInterestResponse.data);
+  };
 
   return (
     <SafeAreaView>
@@ -55,18 +62,16 @@ const PointsOfInterestScreen = () => {
                         <View key={station.id}>
                           <Marker
                             coordinate={{
-                              latitude: station.lat,
-                              longitude: station.long,
+                              latitude: Number(station.lat),
+                              longitude: Number(station.long),
                             }}
-                          >
-                            <Callout>
-                              <Text>{station.title}</Text>
-                            </Callout>
-                          </Marker>
+                            title={`${station.en_title} - ${station.jp_title}`}
+                            description={station.address}
+                          ></Marker>
                           <Circle
                             center={{
-                              latitude: station.lat,
-                              longitude: station.long,
+                              latitude: Number(station.lat),
+                              longitude: Number(station.long),
                             }}
                             radius={100}
                             strokeWidth={2}
