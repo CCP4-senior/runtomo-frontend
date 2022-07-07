@@ -20,6 +20,7 @@ import SortByModal from "./SortByModal.js";
 
 const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
+
   const {
     allEvents,
     setCurrentEvent,
@@ -34,6 +35,15 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     sortingCondition,
     setIsSortingResetInHomePage,
   } = useContext(DataContext);
+
+  const data = allEvents;
+  const [filterModalVisible, setfilterModalVisible] = useState(false);
+  const [sortByModalVisible, setSortByModalVisible] = useState(false);
+  const [resetFilterInHomeScreen, setResetFilterInHomeScreen] = useState(false);
+  const [resetSortingInHomeScreen, setResetSortingInHomeScreen] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (user) {
       setUserData(user.id);
@@ -47,13 +57,6 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
       }
     }, [])
   );
-
-  const data = allEvents;
-  const [filterModalVisible, setfilterModalVisible] = useState(false);
-  const [sortByModalVisible, setSortByModalVisible] = useState(false);
-  const [resetFilterInHomeScreen, setResetFilterInHomeScreen] = useState(false);
-  const [resetSortingInHomeScreen, setResetSortingInHomeScreen] =
-    useState(false);
 
   /* modal */
   const hideModal = () => {
