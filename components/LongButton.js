@@ -6,10 +6,12 @@ const LongButton = ({
   buttonColor,
   buttonText,
   buttonTextColor,
+  mode,
+  customStyle,
 }) => {
   return (
     <Button
-      mode="contained"
+      mode={mode || "contained"}
       uppercase={false}
       color={buttonColor}
       style={{
@@ -17,7 +19,8 @@ const LongButton = ({
         width: "90%",
         height: 55,
         marginVertical: 5,
-        alignSelf:"center"
+        alignSelf: "center",
+        ...customStyle,
       }}
       labelStyle={{
         fontWeight: "700",
@@ -26,7 +29,7 @@ const LongButton = ({
         letterSpacing: 0.5,
       }}
       contentStyle={{
-        padding: 7,
+        paddingVertical: 5,
       }}
       onPress={buttonHandler}
     >
