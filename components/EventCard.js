@@ -62,17 +62,19 @@ const EventCard = ({
               {format(zonedDate, "E, MMM d, yyyy")} at {format(zonedTime, "p")}
             </Text>
             <Text style={styles.title}>
-              {event.title.slice(0, 20)}
-              {event.title.length > 20 && "..."}
+              {event.title.slice(0, 55)}
+              {event.title.length > 55 && "..."}
             </Text>
             <Text style={styles.ward}>
               {event.ward || "Other"}
               {event.running_duration
-                ? ` | ${
-                    runningDurationArray.find(
-                      (el) => +el.num === event.running_duration
-                    ).name
-                  } run`
+                ? event.running_duration === 90
+                  ? " | 1+ hr"
+                  : ` | ${
+                      runningDurationArray.find(
+                        (el) => +el.num === event.running_duration
+                      ).name
+                    }`
                 : ""}
             </Text>
           </View>
@@ -106,47 +108,43 @@ const styles = StyleSheet.create({
   card: {
     width: "90%",
     marginBottom: 10,
-    height: 270,
     marginTop: 10,
+    minHeight: 275,
   },
   homePageCard: {
     width: "100%",
     marginBottom: 8,
-    height: 240,
+    minHeight: 230,
     marginTop: 10,
   },
   title: {
     paddingTop: 3,
     paddingBottom: 3,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "700",
     color: "#363D4E",
   },
   ward: {
-    // paddingLeft: 3,
-    // paddingBottom: 2,
     fontSize: 12,
     color: "#4E4B66",
   },
   date: {
-    // paddingLeft: 2,
     fontSize: 12,
     color: "#FA4048",
   },
   contentContainer: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 12,
+    paddingTop: 8,
     paddingBottom: 8,
   },
   leftContent: {
-    width: "60%",
+    width: "65%",
   },
   rightContent: {
-    // height: 60,
-    // paddingTop: 8,
-    // paddingBottom: 8,
+    width: "35%",
     display: "flex",
     justifyContent: "flex-end",
   },

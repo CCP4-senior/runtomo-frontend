@@ -32,6 +32,7 @@ import MapView, {
 import axiosInstance from "../../helpers/axios.js";
 import StackedAvatars from "./StackedAvatars.js";
 import deleteStoredImage from "../../helpers/deleteStoredImage.js";
+import runningDurationArray from "../../utils/runningDuration.js";
 
 const EventDetailsScreen = ({ navigation }) => {
   // Google Maps logic
@@ -272,14 +273,17 @@ const EventDetailsScreen = ({ navigation }) => {
                       </Text>
                       <Text style={styles.thinText}>
                         {eventData.running_duration <= 60 &&
-                          `${format(new Date(zonedTime), "p")} to
-                        ${format(
-                          addMinutes(
-                            new Date(zonedTime),
-                            Number(eventData.running_duration)
-                          ),
-                          "p"
-                        )}`}
+                          `${format(new Date(zonedTime), "p")} to ${format(
+                            addMinutes(
+                              new Date(zonedTime),
+                              Number(eventData.running_duration)
+                            ),
+                            "p"
+                          )} - ${
+                            runningDurationArray.find(
+                              (el) => el.num === eventData.running_duration
+                            ).name
+                          }`}
                         {eventData.running_duration > 60 &&
                           `Minimum of 1 hr from ${format(
                             new Date(zonedTime),

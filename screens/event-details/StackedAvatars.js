@@ -6,7 +6,7 @@ import { DataContext } from "../../context/datacontext/DataContext";
 
 const StackedAvatars = ({ participantsArray, color, size }) => {
   let participants = participantsArray;
-  if (!participantsArray) {
+  if (participantsArray) {
     participants = [
       { id: 1, image: require("../../assets/images/demo/wade.png") },
       { id: 2, image: null },
