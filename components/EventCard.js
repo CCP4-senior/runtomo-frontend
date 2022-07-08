@@ -26,7 +26,7 @@ const EventCard = ({
   const fadeAnimation = () => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 500,
+      duration: 400,
       useNativeDriver: true,
     }).start();
   };
