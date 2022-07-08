@@ -173,6 +173,8 @@ const EventCreationScreen = ({ navigation }) => {
 
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
+          {/* Event title */}
+
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Event Title"
@@ -194,6 +196,7 @@ const EventCreationScreen = ({ navigation }) => {
               submitted={submitted}
             />
           </View> */}
+
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Meeting Point Address"
@@ -321,7 +324,7 @@ const EventCreationScreen = ({ navigation }) => {
           {/* Loading spinner */}
 
           {isLoading ? (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <LongButton
                 buttonColor={Color.PrimaryMedium}
                 buttonText="Creating Event..."

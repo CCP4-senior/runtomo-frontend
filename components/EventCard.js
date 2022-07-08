@@ -38,6 +38,7 @@ const EventCard = ({
         {event.imageUrl && (
           <Card.Cover
             source={{ uri: event.imageUrl }}
+
             style={{
               height: 160,
               borderTopLeftRadius: 10,
