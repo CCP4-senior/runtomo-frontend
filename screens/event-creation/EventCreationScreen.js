@@ -29,15 +29,10 @@ import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import LoadingSpinner from "../../components/LoadingSpinner.js";
+import runningDurationArray from "../../utils/runningDuration.js";
+
 
 const EventCreationScreen = ({ navigation }) => {
-  const runningDurationArray = [
-    { id: 1, name: "15 mins", num: 15 },
-    { id: 2, name: "30 mins", num: 30 },
-    { id: 3, name: "1 hr", num: 60 },
-    { id: 4, name: "More", num: null },
-  ];
-
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -258,9 +253,8 @@ const EventCreationScreen = ({ navigation }) => {
 
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
-              <Text
-                style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}
-              >
+
+              <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10, }}>
                 Event Image
               </Text>
               <Image source={{ uri: imageUri }} style={{ height: 175 }} />
@@ -391,7 +385,8 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: "90%",
     padding: 10,
-    paddingTop: 25,
+    paddingTop: 40,
+    paddingBottom: 40,
     height: 230,
     backgroundColor: Color.White,
     alignSelf: "center",
