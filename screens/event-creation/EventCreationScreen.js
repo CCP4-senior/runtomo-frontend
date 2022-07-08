@@ -134,7 +134,7 @@ const EventCreationScreen = ({ navigation }) => {
         creator: user,
         imageUrl: currentRef !== null ? generateImageUrl(currentRef) : null,
       });
-      
+
       setIsLoading(false);
       navigation.navigate("Event Created", { isConfirmationCard: true });
     } catch (e) {
@@ -318,15 +318,23 @@ const EventCreationScreen = ({ navigation }) => {
 
           {/* Create Event button */}
 
-          <LongButton
-            buttonHandler={createEvent}
-            buttonColor={Color.PrimaryMain}
-            buttonText="Create Event"
-          />
-
           {/* Loading spinner */}
 
-          {isLoading && <LoadingSpinner />}
+          {isLoading ? (
+            <View style={{flex: 1}}>
+              <LongButton
+                buttonColor={Color.PrimaryMedium}
+                buttonText="Creating Event..."
+              />
+              <LoadingSpinner />
+            </View>
+          ) : (
+            <LongButton
+              buttonHandler={createEvent}
+              buttonColor={Color.PrimaryMain}
+              buttonText="Create Event"
+            />
+          )}
         </View>
       </ScrollView>
     </Provider>
