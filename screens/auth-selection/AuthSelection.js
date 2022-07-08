@@ -172,13 +172,6 @@ const styles = StyleSheet.create({
     width: 119,
     height: 148,
   },
-  spinnerContainer: {
-    position: "absolute",
-    width: "100%",
-    top: "70%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   lowerContainer: {
     position: "absolute",
     backgroundColor: Color.White,
@@ -186,7 +179,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "40%",
     alignItems: "center",
-    // paddingTop: 30,
   },
   copyContainer: {
     alignItems: "center",

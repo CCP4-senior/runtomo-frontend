@@ -16,6 +16,7 @@ const Black = "#000000";
 const Fill = "#F5F8FA";
 const Text = "#4E4B66";
 const HeaderTitle = "#455154";
+const TextMute = "rgba(25, 33, 38, 0.5)";
 
 const TestColor = "#8A2BE2";
 
@@ -34,6 +35,7 @@ const Color = {
   AccentColor,
   TestColor,
   Yellow,
+  TextMute,
 };
 
 export default Color;

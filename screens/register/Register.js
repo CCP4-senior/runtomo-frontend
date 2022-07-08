@@ -2,15 +2,19 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
+  ScrollView,
   Text,
   Linking,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
-import { Button, TextInput } from "react-native-paper";
+import { Button, TextInput, Avatar, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color.js";
+import LongButton from "../../components/LongButton";
+import selectImage from "../../helpers/selectImage";
 
 const Register = () => {
   const navigation = useNavigation();
@@ -26,6 +30,7 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
   const [password, setPassword] = useState("");
+  const [imageUri, setImageUri] = useState("");
 
   const handleRegister = () => {
     let inputError = false;
@@ -86,133 +91,259 @@ const Register = () => {
     }
   };
 
-  // const validatePassword = (text) => {
-  //   let result = true;
-  // };
+  const deleteImage = () => {
+    setImageUri("");
+  };
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.mainContainer}>
-        {/*  Title */}
-        <View>
-          <Text style={styles.title}>Create a New Account</Text>
-        </View>
+      <ScrollView>
+        <View style={styles.mainContainer}>
+          {/*  Title */}
+          <View>
+            <Text style={styles.title}>Create a New Account</Text>
+          </View>
 
-        {/* Email */}
-
-        <View style={styles.emailFieldWrapper}>
-          <TextInput
-            label="Email"
-            value={email}
-            mode="outlined"
-            outlineColor={Color.Black}
-            activeOutlineColor={Color.Black}
-            autoCapitalize="none"
-            textContentType="emailAddress"
-            keyboardType="email-address"
-            returnKeyType="next"
-            style={{ height: 50, backgroundColor: Color.GrayLight }}
-            error={false}
-            errorText={"TESTING"}
-            onChangeText={(text) => {
-              if (emailError.isTriggered === false) {
-                const updatedEmailError = {
-                  isTriggered: true,
-                  message: "Please enter a valid email.",
-                };
-                setEmailError(updatedEmailError);
-              }
-              validateEmail(text);
-              return setEmail(text);
-            }}
-          />
-          <Text style={styles.emailErrorMessage}>
-            {emailError.isTriggered && emailError.message}
+          <Text style={styles.subtitle}>
+            Let's start with some facts about you
           </Text>
+          {imageUri === "" && (
+            <>
+              <View style={styles.avatarContainer}>
+                {/* <View style={styles.mainContainer}>
+              {imageUri === "" && (
+                <TouchableOpacity
+                  onPress={async () => {
+                    await selectImage(setImageUri);
+                  }}
+                >
+                  <View
+                    backgroundColor="#fff"
+                    style={styles.imagePlaceholderBackground}
+                  >
+                    <View style={styles.imageLogo}>
+                      <IconButton
+                        icon="camera"
+                        color={Color.PrimaryMain}
+                        size={100}
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+
+              {imageUri !== "" && (
+                <View style={styles.imageBackground}>
+                  <Text style={{ fontWeight: "bold", textAlign: "center" }}>
+                    Profile Photo
+                  </Text>
+
+                  <Image
+                    source={{ uri: imageUri }}
+                    style={styles.selectedPhoto}
+                  />
+
+                  <View style={styles.imageOverlay}></View>
+                  <Button color={Color.PrimaryMain} onPress={deleteImage}>
+                    Delete
+                  </Button>
+                </View>
+              )}
+            </View> */}
+
+                <Avatar.Icon
+                  size={120}
+                  icon="account"
+                  backgroundColor={Color.GrayMedium}
+                  color={Color.GrayDark}
+                  style={styles.avatar}
+                />
+              </View>
+              <TouchableOpacity
+                onPress={async () => {
+                  await selectImage(setImageUri);
+                }}
+              >
+                <View style={styles.icon}>
+                  <IconButton
+                    icon="camera"
+                    mode="contained"
+                    color={Color.White}
+                    size={33}
+                  />
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+          {imageUri !== "" && (
+            <>
+              <View style={styles.avatarContainer}>
+                <Avatar.Image
+                  size={120}
+                  source={{ uri: imageUri }}
+                  style={styles.avatar}
+                />
+              </View>
+              <TouchableOpacity onPress={deleteImage}>
+                <View style={styles.icon}>
+                  <IconButton
+                    icon="trash-can"
+                    mode="contained"
+                    color={Color.White}
+                    size={33}
+                  />
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+
+          {/* Email */}
+          <View style={styles.inputContainer}>
+            <View style={styles.emailFieldWrapper}>
+              <TextInput
+                theme={{
+                  roundness: 25,
+                  colors: {
+                    placeholder: Color.TextMute,
+                  },
+                }}
+                label="Email"
+                value={email}
+                mode="outlined"
+                outlineColor={Color.GrayDark}
+                activeOutlineColor="gray"
+                autoCapitalize="none"
+                textContentType="emailAddress"
+                keyboardType="email-address"
+                returnKeyType="next"
+                style={{ height: 50, backgroundColor: Color.GrayLight }}
+                error={false}
+                errorText={"TESTING"}
+                onChangeText={(text) => {
+                  if (emailError.isTriggered === false) {
+                    const updatedEmailError = {
+                      isTriggered: true,
+                      message: "Please enter a valid email.",
+                    };
+                    setEmailError(updatedEmailError);
+                  }
+                  validateEmail(text);
+                  return setEmail(text);
+                }}
+              />
+              <Text style={styles.emailErrorMessage}>
+                {emailError.isTriggered && emailError.message}
+              </Text>
+            </View>
+
+            {/* Username */}
+
+            <View style={styles.usernameFieldWrapper}>
+              <TextInput
+                theme={{
+                  roundness: 25,
+                  colors: {
+                    placeholder: Color.TextMute,
+                  },
+                }}
+                label="Username"
+                value={username}
+                mode="outlined"
+                outlineColor={Color.GrayDark}
+                activeOutlineColor="gray"
+                autoCapitalize="none"
+                keyboardType="default"
+                returnKeyType="next"
+                style={{ height: 50, backgroundColor: Color.GrayLight }}
+                onChangeText={handleUsername}
+              />
+            </View>
+
+            {/*  Password */}
+
+            <View style={styles.passwordFieldWrapper}>
+              <TextInput
+                theme={{
+                  roundness: 25,
+                  colors: {
+                    placeholder: Color.TextMute,
+                  },
+                }}
+                label="Password"
+                value={password}
+                mode="outlined"
+                outlineColor={Color.GrayDark}
+                activeOutlineColor="gray"
+                textContentType="password"
+                secureTextEntry={true}
+                style={{ height: 50, backgroundColor: Color.GrayLight }}
+                onChangeText={(text) => setPassword(text)}
+              />
+            </View>
+
+            {/*  Second Password */}
+
+            <View style={styles.secondPasswordFieldWrapper}>
+              <TextInput
+                theme={{
+                  roundness: 25,
+                  colors: {
+                    placeholder: Color.TextMute,
+                  },
+                }}
+                label="Password (retype)"
+                value={secondPassword}
+                mode="outlined"
+                outlineColor={Color.GrayDark}
+                activeOutlineColor="gray"
+                textContentType="password"
+                secureTextEntry={true}
+                style={{ height: 50, backgroundColor: Color.GrayLight }}
+                onChangeText={(text) => setSecondPassword(text)}
+              />
+            </View>
+
+            {/* Register Button */}
+
+            <View style={styles.registerBottomWrapper}>
+              <LongButton
+                buttonHandler={() => handleRegister()}
+                buttonColor={Color.PrimaryMain}
+                buttonText={"Next"}
+                customStyle={{ width: "100%" }}
+              />
+              {/* <Button
+                mode="contained"
+                uppercase={false}
+                color={Color.PrimaryMain}
+                style={{ borderRadius: 10 }}
+                labelStyle={{
+                  fontWeight: "bold",
+                  fontSize: 18,
+                }}
+                contentStyle={{
+                  padding: 5,
+                }}
+                onPress={() => handleRegister()}
+              >
+                Next
+              </Button> */}
+
+              {/*  Already have an account? */}
+
+              <Text style={styles.registerText}>
+                Already have an account?{" "}
+                <Text
+                  style={styles.registerLink}
+                  onPress={() => navigation.navigate("SignIn")}
+                >
+                  Sign In
+                </Text>
+              </Text>
+            </View>
+          </View>
         </View>
-
-        {/* Username */}
-
-        <View style={styles.usernameFieldWrapper}>
-          <TextInput
-            label="Username"
-            value={username}
-            mode="outlined"
-            outlineColor={Color.Black}
-            activeOutlineColor={Color.Black}
-            autoCapitalize="none"
-            keyboardType="default"
-            returnKeyType="next"
-            style={{ height: 50, backgroundColor: Color.GrayLight }}
-            onChangeText={handleUsername}
-          />
-        </View>
-
-        {/*  Password */}
-
-        <View style={styles.passwordFieldWrapper}>
-          <TextInput
-            label="Password"
-            value={password}
-            mode="outlined"
-            outlineColor={Color.Black}
-            activeOutlineColor={Color.Black}
-            textContentType="password"
-            secureTextEntry={true}
-            style={{ height: 50, backgroundColor: Color.GrayLight }}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </View>
-
-        {/*  Second Password */}
-
-        <View style={styles.secondPasswordFieldWrapper}>
-          <TextInput
-            label="Password (retype)"
-            value={secondPassword}
-            mode="outlined"
-            outlineColor={Color.Black}
-            activeOutlineColor={Color.Black}
-            textContentType="password"
-            secureTextEntry={true}
-            style={{ height: 50, backgroundColor: Color.GrayLight }}
-            onChangeText={(text) => setSecondPassword(text)}
-          />
-        </View>
-
-        {/* Register Button */}
-
-        <View style={styles.registerBottomWrapper}>
-          <Button
-            mode="contained"
-            uppercase={false}
-            color={Color.PrimaryMain}
-            style={{ borderRadius: 10 }}
-            labelStyle={{
-              fontWeight: "bold",
-              fontSize: 18,
-            }}
-            contentStyle={{
-              padding: 5,
-            }}
-            onPress={() => handleRegister()}
-          >
-            Next
-          </Button>
-
-          {/*  Already have an account? */}
-
-          <Text style={styles.registerText}>
-            Already have an account?{" "}
-            <Text
-              style={styles.registerLink}
-              onPress={() => navigation.navigate("SignIn")}
-            >
-              Sign In
-            </Text>
-          </Text>
-        </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -225,32 +356,43 @@ const styles = StyleSheet.create({
     backgroundColor: Color.White,
   },
   mainContainer: {
-    height: "95%",
-    position: "relative",
-    paddingTop: "15%",
-    display: "flex",
+    // height: "95%",
+    // position: "relative",
+    paddingTop: 20,
+    // display: "flex",
+    // justifyContent: "center",
+    // backgroundColor: "red",
+    padding: 10,
+  },
+  inputContainer: {
+    top: -40,
+    height: "60%",
+    // backgroundColor: "yellow",
     justifyContent: "space-around",
   },
   title: {
-    // position: "absolute",
-    width: 305,
-    height: 34,
-    // top: 125,
+    width: "90%",
+    fontFamily: "Mulish_900Black",
     fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
     marginHorizontal: 20,
-    letterSpacing: 0.36,
     alignSelf: "center",
+  },
+  subtitle: {
+    width: "90%",
+    textAlign: "center",
+    marginHorizontal: 20,
+    color: Color.Text,
+    fontSize: 16,
+    marginVertical: 8,
   },
   emailFieldHeader: {
     marginBottom: 10,
   },
   emailFieldWrapper: {
-    // position: "absolute",
-    width: 315,
+    width: "90%",
     height: 74,
-    // top: 304,
     alignSelf: "center",
   },
   emailErrorMessage: {
@@ -258,42 +400,62 @@ const styles = StyleSheet.create({
     color: Color.PrimaryMain,
   },
   usernameFieldWrapper: {
-    // position: "absolute",
-    width: 315,
+    width: "90%",
     height: 74,
-    // top: 200,
     alignSelf: "center",
   },
   passwordFieldWrapper: {
-    // position: "absolute",
-    width: 315,
+    width: "90%",
     height: 70,
-    // top: 400,
     alignSelf: "center",
   },
   secondPasswordFieldWrapper: {
-    // position: "absolute",
-    width: 315,
+    width: "90%",
     height: 70,
-    // top: 500,
     alignSelf: "center",
   },
   registerBottomWrapper: {
-    // position: "absolute",
-    width: 315,
-    height: 101,
-    // top: 600,
-    borderRadius: 10,
-    marginHorizontal: 20,
-    justifyContent: "space-between",
+    marginTop: 12,
+    width: "90%",
+
     alignSelf: "center",
   },
   registerText: {
+    marginTop: 8,
     alignSelf: "center",
     fontWeight: "500",
-    color: Color.Text,
+    color: Color.TextMute,
   },
   registerLink: {
     color: Color.PrimaryMain,
+    fontWeight: "700",
+  },
+  avatarContainer: {
+    marginTop: 10,
+    flexDirection: "column",
+    // paddingTop: 30,
+    // width: "100%",
+    // height: "30%",
+    // justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: "blue",
+  },
+  avatar: {
+    // marginTop: 40,
+    position: "relative",
+    // alignSelf: "center",
+  },
+  icon: {
+    position: "aboslute",
+    top: "-90%",
+    left: "55%",
+    // top: -50,
+    // left: 50,
+    width: 50,
+    height: 50,
+    backgroundColor: Color.PrimaryMain,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
   },
 });

@@ -17,14 +17,14 @@ const LongButton = ({
       style={{
         borderRadius: 25,
         width: "90%",
-        height: 55,
+        height: 48,
         marginVertical: 5,
         alignSelf: "center",
         ...customStyle,
       }}
       labelStyle={{
-        fontWeight: "700",
-        fontSize: 20,
+        fontWeight: "600",
+        fontSize: 16,
         color: buttonTextColor || "#fff",
         letterSpacing: 0.5,
       }}
