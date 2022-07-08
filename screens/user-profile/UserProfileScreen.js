@@ -135,7 +135,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                     ]}
                     icon="account"
                     size={250}
-                    onLoadEnd={fadeAnimation}
+                    // onLoadEnd={fadeAnimation}
                   />
                 )}
               </Animated.View>
@@ -147,7 +147,7 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Username */}
 
               <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>{userData?.username}</Text>
+                <Text style={styles.userFullName}>{userData?.username || " "}</Text>
 
                 {/* Edit Profile button */}
 

@@ -53,25 +53,36 @@ const EventCard = ({
       theme={{ roundness: 10 }}
     >
       <TouchableOpacity onPress={handlePress}>
+        {/* Event image */}
+
         {event.imageUrl && (
-          <Card.Cover
-            source={{ uri: event.imageUrl }}
-            style={{
-              height: 160,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-            }}
-          />
+          <Animated.View style={{ opacity }}>
+            <Card.Cover
+              source={{ uri: event.imageUrl }}
+              style={{
+                height: 160,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+              }}
+              onLoadEnd={fadeAnimation}
+            />
+          </Animated.View>
         )}
+
+        {/* Event image (default) */}
+
         {!event.imageUrl && (
-          <Card.Cover
-            source={require("../assets/images/demo/defaultEvent.jpeg")}
-            style={{
-              height: 160,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-            }}
-          />
+          <Animated.View style={{ opacity }}>
+            <Card.Cover
+              source={require("../assets/images/demo/defaultEvent.jpeg")}
+              style={{
+                height: 160,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+              }}
+              onLoadEnd={fadeAnimation}
+            />
+          </Animated.View>
         )}
         <Card.Content style={styles.contentContainer}>
           <View style={styles.leftContent}>
