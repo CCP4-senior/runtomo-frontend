@@ -13,6 +13,7 @@ import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import axiosInstance from "../../helpers/axios.js";
 import LoadingSpinner from "../../components/LoadingSpinner.js";
+import { set } from "date-fns";
 
 const PersonalEventScreen = ({ navigation }) => {
   const {
@@ -45,10 +46,14 @@ const PersonalEventScreen = ({ navigation }) => {
   const [allUserSessions, setAllUserSessions] = useState([]);
   const [allUserCreatedSessions, setAllUserCreatedSessions] = useState([]);
   const [allUserJoinedSessions, setAllUserJoinedSessions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (currentUser) {
-      setSessions();
+      setSessions().then((value) => {
+        setIsLoading(false);
+      });
+      
       handleFilter(status);
     }
   }, []);
@@ -102,6 +107,10 @@ const PersonalEventScreen = ({ navigation }) => {
     setCurrentEvent(eventData);
     navigation.navigate("Event Details");
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <SafeAreaView style={styles.root}>
