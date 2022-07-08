@@ -53,21 +53,24 @@ const PersonalEventScreen = ({ navigation }) => {
     }
   }, []);
 
+  useEffect(() => {
+    handleFilter(status);
+  }, [mySessions]);
+
   const setSessions = async () => {
     const userCreatedSessions = [];
-    const idsForEventUsersRequest = [];
+    const userJoinedSessions = [];
 
     allEvents.forEach((event) => {
       if (event.creator.id === user.id) {
         userCreatedSessions.push(event);
       }
-      idsForEventUsersRequest.push(event.id);
-      // Implement logic for participating events
+      if (
+        event.participants.some((participant) => participant.id === user.id)
+      ) {
+        userJoinedSessions.push(event);
+      }
     });
-    // handle Joined sessions
-    const userJoinedSessions = await handleJoinedSessions(
-      idsForEventUsersRequest
-    );
 
     const userAllSessions = [...userCreatedSessions, ...userJoinedSessions];
 
@@ -76,32 +79,6 @@ const PersonalEventScreen = ({ navigation }) => {
     setAllUserJoinedSessions(userJoinedSessions);
     /*Initial load*/
     setMySessions(userAllSessions);
-  };
-
-  const handleJoinedSessions = async (idArray) => {
-    const idOfEventsJoined = [];
-    for (const id of idArray) {
-      try {
-        const response = await axiosInstance(`/event_users/${id}/`);
-        const data = response.data;
-        if (data.length > 0) {
-          for (const eventDetail of data) {
-            if (eventDetail.user === user.id) {
-              idOfEventsJoined.push(id);
-              break;
-            }
-          }
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-
-    const result = allEvents.filter((event) => {
-      return idOfEventsJoined.includes(event.id);
-    });
-
-    return result;
   };
 
   const handleFilter = (status) => {
