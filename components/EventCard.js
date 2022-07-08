@@ -47,66 +47,66 @@ const EventCard = ({
     : addHours(time, 9);
 
   return (
-    <Card
-      style={[isHomePageCard ? styles.homePageCard : styles.card]}
-      theme={{ roundness: 10 }}
-    >
-      <TouchableOpacity onPress={handlePress}>
-        {event.imageUrl && (
-          <Animated.View style={{ opacity }}>
-            <Card.Cover
-              source={{ uri: event.imageUrl }}
-              onLoadEnd={fadeAnimation}
-              style={{
-                height: 160,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-              }}
-            />
-          </Animated.View>
-        )}
-        {!event.imageUrl && (
-          <Animated.View style={{ opacity }}>
-            <Card.Cover
-              source={require("../assets/images/demo/defaultEvent.jpeg")}
-              onLoadEnd={fadeAnimation}
-              style={{
-                height: 160,
-                borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
-              }}
-            />
-          </Animated.View>
-        )}
-        <Card.Content style={styles.contentContainer}>
-          <View style={styles.leftContent}>
-            <Text style={styles.title}>{event.title}</Text>
-            <Text style={styles.ward}>{event.ward || "Other"}</Text>
-            <Text style={styles.date}>
-              {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
-            </Text>
-          </View>
-          {event.participants?.length !== 0 && (
-            <View style={styles.rightContent}>
-              <View
+      <Card
+        style={[isHomePageCard ? styles.homePageCard : styles.card]}
+        theme={{ roundness: 10 }}
+      >
+        <TouchableOpacity onPress={handlePress}>
+          {event.imageUrl && (
+            <Animated.View style={{ opacity }}>
+              <Card.Cover
+                source={{ uri: event.imageUrl }}
+                onLoadEnd={fadeAnimation}
                 style={{
-                  alignSelf: "center",
+                  height: 160,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
                 }}
-              >
-                <StackedAvatars
-                  color={"#11C9BD"}
-                  size={"small"}
-                  participantsArray={event.participants}
-                />
-              </View>
-              <Text style={{ color: "#11C9BD", ...styles.joinText }}>
-                {event.participants?.length} Joined
+              />
+            </Animated.View>
+          )}
+          {!event.imageUrl && (
+            <Animated.View style={{ opacity }}>
+              <Card.Cover
+                source={require("../assets/images/demo/defaultEvent.jpeg")}
+                onLoadEnd={fadeAnimation}
+                style={{
+                  height: 160,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                }}
+              />
+            </Animated.View>
+          )}
+          <Card.Content style={styles.contentContainer}>
+            <View style={styles.leftContent}>
+              <Text style={styles.title}>{event.title}</Text>
+              <Text style={styles.ward}>{event.ward || "Other"}</Text>
+              <Text style={styles.date}>
+                {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
               </Text>
             </View>
-          )}
-        </Card.Content>
-      </TouchableOpacity>
-    </Card>
+            {event.participants?.length !== 0 && (
+              <View style={styles.rightContent}>
+                <View
+                  style={{
+                    alignSelf: "center",
+                  }}
+                >
+                  <StackedAvatars
+                    color={"#11C9BD"}
+                    size={"small"}
+                    participantsArray={event.participants}
+                  />
+                </View>
+                <Text style={{ color: "#11C9BD", ...styles.joinText }}>
+                  {event.participants?.length} Joined
+                </Text>
+              </View>
+            )}
+          </Card.Content>
+        </TouchableOpacity>
+      </Card>
   );
 };
 
