@@ -119,6 +119,7 @@ const SettingScreen = ({ navigation }) => {
                     // source={require("../../assets/images/demo/wade.png")}
                     source={{ uri: user.imageUrl }}
                     onLoadEnd={fadeAnimation}
+                    backgroundColor={Color.GrayDark}
                   />
                 )}
                 {!user.imageUrl && (

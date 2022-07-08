@@ -103,21 +103,24 @@ const UserProfileScreen = ({ navigation, route }) => {
             {/* Images */}
 
             <View style={styles.imageContainer}>
-              {/* placeholder image, to be updated */}
-              <ImageBackground
+              {/* Leave for now, may add background image back later */}
+              {/* <ImageBackground
                 style={styles.backgroundImage}
-                imageStyle={{ opacity: 0.75 }}
+                imageStyle={{ opacity: 0.4 }}
                 source={require("../../assets/images/backgroundProfile.png")}
                 resizeMode="cover"
               >
-                <Animated.View style={[styles.backgroundImage, {opacity}]}>
+              </ImageBackground>  */}
+              <Animated.View style={{opacity}}>
+                
                 {/* Profile picture */}
                 {userData?.imageUrl && (
                   <Avatar.Image
-                    style={[styles.profilePicture]}
+                    style={styles.profilePicture}
                     source={{ uri: userData?.imageUrl }}
                     size={200}
                     onLoadEnd={fadeAnimation}
+                    backgroundColor={Color.GrayDark}
                   />
                 )}
 
@@ -129,7 +132,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                       styles.profilePicture,
                       {
                         backgroundColor: Color.GrayDark,
-                      },
+                      }
                     ]}
                     icon="account"
                     size={250}
@@ -137,7 +140,6 @@ const UserProfileScreen = ({ navigation, route }) => {
                   />
                 )}
                 </Animated.View>
-              </ImageBackground>
             </View>
 
             {/* User information */}
@@ -237,17 +239,13 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: "100%",
-    height: 250,
+    height: 200,
   },
   profilePicture: {
     width: 200,
     maxHeight: 200,
     borderRadius: 200 / 2,
-    borderWidth: 2,
-    borderColor: Color.Black,
-    alignSelf: "center",
-    marginTop: "auto",
-    marginBottom: "auto",
+    marginTop: 30,
     overflow: "hidden",
   },
   userInfoContainer: {
@@ -294,5 +292,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Color.Black,
     fontWeight: "500",
+  },
+  shadowProp: {
+    shadowColor: '#171717',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
 });
