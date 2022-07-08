@@ -110,7 +110,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 source={require("../../assets/images/backgroundProfile.png")}
                 resizeMode="cover"
               >
-                <Animated.View style={[styles.imageContainer, {opacity}]}>
+                <Animated.View style={[styles.backgroundImage, {opacity}]}>
                 {/* Profile picture */}
                 {userData?.imageUrl && (
                   <Avatar.Image

@@ -110,6 +110,10 @@ const UserProfileEditScreen = ({ navigation, route }) => {
           />
         </View>
 
+        <Image
+        style={styles.image}
+        source={require('../../assets/images/runner.svg')}/>
+
         {/* Email */}
 
         <View style={styles.field}>
