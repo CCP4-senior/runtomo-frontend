@@ -273,14 +273,21 @@ const EventDetailsScreen = ({ navigation }) => {
                         {format(new Date(zonedDate), "E, MMM d, yyyy")}
                       </Text>
                       <Text style={styles.thinText}>
-                        {format(new Date(zonedTime), "p")} to{" "}
-                        {format(
+                        {eventData.running_duration <= 60 &&
+                          `${format(new Date(zonedTime), "p")} to
+                        ${format(
                           addMinutes(
                             new Date(zonedTime),
                             Number(eventData.running_duration)
                           ),
                           "p"
-                        )}
+                        )}`}
+                        {eventData.running_duration > 60 &&
+                          `Minimum of 1 hr from ${format(
+                            new Date(zonedTime),
+                            "p"
+                          )}
+                       `}
                       </Text>
                     </View>
                   </View>

@@ -28,15 +28,9 @@ import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
+import runningDurationArray from "../../utils/runningDuration.js";
 
 const EventCreationScreen = ({ navigation }) => {
-  const runningDurationArray = [
-    { id: 1, name: "15 mins", num: 15 },
-    { id: 2, name: "30 mins", num: 30 },
-    { id: 3, name: "1 hr", num: 60 },
-    { id: 4, name: "More", num: null },
-  ];
-
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -228,7 +222,11 @@ const EventCreationScreen = ({ navigation }) => {
                 await selectImage(setImageUri);
               }}
             >
-              <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}>Event Image</Text>
+              <Text
+                style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}
+              >
+                Event Image
+              </Text>
               <View
                 backgroundColor="#fff"
                 style={styles.imagePlaceholderBackground}
@@ -243,7 +241,9 @@ const EventCreationScreen = ({ navigation }) => {
 
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
-              <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}>Event Image</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                Event Image
+              </Text>
               <Image source={{ uri: imageUri }} style={{ height: 175 }} />
               <Button color={Color.PrimaryMain} onPress={deleteImage}>
                 Undo Selection
@@ -336,7 +336,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     width: "90%",
     paddingLeft: 8,
-    
   },
   imagePlaceholderBackground: {
     width: 98,
@@ -358,7 +357,8 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: "90%",
     padding: 10,
-    paddingTop: 25,
+    paddingTop: 40,
+    paddingBottom: 40,
     height: 230,
     backgroundColor: Color.White,
     alignSelf: "center",

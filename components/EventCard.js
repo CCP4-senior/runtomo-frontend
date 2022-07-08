@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import StackedAvatars from "../screens/event-details/StackedAvatars";
 import { addHours, format } from "date-fns";
 import { DataContext } from "../context/datacontext/DataContext";
+import runningDurationArray from "../utils/runningDuration";
 
 const EventCard = ({
   event,
@@ -57,10 +58,22 @@ const EventCard = ({
         )}
         <Card.Content style={styles.contentContainer}>
           <View style={styles.leftContent}>
-            <Text style={styles.title}>{event.title}</Text>
-            <Text style={styles.ward}>{event.ward || "Other"}</Text>
             <Text style={styles.date}>
-              {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
+              {format(zonedDate, "E, MMM d, yyyy")} at {format(zonedTime, "p")}
+            </Text>
+            <Text style={styles.title}>
+              {event.title.slice(0, 20)}
+              {event.title.length > 20 && "..."}
+            </Text>
+            <Text style={styles.ward}>
+              {event.ward || "Other"}
+              {event.running_duration
+                ? ` - ${
+                    runningDurationArray.find(
+                      (el) => +el.num === event.running_duration
+                    ).name
+                  } run`
+                : ""}
             </Text>
           </View>
           {event.participants?.length !== 0 && (
@@ -103,20 +116,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   title: {
-    paddingTop: 8,
+    paddingTop: 3,
     paddingBottom: 3,
     fontSize: 16,
     fontWeight: "700",
     color: "#363D4E",
   },
   ward: {
-    paddingLeft: 3,
-    paddingBottom: 2,
+    // paddingLeft: 3,
+    // paddingBottom: 2,
     fontSize: 12,
     color: "#4E4B66",
   },
   date: {
-    paddingLeft: 2,
+    // paddingLeft: 2,
     fontSize: 12,
     color: "#FA4048",
   },
@@ -124,12 +137,16 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingTop: 12,
+    paddingBottom: 8,
   },
   leftContent: {
     width: "60%",
   },
   rightContent: {
-    height: 60,
+    // height: 60,
+    // paddingTop: 8,
+    // paddingBottom: 8,
     display: "flex",
     justifyContent: "flex-end",
   },
