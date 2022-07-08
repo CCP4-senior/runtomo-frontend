@@ -9,7 +9,7 @@ import {
   ImageBackground,
   Icon,
   ScrollView,
-  Animated
+  Animated,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
@@ -111,8 +111,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 resizeMode="cover"
               >
               </ImageBackground>  */}
-              <Animated.View style={{opacity}}>
-                
+              <Animated.View style={{ opacity }}>
                 {/* Profile picture */}
                 {userData?.imageUrl && (
                   <Avatar.Image
@@ -132,14 +131,14 @@ const UserProfileScreen = ({ navigation, route }) => {
                       styles.profilePicture,
                       {
                         backgroundColor: Color.GrayDark,
-                      }
+                      },
                     ]}
                     icon="account"
                     size={250}
                     onLoadEnd={fadeAnimation}
                   />
                 )}
-                </Animated.View>
+              </Animated.View>
             </View>
 
             {/* User information */}
@@ -292,11 +291,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Color.Black,
     fontWeight: "500",
-  },
-  shadowProp: {
-    shadowColor: '#171717',
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
 });

@@ -88,7 +88,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>

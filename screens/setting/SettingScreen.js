@@ -68,7 +68,7 @@ const SettingScreen = ({ navigation }) => {
 
   const openProfileScreen = (eventData) => {
     const userToView = user;
-    RootNavigation.navigate("Profile", { userToView } );
+    RootNavigation.navigate("Profile", { userToView });
   };
 
   return (
@@ -112,11 +112,10 @@ const SettingScreen = ({ navigation }) => {
         >
           <Card.Content>
             <View style={styles.cardContent}>
-              <Animated.View style={[styles.avatar, {opacity}]}>
+              <Animated.View style={[styles.avatar, { opacity }]}>
                 {user.imageUrl && (
                   <Avatar.Image
                     size={60}
-                    // source={require("../../assets/images/demo/wade.png")}
                     source={{ uri: user.imageUrl }}
                     onLoadEnd={fadeAnimation}
                     backgroundColor={Color.GrayDark}

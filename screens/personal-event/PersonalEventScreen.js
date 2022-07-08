@@ -53,7 +53,7 @@ const PersonalEventScreen = ({ navigation }) => {
       setSessions().then((value) => {
         setIsLoading(false);
       });
-      
+
       handleFilter(status);
     }
   }, []);
