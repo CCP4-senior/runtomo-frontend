@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Icon,
   ScrollView,
+  Animated
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
@@ -39,6 +40,16 @@ const UserProfileScreen = ({ navigation, route }) => {
   const [userData, setUserData] = useState(null);
 
   const controller = new AbortController();
+
+  const [opacity, setOpacity] = useState(new Animated.Value(0));
+
+  const fadeAnimation = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const getAndSetUserData = async (id) => {
     try {
@@ -99,12 +110,14 @@ const UserProfileScreen = ({ navigation, route }) => {
                 source={require("../../assets/images/backgroundProfile.png")}
                 resizeMode="cover"
               >
+                <Animated.View style={[styles.imageContainer, {opacity}]}>
                 {/* Profile picture */}
                 {userData?.imageUrl && (
                   <Avatar.Image
                     style={[styles.profilePicture]}
                     source={{ uri: userData?.imageUrl }}
                     size={200}
+                    onLoadEnd={fadeAnimation}
                   />
                 )}
 
@@ -120,8 +133,10 @@ const UserProfileScreen = ({ navigation, route }) => {
                     ]}
                     icon="account"
                     size={250}
+                    onLoadEnd={fadeAnimation}
                   />
                 )}
+                </Animated.View>
               </ImageBackground>
             </View>
 
