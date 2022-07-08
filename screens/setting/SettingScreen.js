@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 import {
   Card,
   Title,
@@ -23,6 +23,16 @@ const SettingScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [dialogType, setDialogType] = useState("confirmation");
   const { user, setUser, signOutUser } = useContext(AuthContext);
+
+  const [opacity, setOpacity] = useState(new Animated.Value(0));
+
+  const fadeAnimation = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
 
   const showDialog = () => setVisible(true);
   const hideDialog = () => {
@@ -102,12 +112,13 @@ const SettingScreen = ({ navigation }) => {
         >
           <Card.Content>
             <View style={styles.cardContent}>
-              <View style={styles.avatar}>
+              <Animated.View style={[styles.avatar, {opacity}]}>
                 {user.imageUrl && (
                   <Avatar.Image
                     size={60}
                     // source={require("../../assets/images/demo/wade.png")}
                     source={{ uri: user.imageUrl }}
+                    onLoadEnd={fadeAnimation}
                   />
                 )}
                 {!user.imageUrl && (
@@ -117,7 +128,7 @@ const SettingScreen = ({ navigation }) => {
                     style={{ backgroundColor: Color.GrayDark }}
                   />
                 )}
-              </View>
+              </Animated.View>
               <View style={styles.accountDetails}>
                 <Title style={styles.cardTopTitle}>{user.username}</Title>
                 <Paragraph style={styles.paragraph}>{user.email}</Paragraph>
