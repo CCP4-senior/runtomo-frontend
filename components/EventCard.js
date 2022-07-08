@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
 import { Card } from "react-native-paper";
 import StackedAvatars from "../screens/event-details/StackedAvatars";
 import { addHours, format } from "date-fns";
 import { DataContext } from "../context/datacontext/DataContext";
+import runningDurationArray from "../utils/runningDuration";
 
 const EventCard = ({
   event,
@@ -57,10 +58,24 @@ const EventCard = ({
         )}
         <Card.Content style={styles.contentContainer}>
           <View style={styles.leftContent}>
-            <Text style={styles.title}>{event.title}</Text>
-            <Text style={styles.ward}>{event.ward || "Other"}</Text>
             <Text style={styles.date}>
-              {format(zonedDate, "MMM d, yyyy")} at {format(zonedTime, "p")}
+              {format(zonedDate, "E, MMM d, yyyy")} at {format(zonedTime, "p")}
+            </Text>
+            <Text style={styles.title}>
+              {event.title.slice(0, 55)}
+              {event.title.length > 55 && "..."}
+            </Text>
+            <Text style={styles.ward}>
+              {event.ward || "Other"}
+              {event.running_duration
+                ? event.running_duration === 90
+                  ? " | 1+ hr"
+                  : ` | ${
+                      runningDurationArray.find(
+                        (el) => +el.num === event.running_duration
+                      ).name
+                    }`
+                : ""}
             </Text>
           </View>
           {event.participants?.length !== 0 && (
@@ -93,43 +108,43 @@ const styles = StyleSheet.create({
   card: {
     width: "90%",
     marginBottom: 10,
-    height: 270,
     marginTop: 10,
+    minHeight: 275,
   },
   homePageCard: {
     width: "100%",
     marginBottom: 8,
-    height: 240,
+    minHeight: 230,
     marginTop: 10,
   },
   title: {
-    paddingTop: 8,
+    paddingTop: 3,
     paddingBottom: 3,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "700",
     color: "#363D4E",
   },
   ward: {
-    paddingLeft: 3,
-    paddingBottom: 2,
     fontSize: 12,
     color: "#4E4B66",
   },
   date: {
-    paddingLeft: 2,
     fontSize: 12,
     color: "#FA4048",
   },
   contentContainer: {
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    paddingTop: 8,
+    paddingBottom: 8,
   },
   leftContent: {
-    width: "60%",
+    width: "65%",
   },
   rightContent: {
-    height: 60,
+    width: "35%",
     display: "flex",
     justifyContent: "flex-end",
   },
