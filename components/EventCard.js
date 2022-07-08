@@ -68,7 +68,7 @@ const EventCard = ({
             <Text style={styles.ward}>
               {event.ward || "Other"}
               {event.running_duration
-                ? ` - ${
+                ? ` | ${
                     runningDurationArray.find(
                       (el) => +el.num === event.running_duration
                     ).name
