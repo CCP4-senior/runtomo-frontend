@@ -18,7 +18,7 @@ const BottomTabNavigator = () => {
           let iconName;
 
           if (route.name === "Home Page") {
-            iconName = "ios-home";
+            // iconName = "ios-home";
           }
           if (route.name === "My Sessions Main Page") {
             // iconName = "walk";
@@ -37,7 +37,23 @@ const BottomTabNavigator = () => {
         name="Home Page"
         options={{
           headerShown: false,
-          title: "Home",
+          title: "Discover",
+          tabBarIcon: ({ size, focused, color }) => {
+            if (focused) {
+              return (
+                <Image
+                  style={{ width: size, height: size }}
+                  source={require("../assets/images/home-variant-orange.png")}
+                />
+              );
+            } else
+              return (
+                <Image
+                  style={{ width: size, height: size }}
+                  source={require("../assets/images/home-variant.png")}
+                />
+              );
+          },
         }}
       >
         {(props) => <HomeNavigator {...props} />}

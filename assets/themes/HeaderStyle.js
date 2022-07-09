@@ -8,6 +8,7 @@ const HeaderStyle = {
   headerTintColor: Color.HeaderTitle,
   headerTitleStyle: {
     fontWeight: "bold",
+    fontFamily: "Mulish_900Black",
   },
 };
 
