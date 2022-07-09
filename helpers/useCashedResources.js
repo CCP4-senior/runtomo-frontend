@@ -18,6 +18,9 @@ export default function useCachedResources() {
         if (fontsLoaded) {
           setLoadingComplete(true);
           SplashScreen.hideAsync();
+          // setTimeout(() => {
+          //   SplashScreen.hideAsync();
+          // }, 1000);
         }
       }
     }

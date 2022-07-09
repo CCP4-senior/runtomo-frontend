@@ -17,12 +17,14 @@ const AuthSelection = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../../assets/images/splash.png")}
-        style={styles.image}
-      />
+      <View style={styles.imageContainer}>
+        <Image
+          source={require("../../assets/images/splash.png")}
+          style={styles.image}
+        />
+      </View>
       <LinearGradient
-        colors={["rgba(255, 180, 67, 0.9)", "rgba(255, 62, 12, 0.9)"]}
+        colors={["rgba(255, 180, 67, 0.8)", "rgba(255, 62, 12, 0.8)"]}
         style={styles.overlay}
       ></LinearGradient>
       <View style={styles.logoContainer}>
@@ -148,6 +150,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  imageContainer: {
+    position: "absolute",
+    height: "60%",
+    width: "100%",
+    top: 0,
+    // alignItems: "center",
+  },
   image: {
     width: "100%",
     height: "100%",
@@ -169,8 +178,9 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: "absolute",
-    width: 119,
-    height: 148,
+    top: "29%",
+    width: 157,
+    height: 205,
   },
   lowerContainer: {
     position: "absolute",
