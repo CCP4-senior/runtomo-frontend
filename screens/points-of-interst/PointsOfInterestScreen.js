@@ -92,31 +92,14 @@ const PointsOfInterestScreen = () => {
 export default PointsOfInterestScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.Fill,
-    padding: 10,
-    alignItems: "center",
-    overflow: "visible",
-  },
-  mapContainer: {
-    backgroundColor: Color.White,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  card: {
-    width: "100%",
-    height: "auto",
-    marginBottom: 20,
-    paddingBottom: 12,
-  },
   eventTitle: {
-    fontSize: 25,
-    fontWeight: "700",
-    color: Color.PrimaryMain,
+    fontSize: 20,
+    fontWeight: "900",
+    color: "#484848",
+    textAlign: "center",
   },
   map: {
-    height: 500,
+    height: 600,
     width: "100%",
     alignSelf: "center",
     marginTop: 12,
