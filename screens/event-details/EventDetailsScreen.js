@@ -73,7 +73,9 @@ const EventDetailsScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getAllParticipants();
+    if (eventData.participants !== undefined) {
+      getAllParticipants();
+    }
     setLatitudeAndLongitude();
   }, []);
 
@@ -325,9 +327,7 @@ const EventDetailsScreen = ({ navigation }) => {
                       <Text style={styles.boldText}>
                         {eventData.ward || "Other"}
                       </Text>
-                      {eventData.participants.some(
-                        (participant) => participant.id === user.id
-                      ) || eventData.creator.id === user.id ? (
+                      {eventData.creator.id === user.id || hasJoined ? (
                         <Text style={styles.thinText}>
                           Exact location address below
                         </Text>
@@ -344,9 +344,7 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.thinText}>{eventData.description}</Text>
                   </View>
 
-                  {eventData.participants.some(
-                    (participant) => participant.id === user.id
-                  ) || eventData.creator.id === user.id ? (
+                  {hasJoined || eventData.creator.id === user.id ? (
                     <View style={styles.section}>
                       <Text style={styles.sectionTitle}>Location:</Text>
                       <Text style={styles.thinText}>{eventData.location}</Text>
@@ -355,9 +353,7 @@ const EventDetailsScreen = ({ navigation }) => {
 
                   {/* <View style={styles.mapContainer}> */}
                   <Animated.View style={[styles.mapContainer, { opacity }]}>
-                    {eventData.participants.some(
-                      (participant) => participant.id === user.id
-                    ) || eventData.creator.id === user.id ? (
+                    {hasJoined || eventData.creator.id === user.id ? (
                       <MapView
                         key={`${eventData.id}${Date.now()}`}
                         style={styles.map}
