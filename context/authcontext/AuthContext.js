@@ -53,6 +53,7 @@ const AuthProvider = ({ children }) => {
     email,
     password,
     image,
+    description,
   }) => {
     try {
       const body = {
@@ -62,12 +63,13 @@ const AuthProvider = ({ children }) => {
         estimated10k,
         userId,
         image,
+        description,
       };
       const userProfileResponse = await axiosInstance.post(
         "/users/profile",
         body
       );
-      await signInUser({ email, password });
+      // await signInUser({ email, password });
     } catch (e) {
       Alert.alert("Error", e.response.data, [
         {

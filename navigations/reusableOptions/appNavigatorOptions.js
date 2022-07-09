@@ -13,19 +13,21 @@ import MapView, {
 const createOptions = (
   settingPressHandler,
   messagePressaHandler,
-  showPointsOfInterest
+  showPointsOfInterest,
+  title
 ) => {
   const options = {
     ...HeaderStyle,
+    title: title,
     headerRight: () => {
       return showPointsOfInterest ? (
-      <TouchableOpacity
-        style={[styles.iconContainer, styles.menu]}
-        onPress={messagePressaHandler}
-      >
-        <IconButton icon="map" size={25} color="grey" />
-      </TouchableOpacity>
-      ) : null
+        <TouchableOpacity
+          style={[styles.iconContainer, styles.menu]}
+          onPress={messagePressaHandler}
+        >
+          <IconButton icon="map" size={25} color="grey" />
+        </TouchableOpacity>
+      ) : null;
     },
     headerLeft: () => (
       <TouchableOpacity

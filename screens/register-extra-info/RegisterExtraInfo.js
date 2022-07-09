@@ -1,26 +1,21 @@
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Text,
-  Linking,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { Button, TextInput, Chip } from "react-native-paper";
+import { StyleSheet, View, SafeAreaView, ScrollView, Text } from "react-native";
+import React, { useContext, useState } from "react";
+import { Button, TextInput, Provider, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import Color from "../../assets/themes/Color.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import DatePicker from "../event-creation/DatePicker.js";
-import { es } from "date-fns/locale";
+import LongButton from "../../components/LongButton.js";
+import SuccessModal from "./SuccessModal.js";
+import resizeImage from "../../helpers/resizeImage.js";
+import uploadImage from "../../helpers/uploadImage.js";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
-  const { /*user, createUserProfile,*/ idForProfile, setUserToBeRegistered } =
+  const { setUserToBeRegistered, createUser, createUserProfile } =
     useContext(AuthContext);
 
-  const { username, email, password } = route.params;
+  const { username, email, password, imageUri } = route.params;
 
   const [date, setDate] = useState("");
   const [estimated5k, setEstimated5k] = useState("");
@@ -29,8 +24,10 @@ const RegisterExtraInfo = ({ route }) => {
   const [submitted, setSubmitted] = useState(false);
 
   const [timesPerWeek, setTimesPerWeek] = useState("");
+  const [description, setDescription] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const handlePress = () => {
+  const handlePress = async () => {
     // age validation
     if (!date) {
       return alert("Please enter date of birth");
@@ -61,13 +58,14 @@ const RegisterExtraInfo = ({ route }) => {
       run_frequency: timesPerWeek,
       estimated5k: estimated5k,
       estimated10k: estimated10k,
-      userId: idForProfile,
       email: email,
       password: password,
+      description: description,
     };
 
-    setUserToBeRegistered(userProfileData);
-    navigation.navigate("ProfilePhoto", { username, email, password });
+    await setUserToBeRegistered(userProfileData);
+    await register(userProfileData);
+    setModalVisible(true);
   };
 
   const handleTPWBtnClick = (buttonValue) => {
@@ -102,373 +100,480 @@ const RegisterExtraInfo = ({ route }) => {
     }
   };
 
+  const register = async (userProfileData) => {
+    const newUri = await resizeImage(imageUri, 300);
+    const imageRef = await uploadImage("profiles", newUri);
+    await createUserAndProfile(imageRef, userProfileData);
+  };
+
+  const createUserAndProfile = async (imageRef, userProfileData) => {
+    try {
+      await createUser({ username, password, email, image: imageRef });
+
+      // Wait to make suer user is created in backend
+      setTimeout(async () => {
+        await createUserProfile(userProfileData);
+      }, 1000);
+    } catch (e) {
+      console.log(e.config.url);
+      alert("Something went wrong! Please try again");
+    }
+  };
+
   return (
-    <SafeAreaView style={styles.root}>
-      {/*  Title */}
-
-      <View style={styles.title}>
-        <Text style={styles.titleText}>Tell us about yourself!</Text>
-      </View>
-
-      {/* Input Fields */}
-
-      <View style={styles.inputs}>
-        {/* Age Date Picker */}
-
-        <View style={styles.dobHeader}>
-          <Text style={styles.btnText}>Date of birth</Text>
-        </View>
-        <View style={styles.datePickerContainer}>
-          <DatePicker
-            setDate={setDate}
-            date={date}
-            submitted={submitted}
-            category="date"
-            isInRegisterForm={true}
-            overWriteWidth={350}
+    <Provider>
+      <SuccessModal modalVisible={modalVisible} />
+      <SafeAreaView
+        style={{ height: "100%", width: "100%", backgroundColor: "#fff" }}
+      >
+        <View style={styles.topContainer}>
+          <IconButton
+            icon={"arrow-left"}
+            size={25}
+            style={{ position: "absolute", left: 0 }}
+            onPress={() => {
+              navigation.navigate("Register");
+            }}
           />
         </View>
+        <ScrollView style={styles.root}>
+          <View style={styles.container}>
+            {/*  Title */}
 
-        {/* Times per week buttons*/}
-        <View style={styles.timesPerWeekBtnHeader}>
-          <Text style={styles.btnText}>
-            How many times a week do you usually run?
-          </Text>
-        </View>
-        <View style={styles.timesPerWeekBtnWrapper}>
-          <Button
-            onPress={() => handleTPWBtnClick("1-2")}
-            mode={timesPerWeek === "1-2" ? "contained" : "outlined"}
-            style={[
-              styles.timesPerWeekBtns,
-              timesPerWeek === "1-2"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text style={styles.btnText}>1-2</Text>
-          </Button>
-          <Button
-            onPress={() => handleTPWBtnClick("2-3")}
-            mode={timesPerWeek === "2-3" ? "contained" : "outlined"}
-            style={[
-              styles.timesPerWeekBtns,
-              timesPerWeek === "2-3"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text style={styles.btnText}>2-3</Text>
-          </Button>
-          <Button
-            onPress={() => handleTPWBtnClick("3-5")}
-            mode={timesPerWeek === "3-5" ? "contained" : "outlined"}
-            style={[
-              styles.timesPerWeekBtns,
-              timesPerWeek === "3-5"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text style={styles.btnText}>3-5</Text>
-          </Button>
-          <Button
-            onPress={() => handleTPWBtnClick("5+")}
-            mode={timesPerWeek === "5+" ? "contained" : "outlined"}
-            style={[
-              styles.timesPerWeekBtns,
-              timesPerWeek === "5+"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text style={styles.btnText}>5+</Text>
-          </Button>
-        </View>
+            <View style={styles.title}>
+              <Text style={styles.titleText}>Tell us about yourself!</Text>
+            </View>
 
-        {/* Pace 5km */}
+            {/*Subtitle */}
+            <View style={styles.subtitle}>
+              <Text style={styles.subtitleText}>
+                Let's start with some facts about you
+              </Text>
+            </View>
 
-        <View style={styles.estimate5kHeader}>
-          <Text style={styles.btnText}>
-            How long does it take you to run a 5km? (estimate)
-          </Text>
-        </View>
-        <View style={styles.estimatedKmBtnWrapper}>
-          <Button
-            onPress={() => handle5kBtnClick("15-20 mins")}
-            mode={estimated5k === "15-20 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated5k === "15-20 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              15-20 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle5kBtnClick("20-25 mins")}
-            mode={estimated5k === "20-25 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated5k === "20-25 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              20-25 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle5kBtnClick("25-30 mins")}
-            mode={estimated5k === "25-30 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated5k === "25-30 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              25-30 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle5kBtnClick("30-35 mins")}
-            mode={estimated5k === "30-35 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated5k === "30-35 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              30-35 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle5kBtnClick("35-40 mins")}
-            mode={estimated5k === "35-40 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated5k === "35-40 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              35-40 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle5kBtnClick(">40 mins")}
-            mode={estimated5k === ">40 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated5k === ">40 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >{`>40 mins`}</Text>
-          </Button>
-        </View>
-        {/* Pace 10km */}
+            {/* Input Fields */}
 
-        <View style={styles.estimate10kHeader}>
-          <Text style={styles.btnText}>
-            How long does it take you to run a 10km? (estimate)
-          </Text>
-        </View>
-        <View style={styles.estimatedKmBtnWrapper}>
-          <Button
-            onPress={() => handle10BtnClick("40-45 mins")}
-            mode={estimated10k === "40-45 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated10k === "40-45 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              40-45 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle10BtnClick("45-50 mins")}
-            mode={estimated10k === "45-50 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated10k === "45-50 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              45-50 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle10BtnClick("50-55 mins")}
-            mode={estimated10k === "50-55 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated10k === "50-55 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              50-55 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle10BtnClick("55-60 mins")}
-            mode={estimated10k === "55-60 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated10k === "55-60 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              55-60 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle10BtnClick("60-65 mins")}
-            mode={estimated10k === "60-65 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated10k === "60-65 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >
-              60-65 mins
-            </Text>
-          </Button>
-          <Button
-            onPress={() => handle10BtnClick(">65 mins")}
-            mode={estimated10k === ">65 mins" ? "contained" : "outlined"}
-            style={[
-              styles.estimatedKmBtns,
-              estimated10k === ">65 mins"
-                ? styles.btnSelected
-                : styles.btnNotSelected,
-            ]}
-          >
-            <Text
-              style={[
-                styles.btnText,
-                { textTransform: "lowercase", fontSize: 12 },
-              ]}
-            >{`>65 mins`}</Text>
-          </Button>
-        </View>
-      </View>
+            <View style={styles.inputs}>
+              {/* Age Date Picker */}
 
-      {/* Continue Button */}
+              <View style={styles.datePickerContainer}>
+                <DatePicker
+                  setDate={setDate}
+                  date={date}
+                  submitted={submitted}
+                  category="date"
+                  isInRegisterForm={true}
+                  overWriteWidth={"100%"}
+                />
+              </View>
 
-      <View style={styles.button}>
-        {/* Original implementation for reference */}
-        {/* <Button
-          mode="contained"
-          uppercase={false}
-          color={Color.PrimaryMain}
-          style={{ borderRadius: 10 }}
-          labelStyle={{
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-          contentStyle={{
-            padding: 5,
-          }}
-          onPress={() => handlePress()}
-        >
-          Add Info
-        </Button> */}
+              {/* Times per week buttons*/}
+              <View style={styles.timesPerWeekBtnHeader}>
+                <Text style={styles.btnTitleText}>
+                  How many times a week do you usually run?
+                </Text>
+              </View>
+              <View style={styles.timesPerWeekBtnWrapper}>
+                <Button
+                  onPress={() => handleTPWBtnClick("1-2")}
+                  mode={timesPerWeek === "1-2" ? "contained" : "outlined"}
+                  style={[
+                    styles.timesPerWeekBtns,
+                    timesPerWeek === "1-2"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={
+                      timesPerWeek === "1-2"
+                        ? styles.btnTextSelected
+                        : styles.btnText
+                    }
+                  >
+                    1-2
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handleTPWBtnClick("2-3")}
+                  mode={timesPerWeek === "2-3" ? "contained" : "outlined"}
+                  style={[
+                    styles.timesPerWeekBtns,
+                    timesPerWeek === "2-3"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={
+                      timesPerWeek === "2-3"
+                        ? styles.btnTextSelected
+                        : styles.btnText
+                    }
+                  >
+                    2-3
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handleTPWBtnClick("3-5")}
+                  mode={timesPerWeek === "3-5" ? "contained" : "outlined"}
+                  style={[
+                    styles.timesPerWeekBtns,
+                    timesPerWeek === "3-5"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={
+                      timesPerWeek === "3-5"
+                        ? styles.btnTextSelected
+                        : styles.btnText
+                    }
+                  >
+                    3-5
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handleTPWBtnClick("5+")}
+                  mode={timesPerWeek === "5+" ? "contained" : "outlined"}
+                  style={[
+                    styles.timesPerWeekBtns,
+                    timesPerWeek === "5+"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={
+                      timesPerWeek === "5+"
+                        ? styles.btnTextSelected
+                        : styles.btnText
+                    }
+                  >
+                    5+
+                  </Text>
+                </Button>
+              </View>
 
-        <Button
-          mode="contained"
-          uppercase={false}
-          color={Color.PrimaryMain}
-          style={{ borderRadius: 10 }}
-          labelStyle={{
-            fontWeight: "bold",
-            fontSize: 18,
-          }}
-          contentStyle={{
-            padding: 5,
-          }}
-          onPress={() => handlePress()}
-        >
-          Next
-        </Button>
-      </View>
-    </SafeAreaView>
+              {/* Pace 5km */}
+
+              <View style={styles.estimate5kHeader}>
+                <Text style={styles.btnTitleText}>
+                  How long does it take you to run a 5km? (estimate)
+                </Text>
+              </View>
+              <View style={styles.estimatedKmBtnWrapper}>
+                <Button
+                  onPress={() => handle5kBtnClick("15-20 mins")}
+                  mode={estimated5k === "15-20 mins" ? "contained" : "outlined"}
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated5k === "15-20 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated5k === "15-20 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    15-20 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle5kBtnClick("20-25 mins")}
+                  mode={estimated5k === "20-25 mins" ? "contained" : "outlined"}
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated5k === "20-25 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated5k === "20-25 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    20-25 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle5kBtnClick("25-30 mins")}
+                  mode={estimated5k === "25-30 mins" ? "contained" : "outlined"}
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated5k === "25-30 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated5k === "25-30 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    25-30 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle5kBtnClick("30-35 mins")}
+                  mode={estimated5k === "30-35 mins" ? "contained" : "outlined"}
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated5k === "30-35 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated5k === "30-35 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    30-35 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle5kBtnClick("35-40 mins")}
+                  mode={estimated5k === "35-40 mins" ? "contained" : "outlined"}
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated5k === "35-40 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated5k === "35-40 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    35-40 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle5kBtnClick(">40 mins")}
+                  mode={estimated5k === ">40 mins" ? "contained" : "outlined"}
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated5k === ">40 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated5k === ">40 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >{`>40 mins`}</Text>
+                </Button>
+              </View>
+              {/* Pace 10km */}
+
+              <View style={styles.estimate10kHeader}>
+                <Text style={styles.btnTitleText}>
+                  How long does it take you to run a 10km? (estimate)
+                </Text>
+              </View>
+              <View style={styles.estimatedKmBtnWrapper}>
+                <Button
+                  onPress={() => handle10BtnClick("40-45 mins")}
+                  mode={
+                    estimated10k === "40-45 mins" ? "contained" : "outlined"
+                  }
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated10k === "40-45 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated10k === "40-45 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    40-45 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle10BtnClick("45-50 mins")}
+                  mode={
+                    estimated10k === "45-50 mins" ? "contained" : "outlined"
+                  }
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated10k === "45-50 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated10k === "45-50 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    45-50 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle10BtnClick("50-55 mins")}
+                  mode={
+                    estimated10k === "50-55 mins" ? "contained" : "outlined"
+                  }
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated10k === "50-55 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated10k === "50-55 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    50-55 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle10BtnClick("55-60 mins")}
+                  mode={
+                    estimated10k === "55-60 mins" ? "contained" : "outlined"
+                  }
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated10k === "55-60 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated10k === "55-60 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    55-60 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle10BtnClick("60-65 mins")}
+                  mode={
+                    estimated10k === "60-65 mins" ? "contained" : "outlined"
+                  }
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated10k === "60-65 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated10k === "60-65 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >
+                    60-65 mins
+                  </Text>
+                </Button>
+                <Button
+                  onPress={() => handle10BtnClick(">65 mins")}
+                  mode={estimated10k === ">65 mins" ? "contained" : "outlined"}
+                  style={[
+                    styles.estimatedKmBtns,
+                    estimated10k === ">65 mins"
+                      ? styles.btnSelected
+                      : styles.btnNotSelected,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      estimated10k === ">65 mins"
+                        ? styles.btnTextSelected
+                        : styles.btnText,
+                      { textTransform: "lowercase", fontSize: 12 },
+                    ]}
+                  >{`>65 mins`}</Text>
+                </Button>
+              </View>
+            </View>
+
+            {/* About me */}
+            <View style={styles.inputContainer}>
+              <View style={styles.profileHeader}>
+                <Text style={styles.btnTitleText}>Profile</Text>
+              </View>
+              <TextInput
+                mode="outlined"
+                value={description}
+                onChangeText={(text) => {
+                  setDescription(text);
+                  if (text.length === 480) {
+                    alert("Description cannot exceed 480 character length.");
+                  }
+                }}
+                theme={{
+                  ...styles.inputTheme,
+                }}
+                style={styles.input}
+                outlineColor={Color.GrayDark}
+                activeOutlineColor={Color.GrayDark}
+                placeholder={"Write some facts about you!"}
+                maxLength={480}
+                multiline={true}
+              />
+            </View>
+
+            {/* Continue Button */}
+
+            <View style={styles.button}>
+              <LongButton
+                buttonColor={Color.PrimaryMain}
+                buttonText="Register"
+                buttonHandler={() => handlePress()}
+                customStyle={{ width: "95%" }}
+              />
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </Provider>
   );
 };
 
@@ -477,20 +582,29 @@ export default RegisterExtraInfo;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: Color.White,
+  },
+  container: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Color.White,
+  },
+  topContainer: {
+    height: 40,
   },
   title: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 8,
+  },
+  subtitle: {
+    marginBottom: 8,
   },
   inputs: {
     width: "85%",
   },
   button: {
-    width: "75%",
+    width: "90%",
     borderRadius: 10,
     alignSelf: "center",
     marginVertical: 20,
@@ -499,30 +613,37 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   titleText: {
+    fontFamily: "Mulish_900Black",
     fontSize: 28,
     fontWeight: "700",
     letterSpacing: 0.36,
   },
+  subtitleText: {
+    fontSize: 16,
+    color: Color.Text,
+  },
   datePickerContainer: {
-    marginVertical: 10,
-    marginBottom: 10
+    marginVertical: 15,
   },
   dobHeader: {
     alignSelf: "flex-start",
   },
   timesPerWeekBtnHeader: {
     alignSelf: "flex-start",
-    marginVertical: 10,
+    marginTop: 10,
   },
   estimate5kHeader: {
     alignSelf: "flex-start",
     marginVertical: 10,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   estimate10kHeader: {
     alignSelf: "flex-start",
     marginVertical: 10,
     marginBottom: 10,
+  },
+  profileHeader: {
+    alignSelf: "flex-start",
   },
   timesPerWeekBtnWrapper: {
     display: "flex",
@@ -540,6 +661,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 10,
     marginBottom: 20,
+    marginTop: 0,
   },
   timesPerWeekBtns: {
     borderRadius: 20,
@@ -552,13 +674,33 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   btnSelected: {
-    backgroundColor: Color.PrimaryMedium,
-    borderColor: Color.Black,
+    backgroundColor: Color.PrimaryMain,
+    borderColor: Color.PrimaryMain,
   },
   btnNotSelected: {
-    borderColor: Color.Black,
+    borderColor: Color.PrimaryMain,
+    borderWidth: 1,
+  },
+  btnTitleText: {
+    color: Color.TextMute,
   },
   btnText: {
-    color: Color.Black,
+    color: Color.PrimaryMain,
+    letterSpacing: 0.1,
   },
+  btnTextSelected: {
+    color: Color.White,
+    letterSpacing: 0.1,
+  },
+  inputContainer: {
+    width: "85%",
+    alignItems: "center",
+  },
+  inputTheme: {
+    roundness: 10,
+    colors: {
+      placeholder: Color.TextMute,
+    },
+  },
+  input: { backgroundColor: Color.GrayMedium, width: "100%", height: 150 },
 });
