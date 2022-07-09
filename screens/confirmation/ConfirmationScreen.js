@@ -28,7 +28,7 @@ const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
       >
         <Card.Content>
           {actionType === "create" && (
-            <Title style={styles.cardTopTitle}>Congratulations</Title>
+            <Title style={styles.cardTopTitle}>Congratulations!</Title>
           )}
           {actionType === "join" && (
             <Title style={styles.cardTopTitle}>Joined Successfully!</Title>
@@ -111,13 +111,17 @@ const styles = StyleSheet.create({
   },
   cardTopTitle: {
     textAlign: "center",
-    color: Color.PrimaryMain,
+    color: Color.Black,
     fontWeight: "bold",
     marginBottom: 10,
+    fontFamily: "Mulish_900Black",
+    fontSize: 24,
   },
   paragraph: {
     textAlign: "center",
     paddingLeft: 20,
     paddingRight: 20,
+    color: "#4E4B66",
+    fontSize: 14,
   },
 });
