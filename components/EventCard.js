@@ -114,13 +114,13 @@ const EventCard = ({
                 }}
               >
                 <StackedAvatars
-                  color={"#11C9BD"}
+                  color={"#FF3E0C"}
                   size={"small"}
                   participantsArray={event.participants}
                 />
               </View>
-              <Text style={{ color: "#11C9BD", ...styles.joinText }}>
-                {event.participants?.length} Joined
+              <Text style={{ color: "#FF3E0C", ...styles.joinText }}>
+                {event.participants?.length > 1 ? `${event.participants?.length} attendees` : `${event.participants?.length} attendee` }
               </Text>
             </View>
           )}

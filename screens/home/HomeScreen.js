@@ -92,25 +92,48 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
-        <TouchableOpacity onPress={() => setSortByModalVisible(true)}>
+        {/* Filter  Button */}
+        <View>
+          <List.Item></List.Item>
+        </View>
+        <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
           <List.Item
-            style={styles.topElement}
-            title="SORT BY"
-            right={(props) => (
-              <List.Icon {...props} icon="text" style={styles.topIcon} />
+            style={styles.topElementFilter}
+            title="Select Area From Tokyo"
+            left={(props) => (
+              <List.Icon
+                {...props}
+                icon="map-marker"
+                color="#FFFFFF"
+                style={styles.topIconTest}
+              />
             )}
-            titleStyle={{ fontSize: 12, fontWeight: "700" }}
+            right={(props) => (
+              <List.Icon
+                {...props}
+                icon="chevron-down"
+                color="#FFFFFF"
+                style={styles.topIcon}
+              />
+            )}
+            titleStyle={{
+              fontSize: 14,
+              fontWeight: "700",
+              color: "#FFFFFF",
+            }}
           />
         </TouchableOpacity>
 
-        {/* Filter  Button */}
-
-        <TouchableOpacity onPress={() => setfilterModalVisible(true)}>
+        <TouchableOpacity onPress={() => setSortByModalVisible(true)}>
           <List.Item
-            style={styles.topElement}
-            title="FILTERS"
+            style={styles.topElementSort}
             right={(props) => (
-              <List.Icon {...props} icon="tune" style={styles.topIcon} />
+              <List.Icon
+                {...props}
+                icon="tune"
+                color="#484848"
+                style={styles.topIcon}
+              />
             )}
             titleStyle={{ fontSize: 12, fontWeight: "700" }}
           />
@@ -327,29 +350,35 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     height: 41,
-    padding: 0,
+    backgroundColor: "#FFFFFF",
+    paddingTop: 10,
+    paddingBottom: 55,
   },
-  resetFilterSortingContainer: {
-    display: "flex",
-    flexDirection: "row",
-    height: 20,
-    padding: 0,
-    paddingHorizontal: 20,
-    marginTop: 10,
-    marginRight: 50,
-  },
-  topElement: {
+  topElementSort: {
     paddingTop: 0,
     marginTop: 6,
-    width: 165,
     height: 35,
-    backgroundColor: Color.GrayDark,
+    backgroundColor: "transparent",
+    marginRight: 30,
+  },
+  topElementFilter: {
+    paddingTop: 0,
+    marginTop: 6,
+    width: 270,
+    height: 40,
+    backgroundColor: "#FF3E0C",
     borderRadius: 30,
+    marginLeft: 30,
   },
   topIcon: {
     paddingTop: 0,
-    height: 18,
+    height: 24,
+    marginRight: -5,
+  },
+  topIconTest: {
+    padding: 0,
+    margin: 0,
   },
 });

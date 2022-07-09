@@ -78,6 +78,7 @@ const EventCreationNavigator = ({ navigation, setData, data }) => {
 
       <Stack.Screen name="Home" options={createOptions(openSetting)}>
         {(props) => <HomeScreen {...props} />}
+        
       </Stack.Screen>
     </Stack.Navigator>
   );
