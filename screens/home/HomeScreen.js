@@ -292,7 +292,7 @@ const EventsDataPage = ({ selectEvent }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Color.Fill,
+    backgroundColor: "#E5E5E5",
     padding: 10,
   },
   titleStyle: {
