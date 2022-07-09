@@ -11,6 +11,7 @@ import StackedAvatars from "../screens/event-details/StackedAvatars";
 import { addHours, format } from "date-fns";
 import { DataContext } from "../context/datacontext/DataContext";
 import runningDurationArray from "../utils/runningDuration";
+import Color from "../assets/themes/Color";
 
 const EventCard = ({
   event,
@@ -114,13 +115,13 @@ const EventCard = ({
                 }}
               >
                 <StackedAvatars
-                  color={"#11C9BD"}
+                  color={Color.PrimaryMain}
                   size={"small"}
                   participantsArray={event.participants}
                 />
               </View>
-              <Text style={{ color: "#11C9BD", ...styles.joinText }}>
-                {event.participants?.length} Joined
+              <Text style={{ color: Color.PrimaryMain, ...styles.joinText }}>
+                {event.participants?.length > 1 ? `${event.participants?.length} attendees` : `${event.participants?.length} attendee` }
               </Text>
             </View>
           )}
