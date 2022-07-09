@@ -163,7 +163,11 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           >
             <TouchableOpacity onPress={handleHomeSortingReset}>
               <Text
-                style={{ color: Color.PrimaryMain, fontWeight: "600", fontSize: 14 }}
+                style={{
+                  color: Color.PrimaryMain,
+                  fontWeight: "600",
+                  fontSize: 14,
+                }}
               >
                 X Reset Sorting
               </Text>
@@ -185,7 +189,11 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           >
             <TouchableOpacity onPress={handleHomeFilterReset}>
               <Text
-                style={{ color: Color.PrimaryMain, fontWeight: "600", fontSize: 14 }}
+                style={{
+                  color: Color.PrimaryMain,
+                  fontWeight: "600",
+                  fontSize: 14,
+                }}
               >
                 X Reset Filter
               </Text>
