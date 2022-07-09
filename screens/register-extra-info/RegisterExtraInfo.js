@@ -542,7 +542,7 @@ const RegisterExtraInfo = ({ route }) => {
             {/* About me */}
             <View style={styles.inputContainer}>
               <View style={styles.profileHeader}>
-                <Text style={styles.btnTitleText}>About Me</Text>
+                <Text style={styles.btnTitleText}>Description</Text>
               </View>
               <TextInput
                 mode="outlined"
