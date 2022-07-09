@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import MapView, {
   Callout,
@@ -17,6 +18,9 @@ import MapView, {
 } from "react-native-maps";
 import Color from "../../assets/themes/Color";
 import axiosInstance from "../../helpers/axios";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const PointsOfInterestScreen = () => {
   const [region, setRegion] = useState({
@@ -98,10 +102,15 @@ const styles = StyleSheet.create({
     color: "#484848",
     textAlign: "center",
   },
-  map: {
-    height: 600,
-    width: "100%",
+  mapContainer: {
+    height: windowHeight,
+    width: windowWidth,
+    marginHorizontal: "auto",
     alignSelf: "center",
+  },
+  map: {
+    height: "100%",
+    width: "100%",
     marginTop: 12,
   },
 });

@@ -21,10 +21,13 @@ import { DataContext } from "../../context/datacontext/DataContext";
 
 const SortByModal = ({ modalVisible, hideModal }) => {
   const containerStyle = {
-    backgroundColor: "#fff",
-    height: "35%",
+    backgroundColor: Color.White,
+    height: "30%",
     margin: 20,
+    borderRadius: 15,
+    width: "90%",
     justifyContent: "center",
+    alignSelf: "center",
   };
   const {
     allEvents,
@@ -159,7 +162,7 @@ const SortByModal = ({ modalVisible, hideModal }) => {
               </Button>
               <Button
                 style={{
-                  backgroundColor: "#FF3E0C",
+                  backgroundColor: Color.PrimaryMain,
                   borderColor: "red",
                   borderWidth: 1,
                   borderRadius: "40px",
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
   },
   resetBtnText: {
-    color: "#FF3E0C",
+    color: Color.PrimaryMain,
     fontWeight: "600",
   },
   applyBtnText: {

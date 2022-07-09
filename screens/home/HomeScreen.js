@@ -154,7 +154,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
               backgroundColor: Color.White,
               borderRadius: 10,
               borderWidth: 1,
-              borderColor: "#FF3E0C",
+              borderColor: Color.PrimaryMain,
               width: 120,
               alignContent: "center",
               alignItems: "center",
@@ -163,7 +163,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           >
             <TouchableOpacity onPress={handleHomeSortingReset}>
               <Text
-                style={{ color: "#FF3E0C", fontWeight: "600", fontSize: 14 }}
+                style={{ color: Color.PrimaryMain, fontWeight: "600", fontSize: 14 }}
               >
                 X Reset Sorting
               </Text>
@@ -177,7 +177,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
               backgroundColor: Color.White,
               borderRadius: 10,
               borderWidth: 1,
-              borderColor: "#FF3E0C",
+              borderColor: Color.PrimaryMain,
               width: 110,
               alignContent: "center",
               alignItems: "center",
@@ -185,7 +185,7 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           >
             <TouchableOpacity onPress={handleHomeFilterReset}>
               <Text
-                style={{ color: "#FF3E0C", fontWeight: "600", fontSize: 14 }}
+                style={{ color: Color.PrimaryMain, fontWeight: "600", fontSize: 14 }}
               >
                 X Reset Filter
               </Text>
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     width: 270,
     height: 40,
-    backgroundColor: "#FF3E0C",
+    backgroundColor: Color.PrimaryMain,
     borderRadius: 30,
     marginLeft: 30,
   },

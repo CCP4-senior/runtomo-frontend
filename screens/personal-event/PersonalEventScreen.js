@@ -213,10 +213,10 @@ const styles = StyleSheet.create({
   },
   textTabUnderline: {
     marginTop: 10,
-    backgroundColor: "#FF3E0C",
+    backgroundColor: Color.PrimaryMain,
     height: 2,
   },
   activeText: {
-    color: "#FF3E0C",
+    color: Color.PrimaryMain,
   },
 });

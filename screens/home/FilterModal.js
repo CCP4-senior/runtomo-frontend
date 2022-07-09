@@ -56,7 +56,10 @@ const FilterModal = ({
     backgroundColor: "#fff",
     height: "80%",
     margin: 20,
+    borderRadius: 15,
+    width: "90%",
     justifyContent: "center",
+    alignSelf: "center",
   };
   const [tokyo23wards, setTokyo23wards] = useState(tokyoWards);
   const { allEvents, setFilteredEvents, setIsDataFiltered } =
@@ -188,7 +191,7 @@ const FilterModal = ({
               </Button>
               <Button
                 style={{
-                  backgroundColor: "#FF3E0C",
+                  backgroundColor: Color.PrimaryMain,
                   borderColor: "red",
                   borderWidth: 1,
                   borderRadius: "40px",
@@ -237,7 +240,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   resetBtnText: {
-    color: "#FF3E0C",
+    color: Color.PrimaryMain,
     fontWeight: "600",
   },
   applyBtnText: {
