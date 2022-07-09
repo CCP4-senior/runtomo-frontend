@@ -100,58 +100,39 @@ const UserProfileScreen = ({ navigation, route }) => {
       <SafeAreaView style={styles.root}>
         <ScrollView>
           <View style={styles.container}>
-            {/* Images */}
-
             <View style={styles.imageContainer}>
-              {/* Leave for now, may add background image back later */}
               <ImageBackground
                 style={styles.backgroundImage}
-                // imageStyle={{ opacity: 0.4 }}
                 source={require("../../assets/images/profile-bg.png")}
                 resizeMode="cover"
               >
-                <Animated.View style={{ opacity }}>
-                  {/* Profile picture */}
-                  {userData?.imageUrl && (
+                <Animated.View style={[styles.avatarContainer, { opacity }]}>
+                  {!user.image && (
                     <Avatar.Image
-                      style={styles.profilePicture}
-                      source={{ uri: userData?.imageUrl }}
-                      size={150}
+                      size={180}
+                      source={require("../../assets/images/avatar-blank.png")}
                       onLoadEnd={fadeAnimation}
-                      // backgroundColor={Color.GrayDark}
+                      backgroundColor={Color.GrayDark}
                     />
                   )}
 
-                  {/* Profile picture (default) */}
-
-                  {!userData?.imageUrl && (
-                    <Avatar.Icon
-                      style={[
-                        styles.profilePicture,
-                        {
-                          backgroundColor: Color.GrayDark,
-                        },
-                      ]}
-                      icon="account"
-                      size={150}
-                      // onLoadEnd={fadeAnimation}
+                  {user.imageUrl && (
+                    <Avatar.Image
+                      size={180}
+                      source={{ uri: user.imageUrl }}
+                      onLoadEnd={fadeAnimation}
+                      backgroundColor={Color.GrayDark}
                     />
                   )}
                 </Animated.View>
               </ImageBackground>
             </View>
 
-            {/* User information */}
-
             <View style={styles.userInfoContainer}>
-              {/* Username */}
-
               <View style={styles.userInfoHeader}>
                 <Text style={styles.userFullName}>
                   {userData?.username || " "}
                 </Text>
-
-                {/* Edit Profile button */}
 
                 {isLoginUser && (
                   <IconButton
@@ -162,8 +143,6 @@ const UserProfileScreen = ({ navigation, route }) => {
                     style={{ width: 30 }}
                   />
                 )}
-
-                {/* Edit Profile Photo button */}
 
                 {isLoginUser && (
                   <IconButton
@@ -182,13 +161,12 @@ const UserProfileScreen = ({ navigation, route }) => {
                 </Text>
               </View>
 
-              {/* NEW INFO SECTION --------------------------------*/}
-
               <View style={styles.infoSection}>
                 <View style={styles.infoItem}>
                   <Text style={styles.infoTitle}>AGE</Text>
                   <Text style={styles.infoText}>
-                    {getAge(Date(userData?.profile?.age)}
+                    {getAge(userData?.profile?.["date_of_birth"]) ||
+                      "Not provided"}
                   </Text>
                 </View>
 
@@ -244,6 +222,8 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: "100%",
     height: 250,
+    justifyContent: "center",
+    alignContent: "center",
   },
   profilePicture: {
     width: 200,
@@ -266,37 +246,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     margin: 5,
   },
-  tagsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
-  },
-  tags: {
-    backgroundColor: Color.PrimaryMain,
-    marginHorizontal: 4,
-    borderRadius: 6,
-    borderColor: Color.PrimaryMain,
-    borderWidth: 0.2,
-    overflow: "hidden",
-    padding: 3,
-    color: Color.White,
-    fontWeight: "bold",
-    fontSize: 16,
-    marginVertical: 5,
-  },
-  userDataWrapper: {
-    backgroundColor: Color.White,
-    borderRadius: 20,
-    padding: 20,
-    width: "100%",
-    marginBottom: 10,
-  },
-  userDataFont: {
-    fontSize: 16,
-    color: Color.Black,
-    fontWeight: "500",
-  },
   descriptionContainer: {
     margin: 20,
     width: "90%",
@@ -318,7 +267,7 @@ const styles = StyleSheet.create({
   },
   infoItem: {
     marginLeft: 10,
-    marginVertical: 15
+    marginVertical: 15,
   },
   infoTitle: {
     fontSize: 20,
@@ -329,5 +278,13 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 20,
     color: "#363D4E",
+  },
+  avatarAnimatedContainer: {},
+  avatarContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatar: {
+    avatar: { backgroundColor: Color.GrayDark },
   },
 });

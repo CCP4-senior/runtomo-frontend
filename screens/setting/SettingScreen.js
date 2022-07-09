@@ -113,7 +113,7 @@ const SettingScreen = ({ navigation }) => {
           <Card.Content>
             <View style={styles.cardContent}>
               <Animated.View style={[styles.avatar, { opacity }]}>
-                {user.imageUrl && (
+                {user.image && (
                   <Avatar.Image
                     size={60}
                     source={{ uri: user.imageUrl }}
@@ -121,12 +121,13 @@ const SettingScreen = ({ navigation }) => {
                     backgroundColor={Color.GrayDark}
                   />
                 )}
-                {!user.imageUrl && (
-                  <Avatar.Icon
-                    icon="account"
-                    size={60}
-                    style={{ backgroundColor: Color.GrayDark }}
-                  />
+                {!user.image && (
+                  <Avatar.Image
+                  size={60}
+                  source={require("../../assets/images/avatar-blank.png")}
+                  onLoadEnd={fadeAnimation}
+                  backgroundColor={Color.GrayDark}
+                />
                 )}
               </Animated.View>
               <View style={styles.accountDetails}>

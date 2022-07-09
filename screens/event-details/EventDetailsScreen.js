@@ -250,8 +250,8 @@ const EventDetailsScreen = ({ navigation }) => {
                           source={{
                             uri: generateImageUrl(eventData.creator.image),
                           }}
-                          backgroundColor={Color.GrayDark}
                           onLoadEnd={fadeAnimation}
+                          backgroundColor={Color.GrayDark}
                         />
                       )}
                       <Text style={styles.creatorName}>
