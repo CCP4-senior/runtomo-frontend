@@ -118,10 +118,17 @@ const PersonalEventScreen = ({ navigation }) => {
         {listTab.map((tab, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.btnTab, tab.status === status && styles.btnActive]}
+            style={[styles.btnTab]}
             onPress={() => handleFilter(tab.status)}
           >
-            <Text style={styles.textTab}>{tab.status}</Text>
+            <Text
+              style={[
+                styles.textTab,
+                tab.status === status && styles.activeText,
+              ]}
+            >
+              {tab.status}
+            </Text>
             <View
               style={[tab.status === status && styles.textTabUnderline]}
             ></View>
@@ -208,5 +215,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "#FF3E0C",
     height: 2,
+  },
+  activeText: {
+    color: "#FF3E0C",
   },
 });
