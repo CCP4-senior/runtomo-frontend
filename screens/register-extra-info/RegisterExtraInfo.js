@@ -640,7 +640,6 @@ const styles = StyleSheet.create({
   estimate5kHeader: {
     alignSelf: "flex-start",
     marginVertical: 10,
-    // marginBottom: 10,
   },
   estimate10kHeader: {
     alignSelf: "flex-start",

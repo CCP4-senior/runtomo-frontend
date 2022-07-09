@@ -32,14 +32,14 @@ const UserProfileEditScreen = ({ navigation, route }) => {
   const [runFrequency, setRunFrequency] = useState(
     user.profile?.["run_frequency"]
   );
-  const [estimated5k, setEstimated5k] = useState(
-    user.profile?.["estimated5k"]
-  );
+  const [estimated5k, setEstimated5k] = useState(user.profile?.["estimated5k"]);
   const [estimated10k, setEstimated10k] = useState(
     user.profile?.["estimated10k"]
   );
 
-  const [description, setDescription] = useState(user.profile?.description || " ");
+  const [description, setDescription] = useState(
+    user.profile?.description || " "
+  );
 
   const doneButtonHandler = () => {
     let inputError = false;
@@ -98,8 +98,6 @@ const UserProfileEditScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.root}>
       <ScrollView contentContainerStyle={styles.container}>
-        {/* Username */}
-
         <View style={styles.field}>
           <Text style={styles.text}>Username</Text>
 
@@ -112,8 +110,6 @@ const UserProfileEditScreen = ({ navigation, route }) => {
           />
         </View>
 
-        {/* Email */}
-
         <View style={styles.field}>
           <Text style={styles.text}>Email</Text>
 
@@ -125,8 +121,6 @@ const UserProfileEditScreen = ({ navigation, route }) => {
           />
         </View>
 
-        {/* Date of Birth */}
-
         <View style={styles.field}>
           <Text style={styles.text}>Date of Birth</Text>
           <CustomInput
@@ -136,8 +130,6 @@ const UserProfileEditScreen = ({ navigation, route }) => {
             width={"100%"}
           />
         </View>
-
-        {/* Run Frequency */}
 
         <View style={styles.field}>
           <Text style={styles.text}>Run Frequency / week</Text>
@@ -149,8 +141,6 @@ const UserProfileEditScreen = ({ navigation, route }) => {
           />
         </View>
 
-        {/* Estimate 5k */}
-
         <View style={styles.field}>
           <Text style={styles.text}>Estimated 5k</Text>
           <CustomInput
@@ -160,8 +150,6 @@ const UserProfileEditScreen = ({ navigation, route }) => {
             width={"100%"}
           />
         </View>
-
-        {/* Estimate 10k */}
 
         <View style={styles.field}>
           <Text style={styles.text}>Estimated 10k</Text>
@@ -174,16 +162,27 @@ const UserProfileEditScreen = ({ navigation, route }) => {
         </View>
 
         <View style={styles.field}>
-          <Text style={styles.text}>Description</Text>
-          <CustomInput
-            placeholder="ex: 55-60 mins"
-            value={description}
-            changeHandler={(value) => setDescription(value)}
-            width={"100%"}
-          />
+          <Text style={styles.text}>Estimated 10k</Text>
+          <View style={styles.descriptionContainer}>
+            <TextInput
+              mode="outlined"
+              value={description}
+              onChangeText={(text) => {
+                setDescription(text);
+                if (text.length === 480) {
+                  alert("Description cannot exceed 480 character length.");
+                }
+              }}
+              style={styles.descriptionText}
+              outlineColor={Color.GrayDark}
+              activeOutlineColor={Color.GrayDark}
+              placeholder={"Tell us a bit about yourself!"}
+              maxLength={480}
+              multiline={true}
+            />
+          </View>
         </View>
 
-        {/* Buttons */}
         <View style={styles.buttonsContainer}>
           <LongButton
             buttonHandler={doneButtonHandler}
@@ -238,5 +237,18 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     alignSelf: "center",
     width: "100%",
+  },
+  descriptionContainer: {
+    marginVertical: 5,
+    padding: 15,
+    paddingVertical: 20,
+    backgroundColor: Color.White,
+    borderRadius: 40,
+    width: "100%",
+    minHeight: 100,
+  },
+  descriptionText: {
+    color: Color.Text,
+    fontSize: 16,
   },
 });

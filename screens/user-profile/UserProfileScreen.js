@@ -46,7 +46,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   const fadeAnimation = () => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 300,
+      duration: 250,
       useNativeDriver: true,
     }).start();
   };
@@ -129,74 +129,79 @@ const UserProfileScreen = ({ navigation, route }) => {
             </View>
 
             <View style={styles.userInfoContainer}>
-              <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>
-                  {userData?.username || " "}
-                </Text>
+              <Animated.View style={{ opacity }}>
+                <View style={styles.userInfoHeader}>
+                  <Text style={styles.userFullName}>
+                    {userData?.username || " "}
+                  </Text>
 
-                {isLoginUser && (
-                  <IconButton
-                    onPress={() => navigation.navigate("Edit Profile")}
-                    icon="account-edit"
-                    size={29}
-                    color={Color.PrimaryMain}
-                    style={{ width: 30 }}
-                  />
-                )}
+                  {isLoginUser && (
+                    <IconButton
+                      onPress={() => navigation.navigate("Edit Profile")}
+                      icon="account-edit"
+                      size={29}
+                      color={Color.PrimaryMain}
+                      style={{ width: 30 }}
+                    />
+                  )}
 
-                {isLoginUser && (
-                  <IconButton
-                    onPress={showModal}
-                    icon="camera-flip"
-                    size={29}
-                    color={Color.PrimaryMain}
-                    style={{ width: 30 }}
-                  />
-                )}
-              </View>
+                  {isLoginUser && (
+                    <IconButton
+                      onPress={showModal}
+                      icon="camera-flip"
+                      size={29}
+                      color={Color.PrimaryMain}
+                      style={{ width: 30 }}
+                    />
+                  )}
+                </View>
 
-              <View style={styles.descriptionContainer}>
-                <Text style={styles.descriptionText}>
-                  {userData?.profile?.description || " "}
-                </Text>
-              </View>
-
-              <View style={styles.infoSection}>
-                <View style={styles.infoItem}>
-                  <Text style={styles.infoTitle}>AGE</Text>
-                  <Text style={styles.infoText}>
-                    {getAge(userData?.profile?.["date_of_birth"]) ||
-                      "Not provided"}
+                <View style={styles.descriptionContainer}>
+                  <Text
+                    style={styles.descriptionText}
+                    onLoadEnd={fadeAnimation}
+                  >
+                    {userData?.profile?.description || " "}
                   </Text>
                 </View>
 
-                <View style={styles.infoItem}>
-                  <Text style={styles.infoTitle}>RUN FREQUENCY</Text>
-                  <Text style={styles.infoText}>
-                    {userData?.profile
-                      ? userData.profile?.["run_frequency"] + " times / week"
-                      : "Not provided"}
-                  </Text>
-                </View>
+                <View style={styles.infoSection}>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>AGE</Text>
+                    <Text style={styles.infoText}>
+                      {getAge(userData?.profile?.["date_of_birth"]) ||
+                        "Not provided"}
+                    </Text>
+                  </View>
 
-                <View style={styles.infoItem}>
-                  <Text style={styles.infoTitle}>ESTIMATED 5K</Text>
-                  <Text style={styles.infoText}>
-                    {userData?.profile
-                      ? userData.profile["estimated5k"]
-                      : "Not provided"}
-                  </Text>
-                </View>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>RUN FREQUENCY</Text>
+                    <Text style={styles.infoText}>
+                      {userData?.profile
+                        ? userData.profile?.["run_frequency"] + " times / week"
+                        : "Not provided"}
+                    </Text>
+                  </View>
 
-                <View style={styles.infoItem}>
-                  <Text style={styles.infoTitle}>ESTIMATED 10K</Text>
-                  <Text style={styles.infoText}>
-                    {userData?.profile
-                      ? userData.profile["estimated10k"]
-                      : "Not provided"}
-                  </Text>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>ESTIMATED 5K</Text>
+                    <Text style={styles.infoText}>
+                      {userData?.profile
+                        ? userData.profile["estimated5k"]
+                        : "Not provided"}
+                    </Text>
+                  </View>
+
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>ESTIMATED 10K</Text>
+                    <Text style={styles.infoText}>
+                      {userData?.profile
+                        ? userData.profile["estimated10k"]
+                        : "Not provided"}
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              </Animated.View>
             </View>
           </View>
         </ScrollView>
@@ -247,7 +252,8 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   descriptionContainer: {
-    margin: 20,
+    margin: 10,
+    marginBottom: 20,
     width: "90%",
     alignSelf: "center",
   },
@@ -255,7 +261,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     // letterSpacing: 0.5,
     fontWeight: "500",
-    textAlign: "justify",
+    textAlign: "center",
     color: "#484848",
     padding: 5,
   },
