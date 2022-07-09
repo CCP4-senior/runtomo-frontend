@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  Animated
+  Animated,
 } from "react-native";
 import {
   Button,
@@ -41,8 +41,6 @@ const EventDetailsScreen = ({ navigation }) => {
     latitude: 35.6828387,
     longitude: 139.7594549,
   });
-
-  
 
   const { user } = useContext(AuthContext);
   const { currentEvent, setCurrentEvent, getUser, generateImageUrl } =
@@ -203,23 +201,22 @@ const EventDetailsScreen = ({ navigation }) => {
           <ScrollView>
             <View style={styles.container}>
               <Card style={styles.card} theme={{ roundness: 10 }}>
-
                 {/* Event cover image */}
-                <Animated.View style={{opacity}}>
-                {eventData.imageUrl && (
-                  <Card.Cover
-                    source={{ uri: eventData.imageUrl }}
-                    style={styles.eventImage}
-                    onLoadEnd={fadeAnimation}
-                  />
-                )}
-                {eventData.imageUrl === undefined && (
-                  <Card.Cover
-                    source={require("../../assets/images/demo/defaultEvent.jpeg")}
-                    style={styles.eventImage}
-                    onLoadEnd={fadeAnimation}
-                  />
-                )}
+                <Animated.View style={{ opacity }}>
+                  {eventData.imageUrl && (
+                    <Card.Cover
+                      source={{ uri: eventData.imageUrl }}
+                      style={styles.eventImage}
+                      onLoadEnd={fadeAnimation}
+                    />
+                  )}
+                  {eventData.imageUrl === undefined && (
+                    <Card.Cover
+                      source={require("../../assets/images/demo/defaultEvent.jpeg")}
+                      style={styles.eventImage}
+                      onLoadEnd={fadeAnimation}
+                    />
+                  )}
                 </Animated.View>
 
                 <View style={styles.label}>
@@ -231,7 +228,7 @@ const EventDetailsScreen = ({ navigation }) => {
                   </Text>
                 </View>
                 <Card.Content style={styles.creatorCard}>
-                  <Animated.View style={[styles.avatarsContainer, {opacity}]}>
+                  <Animated.View style={[styles.avatarsContainer, { opacity }]}>
                     <TouchableOpacity
                       onPress={openCreatorProfile}
                       style={[styles.listContainer]}
@@ -328,9 +325,17 @@ const EventDetailsScreen = ({ navigation }) => {
                       <Text style={styles.boldText}>
                         {eventData.ward || "Other"}
                       </Text>
-                      <Text style={styles.thinText}>
-                        Exact location available upon joining
-                      </Text>
+                      {eventData.participants.some(
+                        (participant) => participant.id === user.id
+                      ) || eventData.creator.id === user.id ? (
+                        <Text style={styles.thinText}>
+                          Exact location address below
+                        </Text>
+                      ) : (
+                        <Text style={styles.thinText}>
+                          Exact location available upon joining
+                        </Text>
+                      )}
                     </View>
                   </View>
 
@@ -339,12 +344,17 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.thinText}>{eventData.description}</Text>
                   </View>
 
-                  <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Location:</Text>
-                    <Text style={styles.thinText}>{eventData.location}</Text>
-                  </View>
+                  {eventData.participants.some(
+                    (participant) => participant.id === user.id
+                  ) || eventData.creator.id === user.id ? (
+                    <View style={styles.section}>
+                      <Text style={styles.sectionTitle}>Location:</Text>
+                      <Text style={styles.thinText}>{eventData.location}</Text>
+                    </View>
+                  ) : null}
+
                   {/* <View style={styles.mapContainer}> */}
-                  <Animated.View style={[styles.mapContainer, {opacity}]}>
+                  <Animated.View style={[styles.mapContainer, { opacity }]}>
                     {eventData.participants.some(
                       (participant) => participant.id === user.id
                     ) || eventData.creator.id === user.id ? (
