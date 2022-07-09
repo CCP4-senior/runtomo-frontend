@@ -1,15 +1,6 @@
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  Linking,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { Button, TextInput, Chip, Provider } from "react-native-paper";
+import { StyleSheet, View, SafeAreaView, ScrollView, Text } from "react-native";
+import React, { useContext, useState } from "react";
+import { Button, TextInput, Provider, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import Color from "../../assets/themes/Color.js";
 import { AuthContext } from "../../context/authcontext/AuthContext";
@@ -21,13 +12,8 @@ import uploadImage from "../../helpers/uploadImage.js";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
-  const {
-    idForProfile,
-    setUserToBeRegistered,
-    createUser,
-    createUserProfile,
-    userToBeRegistered,
-  } = useContext(AuthContext);
+  const { setUserToBeRegistered, createUser, createUserProfile } =
+    useContext(AuthContext);
 
   const { username, email, password, imageUri } = route.params;
 
@@ -38,6 +24,7 @@ const RegisterExtraInfo = ({ route }) => {
   const [submitted, setSubmitted] = useState(false);
 
   const [timesPerWeek, setTimesPerWeek] = useState("");
+  const [description, setDescription] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
   const handlePress = async () => {
@@ -71,13 +58,13 @@ const RegisterExtraInfo = ({ route }) => {
       run_frequency: timesPerWeek,
       estimated5k: estimated5k,
       estimated10k: estimated10k,
-      userId: idForProfile,
       email: email,
       password: password,
+      description: description,
     };
 
-    setUserToBeRegistered(userProfileData);
-    await register();
+    await setUserToBeRegistered(userProfileData);
+    await register(userProfileData);
     setModalVisible(true);
   };
 
@@ -113,29 +100,32 @@ const RegisterExtraInfo = ({ route }) => {
     }
   };
 
-  const register = async () => {
+  const register = async (userProfileData) => {
     if (imageUri === "") {
       // showDialog();
-      await createUserAndProfile(null);
+      await createUserAndProfile(null, userProfileData);
       // return;
     } else {
       const newUri = await resizeImage(imageUri, 300);
       const imageRef = await uploadImage("profiles", newUri);
       console.log(imageRef);
-      await createUserAndProfile(imageRef);
+      await createUserAndProfile(imageRef, userProfileData);
     }
   };
 
-  const createUserAndProfile = async (imageRef) => {
+  const createUserAndProfile = async (imageRef, userProfileData) => {
     try {
       console.log({ username, password, email, imageRef });
       await createUser({ username, password, email, image: imageRef });
       console.log("createuser ran");
-      console.log(userToBeRegistered);
-      await createUserProfile(userToBeRegistered);
+      console.log(userProfileData);
+      // Wait to make suer user is created in backend
+      setTimeout(async () => {
+        await createUserProfile(userProfileData);
+      }, 1000);
       console.log("createProfile ran");
     } catch (e) {
-      console.log(e);
+      console.log(e.config.url);
       alert("Something went wrong! Please try again");
     }
   };
@@ -146,6 +136,16 @@ const RegisterExtraInfo = ({ route }) => {
       <SafeAreaView
         style={{ height: "100%", width: "100%", backgroundColor: "#fff" }}
       >
+        <View style={styles.topContainer}>
+          <IconButton
+            icon={"arrow-left"}
+            size={25}
+            style={{ position: "absolute", left: 0 }}
+            onPress={() => {
+              navigation.navigate("Register");
+            }}
+          />
+        </View>
         <ScrollView style={styles.root}>
           <View style={styles.container}>
             {/*  Title */}
@@ -166,9 +166,6 @@ const RegisterExtraInfo = ({ route }) => {
             <View style={styles.inputs}>
               {/* Age Date Picker */}
 
-              {/* <View style={styles.dobHeader}>
-          <Text style={styles.btnText}>Date of birth</Text>
-        </View> */}
               <View style={styles.datePickerContainer}>
                 <DatePicker
                   setDate={setDate}
@@ -554,8 +551,13 @@ const RegisterExtraInfo = ({ route }) => {
               </View>
               <TextInput
                 mode="outlined"
-                // outlineColor="#fff"
-                // activeOutlineColor={Color.GrayDark}
+                value={description}
+                onChangeText={(text) => {
+                  setDescription(text);
+                  if (text.length === 480) {
+                    alert("Description cannot exceed 480 character length.");
+                  }
+                }}
                 theme={{
                   ...styles.inputTheme,
                 }}
@@ -563,7 +565,7 @@ const RegisterExtraInfo = ({ route }) => {
                 outlineColor={Color.GrayDark}
                 activeOutlineColor={Color.GrayDark}
                 placeholder={"Write some facts about you!"}
-                maxLength={255}
+                maxLength={480}
                 multiline={true}
               />
             </View>
@@ -590,14 +592,14 @@ export default RegisterExtraInfo;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    // paddingTop: 50,
-    // justifyContent: "center",
-    // alignItems: "center",
     backgroundColor: Color.White,
   },
   container: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  topContainer: {
+    height: 40,
   },
   title: {
     justifyContent: "center",
@@ -613,7 +615,6 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "90%",
-    // width: "75%",
     borderRadius: 10,
     alignSelf: "center",
     marginVertical: 20,
@@ -632,7 +633,6 @@ const styles = StyleSheet.create({
     color: Color.Text,
   },
   datePickerContainer: {
-    // marginVertical: 10,
     marginVertical: 15,
   },
   dobHeader: {
@@ -654,7 +654,6 @@ const styles = StyleSheet.create({
   },
   profileHeader: {
     alignSelf: "flex-start",
-    // marginVertical: 10,
   },
   timesPerWeekBtnWrapper: {
     display: "flex",
@@ -662,7 +661,6 @@ const styles = StyleSheet.create({
     width: "100%",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    // backgroundColor: "blue",
     marginBottom: 10,
   },
   estimatedKmBtnWrapper: {
@@ -674,7 +672,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginBottom: 20,
     marginTop: 0,
-    // backgroundColor: "blue",
   },
   timesPerWeekBtns: {
     borderRadius: 20,

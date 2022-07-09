@@ -3,7 +3,7 @@ import { AuthProvider } from "./context/authcontext/AuthContext";
 import { DataProvider } from "./context/datacontext/DataContext";
 import AppNavContainer from "./navigations/AppNavContainer";
 import useCachedResources from "./helpers/useCashedResources";
-import Spinner from "./screens/splash/Spinner";
+import Spinner from "./screens/spinner/Spinner";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

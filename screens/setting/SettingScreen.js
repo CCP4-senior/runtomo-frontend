@@ -58,7 +58,7 @@ const SettingScreen = ({ navigation }) => {
 
   const openProfileScreen = (eventData) => {
     const userToView = user;
-    RootNavigation.navigate("Profile", { userToView } );
+    RootNavigation.navigate("Profile", { userToView });
   };
 
   return (
@@ -75,7 +75,7 @@ const SettingScreen = ({ navigation }) => {
               <Paragraph>
                 {dialogType === "confirmation"
                   ? "Are you sure you want to remove your account?"
-                  : "Your account was deleted successfully. All of your data was removed from our services. Thank you for using SoleMates."}
+                  : "Your account was deleted successfully. All of your data was removed from our services. Thank you for using RunTomo."}
               </Paragraph>
             </Dialog.Content>
             <Dialog.Actions>

@@ -4,12 +4,11 @@ import {
   SafeAreaView,
   ScrollView,
   Text,
-  Linking,
   Alert,
   TouchableOpacity,
 } from "react-native";
-import React, { useContext, useState, useEffect } from "react";
-import { Button, TextInput, Avatar, IconButton } from "react-native-paper";
+import React, { useContext, useState } from "react";
+import { TextInput, Avatar, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color.js";
@@ -19,12 +18,10 @@ import selectImage from "../../helpers/selectImage";
 const Register = () => {
   const navigation = useNavigation();
 
-  const { setUser, createUser } = useContext(AuthContext);
   const [emailError, setEmailError] = useState({
     isTriggered: false,
     message: "",
   });
-  const [passwordError, setPasswordError] = useState("");
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -102,6 +99,16 @@ const Register = () => {
 
   return (
     <SafeAreaView style={styles.root}>
+      <View style={styles.topContainer}>
+        <IconButton
+          icon={"arrow-left"}
+          size={25}
+          style={{ position: "absolute", left: 0 }}
+          onPress={() => {
+            navigation.navigate("AuthSelection");
+          }}
+        />
+      </View>
       <ScrollView>
         <View style={styles.mainContainer}>
           {/*  Title */}
@@ -115,47 +122,6 @@ const Register = () => {
           {imageUri === "" && (
             <>
               <View style={styles.avatarContainer}>
-                {/* <View style={styles.mainContainer}>
-              {imageUri === "" && (
-                <TouchableOpacity
-                  onPress={async () => {
-                    await selectImage(setImageUri);
-                  }}
-                >
-                  <View
-                    backgroundColor="#fff"
-                    style={styles.imagePlaceholderBackground}
-                  >
-                    <View style={styles.imageLogo}>
-                      <IconButton
-                        icon="camera"
-                        color={Color.PrimaryMain}
-                        size={100}
-                      />
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )}
-
-              {imageUri !== "" && (
-                <View style={styles.imageBackground}>
-                  <Text style={{ fontWeight: "bold", textAlign: "center" }}>
-                    Profile Photo
-                  </Text>
-
-                  <Image
-                    source={{ uri: imageUri }}
-                    style={styles.selectedPhoto}
-                  />
-
-                  <View style={styles.imageOverlay}></View>
-                  <Button color={Color.PrimaryMain} onPress={deleteImage}>
-                    Delete
-                  </Button>
-                </View>
-              )}
-            </View> */}
-
                 <Avatar.Icon
                   size={120}
                   icon="account"
@@ -215,8 +181,8 @@ const Register = () => {
                 label="Email"
                 value={email}
                 mode="outlined"
-                outlineColor={Color.GrayDark}
-                activeOutlineColor="gray"
+                outlineColor={Color.Black}
+                activeOutlineColor={Color.Black}
                 autoCapitalize="none"
                 textContentType="emailAddress"
                 keyboardType="email-address"
@@ -254,8 +220,8 @@ const Register = () => {
                 label="Username"
                 value={username}
                 mode="outlined"
-                outlineColor={Color.GrayDark}
-                activeOutlineColor="gray"
+                outlineColor={Color.Black}
+                activeOutlineColor={Color.Black}
                 autoCapitalize="none"
                 keyboardType="default"
                 returnKeyType="next"
@@ -277,8 +243,8 @@ const Register = () => {
                 label="Password"
                 value={password}
                 mode="outlined"
-                outlineColor={Color.GrayDark}
-                activeOutlineColor="gray"
+                outlineColor={Color.Black}
+                activeOutlineColor={Color.Black}
                 textContentType="password"
                 secureTextEntry={true}
                 style={{ height: 50, backgroundColor: Color.GrayLight }}
@@ -299,8 +265,8 @@ const Register = () => {
                 label="Password (retype)"
                 value={secondPassword}
                 mode="outlined"
-                outlineColor={Color.GrayDark}
-                activeOutlineColor="gray"
+                outlineColor={Color.Black}
+                activeOutlineColor={Color.Black}
                 textContentType="password"
                 secureTextEntry={true}
                 style={{ height: 50, backgroundColor: Color.GrayLight }}
@@ -317,22 +283,6 @@ const Register = () => {
                 buttonText={"Next"}
                 customStyle={{ width: "100%" }}
               />
-              {/* <Button
-                mode="contained"
-                uppercase={false}
-                color={Color.PrimaryMain}
-                style={{ borderRadius: 10 }}
-                labelStyle={{
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-                contentStyle={{
-                  padding: 5,
-                }}
-                onPress={() => handleRegister()}
-              >
-                Next
-              </Button> */}
 
               {/*  Already have an account? */}
 
@@ -359,20 +309,15 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: Color.White,
-  },
-  mainContainer: {
-    // height: "95%",
-    // position: "relative",
-    paddingTop: 20,
-    // display: "flex",
-    // justifyContent: "center",
-    // backgroundColor: "red",
     padding: 10,
   },
+  topContainer: {
+    height: 40,
+  },
+  mainContainer: {},
   inputContainer: {
     top: -40,
     height: "60%",
-    // backgroundColor: "yellow",
     justifyContent: "space-around",
   },
   title: {
@@ -396,7 +341,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   emailFieldWrapper: {
-    width: "90%",
+    width: 315,
     height: 74,
     alignSelf: "center",
   },
@@ -405,23 +350,23 @@ const styles = StyleSheet.create({
     color: Color.PrimaryMain,
   },
   usernameFieldWrapper: {
-    width: "90%",
+    width: 315,
     height: 74,
     alignSelf: "center",
   },
   passwordFieldWrapper: {
-    width: "90%",
+    width: 315,
     height: 70,
     alignSelf: "center",
   },
   secondPasswordFieldWrapper: {
-    width: "90%",
+    width: 315,
     height: 70,
     alignSelf: "center",
   },
   registerBottomWrapper: {
     marginTop: 12,
-    width: "90%",
+    width: 315,
 
     alignSelf: "center",
   },
@@ -438,24 +383,15 @@ const styles = StyleSheet.create({
   avatarContainer: {
     marginTop: 10,
     flexDirection: "column",
-    // paddingTop: 30,
-    // width: "100%",
-    // height: "30%",
-    // justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "blue",
   },
   avatar: {
-    // marginTop: 40,
     position: "relative",
-    // alignSelf: "center",
   },
   icon: {
     position: "aboslute",
     top: "-90%",
     left: "55%",
-    // top: -50,
-    // left: 50,
     width: 50,
     height: 50,
     backgroundColor: Color.PrimaryMain,
