@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import MapView, {
   Callout,
@@ -17,6 +18,9 @@ import MapView, {
 } from "react-native-maps";
 import Color from "../../assets/themes/Color";
 import axiosInstance from "../../helpers/axios";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const PointsOfInterestScreen = () => {
   const [region, setRegion] = useState({
@@ -92,33 +96,21 @@ const PointsOfInterestScreen = () => {
 export default PointsOfInterestScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.Fill,
-    padding: 10,
-    alignItems: "center",
-    overflow: "visible",
+  eventTitle: {
+    fontSize: 20,
+    fontWeight: "900",
+    color: "#484848",
+    textAlign: "center",
   },
   mapContainer: {
-    backgroundColor: Color.White,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  card: {
-    width: "100%",
-    height: "auto",
-    marginBottom: 20,
-    paddingBottom: 12,
-  },
-  eventTitle: {
-    fontSize: 25,
-    fontWeight: "700",
-    color: Color.PrimaryMain,
+    height: windowHeight,
+    width: windowWidth,
+    marginHorizontal: "auto",
+    alignSelf: "center",
   },
   map: {
-    height: 500,
+    height: "100%",
     width: "100%",
-    alignSelf: "center",
     marginTop: 12,
   },
 });

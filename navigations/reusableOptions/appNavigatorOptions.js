@@ -9,6 +9,7 @@ import MapView, {
   PROVIDER_GOOGLE,
   PROVIDER_DEFAULT,
 } from "react-native-maps";
+import Color from "../../assets/themes/Color";
 
 const createOptions = (
   settingPressHandler,
@@ -25,7 +26,7 @@ const createOptions = (
           style={[styles.iconContainer, styles.menu]}
           onPress={messagePressaHandler}
         >
-          <IconButton icon="map" size={25} color="grey" />
+          <IconButton icon="map" size={25} color="#484848" />
         </TouchableOpacity>
       ) : null;
     },
@@ -34,7 +35,7 @@ const createOptions = (
         style={[styles.iconContainer, styles.menu]}
         onPress={settingPressHandler}
       >
-        <IconButton icon="menu" color="grey" size={25} />
+        <IconButton icon="menu" color="#484848" size={25} />
       </TouchableOpacity>
     ),
   };
@@ -46,7 +47,7 @@ export default createOptions;
 const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
-    backgroundColor: "#F5F8FA",
+    backgroundColor: Color.White,
     paddingHorizontal: 20,
   },
   menu: {

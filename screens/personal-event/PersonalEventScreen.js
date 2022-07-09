@@ -118,10 +118,20 @@ const PersonalEventScreen = ({ navigation }) => {
         {listTab.map((tab, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.btnTab, tab.status === status && styles.btnActive]}
+            style={[styles.btnTab]}
             onPress={() => handleFilter(tab.status)}
           >
-            <Text style={styles.textTab}>{tab.status}</Text>
+            <Text
+              style={[
+                styles.textTab,
+                tab.status === status && styles.activeText,
+              ]}
+            >
+              {tab.status}
+            </Text>
+            <View
+              style={[tab.status === status && styles.textTabUnderline]}
+            ></View>
           </TouchableOpacity>
         ))}
       </View>
@@ -155,7 +165,7 @@ export default PersonalEventScreen;
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Color.White,
+    backgroundColor: "#E5E5E5",
     padding: 10,
   },
   container: {
@@ -187,19 +197,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   listTab: {
+    paddingTop: 20,
     flexDirection: "row",
     justifyContent: "space-evenly",
-    backgroundColor: Color.GrayMedium,
+    backgroundColor: Color.White,
   },
   btnTab: {
     padding: 10,
     width: 110,
   },
-  btnActive: {
-    backgroundColor: Color.GrayDark,
-  },
   textTab: {
     textAlign: "center",
-    fontWeight: "500",
+    fontWeight: "700",
+    fontSize: 15,
+  },
+  textTabUnderline: {
+    marginTop: 10,
+    backgroundColor: Color.PrimaryMain,
+    height: 2,
+  },
+  activeText: {
+    color: Color.PrimaryMain,
   },
 });
