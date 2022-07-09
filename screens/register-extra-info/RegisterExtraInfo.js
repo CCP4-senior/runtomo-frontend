@@ -30,7 +30,7 @@ const RegisterExtraInfo = ({ route }) => {
   const handlePress = async () => {
     // age validation
     if (!date) {
-      return alert("Please enter date of birth");
+      return alert("Please enter date of birth.");
     }
     const isAgeValid = validateAge(date);
 
@@ -39,16 +39,21 @@ const RegisterExtraInfo = ({ route }) => {
     }
 
     if (!timesPerWeek) {
-      return alert("Please select running frequency per week");
+      return alert("Please select running frequency per week.");
     }
 
     if (!estimated5k) {
-      return alert("Please select estimated 5k time");
+      return alert("Please select estimated 5k time.");
     }
 
     if (!estimated10k) {
-      return alert("Please select estimated 10k time");
+      return alert("Please select estimated 10k time.");
     }
+
+    if (description === "") {
+      return alert("Please write a short description about yourself.");
+    }
+
     const formattedDate = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDate()}`;
@@ -537,7 +542,7 @@ const RegisterExtraInfo = ({ route }) => {
             {/* About me */}
             <View style={styles.inputContainer}>
               <View style={styles.profileHeader}>
-                <Text style={styles.btnTitleText}>Profile</Text>
+                <Text style={styles.btnTitleText}>Description</Text>
               </View>
               <TextInput
                 mode="outlined"
@@ -554,7 +559,7 @@ const RegisterExtraInfo = ({ route }) => {
                 style={styles.input}
                 outlineColor={Color.GrayDark}
                 activeOutlineColor={Color.GrayDark}
-                placeholder={"Write some facts about you!"}
+                placeholder={"Tell us a bit about yourself!"}
                 maxLength={480}
                 multiline={true}
               />
