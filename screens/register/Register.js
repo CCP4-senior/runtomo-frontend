@@ -34,26 +34,26 @@ const Register = () => {
     let alertMessage = "";
 
     if (username.length < 5) {
-      alertMessage = "The username must be greater than 5 letters";
+      alertMessage = "The username must 5 or more characters long.";
       inputError = true;
     } else if (email === "") {
-      alertMessage = "Cannot have an empty field";
+      alertMessage = "Cannot have an empty field.";
       inputError = true;
     } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       alertMessage =
         "The email does not look right. Did you type it correctly?";
       inputError = true;
     } else if (password.length < 9) {
-      alertMessage = "The password must be 9 or more characters";
+      alertMessage = "The password must be 9 or more characters long.";
       inputError = true;
     } else if (password !== secondPassword) {
-      alertMessage = "Passwords do not match";
+      alertMessage = "Passwords do not match.";
       inputError = true;
     } else if (password === "" || secondPassword === "") {
-      alertMessage = "Cannot have an empty password";
+      alertMessage = "Cannot have an empty password.";
       inputError = true;
     } else if (imageUri === "") {
-      alertMessage = "Signing up requires profile photo";
+      alertMessage = "Signing up requires a profile photo.";
       inputError = true;
     }
 
@@ -265,7 +265,7 @@ const Register = () => {
                     placeholder: Color.TextMute,
                   },
                 }}
-                label="Password (retype)"
+                label="Confirm Password"
                 value={secondPassword}
                 mode="outlined"
                 outlineColor={Color.Black}
