@@ -4,6 +4,7 @@ const Yellow = "#FFB443";
 
 const PrimaryMedium = "#FECBCA";
 const PrimaryLight = "#F5DADA";
+const PrimaryTitle = "#FA4048";
 
 const GrayLight = "#FAFAFA";
 const GrayMedium = "#F0F2F5";
@@ -19,6 +20,9 @@ const HeaderTitle = "#455154";
 const TextMute = "rgba(25, 33, 38, 0.5)";
 
 const TestColor = "#8A2BE2";
+
+const CalendarEventIconBackgroundColor = "#4BB586";
+const MapEventIconBackgroundColor = "#F79725";
 
 const Color = {
   PrimaryMain: PrimaryMain,
@@ -36,6 +40,9 @@ const Color = {
   TestColor,
   Yellow,
   TextMute,
+  CalendarEventIconBackgroundColor,
+  MapEventIconBackgroundColor,
+  PrimaryTitle,
 };
 
 export default Color;
