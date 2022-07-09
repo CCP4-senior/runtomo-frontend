@@ -469,11 +469,13 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     overflow: "visible",
+    
   },
   mapContainer: {
     backgroundColor: Color.White,
     alignItems: "center",
     justifyContent: "center",
+    
   },
   label: {
     position: "absolute",
