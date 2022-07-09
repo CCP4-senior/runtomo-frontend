@@ -78,7 +78,7 @@ const EventCard = ({
                 : ""}
             </Text>
           </View>
-          {event.participants?.length !== 0 && (
+          {event.participants && event.participants.length !== 0 && (
             <View style={styles.rightContent}>
               <View
                 style={{
