@@ -1,4 +1,5 @@
 import React from "react";
+import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeNavigator from "../navigations/HomeNavigator";
 import EventCreationNavigator from "./EventCreationNavigator";
@@ -20,7 +21,7 @@ const BottomTabNavigator = () => {
             iconName = "ios-home";
           }
           if (route.name === "My Sessions Main Page") {
-            iconName = "walk";
+            // iconName = "walk";
           }
           if (route.name === "Event Creation") {
             iconName = "add-circle-outline";
@@ -55,6 +56,22 @@ const BottomTabNavigator = () => {
         options={{
           title: "My Sessions",
           headerShown: false,
+          tabBarIcon: ({ size, focused, color }) => {
+            if (focused) {
+              return (
+                <Image
+                  style={{ width: size, height: size }}
+                  source={require("../assets/images/my-session.png")}
+                />
+              );
+            } else
+              return (
+                <Image
+                  style={{ width: size, height: size }}
+                  source={require("../assets/images/my-session-gray.png")}
+                />
+              );
+          },
         }}
       >
         {(props) => <PersonalEventNavigator {...props} />}
