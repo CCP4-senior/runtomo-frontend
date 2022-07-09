@@ -11,8 +11,6 @@ const DataProvider = ({ children }) => {
   const { user, setUser } = useContext(AuthContext);
   const [allEvents, setAllEvents] = useState([]);
   const [createdEvents, setCreatedEvents] = useState([]);
-  const [joinedEvents, setJoinedEvents] = useState([]);
-  const [userEvents, setUserEvents] = useState([]);
   const [eventId, setEventId] = useState("");
   const [currentEvent, setCurrentEvent] = useState("");
   const [filteredEvents, setFilteredEvents] = useState(null);
@@ -49,34 +47,9 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  //   Following paddData function is added for data consistency. Will be deleted once backend data is set
-  const paddData = (el) => {
-    const randomWard = Math.floor(Math.random() * 2);
-    return {
-      id: el.id,
-      title: el.title,
-      location: el.location || "2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052",
-      ward: randomWard === 0 ? "Shibuya" : "Meguro",
-      date: "2022-09-15T12:03:55.300Z",
-      time: "2022-09-15T12:03:55.300Z",
-      image: require("../../assets/images/demo/yoyogipark.jpeg"),
-      user: {
-        id: 2,
-        username: "wade",
-        age: 34,
-        image: require("../../assets/images/demo/wade.png"),
-      },
-      participants: [],
-      owner_id: 2,
-      hasJoined: true,
-      description:
-        "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.",
-    };
-  };
   const setUserData = async (userId) => {
     try {
       const response = await axiosInstance(`/users/${userId}/`);
-      console.log(response.data);
       setUser({
         ...response.data,
         imageUrl: response.data.image
@@ -109,7 +82,6 @@ const DataProvider = ({ children }) => {
         const event = { ...data[i], imageUrl };
         dataWithImage.push(event);
       }
-      // console.log(dataWithImage);
       setAllEvents(dataWithImage);
     } catch (e) {
       alert("Something went wrong with getAllEventsData. Please try again");

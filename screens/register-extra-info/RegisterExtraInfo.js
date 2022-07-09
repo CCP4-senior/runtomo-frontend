@@ -12,8 +12,7 @@ import uploadImage from "../../helpers/uploadImage.js";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
-  const { setUserToBeRegistered, createUser, createUserProfile } =
-    useContext(AuthContext);
+  const { createUser, createUserProfile } = useContext(AuthContext);
 
   const { username, email, password, imageUri } = route.params;
 
@@ -63,7 +62,6 @@ const RegisterExtraInfo = ({ route }) => {
       description: description,
     };
 
-    await setUserToBeRegistered(userProfileData);
     await register(userProfileData);
     setModalVisible(true);
   };
@@ -101,29 +99,19 @@ const RegisterExtraInfo = ({ route }) => {
   };
 
   const register = async (userProfileData) => {
-    if (imageUri === "") {
-      // showDialog();
-      await createUserAndProfile(null, userProfileData);
-      // return;
-    } else {
-      const newUri = await resizeImage(imageUri, 300);
-      const imageRef = await uploadImage("profiles", newUri);
-      console.log(imageRef);
-      await createUserAndProfile(imageRef, userProfileData);
-    }
+    const newUri = await resizeImage(imageUri, 300);
+    const imageRef = await uploadImage("profiles", newUri);
+    await createUserAndProfile(imageRef, userProfileData);
   };
 
   const createUserAndProfile = async (imageRef, userProfileData) => {
     try {
-      console.log({ username, password, email, imageRef });
       await createUser({ username, password, email, image: imageRef });
-      console.log("createuser ran");
-      console.log(userProfileData);
+
       // Wait to make suer user is created in backend
       setTimeout(async () => {
         await createUserProfile(userProfileData);
       }, 1000);
-      console.log("createProfile ran");
     } catch (e) {
       console.log(e.config.url);
       alert("Something went wrong! Please try again");
