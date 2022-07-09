@@ -28,15 +28,11 @@ import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
+import LoadingSpinner from "../../components/LoadingSpinner.js";
+import runningDurationArray from "../../utils/runningDuration.js";
+
 
 const EventCreationScreen = ({ navigation }) => {
-  const runningDurationArray = [
-    { id: 1, name: "15 mins", num: 15 },
-    { id: 2, name: "30 mins", num: 30 },
-    { id: 3, name: "1 hr", num: 60 },
-    { id: 4, name: "More", num: null },
-  ];
-
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -51,6 +47,7 @@ const EventCreationScreen = ({ navigation }) => {
   const [eventDescription, setEventDescription] = useState("");
   const [imageUri, setImageUri] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef();
   const { setCurrentEvent, generateImageUrl } = useContext(DataContext);
   const { user } = useContext(AuthContext);
@@ -89,6 +86,8 @@ const EventCreationScreen = ({ navigation }) => {
 
   const createEvent = async () => {
     try {
+      setIsLoading(true);
+
       let currentRef = null;
       if (imageUri !== "") {
         const newUri = await resizeImage(imageUri, 300);
@@ -106,6 +105,7 @@ const EventCreationScreen = ({ navigation }) => {
 
       if (requiredFields.some((field) => field === "")) {
         setSubmitted(true);
+        setIsLoading(false);
         return;
       }
 
@@ -123,16 +123,19 @@ const EventCreationScreen = ({ navigation }) => {
       };
 
       const response = await axiosInstance.post("/events/create_event/", event);
+
       setCurrentEvent({
         ...event,
         creator: user,
         imageUrl: currentRef !== null ? generateImageUrl(currentRef) : null,
       });
 
+      setIsLoading(false);
       navigation.navigate("Event Created", { isConfirmationCard: true });
     } catch (e) {
+      setIsLoading(false);
       console.log(e);
-      alert("Something went wrong. Please try again!");
+      alert("Something went wrong with Create Event. Please try again!");
     }
   };
 
@@ -165,6 +168,8 @@ const EventCreationScreen = ({ navigation }) => {
 
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
+          {/* Event title */}
+
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Event Title"
@@ -186,6 +191,7 @@ const EventCreationScreen = ({ navigation }) => {
               submitted={submitted}
             />
           </View> */}
+
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Meeting Point Address"
@@ -228,7 +234,11 @@ const EventCreationScreen = ({ navigation }) => {
                 await selectImage(setImageUri);
               }}
             >
-              <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}>Event Image</Text>
+              <Text
+                style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}
+              >
+                Event Image
+              </Text>
               <View
                 backgroundColor="#fff"
                 style={styles.imagePlaceholderBackground}
@@ -243,7 +253,10 @@ const EventCreationScreen = ({ navigation }) => {
 
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
-              <Text style={{ fontWeight: "bold", marginBottom: 10, fontSize: 16 }}>Event Image</Text>
+
+              <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10, }}>
+                Event Image
+              </Text>
               <Image source={{ uri: imageUri }} style={{ height: 175 }} />
               <Button color={Color.PrimaryMain} onPress={deleteImage}>
                 Undo Selection
@@ -299,11 +312,26 @@ const EventCreationScreen = ({ navigation }) => {
               multiline={true}
             />
           </View>
-          <LongButton
-            buttonHandler={createEvent}
-            buttonColor={Color.PrimaryMain}
-            buttonText="Create Event"
-          />
+
+          {/* Create Event button */}
+
+          {/* Loading spinner */}
+
+          {isLoading ? (
+            <View style={{ flex: 1 }}>
+              <LongButton
+                buttonColor={Color.PrimaryMedium}
+                buttonText="Creating Event..."
+              />
+              <LoadingSpinner />
+            </View>
+          ) : (
+            <LongButton
+              buttonHandler={createEvent}
+              buttonColor={Color.PrimaryMain}
+              buttonText="Create Event"
+            />
+          )}
         </View>
       </ScrollView>
     </Provider>
@@ -336,7 +364,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
     width: "90%",
     paddingLeft: 8,
-    
   },
   imagePlaceholderBackground: {
     width: 98,
@@ -358,7 +385,8 @@ const styles = StyleSheet.create({
   imageBackground: {
     width: "90%",
     padding: 10,
-    paddingTop: 25,
+    paddingTop: 40,
+    paddingBottom: 40,
     height: 230,
     backgroundColor: Color.White,
     alignSelf: "center",

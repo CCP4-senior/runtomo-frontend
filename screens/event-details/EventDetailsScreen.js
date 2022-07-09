@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
+  Animated,
 } from "react-native";
 import {
   Button,
@@ -32,6 +33,7 @@ import MapView, {
 import axiosInstance from "../../helpers/axios.js";
 import StackedAvatars from "./StackedAvatars.js";
 import deleteStoredImage from "../../helpers/deleteStoredImage.js";
+import runningDurationArray from "../../utils/runningDuration.js";
 
 const EventDetailsScreen = ({ navigation }) => {
   // Google Maps logic
@@ -59,6 +61,16 @@ const EventDetailsScreen = ({ navigation }) => {
   const time = new Date(eventData.time);
   const zonedDate = addHours(date, 9);
   const zonedTime = addHours(time, 9);
+
+  // Fade-in logic
+  const [opacity, setOpacity] = useState(new Animated.Value(0));
+  const fadeAnimation = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start();
+  };
 
   useEffect(() => {
     getAllParticipants();
@@ -189,18 +201,23 @@ const EventDetailsScreen = ({ navigation }) => {
           <ScrollView>
             <View style={styles.container}>
               <Card style={styles.card} theme={{ roundness: 10 }}>
-                {eventData.imageUrl && (
-                  <Card.Cover
-                    source={{ uri: eventData.imageUrl }}
-                    style={styles.eventImage}
-                  />
-                )}
-                {eventData.imageUrl === undefined && (
-                  <Card.Cover
-                    source={require("../../assets/images/demo/defaultEvent.jpeg")}
-                    style={styles.eventImage}
-                  />
-                )}
+                {/* Event cover image */}
+                <Animated.View style={{ opacity }}>
+                  {eventData.imageUrl && (
+                    <Card.Cover
+                      source={{ uri: eventData.imageUrl }}
+                      style={styles.eventImage}
+                      onLoadEnd={fadeAnimation}
+                    />
+                  )}
+                  {eventData.imageUrl === undefined && (
+                    <Card.Cover
+                      source={require("../../assets/images/demo/defaultEvent.jpeg")}
+                      style={styles.eventImage}
+                      onLoadEnd={fadeAnimation}
+                    />
+                  )}
+                </Animated.View>
 
                 <View style={styles.label}>
                   <Text style={styles.labelDate}>
@@ -211,7 +228,7 @@ const EventDetailsScreen = ({ navigation }) => {
                   </Text>
                 </View>
                 <Card.Content style={styles.creatorCard}>
-                  <View style={styles.avatarsContainer}>
+                  <Animated.View style={[styles.avatarsContainer, { opacity }]}>
                     <TouchableOpacity
                       onPress={openCreatorProfile}
                       style={[styles.listContainer]}
@@ -221,6 +238,8 @@ const EventDetailsScreen = ({ navigation }) => {
                           size={40}
                           icon="account"
                           style={styles.avatar}
+                          onLoadEnd={fadeAnimation}
+                          backgroundColor={Color.GrayDark}
                         />
                       )}
                       {eventData.creator?.image && (
@@ -229,6 +248,8 @@ const EventDetailsScreen = ({ navigation }) => {
                           source={{
                             uri: generateImageUrl(eventData.creator.image),
                           }}
+                          backgroundColor={Color.GrayDark}
+                          onLoadEnd={fadeAnimation}
                         />
                       )}
                       <Text style={styles.creatorName}>
@@ -253,7 +274,7 @@ const EventDetailsScreen = ({ navigation }) => {
                         </Text>
                       )}
                     </View>
-                  </View>
+                  </Animated.View>
 
                   <Title style={styles.eventTitle}>{eventData.title}</Title>
 
@@ -271,14 +292,24 @@ const EventDetailsScreen = ({ navigation }) => {
                         {format(new Date(zonedDate), "E, MMM d, yyyy")}
                       </Text>
                       <Text style={styles.thinText}>
-                        {format(new Date(zonedTime), "p")} to{" "}
-                        {format(
-                          addMinutes(
+                        {eventData.running_duration <= 60 &&
+                          `${format(new Date(zonedTime), "p")} to ${format(
+                            addMinutes(
+                              new Date(zonedTime),
+                              Number(eventData.running_duration)
+                            ),
+                            "p"
+                          )} - ${
+                            runningDurationArray.find(
+                              (el) => el.num === eventData.running_duration
+                            ).name
+                          }`}
+                        {eventData.running_duration > 60 &&
+                          `Minimum of 1 hr from ${format(
                             new Date(zonedTime),
-                            Number(eventData.running_duration)
-                          ),
-                          "p"
-                        )}
+                            "p"
+                          )}
+                       `}
                       </Text>
                     </View>
                   </View>
@@ -294,9 +325,17 @@ const EventDetailsScreen = ({ navigation }) => {
                       <Text style={styles.boldText}>
                         {eventData.ward || "Other"}
                       </Text>
-                      <Text style={styles.thinText}>
-                        Exact location available upon joining
-                      </Text>
+                      {eventData.participants.some(
+                        (participant) => participant.id === user.id
+                      ) || eventData.creator.id === user.id ? (
+                        <Text style={styles.thinText}>
+                          Exact location address below
+                        </Text>
+                      ) : (
+                        <Text style={styles.thinText}>
+                          Exact location available upon joining
+                        </Text>
+                      )}
                     </View>
                   </View>
 
@@ -305,11 +344,17 @@ const EventDetailsScreen = ({ navigation }) => {
                     <Text style={styles.thinText}>{eventData.description}</Text>
                   </View>
 
-                  <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Location:</Text>
-                    <Text style={styles.thinText}>{eventData.location}</Text>
-                  </View>
-                  <View style={styles.mapContainer}>
+                  {eventData.participants.some(
+                    (participant) => participant.id === user.id
+                  ) || eventData.creator.id === user.id ? (
+                    <View style={styles.section}>
+                      <Text style={styles.sectionTitle}>Location:</Text>
+                      <Text style={styles.thinText}>{eventData.location}</Text>
+                    </View>
+                  ) : null}
+
+                  {/* <View style={styles.mapContainer}> */}
+                  <Animated.View style={[styles.mapContainer, { opacity }]}>
                     {eventData.participants.some(
                       (participant) => participant.id === user.id
                     ) || eventData.creator.id === user.id ? (
@@ -323,6 +368,7 @@ const EventDetailsScreen = ({ navigation }) => {
                           longitudeDelta: 0.002,
                         }}
                         provider={PROVIDER_DEFAULT}
+                        onLoadEnd={fadeAnimation}
                       >
                         <Marker
                           coordinate={{
@@ -344,7 +390,8 @@ const EventDetailsScreen = ({ navigation }) => {
                         ></Circle>
                       </MapView>
                     ) : null}
-                  </View>
+                  </Animated.View>
+                  {/* </View> */}
                 </Card.Content>
               </Card>
 
@@ -355,9 +402,10 @@ const EventDetailsScreen = ({ navigation }) => {
                       setCurrentEvent(eventData);
                       navigation.navigate("Edit Event");
                     }}
-                    buttonColor={Color.GrayDark}
+                    buttonColor={Color.White}
                     buttonText="Edit Event"
-                    buttonTextColor="#555555"
+                    // buttonTextColor="#555555"
+                    buttonTextColor={Color.PrimaryMain}
                   />
                   <LongButton
                     buttonHandler={() => cancelEvent(eventData)}

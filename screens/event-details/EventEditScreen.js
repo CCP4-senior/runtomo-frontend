@@ -23,15 +23,9 @@ import selectImage from "../../helpers/selectImage.js";
 import deleteStoredImage from "../../helpers/deleteStoredImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
+import runningDurationArray from "../../utils/runningDuration.js";
 
 const EventEditScreen = ({ navigation }) => {
-  const runningDurationArray = [
-    { id: 1, name: "15 mins", num: 15 },
-    { id: 2, name: "30 mins", num: 30 },
-    { id: 3, name: "1 hr", num: 60 },
-    { id: 4, name: "More", num: null },
-  ];
-
   const { setCurrentEvent, currentEvent, generateImageUrl } =
     useContext(DataContext);
   const { user } = useContext(AuthContext);
