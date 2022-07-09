@@ -12,7 +12,8 @@ import uploadImage from "../../helpers/uploadImage.js";
 
 const RegisterExtraInfo = ({ route }) => {
   const navigation = useNavigation();
-  const { createUser, createUserProfile } = useContext(AuthContext);
+  const { setUserToBeRegistered, createUser, createUserProfile } =
+    useContext(AuthContext);
 
   const { username, email, password, imageUri } = route.params;
 
@@ -62,6 +63,7 @@ const RegisterExtraInfo = ({ route }) => {
       description: description,
     };
 
+    await setUserToBeRegistered(userProfileData);
     await register(userProfileData);
     setModalVisible(true);
   };

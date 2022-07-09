@@ -10,6 +10,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [idForProfile, setIdForProfile] = useState("");
+  const [userToBeRegistered, setUserToBeRegistered] = useState({});
 
   const createUser = async ({ username, email, password, image }) => {
     try {
@@ -177,6 +178,8 @@ const AuthProvider = ({ children }) => {
     signOutUser,
     createUserProfile,
     idForProfile,
+    userToBeRegistered,
+    setUserToBeRegistered,
     updateDBUserInfo,
     updateDBUserProfile,
   };
