@@ -287,7 +287,7 @@ const EventDetailsScreen = ({ navigation }) => {
                       color={Color.White}
                       size={40}
                       icon="calendar-month"
-                      style={styles.listIcon}
+                      style={styles.calendarListIcon}
                     />
                     <View style={styles.listContent}>
                       <Text style={styles.boldText}>
@@ -321,7 +321,7 @@ const EventDetailsScreen = ({ navigation }) => {
                       color={Color.White}
                       size={40}
                       icon="map-marker"
-                      style={styles.listIcon}
+                      style={styles.mapMarkerListIcon}
                     />
                     <View style={styles.listContent}>
                       <Text style={styles.boldText}>
@@ -340,13 +340,13 @@ const EventDetailsScreen = ({ navigation }) => {
                   </View>
 
                   <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Description:</Text>
+                    <Text style={styles.sectionTitle}>DESCRIPTION</Text>
                     <Text style={styles.thinText}>{eventData.description}</Text>
                   </View>
 
                   {hasJoined || eventData.creator.id === user.id ? (
                     <View style={styles.section}>
-                      <Text style={styles.sectionTitle}>Location:</Text>
+                      <Text style={styles.sectionTitle}>LOCATION</Text>
                       <Text style={styles.thinText}>{eventData.location}</Text>
                     </View>
                   ) : null}
@@ -436,7 +436,7 @@ const EventDetailsScreen = ({ navigation }) => {
             <Button
               style={styles.messageButton}
               mode="contained"
-              color={"#007AFF"}
+              color={Color.PrimaryMain}
               uppercase={false}
               labelStyle={{
                 lineHeight: 20,
@@ -479,7 +479,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 15,
-    backgroundColor: Color.AccentColor,
+    backgroundColor: Color.PrimaryTitle,
     width: 55,
     height: 75,
     borderBottomLeftRadius: 25,
@@ -524,10 +524,17 @@ const styles = StyleSheet.create({
   listIcon: {
     backgroundColor: Color.AccentColor,
   },
+  calendarListIcon: {
+    backgroundColor: Color.CalendarEventIconBackgroundColor,
+  },
+  mapMarkerListIcon: {
+    backgroundColor: Color.MapEventIconBackgroundColor,
+  },
   sectionTitle: {
     fontSize: 16,
     marginBottom: 8,
-    fontWeight: "600",
+    fontWeight: "800",
+    color: Color.PrimaryMain,
   },
   eventImage: {
     height: 175,
@@ -559,7 +566,7 @@ const styles = StyleSheet.create({
   eventTitle: {
     fontSize: 25,
     fontWeight: "700",
-    color: Color.PrimaryMain,
+    color: Color.PrimaryTitle,
     paddingTop: 25,
   },
   map: {
