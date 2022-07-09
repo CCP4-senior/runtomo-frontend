@@ -139,8 +139,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
           />
         </TouchableOpacity>
       </View>
+
       <View
         style={[
+          styles.resetBtnsBackground,
           sortingCondition !== "standard" || filteredEvents
             ? styles.resetFilterSortingContainer
             : null,
@@ -149,10 +151,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
         {sortingCondition !== "standard" && (
           <View
             style={{
-              backgroundColor: Color.GrayDark,
+              backgroundColor: Color.White,
               borderRadius: 10,
-              borderWidth: 2,
-              borderColor: Color.GrayDark,
+              borderWidth: 1,
+              borderColor: "#FF3E0C",
               width: 120,
               alignContent: "center",
               alignItems: "center",
@@ -160,7 +162,11 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
             }}
           >
             <TouchableOpacity onPress={handleHomeSortingReset}>
-              <Text>X Reset Sorting</Text>
+              <Text
+                style={{ color: "#FF3E0C", fontWeight: "600", fontSize: 14 }}
+              >
+                X Reset Sorting
+              </Text>
             </TouchableOpacity>
           </View>
         )}
@@ -168,21 +174,26 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
         {filteredEvents && (
           <View
             style={{
-              backgroundColor: Color.GrayDark,
+              backgroundColor: Color.White,
               borderRadius: 10,
-              borderWidth: 2,
-              borderColor: Color.GrayDark,
+              borderWidth: 1,
+              borderColor: "#FF3E0C",
               width: 110,
               alignContent: "center",
               alignItems: "center",
             }}
           >
             <TouchableOpacity onPress={handleHomeFilterReset}>
-              <Text>X Reset Filter</Text>
+              <Text
+                style={{ color: "#FF3E0C", fontWeight: "600", fontSize: 14 }}
+              >
+                X Reset Filter
+              </Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
+
       <View style={styles.container}>
         <FilterModal
           modalVisible={filterModalVisible}
@@ -380,5 +391,12 @@ const styles = StyleSheet.create({
   topIconTest: {
     padding: 0,
     margin: 0,
+  },
+  resetBtnsBackground: {
+    backgroundColor: Color.White,
+    paddingBottom: 10,
+    paddingLeft: 30,
+    display: "flex",
+    flexDirection: "row",
   },
 });
