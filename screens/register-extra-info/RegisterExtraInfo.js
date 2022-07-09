@@ -542,7 +542,7 @@ const RegisterExtraInfo = ({ route }) => {
             {/* About me */}
             <View style={styles.inputContainer}>
               <View style={styles.profileHeader}>
-                <Text style={styles.btnTitleText}>Profile</Text>
+                <Text style={styles.btnTitleText}>About Me</Text>
               </View>
               <TextInput
                 mode="outlined"
@@ -559,7 +559,7 @@ const RegisterExtraInfo = ({ route }) => {
                 style={styles.input}
                 outlineColor={Color.GrayDark}
                 activeOutlineColor={Color.GrayDark}
-                placeholder={"Write some facts about you!"}
+                placeholder={"Tell us a bit about yourself!"}
                 maxLength={480}
                 multiline={true}
               />
