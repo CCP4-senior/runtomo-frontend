@@ -104,41 +104,41 @@ const UserProfileScreen = ({ navigation, route }) => {
 
             <View style={styles.imageContainer}>
               {/* Leave for now, may add background image back later */}
-              {/* <ImageBackground
+              <ImageBackground
                 style={styles.backgroundImage}
-                imageStyle={{ opacity: 0.4 }}
-                source={require("../../assets/images/backgroundProfile.png")}
+                // imageStyle={{ opacity: 0.4 }}
+                source={require("../../assets/images/profile-bg.png")}
                 resizeMode="cover"
               >
-              </ImageBackground>  */}
-              <Animated.View style={{ opacity }}>
-                {/* Profile picture */}
-                {userData?.imageUrl && (
-                  <Avatar.Image
-                    style={styles.profilePicture}
-                    source={{ uri: userData?.imageUrl }}
-                    size={200}
-                    onLoadEnd={fadeAnimation}
-                    backgroundColor={Color.GrayDark}
-                  />
-                )}
+                <Animated.View style={{ opacity }}>
+                  {/* Profile picture */}
+                  {userData?.imageUrl && (
+                    <Avatar.Image
+                      style={styles.profilePicture}
+                      source={{ uri: userData?.imageUrl }}
+                      size={150}
+                      onLoadEnd={fadeAnimation}
+                      // backgroundColor={Color.GrayDark}
+                    />
+                  )}
 
-                {/* Profile picture (default) */}
+                  {/* Profile picture (default) */}
 
-                {!userData?.imageUrl && (
-                  <Avatar.Icon
-                    style={[
-                      styles.profilePicture,
-                      {
-                        backgroundColor: Color.GrayDark,
-                      },
-                    ]}
-                    icon="account"
-                    size={250}
-                    // onLoadEnd={fadeAnimation}
-                  />
-                )}
-              </Animated.View>
+                  {!userData?.imageUrl && (
+                    <Avatar.Icon
+                      style={[
+                        styles.profilePicture,
+                        {
+                          backgroundColor: Color.GrayDark,
+                        },
+                      ]}
+                      icon="account"
+                      size={150}
+                      // onLoadEnd={fadeAnimation}
+                    />
+                  )}
+                </Animated.View>
+              </ImageBackground>
             </View>
 
             {/* User information */}
@@ -147,7 +147,9 @@ const UserProfileScreen = ({ navigation, route }) => {
               {/* Username */}
 
               <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>{userData?.username || " "}</Text>
+                <Text style={styles.userFullName}>
+                  {userData?.username || " "}
+                </Text>
 
                 {/* Edit Profile button */}
 
@@ -238,7 +240,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: "100%",
-    height: 200,
+    height: 250,
   },
   profilePicture: {
     width: 200,

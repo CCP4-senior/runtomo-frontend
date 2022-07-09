@@ -20,7 +20,6 @@ import CustomInput from "../../components/CustomInput";
 import LongButton from "../../components/LongButton";
 
 const UserProfileEditScreen = ({ navigation, route }) => {
-
   const { user, setUser, updateDBUserInfo, updateDBUserProfile } =
     useContext(AuthContext);
   const { height } = useWindowDimensions();
@@ -225,6 +224,6 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     alignSelf: "center",
-    width: '100%', 
+    width: "100%",
   },
 });
