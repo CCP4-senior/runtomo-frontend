@@ -98,7 +98,7 @@ const FilterModal = ({
         >
           <ScrollView>
             <Title style={styles.modalTitle}>
-              Select area from Tokyo 23 Wards!
+              Select area from Tokyo 23 Wards
             </Title>
             {tokyo23wards &&
               tokyo23wards.map((ward, index) => {
@@ -116,22 +116,41 @@ const FilterModal = ({
                       setTokyo23wards(updated23Wards);
                     }}
                   >
-                    <Checkbox
-                      status={ward.isChecked ? "checked" : "unchecked"}
-                    />
-                    <Text
+                    <View
                       style={{
-                        marginTop: "auto",
-                        marginBottom: "auto",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignContent: "center",
                       }}
                     >
-                      {ward.name}
-                    </Text>
+                      <Checkbox
+                        status={ward.isChecked ? "checked" : "unchecked"}
+                      />
+                      <Text
+                        style={{
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          fontWeight: "700",
+                          fontSize: 14,
+                          lineHeight: 45,
+                        }}
+                      >
+                        {ward.name}
+                      </Text>
+                    </View>
                   </TouchableOpacity>
                 );
               })}
             <View style={styles.applyResetBtnsWrapper}>
               <Button
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  borderColor: "red",
+                  borderWidth: 1,
+                  borderRadius: "40px",
+                  width: 140,
+                }}
                 onPress={() => {
                   const reseted23Wards = [
                     { isChecked: false, name: "Adachi" },
@@ -168,6 +187,13 @@ const FilterModal = ({
                 <Text style={styles.resetBtnText}>Reset</Text>
               </Button>
               <Button
+                style={{
+                  backgroundColor: "#FF3E0C",
+                  borderColor: "red",
+                  borderWidth: 1,
+                  borderRadius: "40px",
+                  width: 140,
+                }}
                 onPress={() => {
                   handleFilter();
                   setIsDataFiltered(true);
@@ -192,20 +218,30 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     borderBottomColor: Color.GrayDark,
     borderBottomWidth: 1,
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   modalTitle: {
     textAlign: "center",
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontWeight: "900",
+    color: "#192126",
+    fontSize: 18,
   },
   applyResetBtnsWrapper: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    padding: 2,
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   resetBtnText: {
-    color: Color.PrimaryMain,
+    color: "#FF3E0C",
+    fontWeight: "600",
   },
   applyBtnText: {
-    color: Color.Black,
+    color: Color.White,
+    fontWeight: "600",
   },
 });

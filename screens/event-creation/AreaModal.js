@@ -43,7 +43,14 @@ const AreaModal = ({ modalVisible, hideModal, setWard }) => {
           contentContainerStyle={containerStyle}
         >
           <ScrollView>
-            <Title style={{ textAlign: "center", padding: 10 }}>
+            <Title
+              style={{
+                textAlign: "center",
+                padding: 10,
+                fontWeight: "900",
+                color: "#192126",
+              }}
+            >
               Select area from Tokyo 23 Wards!
             </Title>
             {tokyo23wards.map((ward) => {

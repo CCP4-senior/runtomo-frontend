@@ -22,7 +22,7 @@ import { DataContext } from "../../context/datacontext/DataContext";
 const SortByModal = ({ modalVisible, hideModal }) => {
   const containerStyle = {
     backgroundColor: "#fff",
-    height: "30%",
+    height: "35%",
     margin: 20,
     justifyContent: "center",
   };
@@ -143,6 +143,13 @@ const SortByModal = ({ modalVisible, hideModal }) => {
             </RadioButton.Group>
             <View style={styles.applyResetBtnsWrapper}>
               <Button
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  borderColor: "red",
+                  borderWidth: 1,
+                  borderRadius: "40px",
+                  width: 140,
+                }}
                 onPress={() => {
                   handleSorting("reset");
                   hideModal();
@@ -151,6 +158,13 @@ const SortByModal = ({ modalVisible, hideModal }) => {
                 <Text style={styles.resetBtnText}>Reset</Text>
               </Button>
               <Button
+                style={{
+                  backgroundColor: "#FF3E0C",
+                  borderColor: "red",
+                  borderWidth: 1,
+                  borderRadius: "40px",
+                  width: 140,
+                }}
                 onPress={() => {
                   handleSorting();
                   hideModal();
@@ -171,19 +185,24 @@ export default SortByModal;
 const styles = StyleSheet.create({
   modalTitle: {
     textAlign: "center",
-    padding: 10,
-    marginBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 20,
+    fontWeight: "900",
+    color: "#192126",
+    fontSize: 18,
   },
   applyResetBtnsWrapper: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-    padding: 2,
-    marginTop: 5,
+    paddingTop: 20,
+    paddingBottom: 40,
   },
   resetBtnText: {
-    color: Color.PrimaryMain,
+    color: "#FF3E0C",
+    fontWeight: "600",
   },
   applyBtnText: {
-    color: Color.Black,
+    color: Color.White,
+    fontWeight: "600",
   },
 });
