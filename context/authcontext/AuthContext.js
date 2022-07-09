@@ -67,7 +67,7 @@ const AuthProvider = ({ children }) => {
         "/users/profile",
         body
       );
-      await signInUser({ email, password });
+      // await signInUser({ email, password });
     } catch (e) {
       Alert.alert("Error", e.response.data, [
         {

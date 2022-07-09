@@ -67,7 +67,12 @@ const Register = () => {
       ]);
     } else {
       try {
-        navigation.navigate("RegisterExtraInfo", { username, email, password });
+        navigation.navigate("RegisterExtraInfo", {
+          username,
+          email,
+          password,
+          imageUri,
+        });
       } catch (error) {
         Alert.alert("Error", e.response.data.detail, [
           {

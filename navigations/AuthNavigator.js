@@ -6,7 +6,6 @@ import RegisterExtraInfo from "../screens/register-extra-info/RegisterExtraInfo"
 import AuthSelection from "../screens/auth-selection/AuthSelection";
 import SignOutScreen from "../screens/signout/SignOutScreen";
 import ProfilePhoto from "../screens/register-extra-info/ProfilePhoto";
-import SplashScreen from "../screens/splash/SplashScreen";
 
 const Stack = createStackNavigator();
 
