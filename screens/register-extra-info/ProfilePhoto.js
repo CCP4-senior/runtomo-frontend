@@ -47,12 +47,6 @@ const ProfilePhoto = ({ route }) => {
   };
 
   const createUserAndProfile = async (imageRef) => {
-    console.log("creaate user and profile ran", {
-      username,
-      password,
-      email,
-      imageRef,
-    });
     try {
       await createUser({ username, password, email, image: imageRef });
       await createUserProfile(userToBeRegistered);

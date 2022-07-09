@@ -62,8 +62,8 @@ const DatePicker = ({
       {isInRegisterForm === true ? (
         <View>
           <CustomInput
-            placeholder={category === "date" ? "Date" : "Time"}
-            icon={category === "date" ? "calendar-month" : "clock-outline"}
+            placeholder={"Date of birth"}
+            icon={"calendar-month"}
             onFocus={showDatePicker}
             value={
               date || time

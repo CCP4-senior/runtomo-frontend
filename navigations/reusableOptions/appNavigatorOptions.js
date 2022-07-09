@@ -14,10 +14,12 @@ import Color from "../../assets/themes/Color";
 const createOptions = (
   settingPressHandler,
   messagePressaHandler,
-  showPointsOfInterest
+  showPointsOfInterest,
+  title
 ) => {
   const options = {
     ...HeaderStyle,
+    title: title,
     headerRight: () => {
       return showPointsOfInterest ? (
         <TouchableOpacity

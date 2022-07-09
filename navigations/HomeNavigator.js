@@ -31,7 +31,8 @@ const HomeNavigator = ({ navigation }) => {
         options={createOptions(
           openSetting,
           openPointsOfInterest,
-          showPointsOfInterest
+          showPointsOfInterest,
+          "Discover"
         )}
       >
         {(props) => <HomeScreen {...props} />}

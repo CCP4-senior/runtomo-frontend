@@ -1,9 +1,10 @@
-import { StyleSheet, View, SafeAreaView, Text, Linking } from "react-native";
-import React, { useContext, useState, useEffect } from "react";
-import { Button, TextInput } from "react-native-paper";
+import { StyleSheet, View, SafeAreaView, Text, Image } from "react-native";
+import React, { useContext, useState } from "react";
+import { TextInput, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color.js";
+import LongButton from "../../components/LongButton";
 
 const SignIn = () => {
   const navigation = useNavigation();
@@ -81,13 +82,33 @@ const SignIn = () => {
 
   return (
     <SafeAreaView style={styles.root}>
+      <View style={styles.topContainer}>
+        <IconButton
+          icon={"arrow-left"}
+          size={25}
+          style={{ position: "absolute", left: 0 }}
+          onPress={() => {
+            navigation.navigate("AuthSelection");
+          }}
+        />
+      </View>
       <View style={styles.mainContainer}>
+        <Image
+          source={require("../../assets/images/runtomo-logo-orange.png")}
+          style={styles.image}
+        />
         <View>
           <Text style={styles.title}>Welcome Back!</Text>
         </View>
 
         <View style={styles.emailFieldWrapper}>
           <TextInput
+            theme={{
+              roundness: 25,
+              colors: {
+                placeholder: Color.TextMute,
+              },
+            }}
             label="Email"
             value={email}
             mode="outlined"
@@ -110,6 +131,12 @@ const SignIn = () => {
         </View>
         <View style={styles.passwordFieldWrapper}>
           <TextInput
+            theme={{
+              roundness: 25,
+              colors: {
+                placeholder: Color.TextMute,
+              },
+            }}
             label="Password"
             value={password}
             mode="outlined"
@@ -134,23 +161,13 @@ const SignIn = () => {
           Forgot password?
         </Text>
         <View style={styles.signInBottomWrapper}>
-          <Button
-            mode="contained"
-            uppercase={false}
-            color={Color.PrimaryMain}
-            style={{ borderRadius: 10 }}
-            labelStyle={{
-              fontWeight: "bold",
-              fontSize: 18,
-            }}
-            contentStyle={{
-              padding: 5,
-            }}
-            disabled={!isFormValidated}
-            onPress={() => handleSignIn()}
-          >
-            Sign In
-          </Button>
+          <LongButton
+            buttonColor={Color.PrimaryMain}
+            buttonText="Sign In"
+            customStyle={{ width: "100%" }}
+            buttonHandler={() => handleSignIn()}
+          />
+
           <Text style={styles.signUpText}>
             Don't have an account?{" "}
             <Text
@@ -174,18 +191,19 @@ const styles = StyleSheet.create({
     backgroundColor: Color.White,
   },
   mainContainer: {
-    // alignSelf: "center"
-    height: "55%",
+    height: "70%",
     position: "relative",
-    marginTop: "40%",
+    marginTop: "30%",
     display: "flex",
     justifyContent: "space-between",
   },
+  image: {
+    alignSelf: "center",
+    width: 120,
+    height: 120,
+  },
   title: {
-    // position: "absolute",
-    width: 305,
-    height: 34,
-    // top: 213,
+    fontFamily: "Mulish_900Black",
     fontSize: 28,
     fontWeight: "700",
     textAlign: "center",
@@ -198,42 +216,36 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   emailFieldWrapper: {
-    // position: "absolute",
     width: 315,
     height: 74,
-    // top: 304,
     alignSelf: "center",
   },
   emailErrorMessage: {
     marginTop: 4,
-    color: "#c7254e",
+    color: Color.PrimaryMain,
   },
   passwordErrorMessage: {
     marginTop: 4,
-    color: "#c7254e",
+    color: Color.PrimaryMain,
   },
   passwordFieldWrapper: {
-    // position: "absolute",
     width: 315,
     height: 70,
-    // top: 398,
     alignSelf: "center",
   },
   forgotPasswordLink: {
-    // position: "absolute",
     color: Color.PrimaryMain,
-    // top: 485,
     fontSize: 15,
     left: 225,
     fontWeight: "500",
+    marginTop: 10,
   },
   signInBottomWrapper: {
-    // position: "absolute",
     width: 315,
     height: 101,
-    // top: 525,
     borderRadius: 10,
     marginHorizontal: 20,
+    marginTop: 10,
     fontWeight: "500",
     justifyContent: "space-between",
     alignSelf: "center",
@@ -247,5 +259,6 @@ const styles = StyleSheet.create({
   signUpLink: {
     color: Color.PrimaryMain,
     fontSize: 15,
+    fontWeight: "700",
   },
 });

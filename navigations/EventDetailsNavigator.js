@@ -11,7 +11,10 @@ const Stack = createStackNavigator();
 const EventDetailsNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Running Event" options={{ ...HeaderStyle }}>
+      <Stack.Screen
+        name="Running Event"
+        options={{ ...HeaderStyle, title: "Running Session" }}
+      >
         {(props) => <EventDetailsScreen {...props} />}
       </Stack.Screen>
 
