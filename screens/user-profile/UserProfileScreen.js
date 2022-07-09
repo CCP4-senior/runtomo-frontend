@@ -113,6 +113,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                       source={require("../../assets/images/avatar-blank.png")}
                       onLoadEnd={fadeAnimation}
                       backgroundColor={Color.GrayDark}
+                      style={styles.profilePicture}
                     />
                   )}
 
@@ -122,6 +123,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                       source={{ uri: user.imageUrl }}
                       onLoadEnd={fadeAnimation}
                       backgroundColor={Color.GrayDark}
+                      style={styles.profilePicture}
                     />
                   )}
                 </Animated.View>
@@ -231,11 +233,15 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   profilePicture: {
-    width: 200,
-    maxHeight: 200,
-    borderRadius: 200 / 2,
-    marginTop: 30,
-    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 7,
+    },
+    shadowOpacity: 0.43,
+    shadowRadius: 9.51,
+
+    elevation: 15,
   },
   userInfoContainer: {
     flex: 2,
@@ -270,6 +276,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 20,
     width: "100%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
   infoItem: {
     marginLeft: 10,

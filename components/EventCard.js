@@ -141,6 +141,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     minHeight: 275,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 6,
   },
   homePageCard: {
     width: "100%",
@@ -154,7 +162,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
-
     elevation: 6,
   },
   title: {
