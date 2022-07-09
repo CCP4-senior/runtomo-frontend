@@ -182,45 +182,42 @@ const UserProfileScreen = ({ navigation, route }) => {
                 </Text>
               </View>
 
-              {/* Age */}
+              {/* NEW INFO SECTION --------------------------------*/}
 
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Age:{" "}
-                  {getAge(userData?.profile?.["date_of_birth"]) ||
-                    "Not provided"}
-                </Text>
-              </View>
+              <View style={styles.infoSection}>
+                <View style={styles.infoItem}>
+                  <Text style={styles.infoTitle}>AGE</Text>
+                  <Text style={styles.infoText}>
+                    {userData?.username || " "}
+                  </Text>
+                </View>
 
-              {/* Run Frequency */}
+                <View style={styles.infoItem}>
+                  <Text style={styles.infoTitle}>RUN FREQUENCY</Text>
+                  <Text style={styles.infoText}>
+                    {userData?.profile
+                      ? userData.profile?.["run_frequency"] + " times / week"
+                      : "Not provided"}
+                  </Text>
+                </View>
 
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Run Frequency:{" "}
-                  {userData?.profile
-                    ? userData.profile?.["run_frequency"] + " times / week"
-                    : "Not provided"}
-                </Text>
-              </View>
+                <View style={styles.infoItem}>
+                  <Text style={styles.infoTitle}>ESTIMATE 5K</Text>
+                  <Text style={styles.infoText}>
+                    {userData?.profile
+                      ? userData.profile["estimated5k"]
+                      : "Not provided"}
+                  </Text>
+                </View>
 
-              {/* Estimate 5k */}
-
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Estimated 5k:{" "}
-                  {userData?.profile
-                    ? userData.profile["estimated5k"]
-                    : "Not provided"}
-                </Text>
-              </View>
-
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Estimated 10k:{" "}
-                  {userData?.profile
-                    ? userData.profile["estimated10k"]
-                    : "Not provided"}
-                </Text>
+                <View style={styles.infoItem}>
+                  <Text style={styles.infoTitle}>ESTIMATE 10K</Text>
+                  <Text style={styles.infoText}>
+                    {userData?.profile
+                      ? userData.profile["estimated10k"]
+                      : "Not provided"}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
@@ -260,14 +257,14 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   userFullName: {
-    fontSize: 24,
+    fontSize: 36,
     fontWeight: "bold",
     alignSelf: "center",
   },
   userInfoHeader: {
     flexDirection: "row",
     alignSelf: "center",
-    marginBottom: 10,
+    margin: 5,
   },
   tagsContainer: {
     display: "flex",
@@ -303,16 +300,31 @@ const styles = StyleSheet.create({
   descriptionContainer: {
     margin: 20,
     width: "90%",
-    alignSelf: 'center'
-
-
+    alignSelf: "center",
   },
   descriptionText: {
     fontSize: 20,
     // letterSpacing: 0.5,
     fontWeight: "500",
-    textAlign: 'justify',
+    textAlign: "justify",
     color: "#484848",
-    padding: 5
-  }
+    padding: 5,
+  },
+  infoSection: {
+    backgroundColor: Color.White,
+    borderRadius: 20,
+    padding: 20,
+    width: "100%",
+  },
+  infoItem: {
+    margin: 5,
+  },
+  infoTitle: {
+    fontSize: 20,
+    color: Color.PrimaryMain,
+    fontWeight: "bold",
+  },
+  infoText: {
+    fontSize: 20,
+  },
 });
