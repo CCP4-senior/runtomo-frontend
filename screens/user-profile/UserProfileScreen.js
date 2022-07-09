@@ -188,7 +188,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 <View style={styles.infoItem}>
                   <Text style={styles.infoTitle}>AGE</Text>
                   <Text style={styles.infoText}>
-                    {userData?.username || " "}
+                    {getAge(Date(userData?.profile?.age)}
                   </Text>
                 </View>
 
@@ -202,7 +202,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.infoItem}>
-                  <Text style={styles.infoTitle}>ESTIMATE 5K</Text>
+                  <Text style={styles.infoTitle}>ESTIMATED 5K</Text>
                   <Text style={styles.infoText}>
                     {userData?.profile
                       ? userData.profile["estimated5k"]
@@ -211,7 +211,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.infoItem}>
-                  <Text style={styles.infoTitle}>ESTIMATE 10K</Text>
+                  <Text style={styles.infoTitle}>ESTIMATED 10K</Text>
                   <Text style={styles.infoText}>
                     {userData?.profile
                       ? userData.profile["estimated10k"]
@@ -317,14 +317,17 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   infoItem: {
-    margin: 5,
+    marginLeft: 10,
+    marginVertical: 15
   },
   infoTitle: {
     fontSize: 20,
     color: Color.PrimaryMain,
     fontWeight: "bold",
+    marginBottom: 2,
   },
   infoText: {
     fontSize: 20,
+    color: "#363D4E",
   },
 });
