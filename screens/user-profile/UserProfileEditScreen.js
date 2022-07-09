@@ -27,17 +27,19 @@ const UserProfileEditScreen = ({ navigation, route }) => {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [dateOfBirth, setDateOfBirth] = useState(
-    user["profile"]["date_of_birth"]
+    user.profile?.["date_of_birth"]
   );
   const [runFrequency, setRunFrequency] = useState(
-    user["profile"]["run_frequency"]
+    user.profile?.["run_frequency"]
   );
   const [estimated5k, setEstimated5k] = useState(
-    user["profile"]["estimated5k"]
+    user.profile?.["estimated5k"]
   );
   const [estimated10k, setEstimated10k] = useState(
-    user["profile"]["estimated10k"]
+    user.profile?.["estimated10k"]
   );
+
+  const [description, setDescription] = useState(user.profile?.description || " ");
 
   const doneButtonHandler = () => {
     let inputError = false;
@@ -72,6 +74,7 @@ const UserProfileEditScreen = ({ navigation, route }) => {
             run_frequency: runFrequency,
             estimated5k: estimated5k,
             estimated10k: estimated10k,
+            description: description,
           },
         },
       };
@@ -166,6 +169,16 @@ const UserProfileEditScreen = ({ navigation, route }) => {
             placeholder="ex: 55-60 mins"
             value={estimated10k}
             changeHandler={(value) => setEstimated10k(value)}
+            width={"100%"}
+          />
+        </View>
+
+        <View style={styles.field}>
+          <Text style={styles.text}>Description</Text>
+          <CustomInput
+            placeholder="ex: 55-60 mins"
+            value={description}
+            changeHandler={(value) => setDescription(value)}
             width={"100%"}
           />
         </View>
