@@ -28,7 +28,9 @@ import resizeImage from "../../helpers/resizeImage.js";
 import selectImage from "../../helpers/selectImage.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
+import LoadingSpinner from "../../components/LoadingSpinner.js";
 import runningDurationArray from "../../utils/runningDuration.js";
+
 
 const EventCreationScreen = ({ navigation }) => {
   const [title, setTitle] = useState("");
@@ -45,6 +47,7 @@ const EventCreationScreen = ({ navigation }) => {
   const [eventDescription, setEventDescription] = useState("");
   const [imageUri, setImageUri] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef();
   const { setCurrentEvent, generateImageUrl } = useContext(DataContext);
   const { user } = useContext(AuthContext);
@@ -83,6 +86,8 @@ const EventCreationScreen = ({ navigation }) => {
 
   const createEvent = async () => {
     try {
+      setIsLoading(true);
+
       let currentRef = null;
       if (imageUri !== "") {
         const newUri = await resizeImage(imageUri, 300);
@@ -100,6 +105,7 @@ const EventCreationScreen = ({ navigation }) => {
 
       if (requiredFields.some((field) => field === "")) {
         setSubmitted(true);
+        setIsLoading(false);
         return;
       }
 
@@ -117,16 +123,19 @@ const EventCreationScreen = ({ navigation }) => {
       };
 
       const response = await axiosInstance.post("/events/create_event/", event);
+
       setCurrentEvent({
         ...event,
         creator: user,
         imageUrl: currentRef !== null ? generateImageUrl(currentRef) : null,
       });
 
+      setIsLoading(false);
       navigation.navigate("Event Created", { isConfirmationCard: true });
     } catch (e) {
+      setIsLoading(false);
       console.log(e);
-      alert("Something went wrong. Please try again!");
+      alert("Something went wrong with Create Event. Please try again!");
     }
   };
 
@@ -159,6 +168,8 @@ const EventCreationScreen = ({ navigation }) => {
 
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
+          {/* Event title */}
+
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Event Title"
@@ -180,6 +191,7 @@ const EventCreationScreen = ({ navigation }) => {
               submitted={submitted}
             />
           </View> */}
+
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Meeting Point Address"
@@ -241,7 +253,8 @@ const EventCreationScreen = ({ navigation }) => {
 
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+
+              <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10, }}>
                 Event Image
               </Text>
               <Image source={{ uri: imageUri }} style={{ height: 175 }} />
@@ -299,11 +312,26 @@ const EventCreationScreen = ({ navigation }) => {
               multiline={true}
             />
           </View>
-          <LongButton
-            buttonHandler={createEvent}
-            buttonColor={Color.PrimaryMain}
-            buttonText="Create Event"
-          />
+
+          {/* Create Event button */}
+
+          {/* Loading spinner */}
+
+          {isLoading ? (
+            <View style={{ flex: 1 }}>
+              <LongButton
+                buttonColor={Color.PrimaryMedium}
+                buttonText="Creating Event..."
+              />
+              <LoadingSpinner />
+            </View>
+          ) : (
+            <LongButton
+              buttonHandler={createEvent}
+              buttonColor={Color.PrimaryMain}
+              buttonText="Create Event"
+            />
+          )}
         </View>
       </ScrollView>
     </Provider>

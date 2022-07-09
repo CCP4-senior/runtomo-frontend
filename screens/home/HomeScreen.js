@@ -17,9 +17,11 @@ import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import FilterModal from "./FilterModal.js";
 import SortByModal from "./SortByModal.js";
+import LoadingSpinner from "../../components/LoadingSpinner.js";
 
 const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   const { user } = useContext(AuthContext);
+
   const {
     allEvents,
     setCurrentEvent,
@@ -34,6 +36,15 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     sortingCondition,
     setIsSortingResetInHomePage,
   } = useContext(DataContext);
+
+  const data = allEvents;
+  const [filterModalVisible, setfilterModalVisible] = useState(false);
+  const [sortByModalVisible, setSortByModalVisible] = useState(false);
+  const [resetFilterInHomeScreen, setResetFilterInHomeScreen] = useState(false);
+  const [resetSortingInHomeScreen, setResetSortingInHomeScreen] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (user) {
       setUserData(user.id);
@@ -43,17 +54,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
   useFocusEffect(
     useCallback(() => {
       if (user) {
-        getAllEventsData();
+        getAllEventsData().then(() => setIsLoading(false));
       }
     }, [])
   );
-
-  const data = allEvents;
-  const [filterModalVisible, setfilterModalVisible] = useState(false);
-  const [sortByModalVisible, setSortByModalVisible] = useState(false);
-  const [resetFilterInHomeScreen, setResetFilterInHomeScreen] = useState(false);
-  const [resetSortingInHomeScreen, setResetSortingInHomeScreen] =
-    useState(false);
 
   /* modal */
   const hideModal = () => {
@@ -80,6 +84,10 @@ const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
     setIsDataFiltered(false);
     setResetFilterInHomeScreen(true);
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>

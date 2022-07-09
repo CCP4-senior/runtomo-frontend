@@ -1,5 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  View,
+  Animated,
+} from "react-native";
 import { Card } from "react-native-paper";
 import StackedAvatars from "../screens/event-details/StackedAvatars";
 import { addHours, format } from "date-fns";
@@ -15,6 +21,17 @@ const EventCard = ({
   isTimeUTC,
 }) => {
   const { currentEvent } = useContext(DataContext);
+
+  const [opacity, setOpacity] = useState(new Animated.Value(0));
+
+  const fadeAnimation = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start();
+  };
+
   if (!isHomePageCard) event = currentEvent;
 
   const date = new Date(event.date);
@@ -36,25 +53,36 @@ const EventCard = ({
       theme={{ roundness: 10 }}
     >
       <TouchableOpacity onPress={handlePress}>
+        {/* Event image */}
+
         {event.imageUrl && (
-          <Card.Cover
-            source={{ uri: event.imageUrl }}
-            style={{
-              height: 160,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-            }}
-          />
+          <Animated.View style={{ opacity }}>
+            <Card.Cover
+              source={{ uri: event.imageUrl }}
+              style={{
+                height: 160,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+              }}
+              onLoadEnd={fadeAnimation}
+            />
+          </Animated.View>
         )}
+
+        {/* Event image (default) */}
+
         {!event.imageUrl && (
-          <Card.Cover
-            source={require("../assets/images/demo/defaultEvent.jpeg")}
-            style={{
-              height: 160,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
-            }}
-          />
+          <Animated.View style={{ opacity }}>
+            <Card.Cover
+              source={require("../assets/images/demo/defaultEvent.jpeg")}
+              style={{
+                height: 160,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+              }}
+              onLoadEnd={fadeAnimation}
+            />
+          </Animated.View>
         )}
         <Card.Content style={styles.contentContainer}>
           <View style={styles.leftContent}>
