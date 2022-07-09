@@ -176,6 +176,12 @@ const UserProfileScreen = ({ navigation, route }) => {
                 )}
               </View>
 
+              <View style={styles.descriptionContainer}>
+                <Text style={styles.descriptionText}>
+                  {userData?.profile?.description || " "}
+                </Text>
+              </View>
+
               {/* Age */}
 
               <View style={styles.userDataWrapper}>
@@ -294,4 +300,19 @@ const styles = StyleSheet.create({
     color: Color.Black,
     fontWeight: "500",
   },
+  descriptionContainer: {
+    margin: 20,
+    width: "90%",
+    alignSelf: 'center'
+
+
+  },
+  descriptionText: {
+    fontSize: 20,
+    // letterSpacing: 0.5,
+    fontWeight: "500",
+    textAlign: 'justify',
+    color: "#484848",
+    padding: 5
+  }
 });
