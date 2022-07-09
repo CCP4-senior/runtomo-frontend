@@ -52,6 +52,9 @@ const Register = () => {
     } else if (password === "" || secondPassword === "") {
       alertMessage = "Cannot have an empty password";
       inputError = true;
+    } else if (imageUri === "") {
+      alertMessage = "Signing up requires profile photo";
+      inputError = true;
     }
 
     if (inputError) {

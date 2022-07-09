@@ -199,6 +199,8 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: "center",
+    width: 120,
+    height: 120,
   },
   title: {
     fontFamily: "Mulish_900Black",
