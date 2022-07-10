@@ -63,6 +63,8 @@ const UserProfileScreen = ({ navigation, route }) => {
           ? generateImageUrl(response.data.image)
           : null,
       });
+
+      return "getAndSetUser is complete!"
     } catch (e) {
       console.log(e);
     }
@@ -78,7 +80,18 @@ const UserProfileScreen = ({ navigation, route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
+      // isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
+      if (isLoginUser) {
+        setUserData(user);
+      } else {
+        const response = getAndSetUserData(userToView.id);
+
+        response.then(value => {
+          console.log('\n 🍎 value:', value);
+          fadeAnimation();
+
+        })
+      }
 
       return () => {
         controller.abort();
