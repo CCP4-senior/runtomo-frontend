@@ -64,7 +64,7 @@ const UserProfileScreen = ({ navigation, route }) => {
           : null,
       });
 
-      return "getAndSetUser is complete!"
+      return "getAndSetUser is complete!";
     } catch (e) {
       console.log(e);
     }
@@ -80,18 +80,15 @@ const UserProfileScreen = ({ navigation, route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      // isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
       if (isLoginUser) {
         setUserData(user);
-        fadeAnimation();
+        // fadeAnimation();
       } else {
         const response = getAndSetUserData(userToView.id);
 
-        response.then(value => {
-          console.log('\n 🍎 value:', value);
-          fadeAnimation();
-
-        })
+        response.then((value) => {
+          // fadeAnimation();
+        });
       }
 
       return () => {
@@ -125,8 +122,8 @@ const UserProfileScreen = ({ navigation, route }) => {
                     <Avatar.Image
                       size={180}
                       source={require("../../assets/images/avatar-blank.png")}
-                      // onLoadEnd={fadeAnimation}
-                      backgroundColor={Color.GrayDark}
+                      onLoadEnd={fadeAnimation}
+                      backgroundColor={"transparent"}
                       style={styles.profilePicture}
                     />
                   )}
@@ -135,8 +132,8 @@ const UserProfileScreen = ({ navigation, route }) => {
                     <Avatar.Image
                       size={180}
                       source={{ uri: userData.imageUrl }}
-                      // onLoadEnd={fadeAnimation}
-                      backgroundColor={Color.GrayDark}
+                      onLoadEnd={fadeAnimation}
+                      backgroundColor={"transparent"}
                       style={styles.profilePicture}
                     />
                   )}
