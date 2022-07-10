@@ -94,7 +94,7 @@ const SignIn = () => {
       </View>
       <View style={styles.mainContainer}>
         <Image
-          source={require("../../assets/images/runtomo-logo-orange.png")}
+          source={require("../../assets/images/runtomo-logo-orange-3.png")}
           style={styles.image}
         />
         <View>
