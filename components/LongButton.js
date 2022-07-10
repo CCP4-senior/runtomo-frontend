@@ -8,6 +8,7 @@ const LongButton = ({
   buttonTextColor,
   mode,
   customStyle,
+  isBtnDisabled
 }) => {
   return (
     <Button
@@ -32,6 +33,7 @@ const LongButton = ({
         paddingVertical: 5,
       }}
       onPress={buttonHandler}
+      disabled={isBtnDisabled}
     >
       {buttonText}
     </Button>
