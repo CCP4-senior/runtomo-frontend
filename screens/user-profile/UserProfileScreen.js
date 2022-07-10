@@ -63,8 +63,6 @@ const UserProfileScreen = ({ navigation, route }) => {
           ? generateImageUrl(response.data.image)
           : null,
       });
-
-      return "getAndSetUser is complete!";
     } catch (e) {
       console.log(e);
     }
@@ -113,17 +111,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 resizeMode="cover"
               >
                 <Animated.View style={[styles.avatarContainer, { opacity }]}>
-                  {isLoginUser && !userData?.imageUrl && (
-                    <Avatar.Image
-                      size={180}
-                      source={require("../../assets/images/avatar-blank.png")}
-                      onLoadEnd={fadeAnimation}
-                      backgroundColor={"transparent"}
-                      style={styles.profilePicture}
-                    />
-                  )}
-
-                  {!isLoginUser && !userData?.imageUrl && (
+                  {!userData?.imageUrl && (
                     <Avatar.Image
                       size={180}
                       source={require("../../assets/images/avatar-blank.png")}
@@ -132,17 +120,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                     />
                   )}
 
-                  {isLoginUser && userData?.imageUrl && (
-                    <Avatar.Image
-                      size={180}
-                      source={{ uri: userData.imageUrl }}
-                      onLoadEnd={fadeAnimation}
-                      backgroundColor={"transparent"}
-                      style={styles.profilePicture}
-                    />
-                  )}
-
-                  {!isLoginUser && userData?.imageUrl && (
+                  {userData?.imageUrl && (
                     <Avatar.Image
                       size={180}
                       source={{ uri: userData.imageUrl }}
