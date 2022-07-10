@@ -107,7 +107,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 resizeMode="cover"
               >
                 <Animated.View style={[styles.avatarContainer, { opacity }]}>
-                  {!user.image && (
+                  {!userData?.imageUrl && (
                     <Avatar.Image
                       size={180}
                       source={require("../../assets/images/avatar-blank.png")}
@@ -117,10 +117,10 @@ const UserProfileScreen = ({ navigation, route }) => {
                     />
                   )}
 
-                  {user.imageUrl && (
+                  {userData?.imageUrl && (
                     <Avatar.Image
                       size={180}
-                      source={{ uri: user.imageUrl }}
+                      source={{ uri: userData.imageUrl }}
                       onLoadEnd={fadeAnimation}
                       backgroundColor={Color.GrayDark}
                       style={styles.profilePicture}
