@@ -82,13 +82,8 @@ const UserProfileScreen = ({ navigation, route }) => {
     React.useCallback(() => {
       if (isLoginUser) {
         setUserData(user);
-        // fadeAnimation();
       } else {
         const response = getAndSetUserData(userToView.id);
-
-        response.then((value) => {
-          // fadeAnimation();
-        });
       }
 
       return () => {
@@ -132,7 +127,6 @@ const UserProfileScreen = ({ navigation, route }) => {
                     <Avatar.Image
                       size={180}
                       source={require("../../assets/images/avatar-blank.png")}
-                      // onLoadEnd={fadeAnimation}
                       backgroundColor={"transparent"}
                       style={styles.profilePicture}
                     />

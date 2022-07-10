@@ -22,7 +22,10 @@ const ProfilePhotoModal = ({
     backgroundColor: "#fff",
     height: "80%",
     margin: 20,
+    borderRadius: 15,
+    width: "90%",
     justifyContent: "center",
+    alignSelf: "center",
   };
   const { user, setUser } = useContext(AuthContext);
   const { generateImageUrl } = useContext(DataContext);
@@ -100,19 +103,14 @@ const ProfilePhotoModal = ({
 
           {!wantsToDelete && imageUri === "" && hasPhoto && (
             <>
-              <Text style={{ textAlign: "center", padding: 10 }}>
-                Do you want to change or delete your profile photo?
+              <Text style={styles.modalTitle}>
+                Do you want to change your profile photo?
               </Text>
               <View style={styles.buttonContainer}>
                 <Button onPress={startSelectImage} color={Color.PrimaryMain}>
                   Change
                 </Button>
-                <Button
-                  color={Color.PrimaryMain}
-                  onPress={() => setWantsToDelete(true)}
-                >
-                  Delete
-                </Button>
+                
               </View>
             </>
           )}
@@ -135,11 +133,11 @@ const ProfilePhotoModal = ({
 
           {!wantsToDelete && imageUri !== "" && (
             <>
-              <Text style={{ textAlign: "center", padding: 10 }}>
+              <Text style={styles.modalTitle}>
                 Do you want to set this as your new profile photo?
               </Text>
               {hasPhoto && (
-                <Text style={{ textAlign: "center", padding: 10 }}>
+                <Text style={styles.modalTitle}>
                   The old photo will be deleted from our system.
                 </Text>
               )}
@@ -182,5 +180,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "80%",
     alignSelf: "center",
+  },
+  modalTitle: {
+    textAlign: "center",
+    padding: 30,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    fontWeight: "600",
+    color: "#192126",
+    fontSize: 18,
   },
 });
