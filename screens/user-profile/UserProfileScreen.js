@@ -83,6 +83,7 @@ const UserProfileScreen = ({ navigation, route }) => {
       // isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
       if (isLoginUser) {
         setUserData(user);
+        fadeAnimation();
       } else {
         const response = getAndSetUserData(userToView.id);
 
@@ -124,7 +125,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                     <Avatar.Image
                       size={180}
                       source={require("../../assets/images/avatar-blank.png")}
-                      onLoadEnd={fadeAnimation}
+                      // onLoadEnd={fadeAnimation}
                       backgroundColor={Color.GrayDark}
                       style={styles.profilePicture}
                     />
@@ -134,7 +135,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                     <Avatar.Image
                       size={180}
                       source={{ uri: userData.imageUrl }}
-                      onLoadEnd={fadeAnimation}
+                      // onLoadEnd={fadeAnimation}
                       backgroundColor={Color.GrayDark}
                       style={styles.profilePicture}
                     />
@@ -174,7 +175,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 <View style={styles.descriptionContainer}>
                   <Text
                     style={styles.descriptionText}
-                    onLoad={fadeAnimation}
+                    // onLoad={fadeAnimation}
                   >
                     {userData?.profile?.description || " "}
                   </Text>
