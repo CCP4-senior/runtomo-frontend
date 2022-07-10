@@ -118,7 +118,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 resizeMode="cover"
               >
                 <Animated.View style={[styles.avatarContainer, { opacity }]}>
-                  {!userData?.imageUrl && (
+                  {isLoginUser && !userData?.imageUrl && (
                     <Avatar.Image
                       size={180}
                       source={require("../../assets/images/avatar-blank.png")}
@@ -128,7 +128,27 @@ const UserProfileScreen = ({ navigation, route }) => {
                     />
                   )}
 
-                  {userData?.imageUrl && (
+                  {!isLoginUser && !userData?.imageUrl && (
+                    <Avatar.Image
+                      size={180}
+                      source={require("../../assets/images/avatar-blank.png")}
+                      // onLoadEnd={fadeAnimation}
+                      backgroundColor={"transparent"}
+                      style={styles.profilePicture}
+                    />
+                  )}
+
+                  {isLoginUser && userData?.imageUrl && (
+                    <Avatar.Image
+                      size={180}
+                      source={{ uri: userData.imageUrl }}
+                      onLoadEnd={fadeAnimation}
+                      backgroundColor={"transparent"}
+                      style={styles.profilePicture}
+                    />
+                  )}
+
+                  {!isLoginUser && userData?.imageUrl && (
                     <Avatar.Image
                       size={180}
                       source={{ uri: userData.imageUrl }}
