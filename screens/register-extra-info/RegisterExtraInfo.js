@@ -74,6 +74,7 @@ const RegisterExtraInfo = ({ route }) => {
       setIsBtnDisabled(true);
       await setUserToBeRegistered(userProfileData);
       await register(userProfileData);
+      setModalVisible(true);
     } catch (error) {
       setIsBtnDisabled(false);
     }
