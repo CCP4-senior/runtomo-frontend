@@ -109,6 +109,7 @@ const AuthProvider = ({ children }) => {
           style: "cancel",
         },
       ]);
+      throw new Error(e);
     }
   };
 

@@ -17,6 +17,8 @@ const RegisterExtraInfo = ({ route }) => {
 
   const { username, email, password, imageUri } = route.params;
 
+  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+  const abort = new AbortController();
   const [date, setDate] = useState("");
   const [estimated5k, setEstimated5k] = useState("");
   const [estimated10k, setEstimated10k] = useState("");
@@ -68,9 +70,19 @@ const RegisterExtraInfo = ({ route }) => {
       description: description,
     };
 
-    await setUserToBeRegistered(userProfileData);
-    await register(userProfileData);
-    setModalVisible(true);
+    try {
+      setIsBtnDisabled(true);
+      await setUserToBeRegistered(userProfileData);
+      await register(userProfileData);
+      setModalVisible(true);
+    } catch (error) {
+      setIsBtnDisabled(false);
+    }
+
+    return () => {
+      setIsBtnDisabled(false);
+      controller.abort();
+    };
   };
 
   const handleTPWBtnClick = (buttonValue) => {
@@ -106,9 +118,13 @@ const RegisterExtraInfo = ({ route }) => {
   };
 
   const register = async (userProfileData) => {
-    const newUri = await resizeImage(imageUri, 300);
-    const imageRef = await uploadImage("profiles", newUri);
-    await createUserAndProfile(imageRef, userProfileData);
+    try {
+      const newUri = await resizeImage(imageUri, 300);
+      const imageRef = await uploadImage("profiles", newUri);
+      await createUserAndProfile(imageRef, userProfileData);
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   const createUserAndProfile = async (imageRef, userProfileData) => {
@@ -573,6 +589,7 @@ const RegisterExtraInfo = ({ route }) => {
                 buttonText="Register"
                 buttonHandler={() => handlePress()}
                 customStyle={{ width: "95%" }}
+                isBtnDisabled={isBtnDisabled}
               />
             </View>
           </View>

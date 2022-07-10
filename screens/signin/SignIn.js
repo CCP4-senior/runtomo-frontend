@@ -16,6 +16,8 @@ const SignIn = () => {
     message: "",
   });
   const [isFormValidated, setIsFormValidated] = useState(false);
+  const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+  const abort = new AbortController();
   const [passwordError, setPasswordError] = useState({
     isTriggered: true,
     message: "",
@@ -29,7 +31,16 @@ const SignIn = () => {
       return alert("Please enter an email!");
     }
 
-    await signInUser({ email, password });
+    try {
+      setIsBtnDisabled(true);
+      const response = await signInUser({ email, password });
+    } catch (error) {
+      setIsBtnDisabled(false);
+    }
+    return () => {
+      setIsBtnDisabled(false);
+      controller.abort();
+    };
   };
 
   const validateEmail = (text) => {
@@ -166,6 +177,7 @@ const SignIn = () => {
             buttonText="Sign In"
             customStyle={{ width: "100%" }}
             buttonHandler={() => handleSignIn()}
+            isBtnDisabled={isBtnDisabled}
           />
 
           <Text style={styles.signUpText}>
