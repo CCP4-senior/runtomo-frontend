@@ -107,7 +107,7 @@ const UserProfileScreen = ({ navigation, route }) => {
             <View style={styles.imageContainer}>
               <ImageBackground
                 style={styles.backgroundImage}
-                source={require("../../assets/images/profile-bg.png")}
+                source={require("../../assets/images/profile-bg2.png")}
                 resizeMode="cover"
               >
                 <Animated.View style={[styles.avatarContainer, { opacity }]}>

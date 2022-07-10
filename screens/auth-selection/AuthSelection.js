@@ -30,7 +30,7 @@ const AuthSelection = ({ navigation }) => {
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
-          source={require("../../assets/images/runtomo-logo.png")}
+          source={require("../../assets/images/runtomo-logo3.png")}
           resizeMode="cover"
         />
       </View>
