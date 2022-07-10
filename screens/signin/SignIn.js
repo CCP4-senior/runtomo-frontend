@@ -17,6 +17,7 @@ const SignIn = () => {
   });
   const [isFormValidated, setIsFormValidated] = useState(false);
   const [isBtnDisabled, setIsBtnDisabled] = useState(false);
+  const abort = new AbortController();
   const [passwordError, setPasswordError] = useState({
     isTriggered: true,
     message: "",
@@ -32,12 +33,14 @@ const SignIn = () => {
 
     try {
       setIsBtnDisabled(true);
-      await signInUser({ email, password });
+      const response = await signInUser({ email, password });
     } catch (error) {
-      throw new Error(error);
-    } finally {
       setIsBtnDisabled(false);
     }
+    return () => {
+      setIsBtnDisabled(false);
+      controller.abort();
+    };
   };
 
   const validateEmail = (text) => {
