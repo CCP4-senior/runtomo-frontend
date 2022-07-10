@@ -239,11 +239,12 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 7,
+      height: 5,
     },
-    shadowOpacity: 0.43,
-    shadowRadius: 9.51,
-    elevation: 15,
+    shadowOpacity: 0.36,
+    shadowRadius: 6.68,
+
+    elevation: 11,
   },
   userInfoContainer: {
     flex: 2,
