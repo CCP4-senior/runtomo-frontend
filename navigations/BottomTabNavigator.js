@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeNavigator from "../navigations/HomeNavigator";
 import EventCreationNavigator from "./EventCreationNavigator";
@@ -18,7 +18,7 @@ const BottomTabNavigator = () => {
           let iconName;
 
           if (route.name === "Home Page") {
-            // iconName = "ios-home";
+            // iconName = "home";
           }
           if (route.name === "My Sessions Main Page") {
             // iconName = "walk";
@@ -31,6 +31,7 @@ const BottomTabNavigator = () => {
         },
         tabBarActiveTintColor: Color.PrimaryMain,
         tabBarInactiveTintColor: "gray",
+        tabBarStyle: {},
       })}
     >
       <Tab.Screen
@@ -42,16 +43,18 @@ const BottomTabNavigator = () => {
             if (focused) {
               return (
                 <Image
-                  style={{ width: size, height: size }}
+                  style={{ width: size, height: size + 3 }}
                   source={require("../assets/images/home-variant-orange2.png")}
                 />
               );
             } else
               return (
-                <Image
-                  style={{ width: size, height: size }}
-                  source={require("../assets/images/home-variant2.png")}
-                />
+                <View style={styles.iconImage}>
+                  <Image
+                    style={{ width: size, height: size + 3 }}
+                    source={require("../assets/images/home-variant2.png")}
+                  />
+                </View>
               );
           },
         }}
@@ -76,17 +79,17 @@ const BottomTabNavigator = () => {
             if (focused) {
               return (
                 <Image
-                  style={{ width: size, height: size }}
+                  style={{ width: size, height: size + 3 }}
                   source={require("../assets/images/my-session2.png")}
-                  resizeMode={'cover'}
+                  resizeMode={"cover"}
                 />
               );
             } else
               return (
                 <Image
-                  style={{ width: size, height: size }}
+                  style={{ width: size, height: size + 3 }}
                   source={require("../assets/images/my-session-gray2.png")}
-                  resizeMode={'cover'}
+                  resizeMode={"cover"}
                 />
               );
           },
@@ -99,3 +102,5 @@ const BottomTabNavigator = () => {
 };
 
 export default BottomTabNavigator;
+
+const styles = StyleSheet.create({});
