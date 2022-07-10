@@ -113,19 +113,22 @@ const SettingScreen = ({ navigation }) => {
           <Card.Content>
             <View style={styles.cardContent}>
               <Animated.View style={[styles.avatar, { opacity }]}>
-                {user.imageUrl && (
+                {user.image && (
                   <Avatar.Image
                     size={60}
                     source={{ uri: user.imageUrl }}
                     onLoadEnd={fadeAnimation}
                     backgroundColor={Color.GrayDark}
+                    style={styles.profilePicture}
                   />
                 )}
-                {!user.imageUrl && (
-                  <Avatar.Icon
-                    icon="account"
+                {!user.image && (
+                  <Avatar.Image
                     size={60}
-                    style={{ backgroundColor: Color.GrayDark }}
+                    source={require("../../assets/images/avatar-blank.png")}
+                    onLoadEnd={fadeAnimation}
+                    backgroundColor={Color.GrayDark}
+                    style={styles.profilePicture}
                   />
                 )}
               </Animated.View>
@@ -188,6 +191,14 @@ const styles = StyleSheet.create({
     width: "95%",
     marginBottom: 10,
     height: 90,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   cardTopTitle: {
     color: Color.Text,
@@ -212,5 +223,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "700",
     letterSpacing: 0.3,
+  },
+  profilePicture: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
 });

@@ -14,7 +14,7 @@ const AccentColor = "#11C9BD";
 
 const White = "#FFFFFF";
 const Black = "#000000";
-const Fill = "#F5F8FA";
+const Fill = "#F4F4F6";
 const Text = "#4E4B66";
 const HeaderTitle = "#455154";
 const TextMute = "rgba(25, 33, 38, 0.5)";

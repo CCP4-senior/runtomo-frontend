@@ -121,7 +121,9 @@ const EventCard = ({
                 />
               </View>
               <Text style={{ color: Color.PrimaryMain, ...styles.joinText }}>
-                {event.participants?.length > 1 ? `${event.participants?.length} attendees` : `${event.participants?.length} attendee` }
+                {event.participants?.length > 1
+                  ? `${event.participants?.length} attendees`
+                  : `${event.participants?.length} attendee`}
               </Text>
             </View>
           )}
@@ -139,12 +141,30 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     minHeight: 275,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   homePageCard: {
     width: "100%",
     marginBottom: 8,
     minHeight: 230,
     marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   title: {
     paddingTop: 3,

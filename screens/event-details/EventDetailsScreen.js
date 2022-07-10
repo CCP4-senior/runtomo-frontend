@@ -250,8 +250,8 @@ const EventDetailsScreen = ({ navigation }) => {
                           source={{
                             uri: generateImageUrl(eventData.creator.image),
                           }}
-                          backgroundColor={Color.GrayDark}
                           onLoadEnd={fadeAnimation}
+                          backgroundColor={Color.GrayDark}
                         />
                       )}
                       <Text style={styles.creatorName}>
@@ -469,11 +469,13 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     overflow: "visible",
+    
   },
   mapContainer: {
     backgroundColor: Color.White,
     alignItems: "center",
     justifyContent: "center",
+    
   },
   label: {
     position: "absolute",

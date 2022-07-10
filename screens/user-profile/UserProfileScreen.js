@@ -46,7 +46,7 @@ const UserProfileScreen = ({ navigation, route }) => {
   const fadeAnimation = () => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 300,
+      duration: 250,
       useNativeDriver: true,
     }).start();
   };
@@ -78,7 +78,11 @@ const UserProfileScreen = ({ navigation, route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      isLoginUser ? setUserData(user) : getAndSetUserData(userToView.id);
+      if (isLoginUser) {
+        setUserData(user);
+      } else {
+        const response = getAndSetUserData(userToView.id);
+      }
 
       return () => {
         controller.abort();
@@ -100,120 +104,109 @@ const UserProfileScreen = ({ navigation, route }) => {
       <SafeAreaView style={styles.root}>
         <ScrollView>
           <View style={styles.container}>
-            {/* Images */}
-
             <View style={styles.imageContainer}>
-              {/* Leave for now, may add background image back later */}
-              {/* <ImageBackground
+              <ImageBackground
                 style={styles.backgroundImage}
-                imageStyle={{ opacity: 0.4 }}
-                source={require("../../assets/images/backgroundProfile.png")}
+                source={require("../../assets/images/profile-bg.png")}
                 resizeMode="cover"
               >
-              </ImageBackground>  */}
-              <Animated.View style={{ opacity }}>
-                {/* Profile picture */}
-                {userData?.imageUrl && (
-                  <Avatar.Image
-                    style={styles.profilePicture}
-                    source={{ uri: userData?.imageUrl }}
-                    size={200}
-                    onLoadEnd={fadeAnimation}
-                    backgroundColor={Color.GrayDark}
-                  />
-                )}
+                <Animated.View style={[styles.avatarContainer, { opacity }]}>
+                  {!userData?.imageUrl && (
+                    <Avatar.Image
+                      size={180}
+                      source={require("../../assets/images/avatar-blank.png")}
+                      backgroundColor={"transparent"}
+                      style={styles.profilePicture}
+                    />
+                  )}
 
-                {/* Profile picture (default) */}
-
-                {!userData?.imageUrl && (
-                  <Avatar.Icon
-                    style={[
-                      styles.profilePicture,
-                      {
-                        backgroundColor: Color.GrayDark,
-                      },
-                    ]}
-                    icon="account"
-                    size={250}
-                    // onLoadEnd={fadeAnimation}
-                  />
-                )}
-              </Animated.View>
+                  {userData?.imageUrl && (
+                    <Avatar.Image
+                      size={180}
+                      source={{ uri: userData.imageUrl }}
+                      onLoadEnd={fadeAnimation}
+                      backgroundColor={"transparent"}
+                      style={styles.profilePicture}
+                    />
+                  )}
+                </Animated.View>
+              </ImageBackground>
             </View>
 
-            {/* User information */}
-
             <View style={styles.userInfoContainer}>
-              {/* Username */}
+              <Animated.View style={{ opacity }}>
+                <View style={styles.userInfoHeader}>
+                  <Text style={styles.userFullName}>
+                    {userData?.username || " "}
+                  </Text>
 
-              <View style={styles.userInfoHeader}>
-                <Text style={styles.userFullName}>{userData?.username || " "}</Text>
+                  {isLoginUser && (
+                    <IconButton
+                      onPress={() => navigation.navigate("Edit Profile")}
+                      icon="account-edit"
+                      size={29}
+                      color={Color.PrimaryMain}
+                      style={{ width: 30 }}
+                    />
+                  )}
 
-                {/* Edit Profile button */}
+                  {isLoginUser && (
+                    <IconButton
+                      onPress={showModal}
+                      icon="camera-flip"
+                      size={29}
+                      color={Color.PrimaryMain}
+                      style={{ width: 30 }}
+                    />
+                  )}
+                </View>
 
-                {isLoginUser && (
-                  <IconButton
-                    onPress={() => navigation.navigate("Edit Profile")}
-                    icon="account-edit"
-                    size={29}
-                    color={Color.PrimaryMain}
-                    style={{ width: 30 }}
-                  />
-                )}
+                <View style={styles.descriptionContainer}>
+                  <Text
+                    style={styles.descriptionText}
+                    // onLoad={fadeAnimation}
+                  >
+                    {userData?.profile?.description || " "}
+                  </Text>
+                </View>
 
-                {/* Edit Profile Photo button */}
+                <View style={styles.infoSection}>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>AGE</Text>
+                    <Text style={styles.infoText}>
+                      {getAge(userData?.profile?.["date_of_birth"]) ||
+                        "Not provided"}
+                    </Text>
+                  </View>
 
-                {isLoginUser && (
-                  <IconButton
-                    onPress={showModal}
-                    icon="camera-flip"
-                    size={29}
-                    color={Color.PrimaryMain}
-                    style={{ width: 30 }}
-                  />
-                )}
-              </View>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>RUN FREQUENCY</Text>
+                    <Text style={styles.infoText}>
+                      {userData?.profile
+                        ? userData.profile?.["run_frequency"] + " times / week"
+                        : "Not provided"}
+                    </Text>
+                  </View>
 
-              {/* Age */}
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>ESTIMATED 5K</Text>
+                    <Text style={styles.infoText}>
+                      {userData?.profile
+                        ? userData.profile["estimated5k"]
+                        : "Not provided"}
+                    </Text>
+                  </View>
 
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Age:{" "}
-                  {getAge(userData?.profile?.["date_of_birth"]) ||
-                    "Not provided"}
-                </Text>
-              </View>
-
-              {/* Run Frequency */}
-
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Run Frequency:{" "}
-                  {userData?.profile
-                    ? userData.profile?.["run_frequency"] + " times / week"
-                    : "Not provided"}
-                </Text>
-              </View>
-
-              {/* Estimate 5k */}
-
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Estimated 5k:{" "}
-                  {userData?.profile
-                    ? userData.profile["estimated5k"]
-                    : "Not provided"}
-                </Text>
-              </View>
-
-              <View style={styles.userDataWrapper}>
-                <Text style={styles.userDataFont}>
-                  Estimated 10k:{" "}
-                  {userData?.profile
-                    ? userData.profile["estimated10k"]
-                    : "Not provided"}
-                </Text>
-              </View>
+                  <View style={styles.infoItem}>
+                    <Text style={styles.infoTitle}>ESTIMATED 10K</Text>
+                    <Text style={styles.infoText}>
+                      {userData?.profile
+                        ? userData.profile["estimated10k"]
+                        : "Not provided"}
+                    </Text>
+                  </View>
+                </View>
+              </Animated.View>
             </View>
           </View>
         </ScrollView>
@@ -238,58 +231,84 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     width: "100%",
-    height: 200,
+    height: 250,
+    justifyContent: "center",
+    alignContent: "center",
   },
   profilePicture: {
-    width: 200,
-    maxHeight: 200,
-    borderRadius: 200 / 2,
-    marginTop: 30,
-    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.36,
+    shadowRadius: 6.68,
+
+    elevation: 11,
   },
   userInfoContainer: {
     flex: 2,
     padding: 20,
   },
   userFullName: {
-    fontSize: 24,
+    fontSize: 36,
     fontWeight: "bold",
     alignSelf: "center",
   },
   userInfoHeader: {
     flexDirection: "row",
     alignSelf: "center",
-    marginBottom: 10,
+    margin: 5,
   },
-  tagsContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
+  descriptionContainer: {
+    margin: 10,
+    marginBottom: 20,
+    width: "90%",
+    alignSelf: "center",
   },
-  tags: {
-    backgroundColor: Color.PrimaryMain,
-    marginHorizontal: 4,
-    borderRadius: 6,
-    borderColor: Color.PrimaryMain,
-    borderWidth: 0.2,
-    overflow: "hidden",
-    padding: 3,
-    color: Color.White,
-    fontWeight: "bold",
-    fontSize: 16,
-    marginVertical: 5,
+  descriptionText: {
+    fontSize: 20,
+    // letterSpacing: 0.5,
+    fontWeight: "500",
+    textAlign: "center",
+    color: "#484848",
+    padding: 5,
   },
-  userDataWrapper: {
+  infoSection: {
     backgroundColor: Color.White,
     borderRadius: 20,
     padding: 20,
     width: "100%",
-    marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
   },
-  userDataFont: {
-    fontSize: 16,
-    color: Color.Black,
-    fontWeight: "500",
+  infoItem: {
+    marginLeft: 10,
+    marginVertical: 15,
+  },
+  infoTitle: {
+    fontSize: 20,
+    color: Color.PrimaryMain,
+    fontWeight: "bold",
+    marginBottom: 2,
+  },
+  infoText: {
+    fontSize: 20,
+    color: "#363D4E",
+  },
+  avatarAnimatedContainer: {},
+  avatarContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  avatar: {
+    avatar: { backgroundColor: Color.GrayDark },
   },
 });
