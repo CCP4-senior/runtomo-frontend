@@ -43,14 +43,14 @@ const BottomTabNavigator = () => {
               return (
                 <Image
                   style={{ width: size, height: size }}
-                  source={require("../assets/images/home-variant-orange.png")}
+                  source={require("../assets/images/home-variant-orange2.png")}
                 />
               );
             } else
               return (
                 <Image
                   style={{ width: size, height: size }}
-                  source={require("../assets/images/home-variant.png")}
+                  source={require("../assets/images/home-variant2.png")}
                 />
               );
           },
@@ -77,14 +77,16 @@ const BottomTabNavigator = () => {
               return (
                 <Image
                   style={{ width: size, height: size }}
-                  source={require("../assets/images/my-session.png")}
+                  source={require("../assets/images/my-session2.png")}
+                  resizeMode={'cover'}
                 />
               );
             } else
               return (
                 <Image
                   style={{ width: size, height: size }}
-                  source={require("../assets/images/my-session-gray.png")}
+                  source={require("../assets/images/my-session-gray2.png")}
+                  resizeMode={'cover'}
                 />
               );
           },
