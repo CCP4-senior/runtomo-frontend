@@ -43,7 +43,8 @@
     "react-native-screens": "~3.11.1",
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.7",
-    "expo-splash-screen": "~0.15.1"
+    "expo-splash-screen": "~0.15.1",
+    "expo-system-ui": "~1.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
