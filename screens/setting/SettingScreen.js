@@ -85,7 +85,7 @@ const SettingScreen = ({ navigation }) => {
               <Paragraph>
                 {dialogType === "confirmation"
                   ? "Are you sure you want to remove your account?"
-                  : "Your account was deleted successfully. All of your data was removed from our services. Thank you for using RunTomo."}
+                  : "Your account was deleted successfully. All of your data was removed from our services. Thank you for using runtomo."}
               </Paragraph>
             </Dialog.Content>
             <Dialog.Actions>

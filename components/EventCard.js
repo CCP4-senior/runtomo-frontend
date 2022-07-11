@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     width: "90%",
     marginBottom: 10,
     marginTop: 10,
-    minHeight: 275,
+    minHeight: 230,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

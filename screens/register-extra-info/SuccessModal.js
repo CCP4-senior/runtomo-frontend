@@ -37,8 +37,8 @@ const SuccessModal = ({ modalVisible }) => {
               style={styles.image}
               source={require("../../assets/images/confirmation.png")}
             />
-            <Text style={styles.text}>Account is created successufully</Text>
-            <Text style={styles.text}>Start your RunTomo Journey!</Text>
+            <Text style={styles.text}>Account is created successufully.</Text>
+            <Text style={styles.text}>Start your runtomo Journey!</Text>
             <LongButton
               buttonColor={Color.PrimaryMain}
               buttonText="Start"

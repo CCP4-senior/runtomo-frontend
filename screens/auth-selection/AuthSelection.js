@@ -46,7 +46,7 @@ const AuthSelection = ({ navigation }) => {
         />
         <LongButton
           buttonColor={Color.PrimaryMain}
-          buttonText={"Sign in"}
+          buttonText={"Sign In"}
           buttonTextColor={Color.PrimaryMain}
           mode={"outlined"}
           customStyle={{
