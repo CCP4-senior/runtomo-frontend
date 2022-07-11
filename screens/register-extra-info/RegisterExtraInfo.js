@@ -135,7 +135,7 @@ const RegisterExtraInfo = ({ route }) => {
         await createUserProfile(userProfileData);
       }, 1000);
     } catch (e) {
-      console.log(e.config.url);
+      console.log(e);
       alert("Something went wrong! Please try again");
     }
   };

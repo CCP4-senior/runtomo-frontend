@@ -51,7 +51,7 @@ const ProfilePhoto = ({ route }) => {
       await createUser({ username, password, email, image: imageRef });
       await createUserProfile(userToBeRegistered);
     } catch (e) {
-      console.log(e.config.url);
+      console.log(e);
       alert("Something went wrong! Please try again");
     }
   };
