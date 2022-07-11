@@ -1,14 +1,7 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { IconButton } from "react-native-paper";
 import HeaderStyle from "../../assets/themes/HeaderStyle";
-import MapView, {
-  Callout,
-  Marker,
-  Circle,
-  PROVIDER_GOOGLE,
-  PROVIDER_DEFAULT,
-} from "react-native-maps";
 import Color from "../../assets/themes/Color";
 
 const createOptions = (

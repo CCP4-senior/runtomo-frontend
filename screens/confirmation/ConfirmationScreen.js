@@ -6,7 +6,7 @@ import LongButton from "../../components/LongButton.js";
 import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 
-const ConfirmationScreen = ({ navigation, /*event,*/ actionType, route }) => {
+const ConfirmationScreen = ({ navigation, actionType, route }) => {
   let isConfirmationCard, isDateUTC, isTimeUTC;
   if (route.params) {
     isConfirmationCard = route.params.isConfirmationCard;

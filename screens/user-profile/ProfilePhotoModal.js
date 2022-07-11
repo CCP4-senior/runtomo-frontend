@@ -16,7 +16,6 @@ const ProfilePhotoModal = ({
   imageUri,
   setImageUri,
   wantsToDelete,
-  setWantsToDelete,
 }) => {
   const containerStyle = {
     backgroundColor: "#fff",

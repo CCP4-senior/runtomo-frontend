@@ -19,15 +19,13 @@ import FilterModal from "./FilterModal.js";
 import SortByModal from "./SortByModal.js";
 import LoadingSpinner from "../../components/LoadingSpinner.js";
 
-const HomeScreen = ({ navigation, /*data,*/ setCurrEvent }) => {
+const HomeScreen = ({ navigation }) => {
   const { user } = useContext(AuthContext);
 
   const {
     allEvents,
     setCurrentEvent,
-    setEventId,
     getAllEventsData,
-    getCurrentEventData,
     filteredEvents,
     setUserData,
     setFilteredEvents,

@@ -2,21 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Card, Title } from "react-native-paper";
 import {
   ScrollView,
-  Text,
   View,
-  TouchableOpacity,
   StyleSheet,
   SafeAreaView,
   Dimensions,
 } from "react-native";
 import MapView, {
-  Callout,
   Marker,
   Circle,
   PROVIDER_GOOGLE,
   PROVIDER_DEFAULT,
 } from "react-native-maps";
-import Color from "../../assets/themes/Color";
 import axiosInstance from "../../helpers/axios";
 
 const windowWidth = Dimensions.get("window").width;

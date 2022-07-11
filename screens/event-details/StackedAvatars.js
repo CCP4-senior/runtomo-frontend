@@ -30,10 +30,6 @@ const StackedAvatars = ({ participantsArray, color, size }) => {
     <View
       style={{
         width: width,
-        // width:
-        //   size === "small"
-        //     ? 22 * displayedCirlceCount
-        //     : 27 * displayedCirlceCount,
         ...styles.avatarContainer,
       }}
     >

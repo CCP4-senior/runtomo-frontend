@@ -6,15 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import {
-  Modal,
-  Portal,
-  Card,
-  Title,
-  Paragraph,
-  Checkbox,
-  Button,
-} from "react-native-paper";
+import { Modal, Portal, Title, Checkbox, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import tokyoWards from "../../utils/tokyoWards";
 import { DataContext } from "../../context/datacontext/DataContext";
@@ -99,7 +91,6 @@ const FilterModal = ({
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}
         >
-          {/* <ScrollView> */}
           <Title style={styles.modalTitle}>
             Select area from Tokyo 23 Wards
           </Title>
@@ -208,7 +199,6 @@ const FilterModal = ({
               <Text style={styles.applyBtnText}>Apply</Text>
             </Button>
           </View>
-          {/* </ScrollView> */}
         </Modal>
       </Portal>
     </View>

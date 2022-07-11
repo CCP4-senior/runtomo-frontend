@@ -1,9 +1,7 @@
 import {
   StyleSheet,
-  Text,
   View,
   SafeAreaView,
-  Image,
   ActivityIndicator,
 } from "react-native";
 import React from "react";

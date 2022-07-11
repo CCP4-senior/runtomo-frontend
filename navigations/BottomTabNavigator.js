@@ -17,12 +17,6 @@ const BottomTabNavigator = () => {
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === "Home Page") {
-            // iconName = "home";
-          }
-          if (route.name === "My Sessions Main Page") {
-            // iconName = "walk";
-          }
           if (route.name === "Event Creation") {
             iconName = "add-circle-outline";
           }

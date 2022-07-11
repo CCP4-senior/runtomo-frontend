@@ -19,7 +19,7 @@ import axiosInstance from "../../helpers/axios.js";
 import deleteStoredImage from "../../helpers/deleteStoredImage.js";
 import deleteImageDirectory from "../../helpers/deleteImageDirectory.js";
 
-const SettingScreen = ({ navigation }) => {
+const SettingScreen = () => {
   const [visible, setVisible] = useState(false);
   const [dialogType, setDialogType] = useState("confirmation");
   const { user, setUser, signOutUser } = useContext(AuthContext);

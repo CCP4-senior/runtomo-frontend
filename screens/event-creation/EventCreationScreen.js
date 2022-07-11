@@ -17,7 +17,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "./DatePicker.js";
-// import AreaModal from "./AreaModal.js";
 import DurationModal from "./DurationModal.js";
 import GoogleSearchModal from "./GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
@@ -31,7 +30,6 @@ import { AuthContext } from "../../context/authcontext/AuthContext.js";
 import LoadingSpinner from "../../components/LoadingSpinner.js";
 import runningDurationArray from "../../utils/runningDuration.js";
 
-
 const EventCreationScreen = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [meetingPoint, setMeetingPoint] = useState("");
@@ -41,7 +39,6 @@ const EventCreationScreen = ({ navigation }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [runningDuration, setRunningDuration] = useState("");
-  const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
   const [eventDescription, setEventDescription] = useState("");
@@ -59,7 +56,6 @@ const EventCreationScreen = ({ navigation }) => {
   // });
 
   const hideModal = () => {
-    setAreaModalVisible(false);
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
     inputRef.current?.blur();
@@ -145,12 +141,6 @@ const EventCreationScreen = ({ navigation }) => {
 
   return (
     <Provider>
-      {/* LEAVE FOR REFERENCE, WE MIGHT NEED TO PUT IT BACK*/}
-      {/* <AreaModal
-        modalVisible={areaModalVisible}
-        hideModal={hideModal}
-        setWard={setWard}
-      /> */}
       <DurationModal
         modalVisible={durationModalVisible}
         setRunningDuration={setRunningDuration}
@@ -178,19 +168,6 @@ const EventCreationScreen = ({ navigation }) => {
               submitted={submitted}
             />
           </View>
-          {/* LEAVE FOR REFERENCE, WE MIGHT NEED TO PUT IT BACK*/}
-          {/* <View style={styles.inputContainer}>
-            <CustomInput
-              placeholder="Area"
-              onFocus={() => {
-                if (ward === "") {
-                  setAreaModalVisible(true);
-                }
-              }}
-              value={ward}
-              submitted={submitted}
-            />
-          </View> */}
 
           <View style={styles.inputContainer}>
             <CustomInput
@@ -253,8 +230,9 @@ const EventCreationScreen = ({ navigation }) => {
 
           {imageUri !== "" && (
             <View style={styles.imageBackground}>
-
-              <Text style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10, }}>
+              <Text
+                style={{ fontWeight: "bold", fontSize: 16, marginBottom: 10 }}
+              >
                 Event Image
               </Text>
               <Image source={{ uri: imageUri }} style={{ height: 175 }} />
@@ -267,8 +245,6 @@ const EventCreationScreen = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <TextInput
               mode="outlined"
-              // outlineColor="#fff"
-              // activeOutlineColor={Color.GrayDark}
               theme={{
                 ...styles.inputTheme,
                 colors: {
@@ -312,8 +288,6 @@ const EventCreationScreen = ({ navigation }) => {
               multiline={true}
             />
           </View>
-
-          {/* Create Event button */}
 
           {/* Loading spinner */}
 

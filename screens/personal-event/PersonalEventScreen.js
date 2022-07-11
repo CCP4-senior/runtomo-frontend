@@ -11,21 +11,11 @@ import Color from "../../assets/themes/Color.js";
 import EventCard from "../../components/EventCard.js";
 import { DataContext } from "../../context/datacontext/DataContext.js";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
-import axiosInstance from "../../helpers/axios.js";
 import LoadingSpinner from "../../components/LoadingSpinner.js";
 import { set } from "date-fns";
 
 const PersonalEventScreen = ({ navigation }) => {
-  const {
-    createdEvents,
-    setCurrentEvent,
-    allEvents,
-    setCreatedEvents,
-    setJoinedEvents,
-    joinedEvents,
-    userEvents,
-    setUserEvents,
-  } = useContext(DataContext);
+  const { setCurrentEvent, allEvents } = useContext(DataContext);
   const { user } = useContext(AuthContext);
   const listTab = [
     {
