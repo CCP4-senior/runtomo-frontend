@@ -113,7 +113,6 @@ const Register = () => {
       </View>
       <ScrollView>
         <View style={styles.mainContainer}>
-          {/*  Title */}
           <View>
             <Text style={styles.title}>Create a New Account</Text>
           </View>
@@ -170,7 +169,6 @@ const Register = () => {
             </>
           )}
 
-          {/* Email */}
           <View style={styles.inputContainer}>
             <View style={styles.emailFieldWrapper}>
               <TextInput
@@ -209,8 +207,6 @@ const Register = () => {
               </Text>
             </View>
 
-            {/* Username */}
-
             <View style={styles.usernameFieldWrapper}>
               <TextInput
                 theme={{
@@ -232,8 +228,6 @@ const Register = () => {
               />
             </View>
 
-            {/*  Password */}
-
             <View style={styles.passwordFieldWrapper}>
               <TextInput
                 theme={{
@@ -253,8 +247,6 @@ const Register = () => {
                 onChangeText={(text) => setPassword(text)}
               />
             </View>
-
-            {/*  Second Password */}
 
             <View style={styles.secondPasswordFieldWrapper}>
               <TextInput
@@ -276,8 +268,6 @@ const Register = () => {
               />
             </View>
 
-            {/* Register Button */}
-
             <View style={styles.registerBottomWrapper}>
               <LongButton
                 buttonHandler={() => handleRegister()}
@@ -285,8 +275,6 @@ const Register = () => {
                 buttonText={"Next"}
                 customStyle={{ width: "100%" }}
               />
-
-              {/*  Already have an account? */}
 
               <Text style={styles.registerText}>
                 Already have an account?{" "}

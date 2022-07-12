@@ -202,7 +202,6 @@ const EventDetailsScreen = ({ navigation }) => {
           <ScrollView>
             <View style={styles.container}>
               <Card style={styles.card} theme={{ roundness: 10 }}>
-                {/* Event cover image */}
                 <Animated.View style={{ opacity }}>
                   {eventData.imageUrl && (
                     <Card.Cover
@@ -465,13 +464,11 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: "center",
     overflow: "visible",
-    
   },
   mapContainer: {
     backgroundColor: Color.White,
     alignItems: "center",
     justifyContent: "center",
-    
   },
   label: {
     position: "absolute",

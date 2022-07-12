@@ -78,7 +78,6 @@ const ProfilePhoto = ({ route }) => {
           </Dialog>
         </Portal>
 
-        {/*  Title */}
         <View style={styles.title}>
           <Text style={styles.titleText}>My Picture</Text>
         </View>
@@ -88,7 +87,6 @@ const ProfilePhoto = ({ route }) => {
           </Text>
         </View>
 
-        {/* Image picker */}
         <View style={styles.mainContainer}>
           {imageUri === "" && (
             <TouchableOpacity

@@ -158,24 +158,17 @@ const RegisterExtraInfo = ({ route }) => {
         </View>
         <ScrollView style={styles.root}>
           <View style={styles.container}>
-            {/*  Title */}
-
             <View style={styles.title}>
               <Text style={styles.titleText}>Tell us about yourself!</Text>
             </View>
 
-            {/*Subtitle */}
             <View style={styles.subtitle}>
               <Text style={styles.subtitleText}>
                 Let's start with some facts about you
               </Text>
             </View>
 
-            {/* Input Fields */}
-
             <View style={styles.inputs}>
-              {/* Age Date Picker */}
-
               <View style={styles.datePickerContainer}>
                 <DatePicker
                   setDate={setDate}
@@ -187,7 +180,6 @@ const RegisterExtraInfo = ({ route }) => {
                 />
               </View>
 
-              {/* Times per week buttons*/}
               <View style={styles.timesPerWeekBtnHeader}>
                 <Text style={styles.btnTitleText}>
                   How many times a week do you usually run?
@@ -275,8 +267,6 @@ const RegisterExtraInfo = ({ route }) => {
                   </Text>
                 </Button>
               </View>
-
-              {/* Pace 5km */}
 
               <View style={styles.estimate5kHeader}>
                 <Text style={styles.btnTitleText}>
@@ -409,7 +399,6 @@ const RegisterExtraInfo = ({ route }) => {
                   >{`>40 mins`}</Text>
                 </Button>
               </View>
-              {/* Pace 10km */}
 
               <View style={styles.estimate10kHeader}>
                 <Text style={styles.btnTitleText}>
@@ -554,7 +543,6 @@ const RegisterExtraInfo = ({ route }) => {
               </View>
             </View>
 
-            {/* About me */}
             <View style={styles.inputContainer}>
               <View style={styles.profileHeader}>
                 <Text style={styles.btnTitleText}>Description</Text>
@@ -579,8 +567,6 @@ const RegisterExtraInfo = ({ route }) => {
                 multiline={true}
               />
             </View>
-
-            {/* Continue Button */}
 
             <View style={styles.button}>
               <LongButton

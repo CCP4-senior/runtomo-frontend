@@ -36,6 +36,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ size, focused, color }) => {
             if (focused) {
               return (
+                // Using "size + 3" prevents the icons from clipping vertically.
                 <Image
                   style={{ width: size, height: size + 3 }}
                   source={require("../assets/images/home-variant-orange2.png")}

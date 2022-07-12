@@ -90,7 +90,6 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
-        {/* Filter  Button */}
         <View>
           <List.Item></List.Item>
         </View>
