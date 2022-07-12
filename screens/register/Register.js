@@ -7,10 +7,9 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { TextInput, Avatar, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { AuthContext } from "../../context/authcontext/AuthContext";
 import Color from "../../assets/themes/Color.js";
 import LongButton from "../../components/LongButton";
 import selectImage from "../../helpers/selectImage";

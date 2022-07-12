@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Keyboard } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format, addHours } from "date-fns";

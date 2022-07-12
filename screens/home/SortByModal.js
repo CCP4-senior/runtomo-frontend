@@ -1,21 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  ScrollView,
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import {
-  Modal,
-  Portal,
-  Card,
-  Title,
-  Paragraph,
-  Checkbox,
-  Button,
-  RadioButton,
-} from "react-native-paper";
+import { ScrollView, Text, View, StyleSheet } from "react-native";
+import { Modal, Portal, Title, Button, RadioButton } from "react-native-paper";
 import Color from "../../assets/themes/Color";
 import { DataContext } from "../../context/datacontext/DataContext";
 
@@ -30,8 +15,6 @@ const SortByModal = ({ modalVisible, hideModal }) => {
     alignSelf: "center",
   };
   const {
-    allEvents,
-    setFilteredEvents,
     setSortingCondition,
     resetSortingInHomeScreen,
     isSortingResetInHomePage,

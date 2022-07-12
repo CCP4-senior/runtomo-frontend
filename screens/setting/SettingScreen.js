@@ -19,7 +19,7 @@ import axiosInstance from "../../helpers/axios.js";
 import deleteStoredImage from "../../helpers/deleteStoredImage.js";
 import deleteImageDirectory from "../../helpers/deleteImageDirectory.js";
 
-const SettingScreen = ({ navigation }) => {
+const SettingScreen = () => {
   const [visible, setVisible] = useState(false);
   const [dialogType, setDialogType] = useState("confirmation");
   const { user, setUser, signOutUser } = useContext(AuthContext);
@@ -85,7 +85,7 @@ const SettingScreen = ({ navigation }) => {
               <Paragraph>
                 {dialogType === "confirmation"
                   ? "Are you sure you want to remove your account?"
-                  : "Your account was deleted successfully. All of your data was removed from our services. Thank you for using RunTomo."}
+                  : "Your account was deleted successfully. All of your data was removed from our services. Thank you for using runtomo."}
               </Paragraph>
             </Dialog.Content>
             <Dialog.Actions>

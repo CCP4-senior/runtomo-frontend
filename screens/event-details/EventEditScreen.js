@@ -8,10 +8,8 @@ import {
   Image,
 } from "react-native";
 import { TextInput, IconButton, Provider, Button } from "react-native-paper";
-import { addHours } from "date-fns";
 import Color from "../../assets/themes/Color.js";
 import DatePicker from "../event-creation/DatePicker.js";
-// import AreaModal from "../event-creation/AreaModal.js";
 import DurationModal from "../event-creation/DurationModal.js";
 import GoogleSearchModal from "../event-creation/GoogleSearchModal.js";
 import LongButton from "../../components/LongButton.js";
@@ -47,7 +45,6 @@ const EventEditScreen = ({ navigation }) => {
         )
       : ""
   );
-  const [areaModalVisible, setAreaModalVisible] = useState(false);
   const [durationModalVisible, setDurationModalVisible] = useState(false);
   const [googleModalVisible, setGoogleModalVisible] = useState(false);
   const [eventDescription, setEventDescription] = useState(
@@ -62,7 +59,6 @@ const EventEditScreen = ({ navigation }) => {
   const [isTimeUTC, setIsTimeUTC] = useState(true);
 
   const hideModal = () => {
-    setAreaModalVisible(false);
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
     inputRef.current?.blur();
@@ -150,12 +146,6 @@ const EventEditScreen = ({ navigation }) => {
 
   return (
     <Provider>
-      {/* LEAVE FOR REFERENCE, WE MIGHT NEED TO PUT IT BACK*/}
-      {/* <AreaModal
-        modalVisible={areaModalVisible}
-        hideModal={hideModal}
-        setWard={setWard}
-      /> */}
       <DurationModal
         modalVisible={durationModalVisible}
         setRunningDuration={setRunningDuration}
@@ -181,19 +171,7 @@ const EventEditScreen = ({ navigation }) => {
               submitted={submitted}
             />
           </View>
-          {/* LEAVE FOR REFERENCE, WE MIGHT NEED TO PUT IT BACK*/}
-          {/* <View style={styles.inputContainer}>
-            <CustomInput
-              placeholder="Area"
-              onFocus={() => {
-                if (ward === "") {
-                  setAreaModalVisible(true);
-                }
-              }}
-              value={ward}
-              submitted={submitted}
-            />
-          </View> */}
+
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Meeting Point Address"
@@ -279,8 +257,6 @@ const EventEditScreen = ({ navigation }) => {
             <TextInput
               mutiline={true}
               mode="outlined"
-              // outlineColor="#fff"
-              // activeOutlineColor={Color.GrayDark}
               theme={{
                 ...styles.inputTheme,
                 colors: {

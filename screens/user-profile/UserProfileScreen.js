@@ -162,10 +162,7 @@ const UserProfileScreen = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.descriptionContainer}>
-                  <Text
-                    style={styles.descriptionText}
-                    // onLoad={fadeAnimation}
-                  >
+                  <Text style={styles.descriptionText}>
                     {userData?.profile?.description || " "}
                   </Text>
                 </View>

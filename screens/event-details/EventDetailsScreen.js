@@ -111,7 +111,6 @@ const EventDetailsScreen = ({ navigation }) => {
     return JSON.parse(JSON.stringify(item));
   };
 
-  // To be modified
   const openCreatorProfile = async () => {
     await getUser(eventData.creator.id);
 
@@ -351,7 +350,6 @@ const EventDetailsScreen = ({ navigation }) => {
                     </View>
                   ) : null}
 
-                  {/* <View style={styles.mapContainer}> */}
                   <Animated.View style={[styles.mapContainer, { opacity }]}>
                     {hasJoined || eventData.creator.id === user.id ? (
                       <MapView
@@ -387,7 +385,6 @@ const EventDetailsScreen = ({ navigation }) => {
                       </MapView>
                     ) : null}
                   </Animated.View>
-                  {/* </View> */}
                 </Card.Content>
               </Card>
 
@@ -400,7 +397,6 @@ const EventDetailsScreen = ({ navigation }) => {
                     }}
                     buttonColor={Color.White}
                     buttonText="Edit Event"
-                    // buttonTextColor="#555555"
                     buttonTextColor={Color.PrimaryMain}
                   />
                   <LongButton
@@ -584,17 +580,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   stackedAvatarContainer: {
-    // height: 50,
-    // display: "flex",
-    // justifyContent: "flex-start",
-    // alignItems: "center",
-    // paddingTop: 15,
     height: 70,
     paddingTop: 15,
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    // backgroundColor: "blue",
   },
   joinText: {
     fontSize: 13,

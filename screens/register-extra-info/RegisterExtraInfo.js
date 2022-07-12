@@ -131,12 +131,11 @@ const RegisterExtraInfo = ({ route }) => {
     try {
       await createUser({ username, password, email, image: imageRef });
 
-      // Wait to make suer user is created in backend
       setTimeout(async () => {
         await createUserProfile(userProfileData);
       }, 1000);
     } catch (e) {
-      console.log(e.config.url);
+      console.log(e);
       alert("Something went wrong! Please try again");
     }
   };

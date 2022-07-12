@@ -1,19 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
   SafeAreaView,
   StyleSheet,
-  ImageBackground,
-  Image,
   useWindowDimensions,
-  Button,
   TextInput,
-  FlatList,
   ScrollView,
 } from "react-native";
 import { AuthContext } from "../../context/authcontext/AuthContext.js";
-import Validation from "../../utils/Validation";
 
 import Color from "../../assets/themes/Color";
 import CustomInput from "../../components/CustomInput";

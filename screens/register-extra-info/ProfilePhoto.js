@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -51,7 +51,7 @@ const ProfilePhoto = ({ route }) => {
       await createUser({ username, password, email, image: imageRef });
       await createUserProfile(userToBeRegistered);
     } catch (e) {
-      console.log(e.config.url);
+      console.log(e);
       alert("Something went wrong! Please try again");
     }
   };

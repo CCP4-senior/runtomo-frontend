@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Modal, Portal, Card, Title, Paragraph } from "react-native-paper";
 
 const DurationModal = ({

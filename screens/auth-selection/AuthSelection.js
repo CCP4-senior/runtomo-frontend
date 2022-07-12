@@ -1,7 +1,6 @@
 import {
   StyleSheet,
   View,
-  SafeAreaView,
   Image,
   useWindowDimensions,
   Text,
@@ -46,7 +45,7 @@ const AuthSelection = ({ navigation }) => {
         />
         <LongButton
           buttonColor={Color.PrimaryMain}
-          buttonText={"Sign in"}
+          buttonText={"Sign In"}
           buttonTextColor={Color.PrimaryMain}
           mode={"outlined"}
           customStyle={{
@@ -59,63 +58,6 @@ const AuthSelection = ({ navigation }) => {
       </View>
     </View>
   );
-
-  // return (
-  //   <SafeAreaView style={styles.root}>
-  //     <View style={styles.container}>
-  //       <Image
-  //         style={{ width: 400, height: 400 }}
-  //         source={require("../../assets/images/logo.png")}
-  //         resizeMode="cover"
-  //       />
-  //     </View>
-  //     <View style={styles.buttonsWrapper}>
-  //       {/* Signin button */}
-
-  //       <View style={styles.signInBtnWrapper}>
-  //         <Button
-  //           color={Color.Black}
-  //           uppercase={false}
-  //           contentStyle={{
-  //             borderWidth: 1,
-  //             borderRadius: 10,
-  //             borderColor: Color.Black,
-  //             padding: 5,
-  //             backgroundColor: Color.GrayLight,
-  //           }}
-  //           labelStyle={{
-  //             fontWeight: "bold",
-  //             fontSize: 18,
-  //           }}
-  //           onPress={() => navigation.navigate("SignIn")}
-  //         >
-  //           Sign In
-  //         </Button>
-  //       </View>
-
-  //       {/* Register button */}
-
-  //       <View style={styles.registerBtnWrapper}>
-  //         <Button
-  //           mode="contained"
-  //           uppercase={false}
-  //           color={Color.PrimaryMain}
-  //           style={{ borderRadius: 10 }}
-  //           labelStyle={{
-  //             fontWeight: "bold",
-  //             fontSize: 18,
-  //           }}
-  //           contentStyle={{
-  //             padding: 5,
-  //           }}
-  //           onPress={() => navigation.navigate("Register")}
-  //         >
-  //           Register
-  //         </Button>
-  //       </View>
-  //     </View>
-  //   </SafeAreaView>
-  // );
 };
 
 export default AuthSelection;
@@ -155,7 +97,6 @@ const styles = StyleSheet.create({
     height: "60%",
     width: "100%",
     top: 0,
-    // alignItems: "center",
   },
   image: {
     width: "100%",
