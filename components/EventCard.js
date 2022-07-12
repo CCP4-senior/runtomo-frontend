@@ -54,8 +54,6 @@ const EventCard = ({
       theme={{ roundness: 10 }}
     >
       <TouchableOpacity onPress={handlePress}>
-        {/* Event image */}
-
         {event.imageUrl && (
           <Animated.View style={{ opacity }}>
             <Card.Cover
@@ -69,8 +67,6 @@ const EventCard = ({
             />
           </Animated.View>
         )}
-
-        {/* Event image (default) */}
 
         {!event.imageUrl && (
           <Animated.View style={{ opacity }}>

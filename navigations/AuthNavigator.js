@@ -20,8 +20,6 @@ const AuthNavigator = () => {
         }}
       />
 
-      {/* SignIn */}
-
       <Stack.Screen
         name="SignIn"
         component={SignIn}
@@ -30,8 +28,6 @@ const AuthNavigator = () => {
         }}
       />
 
-      {/* Registration */}
-
       <Stack.Screen
         name="Register"
         component={Register}
@@ -39,8 +35,6 @@ const AuthNavigator = () => {
           headerShown: false,
         }}
       />
-
-      {/* Extra Info */}
 
       <Stack.Screen
         name="RegisterExtraInfo"

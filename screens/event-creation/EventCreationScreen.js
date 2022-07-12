@@ -49,12 +49,6 @@ const EventCreationScreen = ({ navigation }) => {
   const { setCurrentEvent, generateImageUrl } = useContext(DataContext);
   const { user } = useContext(AuthContext);
 
-  // const [isUser, setIsUser] = useState(true);
-
-  // useEffect(() => {
-  //   setCurrentEvent("");
-  // });
-
   const hideModal = () => {
     setDurationModalVisible(false);
     setGoogleModalVisible(false);
@@ -158,8 +152,6 @@ const EventCreationScreen = ({ navigation }) => {
 
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.container}>
-          {/* Event title */}
-
           <View style={styles.inputContainer}>
             <CustomInput
               placeholder="Event Title"
@@ -288,8 +280,6 @@ const EventCreationScreen = ({ navigation }) => {
               multiline={true}
             />
           </View>
-
-          {/* Loading spinner */}
 
           {isLoading ? (
             <View style={{ flex: 1 }}>

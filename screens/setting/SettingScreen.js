@@ -103,8 +103,6 @@ const SettingScreen = () => {
           </Dialog>
         </Portal>
 
-        {/* Profile card */}
-
         <Card
           style={[styles.card, styles.cardTop]}
           theme={{ roundness: 20 }}
@@ -139,8 +137,6 @@ const SettingScreen = () => {
             </View>
           </Card.Content>
         </Card>
-
-        {/* List of items */}
 
         <Card
           style={[styles.card, styles.cardBottom]}

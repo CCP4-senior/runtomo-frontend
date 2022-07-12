@@ -265,7 +265,6 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 20,
-    // letterSpacing: 0.5,
     fontWeight: "500",
     textAlign: "center",
     color: "#484848",
