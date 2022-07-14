@@ -36,7 +36,7 @@ const AuthSelection = ({ navigation }) => {
       <View style={styles.lowerContainer}>
         <View style={styles.copyContainer}>
           <Text style={styles.copy}>Run with new friends</Text>
-          <Text style={styles.copy}>in Tokyo Area!</Text>
+          <Text style={styles.copy}>in Tokyo!</Text>
         </View>
         <LongButton
           buttonColor={Color.PrimaryMain}
