@@ -24,7 +24,8 @@ At the top of the page, you will find two icons
 **Prerequisites**
 **React Native with Expo CLI**
 First, you must install Expo CLI. You can find their guide here:
-Expo CLI Installation Guide
+[Expo CLI Installation Guide](https://docs.expo.dev/get-started/installation/)
+
 If you can get a simple "Hello world" app to launch with Expo CLI, you're good to go.
 **iOS Simulator**
 Our app is currently designed for iOS. There are two ways to test the functionality with a simulator.
