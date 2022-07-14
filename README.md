@@ -29,10 +29,13 @@ First, you must install Expo CLI. You can find their guide here:
 If you can get a simple "Hello world" app to launch with Expo CLI, you're good to go.
 **iOS Simulator**
 Our app is currently designed for iOS. There are two ways to test the functionality with a simulator.
+
 *Method 1:* Expo Go on a Mobile Device
 * Start by installing Expo Go on your device such as an iPhone. This is the easier method of the two.
+
 *Method 2:* Install XCode on Your Computer
 * To run the simulator locally on your machine, you must install XCode from the App Store.
+
 ⚠️ XCode can take several hours to download and install, despite having a fast internet connection. This is why using Expo Go on your mobile device is the recommended way to test the app quickly.
 # Installation
 Create a local copy by cloning this repository
