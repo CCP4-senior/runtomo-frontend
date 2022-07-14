@@ -1,10 +1,5 @@
 # Runtomo
 Welcome to our app Runtomo! This is the frontend repository.
-
-# Demo of the App
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ijyDfnP7na8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 # How to Use Runtomo
 
 * Launch the Runtomo app
