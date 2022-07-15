@@ -1,5 +1,9 @@
 # Runtomo
 Welcome to our app Runtomo! This is the frontend repository.
+
+**Main Repo:** https://github.com/CCP4-senior/.github
+
+**Demo Video:** https://www.youtube.com/watch?v=ijyDfnP7na8
 # How to Use Runtomo
 
 * Launch the Runtomo app
