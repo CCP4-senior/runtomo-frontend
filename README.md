@@ -73,7 +73,7 @@ We used the following technologies in the frontend:
 * React Native
 * React Native Paper
 * React Navigation
-* Explo: for deployment
+* Expo: for deployment
 * Google Maps
 * Firebase: for photo storage
 
