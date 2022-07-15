@@ -53,9 +53,9 @@ npm install
 **Configure Environmental Variables**
 In order to use Google Maps and Firebase (for images), create an account with both services and obtain the API keys.
 Then:
-* Open the .env.example file
-* Paste your API keys in the correct fields
-* Rename .env.example to .env
+* Create a .env file in the root directory
+* Paste in your Google API key
+* Paste in your Firebase Storage API key
 Run this command after creating the .env, it will clear the cache:
 ```
 expo r -c
